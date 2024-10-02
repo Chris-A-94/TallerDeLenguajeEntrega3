@@ -1,0 +1,2 @@
+INDEX VERSION 1.134+C:\Users\Usuario\Desktop\Folders\Taller2\segundoEntregable\TallerDeLenguajeEntrega1\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
