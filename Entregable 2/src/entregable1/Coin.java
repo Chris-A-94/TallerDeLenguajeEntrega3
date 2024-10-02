@@ -1,4 +1,5 @@
 package entregable1;
+import java.util.Random;
 
 /**
  * Cada instancia de Coin representa una única moneda. Tiene el precio, nombre y stock de la moneda.
@@ -8,12 +9,12 @@ public class Coin {
 	private String sigla;
 	private Double precio;
 	private Double stock;
-	public Coin(String nombre, String sigla, Double precio, Double stock) {
+	public Coin(String nombre, String sigla, Double precio) {
 
 		this.nombre = nombre;
 		this.sigla = sigla;
 		this.precio = precio;
-		this.stock = stock;
+		generarStock();
 	}
 	public Coin(String string, String string2, int indexOf) {
 		// TODO Auto-generated constructor stub
@@ -41,6 +42,14 @@ public class Coin {
 	}
 	public void setStock(Double stock) {
 		this.stock = stock;
+	}
+	private void generarStock()
+	{
+		Random stock = new Random();
+		Double minimo = 1000.0;
+		Double maximo = 9000.0;
+		
+		this.stock = minimo + (maximo - minimo) * stock.nextDouble();
 	}
 	
 }
