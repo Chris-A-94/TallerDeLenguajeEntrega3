@@ -15,12 +15,7 @@ public class Coin {
 		this.sigla = sigla;
 		this.precio = precio;
 		generarStock();
-<<<<<<< HEAD
-=======
-	}
-	public Coin(String string, String string2, int indexOf) {
-		// TODO Auto-generated constructor stub
->>>>>>> rama-A
+
 	}
 	public String getNombre() {
 		return nombre;
