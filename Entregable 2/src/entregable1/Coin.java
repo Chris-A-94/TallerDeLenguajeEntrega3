@@ -15,6 +15,9 @@ public class Coin {
 		this.precio = precio;
 		this.stock = stock;
 	}
+	public Coin(String string, String string2, int indexOf) {
+		// TODO Auto-generated constructor stub
+	}
 	public String getNombre() {
 		return nombre;
 	}
