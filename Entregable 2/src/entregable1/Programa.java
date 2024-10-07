@@ -53,7 +53,7 @@ public class Programa {
 			}
 		} while (opt != _EXIT);
 		
-		
-		
+		// Cerrar scanner
+		in.close();
 	}
 }
