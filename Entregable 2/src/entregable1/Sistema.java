@@ -15,13 +15,8 @@ public class Sistema {
 	
 	public Sistema() {
 		
-		
-		
-	
 	}
 	public boolean crearMoneda() {
-		
-		
 		Coin auxCoin = this.leerMoneda();	
 		if (auxCoin != null)
 			this.monedas.add(auxCoin);
