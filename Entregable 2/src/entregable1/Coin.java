@@ -6,14 +6,22 @@ import java.util.Random;
  */
 public class Coin {
 	private String nombre;
+	private String tipo;
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	private String sigla;
 	private Double precio;
 	private Double stock;
-	public Coin(String nombre, String sigla, Double precio) {
+	public Coin(String nombre, String sigla, String tipo,Double precio) {
 
 		this.nombre = nombre;
 		this.sigla = sigla;
 		this.precio = precio;
+		this.tipo = tipo;
 		generarStock();
 
 	}
