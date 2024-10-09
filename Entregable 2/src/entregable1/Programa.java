@@ -1,85 +1,56 @@
 package entregable1;
 
-import java.sql.*;
 import java.util.Scanner;
 
 public class Programa {
 	public static void main(String[] args) {
 		final int _EXIT = 9;
-		
-		final Scanner in = new Scanner(System.in);
-		
-		Sistema sistema = new Sistema();
-		
-		Integer opt = -1;
-		
-		do {
-			System.out.printf("Seleccionar opción: \n"
-					+ "1. Crear moneda \n"
-					+ "2. Listar monedas \n"
-					+ "3. Generar Stock \n"
-					+ "4. Listar Stock \n"
-					+ "5. Generar Activos \n"
-					+ "6. Listar Mis Activos \n"
-					+ "7. Simular una compra \n"
-					+ "8. Simular Swap \n"
-					+ "9. Cerrar\n"
-					+ "opt: ");
-			opt = in.nextInt();
-			System.out.printf("[%d]\n", opt);
-			
+
+		final Scanner inp = new Scanner(System.in);
+        Sistema sistema = new Sistema();
+        Integer opt = -1;
+
+        do {
+            System.out.printf("Seleccionar opción: \n"
+            		+ "1. Crear moneda \n"
+                    + "2. Listar monedas \n"
+                    + "3. Generar Stock \n"
+                    + "4. Listar Stock \n"
+                    + "5. Generar Activos \n"
+                    + "6. Listar Mis Activos \n"
+                    + "7. Simular una compra \n"
+                    + "8. Simular Swap \n"
+                    + "9. Cerrar\n"
+                    + "opt: ");
+            
+            opt = inp.nextInt();
+            System.out.printf("[%d]\n", opt);
 			switch (opt) {
-			case 1: sistema.crearMoneda();
-				break;
+			case 1:
+			    sistema.crearMoneda();
+			    break;
 			case 2:
-				break;
+			    break;
 			case 3:
-				break;
+			    break;
 			case 4:
-				break;
+			    break;
 			case 5:
-				break;
+			    break;
 			case 6:
-				break;
+			    break;
 			case 7:
-				break;
+			    break;
 			case 8:
-				break;
+			    break;
 			case _EXIT:
-				break;
+			    break;
 			default:
-				System.out.printf("Opción incorrecta\n");
-				break;
-			}
-		} while (opt != _EXIT);
-		
-		
-		in.close();
-	}
-	private void crearTabla() {
-	    Connection con = null;
-	    try {
-	        Class.forName("org.sqlite.JDBC");
-	        con = DriverManager.getConnection("\"jdbc:sqlite:src/BASE_ENTREGABLE.db\"");
+			    System.out.printf("Opción incorrecta\n");
+			    break;
+}
+        } while (opt != _EXIT);
 
-	        String sql = "CREATE TABLE IF NOT EXISTS COIN " +
-	                     "(SIGLA TEXT PRIMARY KEY," +
-	                     " NOMBRE TEXT NOT NULL," +
-	                     " PRECIO_DOLAR REAL NOT NULL," +
-	                     " TIPO TEXT NOT NULL," +
-	                     " STOCK INTEGER NOT NULL)";
-
-	        Statement stmt = con.createStatement();
-	        stmt.execute(sql);
-	        stmt.close();
-	        con.close();
-	        System.out.println("Tabla COIN creada o ya existe.");
-	    } catch (ClassNotFoundException e) {
-	        System.err.println("No se pudo encontrar el controlador JDBC de SQLite.");
-	        e.printStackTrace();
-	    } catch (SQLException e) {
-	        System.err.println("Error al crear la tabla.");
-	        e.printStackTrace();
-	    }
-	}
+        inp.close();
+    }
 }
