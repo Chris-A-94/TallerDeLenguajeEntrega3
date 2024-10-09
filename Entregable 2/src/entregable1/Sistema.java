@@ -121,4 +121,10 @@ public class Sistema {
 		//Esperar base de data...
 		return false;
 	}
+	private boolean agregarAbaseDeDatos()
+	{
+		
+		
+		return false;
+	}
 }
