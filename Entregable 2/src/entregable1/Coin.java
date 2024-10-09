@@ -17,9 +17,6 @@ public class Coin implements Comparable<Coin> {
 		this.precio = precio;
 		this.tipo = tipo;
 		generarStock();
-<<<<<<< HEAD
-
-=======
 	}
 	public Coin(String nombre, String sigla, String tipo,Double precio,Double stock) {
 
@@ -29,10 +26,7 @@ public class Coin implements Comparable<Coin> {
 		this.tipo = tipo;
 		this.stock = stock;
 	}
-	public Coin(String string, String string2, int indexOf) {
-		// TODO Auto-generated constructor stub
->>>>>>> rama-A
-	}
+	
 	public String getTipo() {
 		return tipo;
 	}
