@@ -1,6 +1,5 @@
 package entregable1;
 
-import java.io.Console;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -148,6 +147,7 @@ public class Sistema {
 		try{System.in.read();}
 		catch(Exception e){}
 	}
+	
 	private boolean cargarMonedasDB() {
 		Coin auxCoin;
 		Connection con=null;
