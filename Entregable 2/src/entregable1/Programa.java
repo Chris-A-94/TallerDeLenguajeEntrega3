@@ -48,7 +48,7 @@ public class Programa {
 			default:
 			    System.out.printf("Opción incorrecta\n");
 			    break;
-}
+			}
         } while (opt != _EXIT);
 
         inp.close();
