@@ -8,11 +8,12 @@ public class Programa {
 		
 		final Scanner in = new Scanner(System.in);
 		
-		//System sistema = new System();
+		Sistema sistema = new Sistema();
 		
-		Integer opt = -1;
+		Integer opt;
 		
 		do {
+			 opt = -1;
 			System.out.printf("Seleccionar opción: \n"
 					+ "1. Crear moneda \n"
 					+ "2. Listar monedas \n"
@@ -29,7 +30,7 @@ public class Programa {
 			System.out.printf("[%d]\n", opt);
 			
 			switch (opt) {
-			case 1:
+			case 1: sistema.crearMoneda();
 				break;
 			case 2:
 				break;
@@ -54,6 +55,6 @@ public class Programa {
 		} while (opt != _EXIT);
 		
 		
-		
+		in.close();
 	}
 }
