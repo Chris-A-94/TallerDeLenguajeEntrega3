@@ -70,18 +70,23 @@ public class Sistema {
 	    System.out.println("Stock: " + stock);
 	    System.out.println("Precio: " + price);
 		if (i == 0)
+		{
+			in.close();
 			return false;
+		}
+			
 		Connection con = null;
+
 		try {
-		    con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\laura\\OneDrive\\Escritorio");
+		    con = DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
 		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
-		    pstmt.setString(1, sigla);
-		    pstmt.setString(2, nombre);
-		    pstmt.setDouble(3, price);  
-		    pstmt.setString(4, tipo);
-		    pstmt.setFloat(5, stock);
+		    pstmt.setString(1,sigla);
+		    pstmt.setString(2,nombre);
+		    pstmt.setDouble(3,price);  
+		    pstmt.setString(4,tipo);
+		    pstmt.setFloat(5,stock);
 		    
 		    pstmt.executeUpdate();
 		    
@@ -96,11 +101,8 @@ public class Sistema {
 		return true;
 	}
 	
-			private void VALUES(String sigla, String nombre, Double price, String tipo, Double stock) {
-		// TODO Auto-generated method stub
-		
-	}
-			public boolean listarStock() {
+	
+	public boolean listarStock() {
 		//Esperar base de data...
 		return false;
 	}

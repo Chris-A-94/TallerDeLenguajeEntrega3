@@ -1,5 +1,6 @@
 package entregable1;
 
+import java.sql.*;
 import java.util.Scanner;
 
 public class Programa {
@@ -10,10 +11,9 @@ public class Programa {
 		
 		Sistema sistema = new Sistema();
 		
-		Integer opt;
+		Integer opt = -1;
 		
 		do {
-			 opt = -1;
 			System.out.printf("Seleccionar opción: \n"
 					+ "1. Crear moneda \n"
 					+ "2. Listar monedas \n"
@@ -26,7 +26,6 @@ public class Programa {
 					+ "9. Cerrar\n"
 					+ "opt: ");
 			opt = in.nextInt();
-			
 			System.out.printf("[%d]\n", opt);
 			
 			switch (opt) {
@@ -56,5 +55,31 @@ public class Programa {
 		
 		
 		in.close();
+	}
+	private void crearTabla() {
+	    Connection con = null;
+	    try {
+	        Class.forName("org.sqlite.JDBC");
+	        con = DriverManager.getConnection("\"jdbc:sqlite:src/BASE_ENTREGABLE.db\"");
+
+	        String sql = "CREATE TABLE IF NOT EXISTS COIN " +
+	                     "(SIGLA TEXT PRIMARY KEY," +
+	                     " NOMBRE TEXT NOT NULL," +
+	                     " PRECIO_DOLAR REAL NOT NULL," +
+	                     " TIPO TEXT NOT NULL," +
+	                     " STOCK INTEGER NOT NULL)";
+
+	        Statement stmt = con.createStatement();
+	        stmt.execute(sql);
+	        stmt.close();
+	        con.close();
+	        System.out.println("Tabla COIN creada o ya existe.");
+	    } catch (ClassNotFoundException e) {
+	        System.err.println("No se pudo encontrar el controlador JDBC de SQLite.");
+	        e.printStackTrace();
+	    } catch (SQLException e) {
+	        System.err.println("Error al crear la tabla.");
+	        e.printStackTrace();
+	    }
 	}
 }
