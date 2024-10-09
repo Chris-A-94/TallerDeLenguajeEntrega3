@@ -4,15 +4,9 @@ import java.util.Random;
 /**
  * Cada instancia de Coin representa una única moneda. Tiene el precio, nombre y stock de la moneda.
  */
-public class Coin {
+public class Coin implements Comparable<Coin> {
 	private String nombre;
 	private String tipo;
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 	private String sigla;
 	private Double precio;
 	private Double stock;
@@ -24,8 +18,22 @@ public class Coin {
 		this.tipo = tipo;
 		generarStock();
 	}
+	public Coin(String nombre, String sigla, String tipo,Double precio,Double stock) {
+
+		this.nombre = nombre;
+		this.sigla = sigla;
+		this.precio = precio;
+		this.tipo = tipo;
+		this.stock = stock;
+	}
 	public Coin(String string, String string2, int indexOf) {
 		// TODO Auto-generated constructor stub
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	public String getNombre() {
 		return nombre;
@@ -59,5 +67,14 @@ public class Coin {
 		
 		this.stock = minimo + (maximo - minimo) * stock.nextDouble();
 	}
+	public String toString() {
+		return ("Nombre: "+this.nombre+" \nSigla: "+ this.sigla+ "\nTipo: "+this.tipo +"\nPrecio (USD): "+this.precio+ "\nStock: "+this.stock);
+	}
+
+	@Override
+	public int compareTo(Coin c) {
+		return (int) (this.getPrecio() - c.getPrecio());
+	}
+
 	
 }

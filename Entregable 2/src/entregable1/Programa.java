@@ -30,6 +30,7 @@ public class Programa {
 			    sistema.crearMoneda();
 			    break;
 			case 2:
+				sistema.listarMonedas();
 			    break;
 			case 3:
 			    break;

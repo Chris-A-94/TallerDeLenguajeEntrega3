@@ -3,6 +3,7 @@ package entregable1;
 import java.io.Console;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,9 @@ public class Sistema {
 	
 	public Sistema() {
 		this.monedas = new ArrayList<Coin>();
+		if (monedas.isEmpty())
+			this.cargarMonedasDB();
+		//this.monedas.addAll();
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
 	}
@@ -127,8 +131,36 @@ public class Sistema {
 		}		
 		return false;
 	}
-	public boolean listarStock() {
-		//Esperar base de data...
+	public void listarMonedas() {
+		Collections.sort(monedas);
+		for (Coin c: monedas)
+		{
+			System.out.println(c.toString());
+		}
+		System.out.println("Presione [ENTER] para continuar...");
+		try{System.in.read();}
+		catch(Exception e){}
+	}
+	private boolean cargarMonedasDB() {
+		Coin auxCoin;
+		Connection con=null;
+		try {
+			 con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
+				Statement sent = con.createStatement();
+		 ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
+		 // Si entra al while obtuvo al menos una fila
+		 while (resul.next()){
+			 auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
+			 if (auxCoin != null)
+				 this.monedas.add(auxCoin);
+		 }
+		 sent.close();
+		 con.close();
+		 return true;
+		 } catch (SQLException e) {
+		 System.out.println(e.getMessage());
+		 } 
+
 		return false;
 	}
 }
