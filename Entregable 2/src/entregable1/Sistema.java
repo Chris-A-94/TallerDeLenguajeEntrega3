@@ -18,7 +18,6 @@ public class Sistema {
 		this.monedas = new ArrayList<Coin>();
 		if (monedas.isEmpty())
 			this.cargarMonedasDB();
-		//this.monedas.addAll();
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
 	}
@@ -28,7 +27,7 @@ public class Sistema {
 		if (auxCoin != null)
 			this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
-		System.out.println("Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
+		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
 	    int i = in.nextInt(); //Variable para leer opciones...
 	    
 	    while ((i != 1) && (i != 0)) {  
@@ -99,7 +98,7 @@ public class Sistema {
 	//Agrega una instancia de criptomoneda a la base de datos...
 	private boolean agregarAbaseDeDatos(Coin auxCoin)
 	{
-		auxCoin.toString();
+		
 		Connection con = null;
 
 		try {
@@ -124,7 +123,7 @@ public class Sistema {
 			    	System.out.println("La sigla de criptomoneda ya existe (debe ser única)");
 			    	break;
 			default:
-			    System.out.printf("Opción incorrecta\n");
+			    System.out.println(e.getMessage());
 			    break;
 			}
         
@@ -132,11 +131,19 @@ public class Sistema {
 		return false;
 	}
 	public void listarMonedas() {
+		if (monedas.isEmpty()){
+			System.out.println("No hay monedas dentro de la base de datos");
+			return;
+		}
+
 		Collections.sort(monedas);
 		for (Coin c: monedas)
 		{
-			System.out.println(c.toString());
+			System.out.println(c.toString());	
+			System.out.println("\n-----\n");
+
 		}
+		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 		System.out.println("Presione [ENTER] para continuar...");
 		try{System.in.read();}
 		catch(Exception e){}
@@ -146,20 +153,21 @@ public class Sistema {
 		Connection con=null;
 		try {
 			 con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-				Statement sent = con.createStatement();
-		 ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
-		 // Si entra al while obtuvo al menos una fila
-		 while (resul.next()){
-			 auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
-			 if (auxCoin != null)
-				 this.monedas.add(auxCoin);
-		 }
-		 sent.close();
-		 con.close();
-		 return true;
-		 } catch (SQLException e) {
-		 System.out.println(e.getMessage());
-		 } 
+		Statement sent = con.createStatement();	
+		ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
+		 
+		// Si entra al while obtuvo al menos una fila
+		while (resul.next()){
+			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
+			if (auxCoin != null)
+				this.monedas.add(auxCoin);
+		}
+		sent.close();
+		con.close();
+		return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} 
 
 		return false;
 	}
