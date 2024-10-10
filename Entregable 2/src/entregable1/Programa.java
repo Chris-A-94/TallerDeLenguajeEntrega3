@@ -24,7 +24,7 @@ public class Programa {
                     + "opt: ");
             
             opt = inp.nextInt();
-            System.out.printf("[%d]\n", opt);
+            System.out.printf("[%d]\n\n", opt);
 			switch (opt) {
 			case 1:
 			    sistema.crearMoneda();
@@ -33,6 +33,7 @@ public class Programa {
 				sistema.listarMonedas();
 			    break;
 			case 3:
+				sistema.generarStock();
 			    break;
 			case 4:
 			    break;
@@ -50,6 +51,10 @@ public class Programa {
 			    System.out.printf("Opción incorrecta\n");
 			    break;
 			}
+			System.out.println("Presione [ENTER] para continuar...");
+			try{System.in.read();}
+			catch(Exception e){}
+		
         } while (opt != _EXIT);
 
         inp.close();

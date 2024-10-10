@@ -14,11 +14,37 @@ public class Sistema {
 	//private MonitoreoCoin APIcoins;
 	
 	public Sistema() {
+		
 		this.monedas = new ArrayList<Coin>();
 		if (monedas.isEmpty())
 			this.cargarMonedasDB();
+		this.crearTablaCoin();
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
+	}
+	private void crearTablaCoin() {
+		Connection con=null;
+		try {
+			con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
+			String query = "CREATE TABLE IF NOT EXISTS COIN (" +
+                    "SIGLA TEXT PRIMARY KEY," +
+                    "NOMBRE TEXT NOT NULL," +
+                    "PRECIO_DOLAR REAL NOT NULL," +
+                    "TIPO TEXT NOT NULL," +
+                    "STOCK INTEGER NOT NULL" +
+                    ");";
+			Statement pstmt = con.createStatement();
+			pstmt.execute(query);
+			
+			pstmt.close();
+			con.close();
+			return;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} 
+
+		return;
+
 	}
 	
 	public boolean crearMoneda() {
@@ -38,9 +64,7 @@ public class Sistema {
 		else
 		{
 			this.agregarAbaseDeDatos(auxCoin);
-			System.out.println("Presione [ENTER] para continuar...");
-			try{System.in.read();}
-			catch(Exception e){}
+			
 			
 			return true;
 		}
@@ -112,10 +136,8 @@ public class Sistema {
 		    pstmt.setDouble(5,auxCoin.getStock());
 		    
 		    pstmt.executeUpdate();
-		    
 		    pstmt.close();
 		    con.close();
-		    return true;
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
@@ -125,29 +147,12 @@ public class Sistema {
 			    System.out.println(e.getMessage());
 			    break;
 			}
-        
+			return false;
 		}		
-		return false;
-	}
-	public void listarMonedas() {
-		if (monedas.isEmpty()){
-			System.out.println("No hay monedas dentro de la base de datos");
-			return;
-		}
-
-		Collections.sort(monedas);
-		for (Coin c: monedas)
-		{
-			System.out.println(c.toString());	
-			System.out.println("\n-----\n");
-
-		}
-		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
-		System.out.println("Presione [ENTER] para continuar...");
-		try{System.in.read();}
-		catch(Exception e){}
-	}
+		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
+		return true;
 	
+	}
 	private boolean cargarMonedasDB() {
 		Coin auxCoin;
 		Connection con=null;
@@ -170,5 +175,28 @@ public class Sistema {
 		} 
 
 		return false;
+	}
+	public void listarMonedas() {
+		if (monedas.isEmpty()){
+			System.out.println("No hay monedas dentro de la base de datos");
+			return;
+		}
+
+		Collections.sort(monedas);
+		for (Coin c: monedas)
+		{
+			System.out.println(c.toString());	
+			System.out.println("\n-----\n");
+
+		}
+		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
+	}
+	
+
+	public void generarStock() {
+		for(Coin c:monedas)
+		{
+			c.generarStock();
+		}
 	}
 }

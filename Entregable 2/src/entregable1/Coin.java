@@ -1,5 +1,6 @@
 package entregable1;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Cada instancia de Coin representa una única moneda. Tiene el precio, nombre y stock de la moneda.
@@ -9,17 +10,16 @@ public class Coin implements Comparable<Coin> {
 	private String tipo;
 	private String sigla;
 	private Double precio;
-	private Double stock;
+	private Double stock = 0.0;
 	public Coin(String nombre, String sigla, String tipo,Double precio) {
 
 		this.nombre = nombre;
 		this.sigla = sigla;
 		this.precio = precio;
 		this.tipo = tipo;
-		generarStock();
+		this.generarStock();
 	}
 	public Coin(String nombre, String sigla, String tipo,Double precio,Double stock) {
-
 		this.nombre = nombre;
 		this.sigla = sigla;
 		this.precio = precio;
@@ -29,6 +29,7 @@ public class Coin implements Comparable<Coin> {
 	public Coin(String string, String string2, int indexOf) {
 		// TODO Auto-generated constructor stub
 	}
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -59,8 +60,17 @@ public class Coin implements Comparable<Coin> {
 	public void setStock(Double stock) {
 		this.stock = stock;
 	}
-	private void generarStock()
+	public void generarStock()
 	{
+		if (this.stock != 0)
+		{
+			Scanner in = new Scanner(System.in);
+			String resp;
+			System.out.printf("El stock tiene ya un valor asignado "+this.stock+"\n¿Desea cambiarlo? (y) SI | (n) NO\n");
+			resp = in.next();
+			if (resp != "y")
+				return;
+		}
 		Random stock = new Random();
 		Double minimo = 1000.0;
 		Double maximo = 9000.0;
