@@ -3,7 +3,7 @@ package entregable1;
 /**
  * Informa el balance de una cryptomoneda particular. Traduce el balance a USD.
  */
-public class Saldo {
+public class Saldo implements Comparable<Saldo>{
 	private String nombre = "?";
 	private Double cantMonedas = 0.0;
 	public Saldo(String nombre, Double cantMonedas) {
@@ -33,5 +33,10 @@ public class Saldo {
 	public String ConvertirADivisa(Double cantMonedas2) {
 		// Aca se convierte a pesos.
 		return null;
+	}
+	
+	@Override
+	public int compareTo(Saldo s) {
+		return Double.compare(s.getCantMonedas(), this.getCantMonedas());
 	}
 }
