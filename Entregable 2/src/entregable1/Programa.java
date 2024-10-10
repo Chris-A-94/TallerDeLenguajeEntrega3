@@ -13,12 +13,19 @@ public class Programa {
 	private static void optGenerarActivos(Usuario user) {
 		Scanner in = new Scanner(System.in);
 		
-		System.out.printf("Moneda (nombre): ");
+		System.out.printf("[Generar Activos]\n"
+				+ "Introduzca el nombre de la moneda (* para seleccionar todas): ");
 		String lectura = in.next();
-		for (Saldo saldo : user.getBilletera().getArregloMontos()) {
-			if (saldo.getNombre().equals(lectura)) {
+		if (lectura.equals("*")) {
+			for (Saldo saldo : user.getBilletera().getArregloMontos()) {
 				saldo.setCantMonedas(obtenerRandom(100));
-				break;
+			}
+		} else {
+			for (Saldo saldo : user.getBilletera().getArregloMontos()) {
+				if (saldo.getNombre().equals(lectura)) {
+					saldo.setCantMonedas(obtenerRandom(100));
+					break;
+				}
 			}
 		}
 	}
@@ -28,8 +35,9 @@ public class Programa {
 		for (Saldo saldo : user.getBilletera().getArregloMontos()) {
 			list.add(saldo);
 		}
-		
-		System.out.printf("%s\n", list.toString());
+		list.sort(null);
+		System.out.printf("[Listar Activos]\n"
+				+ "%s\n", list.toString());
 	}
 	
 	public static void main(String[] args) {
@@ -57,7 +65,7 @@ public class Programa {
                     + "opt: ");
             
             opt = in.nextInt();
-            System.out.printf("[%d]\n", opt);
+            System.out.printf("[%d] ", opt);
 			switch (opt) {
 			case 1:
 			    sistema.crearMoneda();
