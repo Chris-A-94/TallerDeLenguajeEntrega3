@@ -1,15 +1,48 @@
 package entregable1;
 
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.Random;
 
 public class Programa {
+	private static double obtenerRandom(int n) {
+		Random rand = new Random();
+		return rand.nextDouble(0, n);
+	}
+	
+	private static void optGenerarActivos(Usuario user) {
+		Scanner in = new Scanner(System.in);
+		
+		System.out.printf("Moneda (nombre): ");
+		String lectura = in.next();
+		for (Saldo saldo : user.getBilletera().getArregloMontos()) {
+			if (saldo.getNombre().equals(lectura)) {
+				saldo.setCantMonedas(obtenerRandom(100));
+				break;
+			}
+		}
+	}
+	
+	private static void optListarActivos(Usuario user) {
+		LinkedList<Saldo> list = new LinkedList<Saldo>();
+		for (Saldo saldo : user.getBilletera().getArregloMontos()) {
+			list.add(saldo);
+		}
+		
+		System.out.printf("%s\n", list.toString());
+	}
+	
 	public static void main(String[] args) {
 		final int _EXIT = 9;
 
-		final Scanner inp = new Scanner(System.in);
+		final Scanner in = new Scanner(System.in);
         Sistema sistema = new Sistema();
         Integer opt = -1;
 
+        Usuario temp = new Usuario(new String("admin"),
+        						new String("0123"),
+        						new String("Argentina"));
+        
         do {
             System.out.printf("Seleccionar opción: \n"
             		+ "1. Crear moneda \n"
@@ -23,7 +56,7 @@ public class Programa {
                     + "9. Cerrar\n"
                     + "opt: ");
             
-            opt = inp.nextInt();
+            opt = in.nextInt();
             System.out.printf("[%d]\n", opt);
 			switch (opt) {
 			case 1:
@@ -36,8 +69,10 @@ public class Programa {
 			case 4:
 			    break;
 			case 5:
+				optGenerarActivos(temp);
 			    break;
 			case 6:
+				optListarActivos(temp);
 			    break;
 			case 7:
 			    break;
@@ -51,6 +86,6 @@ public class Programa {
 			}
         } while (opt != _EXIT);
 
-        inp.close();
+        in.close();
     }
 }

@@ -4,8 +4,8 @@ package entregable1;
  * Informa el balance de una cryptomoneda particular. Traduce el balance a USD.
  */
 public class Saldo {
-	private String nombre;
-	private Double cantMonedas;
+	private String nombre = "?";
+	private Double cantMonedas = 0.0;
 	public Saldo(String nombre, Double cantMonedas) {
 		super();
 		this.nombre = nombre;

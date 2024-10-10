@@ -24,6 +24,11 @@ public class Billetera {
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
 		
+//		Temporal
+		arregloMontos = new Saldo[5];
+		for (int i = 0; i < 5; i++) {
+			arregloMontos[i] = new Saldo();
+		}
 	}
 	public String getTarjetaDebito() {
 		return tarjeta.toString();
@@ -87,5 +92,8 @@ public class Billetera {
 		return saldosString;
 	}
 	
+	public Saldo[] getArregloMontos() {
+		return this.arregloMontos;
+	}
 	
 }
