@@ -14,23 +14,15 @@ public class Sistema {
 	//private MonitoreoCoin APIcoins;
 	
 	public Sistema() {
-<<<<<<< HEAD
-		
-=======
 		this.monedas = new ArrayList<Coin>();
 		if (monedas.isEmpty())
 			this.cargarMonedasDB();
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
->>>>>>> main
 	}
 	
 	public boolean crearMoneda() {
-<<<<<<< HEAD
-		Coin auxCoin = this.leerMoneda();	
-=======
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
->>>>>>> main
 		if (auxCoin != null)
 			this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);

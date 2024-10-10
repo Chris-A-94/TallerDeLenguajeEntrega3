@@ -6,10 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="src/entregable1/sqlite-jdbc-3.46.1.2.jar"/>
-=======
 	<classpathentry kind="lib" path="src/sqlite-jdbc-3.46.1.2.jar"/>
->>>>>>> main
 	<classpathentry kind="output" path="bin"/>
 </classpath>
