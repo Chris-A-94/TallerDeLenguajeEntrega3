@@ -52,7 +52,7 @@ public class Billetera {
 		return CVU;
 	}
 	public void setCVU(String CVU) {
-		CVU = CVU;
+		this.CVU = CVU;
 	}
 	public String getClavePublica() {
 		return clavePublica;
