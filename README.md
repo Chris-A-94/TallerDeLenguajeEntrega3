@@ -1,7 +1,7 @@
 # TLII, Entregable II
 ## Objetivos
 - Emular el funcionamiento de una billetera virtual (FIAT y Criptomonedas).
-- Trabajar conceptos de POO vistos en clase (Herencia, Polimorfismo, Intefaces, Paquetes, Especificadores de Acceso, Etc...).
+- Trabajar conceptos de POO vistos en clase (Herencia, Polimorfismo, Intefaces, Paquetes, Especificadores de Acceso, Etc).
 - Implementar el proyecto con una base de datos funcional en SQLite.
 - Hacer uso de API's que consulten precios actuales de las criptomonedas.
 - Implementar una GUI con javax.Swing.
