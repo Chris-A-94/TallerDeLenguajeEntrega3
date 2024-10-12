@@ -1,11 +1,12 @@
 package entregable1;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Cada instancia de Coin representa una única moneda. Tiene el precio, nombre y stock de la moneda.
  */
-public class Coin implements Comparable<Coin> {
+public class Coin implements Comparable<Coin>{
 	private String nombre;
 	private String tipo;
 	private String sigla;
@@ -80,9 +81,10 @@ public class Coin implements Comparable<Coin> {
 	}
 
 	@Override
-	public int compareTo(Coin c) {
-		return (int) (this.getPrecio() - c.getPrecio());
+	public int compareTo(Coin c) { //COMPARA MONEDAS POR PRECIO...
+		return (int) (c.getPrecio()-this.getPrecio());
 	}
+
 
 	
 }

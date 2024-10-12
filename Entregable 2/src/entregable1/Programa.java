@@ -39,7 +39,9 @@ public class Programa {
 		System.out.printf("[Listar Activos]\n"
 				+ "%s\n", list.toString());
 	}
-	
+	public static Usuario leerUsuario() {
+		return null;
+	}
 	public static void main(String[] args) {
 		final int _EXIT = 9;
 
@@ -49,7 +51,12 @@ public class Programa {
 		final Scanner in = new Scanner(System.in);
         Sistema sistema = new Sistema();
         Integer opt = -1;
-
+        
+        
+        
+        
+        
+        
         Usuario temp = new Usuario(new String("admin"),
         						new String("0123"),
         						new String("Argentina"));
@@ -81,7 +88,8 @@ public class Programa {
 			case 3:
 				sistema.generarStock();
 			    break;
-			case 4:
+			case 4: 
+				sistema.listarStock();
 			    break;
 			case 5:
 				optGenerarActivos(temp);

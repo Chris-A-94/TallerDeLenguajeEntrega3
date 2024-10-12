@@ -194,6 +194,17 @@ public class Sistema {
 		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 	}
 	
+	public void listarStock() {
+		if (monedas.isEmpty()){
+			System.out.println("No hay monedas dentro de la base de datos");
+			return;
+		}
+		monedas.sort(new doubleCompartor());
+		for (Coin c : monedas)
+		{
+			System.out.println(c.getNombre()+": "+c.getStock());
+		}
+	}
 
 	public void generarStock() {
 		for(Coin c:monedas)
