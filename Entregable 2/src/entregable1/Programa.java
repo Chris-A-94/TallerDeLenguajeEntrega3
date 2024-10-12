@@ -5,11 +5,10 @@ import java.util.Scanner;
 public class Programa {
 	public static void main(String[] args) {
 		final int _EXIT = 9;
-
 		final Scanner inp = new Scanner(System.in);
         Sistema sistema = new Sistema();
         Integer opt = -1;
-
+        //Agregar Login y Register...
         do {
             System.out.printf("Seleccionar opción: \n"
             		+ "1. Crear moneda \n"

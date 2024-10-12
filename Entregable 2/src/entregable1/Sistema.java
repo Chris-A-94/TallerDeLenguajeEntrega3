@@ -49,8 +49,10 @@ public class Sistema {
 	
 	public boolean crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
-		if (auxCoin != null)
-			this.monedas.add(auxCoin);
+		
+		if (auxCoin == null)
+			return false;
+		this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
 		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
 	    int i = in.nextInt(); //Variable para leer opciones...
