@@ -42,12 +42,9 @@ public class Programa {
 	
 	public static void main(String[] args) {
 		final int _EXIT = 9;
-<<<<<<< HEAD
-		final Scanner inp = new Scanner(System.in);
-        Sistema sistema = new Sistema();
-        Integer opt = -1;
+
         //Agregar Login y Register...
-=======
+
 
 		final Scanner in = new Scanner(System.in);
         Sistema sistema = new Sistema();
@@ -57,7 +54,7 @@ public class Programa {
         						new String("0123"),
         						new String("Argentina"));
         
->>>>>>> main
+
         do {
             System.out.printf("Seleccionar opción: \n"
             		+ "1. Crear moneda \n"
@@ -71,13 +68,9 @@ public class Programa {
                     + "9. Cerrar\n"
                     + "opt: ");
             
-<<<<<<< HEAD
-            opt = inp.nextInt();
-            System.out.printf("[%d]\n\n", opt);
-=======
             opt = in.nextInt();
-            System.out.printf("[%d] ", opt);
->>>>>>> main
+            System.out.printf("[%d]\n\n", opt);
+
 			switch (opt) {
 			case 1:
 			    sistema.crearMoneda();
