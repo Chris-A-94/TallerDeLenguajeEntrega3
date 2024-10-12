@@ -9,7 +9,7 @@
   
 - Coin:
   - [X] Generar Stock
-  - [X] Listar Stock
+  - [] Listar Stock
   
 - Sistema:
   - [X] Crear Monedas
