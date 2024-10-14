@@ -16,9 +16,10 @@ public class Sistema {
 	public Sistema() {
 		
 		this.monedas = new ArrayList<Coin>();
+		this.crearTablaCoin();
 		if (monedas.isEmpty())
 			this.cargarMonedasDB();
-		this.crearTablaCoin();
+		
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
 	}
@@ -159,22 +160,22 @@ public class Sistema {
 		Coin auxCoin;
 		Connection con=null;
 		try {
-			 con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-		Statement sent = con.createStatement();	
-		ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
-		 
-		// Si entra al while obtuvo al menos una fila
-		while (resul.next()){
+			con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
+			Statement sent = con.createStatement();	
+			ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
+			 
+			// Si entra al while obtuvo al menos una fila
+			while (resul.next()){
 			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
 			if (auxCoin != null)
 				this.monedas.add(auxCoin);
 		}
-		sent.close();
-		con.close();
-		return true;
+			sent.close();
+			con.close();
+			return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-		} 
+		}
 
 		return false;
 	}
