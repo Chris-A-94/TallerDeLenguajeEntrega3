@@ -1,5 +1,5 @@
 package entregable1;
-
+import daos.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,38 +16,14 @@ public class Sistema {
 	public Sistema() {
 		
 		this.monedas = new ArrayList<Coin>();
-		this.crearTablaCoin();
+		//this.crearTablaCoin(); //se crea la tabla
 		if (monedas.isEmpty())
-			this.cargarMonedasDB();
+		//	this.cargarMonedasDB(); // traer todos los datos a una linked list
 		
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
 	}
-	private void crearTablaCoin() {
-		Connection con=null;
-		try {
-			con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-			String query = "CREATE TABLE IF NOT EXISTS COIN (" +
-                    "SIGLA TEXT PRIMARY KEY," +
-                    "NOMBRE TEXT NOT NULL," +
-                    "PRECIO_DOLAR REAL NOT NULL," +
-                    "TIPO TEXT NOT NULL," +
-                    "STOCK INTEGER NOT NULL" +
-                    ");";
-			Statement pstmt = con.createStatement();
-			pstmt.execute(query);
-			
-			pstmt.close();
-			con.close();
-			return;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} 
-
-		return;
-
-	}
-	
+		
 	public boolean crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
 		
@@ -66,7 +42,7 @@ public class Sistema {
 	    	return false;
 		else
 		{
-			this.agregarAbaseDeDatos(auxCoin);
+		//	this.agregarAbaseDeDatos(auxCoin); se agrega moneda
 			
 			
 			return true;
@@ -122,64 +98,7 @@ public class Sistema {
 	    return new Coin(nombre,sigla,tipo,price);
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...
-	private boolean agregarAbaseDeDatos(Coin auxCoin)
-	{
-		
-		Connection con = null;
-
-		try {
-		    con = DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
-		    PreparedStatement pstmt = con.prepareStatement(query);
-		    
-		    pstmt.setString(1,auxCoin.getSigla());
-		    pstmt.setString(2,auxCoin.getNombre());
-		    pstmt.setDouble(3,auxCoin.getPrecio());  
-		    pstmt.setString(4,auxCoin.getTipo());
-		    pstmt.setDouble(5,auxCoin.getStock());
-		    
-		    pstmt.executeUpdate();
-		    pstmt.close();
-		    con.close();
-		} catch (SQLException e) {
-			switch (e.getErrorCode()) {
-			case 19:
-			    	System.out.println("La sigla de criptomoneda ya existe (debe ser única)");
-			    	break;
-			default:
-			    System.out.println(e.getMessage());
-			    break;
-			}
-			return false;
-		}		
-		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
-		return true;
-	
-	}
-	private boolean cargarMonedasDB() {
-		Coin auxCoin;
-		Connection con=null;
-		try {
-			con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-			Statement sent = con.createStatement();	
-			ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
-			 
-			// Si entra al while obtuvo al menos una fila
-			while (resul.next()){
-			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
-			if (auxCoin != null)
-				this.monedas.add(auxCoin);
-		}
-			sent.close();
-			con.close();
-			return true;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		return false;
-	}
-	public void listarMonedas() {
+			public void listarMonedas() {
 		if (monedas.isEmpty()){
 			System.out.println("No hay monedas dentro de la base de datos");
 			return;
