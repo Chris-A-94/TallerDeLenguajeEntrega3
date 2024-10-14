@@ -14,7 +14,7 @@ import entregable1.Coin;
 public class CoinDAO {
 	private Connection con = null;
 	public CoinDAO() {
-		con = MyConnection.getConnection();
+		//con = MyConnection.getConnection();
 		this.crearTabla();
 	}
 	public void crearTabla() {
