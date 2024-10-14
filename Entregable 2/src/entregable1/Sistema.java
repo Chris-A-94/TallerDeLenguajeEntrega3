@@ -12,13 +12,13 @@ public class Sistema {
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
 	//private MonitoreoCoin APIcoins;
-	
+	private CoinDAO cDao;
 	public Sistema() {
 		
 		this.monedas = new ArrayList<Coin>();
-		//this.crearTablaCoin(); //se crea la tabla
+		cDao = new CoinDAO(); //se crea la tabla
 		if (monedas.isEmpty())
-		//	this.cargarMonedasDB(); // traer todos los datos a una linked list
+		monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
 		
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
@@ -42,7 +42,7 @@ public class Sistema {
 	    	return false;
 		else
 		{
-		//	this.agregarAbaseDeDatos(auxCoin); se agrega moneda
+		cDao.guardar(auxCoin); //se agrega moneda
 			
 			
 			return true;
@@ -125,7 +125,7 @@ public class Sistema {
 			System.out.println(c.getNombre()+": "+c.getStock());
 		}
 	}
-
+	
 	public void generarStock() {
 		for(Coin c:monedas)
 		{

@@ -14,7 +14,7 @@ import entregable1.Coin;
 public class CoinDAO {
 	private Connection con = null;
 	public CoinDAO() {
-		//con = MyConnection.getConnection();
+		con = MyConnection.getCon();
 		this.crearTabla();
 	}
 	public void crearTabla() {
@@ -68,7 +68,7 @@ public class CoinDAO {
 		return true;
 	
 	}
-	public boolean devolverTabla() {
+	public List<Coin> devolverTabla() {
 		
 		Coin auxCoin;
 		List<Coin> monedas = new LinkedList<Coin>();
@@ -83,12 +83,13 @@ public class CoinDAO {
 				monedas.add(auxCoin);
 		}
 			sent.close();
-			return true;
+			return monedas;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			return monedas;
 		}
-
-		return false;
+		
+		
 	}
 
 	
