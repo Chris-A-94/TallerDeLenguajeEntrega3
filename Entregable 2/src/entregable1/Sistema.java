@@ -125,7 +125,13 @@ public class Sistema {
 			System.out.println(c.getNombre()+": "+c.getStock());
 		}
 	}
-	
+	public void removerMoneda() {
+		String sigla;
+		Scanner n = new Scanner(System.in);
+		System.out.println("INGRESE LA SIGLA DE LA CRIPTOMONEDA: \n");
+		sigla = n.next();
+		cDao.remover(sigla);
+	}
 	public void generarStock() {
 		for(Coin c:monedas)
 		{

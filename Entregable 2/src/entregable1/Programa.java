@@ -73,6 +73,7 @@ public class Programa {
                     + "7. Simular una compra \n"
                     + "8. Simular Swap \n"
                     + "9. Cerrar\n"
+                    + "10. remove\n"
                     + "opt: ");
             
             opt = in.nextInt();
@@ -103,6 +104,8 @@ public class Programa {
 			    break;
 			case _EXIT:
 			    break;
+			case 10: sistema.removerMoneda();
+				break;
 			default:
 			    System.out.printf("Opción incorrecta\n");
 			    break;
