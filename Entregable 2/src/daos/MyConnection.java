@@ -3,23 +3,22 @@ package daos;
 import java.sql.*;
 
 public class MyConnection {
-	Connection conn = null;
-	String path = null;
+	private static Connection conn = null;
 	
-	public MyConnection(String path) {
-		this.path = path;
+	static {
+		try {
+			conn = DriverManager.getConnection("jdbc:sqlite:./src/BASE_ENTREGABLE.db");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void open() {
-		if (conn != null) {
-			System.out.printf("Ya está abierto!.\n");
-		} else {
-			try {
-				conn = DriverManager.getConnection(path);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public static Connection getCon() {
+		return conn;
+	}
+	
+	private MyConnection() {
+		
 	}
 	
 	public void close() {
