@@ -3,6 +3,8 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 
+
+
 /**
  * Es una única billetera, almacena los saldos de todas las cryptomonedas y las claves, ademas de realizar operaciones sobre las mismas.
  */
@@ -29,6 +31,14 @@ public class Billetera {
 		for (int i = 0; i < 5; i++) {
 			arregloMontos[i] = new Saldo();
 		}
+		
+		
+		/*
+		 *  Monedas
+		 */
+		
+		List<Coin> monedas = new LinkedList<Coin>();
+		monedas.addAll();
 	}
 	public String getTarjetaDebito() {
 		return tarjeta.toString();

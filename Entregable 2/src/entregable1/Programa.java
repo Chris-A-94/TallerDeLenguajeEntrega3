@@ -22,7 +22,7 @@ public class Programa {
 			}
 		} else {
 			for (Saldo saldo : user.getBilletera().getArregloMontos()) {
-				if (saldo.getNombre().equals(lectura)) {
+				if (saldo.getSigla().equals(lectura)) {
 					saldo.setCantMonedas(obtenerRandom(100));
 					break;
 				}
