@@ -3,6 +3,7 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 
+import daos.CoinDAO;
 
 
 /**
@@ -14,7 +15,7 @@ public class Billetera {
 	private String CVU;
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
-	private Saldo[] arregloMontos;
+	private List<Saldo> arregloMontos;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
 	public Billetera()
@@ -25,20 +26,25 @@ public class Billetera {
 		this.Transacciones = new LinkedList<Transaccion>();
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
-		
-//		Temporal
-		arregloMontos = new Saldo[5];
-		for (int i = 0; i < 5; i++) {
-			arregloMontos[i] = new Saldo();
-		}
+	
+		/*
+		 *  Saldo
+		 */
+		arregloMontos = new LinkedList<Saldo>();
 		
 		
 		/*
 		 *  Monedas
 		 */
 		
+		CoinDAO myCoin = new CoinDAO();
+		
 		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll();
+		monedas.addAll(myCoin.devolverTabla());
+		
+		for (Coin moneda : monedas) {
+			arregloMontos.add(new Saldo(moneda.getSigla(), 0.0));
+		}
 	}
 	public String getTarjetaDebito() {
 		return tarjeta.toString();
@@ -92,17 +98,22 @@ public class Billetera {
 	}
 	public String getSaldos()
 	{
-		int i;
 		String saldosString = "SALDOS";
 		saldosString.concat("\n");
-		for (i=0;i<4;i++)
-		{
-			saldosString.concat(this.arregloMontos[i].toString()+"\n");
+		
+		for (Saldo saldo : this.arregloMontos) {
+			saldosString.concat(saldo.toString() + '\n');
 		}
+		
+//		for (i=0;i<4;i++)
+//		{
+//			saldosString.concat(this.arregloMontos[i].toString()+"\n");
+//		}
+		
 		return saldosString;
 	}
 	
-	public Saldo[] getArregloMontos() {
+	public List<Saldo> getArregloMontos() {
 		return this.arregloMontos;
 	}
 	
