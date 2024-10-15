@@ -4,21 +4,21 @@ package entregable1;
  * Informa el balance de una cryptomoneda particular. Traduce el balance a USD.
  */
 public class Saldo implements Comparable<Saldo>{
-	private String nombre = "?";
+	private String sigla = "?";
 	private Double cantMonedas = 0.0;
-	public Saldo(String nombre, Double cantMonedas) {
+	public Saldo(String sigla, Double cantMonedas) {
 		super();
-		this.nombre = nombre;
+		this.sigla = sigla;
 		this.cantMonedas = cantMonedas;
 	}
 	public Saldo() {
 		super();
 	}
-	public String getNombre() {
-		return nombre;
+	public String getSigla() {
+		return sigla;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String sigla) {
+		this.sigla = sigla;
 	}
 	public Double getCantMonedas() {
 		return cantMonedas;
@@ -27,7 +27,7 @@ public class Saldo implements Comparable<Saldo>{
 		this.cantMonedas = cantMonedas;
 	}
 	public String toString(){
-		String aux = (nombre +" "+cantMonedas);
+		String aux = (sigla +" "+cantMonedas);
 		return aux;
 	}
 	public String ConvertirADivisa(Double cantMonedas2) {

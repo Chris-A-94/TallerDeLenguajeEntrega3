@@ -3,16 +3,23 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 
+import daos.CoinDAO;
+
+
 /**
  * Es una única billetera, almacena los saldos de todas las cryptomonedas y las claves, ademas de realizar operaciones sobre las mismas.
  */
 public class Billetera {
+	/*
+	 *  ¿Qué sucede si se agrega una nueva moneda a la base de datos?
+	 */
+	
 	private Double balance;
 	private String divisa;
 	private String CVU;
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
-	private Saldo[] arregloMontos;
+	private List<Saldo> arregloMontos;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
 	public Billetera()
@@ -23,11 +30,28 @@ public class Billetera {
 		this.Transacciones = new LinkedList<Transaccion>();
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
+	
+		/*
+		 *  Saldo
+		 */
+		arregloMontos = new LinkedList<Saldo>();
 		
-//		Temporal
-		arregloMontos = new Saldo[5];
-		for (int i = 0; i < 5; i++) {
-			arregloMontos[i] = new Saldo();
+		
+		/*
+		 *  Monedas
+		 */
+		
+		/*
+		 * TODO: Agregar la lógica 
+		 */
+		
+		CoinDAO myCoin = new CoinDAO();
+		
+		List<Coin> monedas = new LinkedList<Coin>();
+		monedas.addAll(myCoin.devolverTabla());
+		
+		for (Coin moneda : monedas) {
+			arregloMontos.add(new Saldo(moneda.getSigla(), 0.0));
 		}
 	}
 	public String getTarjetaDebito() {
@@ -82,17 +106,22 @@ public class Billetera {
 	}
 	public String getSaldos()
 	{
-		int i;
 		String saldosString = "SALDOS";
 		saldosString.concat("\n");
-		for (i=0;i<4;i++)
-		{
-			saldosString.concat(this.arregloMontos[i].toString()+"\n");
+		
+		for (Saldo saldo : this.arregloMontos) {
+			saldosString.concat(saldo.toString() + '\n');
 		}
+		
+//		for (i=0;i<4;i++)
+//		{
+//			saldosString.concat(this.arregloMontos[i].toString()+"\n");
+//		}
+		
 		return saldosString;
 	}
 	
-	public Saldo[] getArregloMontos() {
+	public List<Saldo> getArregloMontos() {
 		return this.arregloMontos;
 	}
 	

@@ -2,32 +2,29 @@ package entregable1;
 
 import java.util.Scanner;
 import java.util.LinkedList;
-import java.util.Random;
 
 public class Programa {
-	private static double obtenerRandom(int n) {
-		Random rand = new Random();
-		return rand.nextDouble(0, n);
-	}
-	
 	private static void optGenerarActivos(Usuario user) {
-		Scanner in = new Scanner(System.in);
-		
-		System.out.printf("[Generar Activos]\n"
-				+ "Introduzca el nombre de la moneda (* para seleccionar todas): ");
-		String lectura = in.next();
-		if (lectura.equals("*")) {
-			for (Saldo saldo : user.getBilletera().getArregloMontos()) {
-				saldo.setCantMonedas(obtenerRandom(100));
-			}
-		} else {
-			for (Saldo saldo : user.getBilletera().getArregloMontos()) {
-				if (saldo.getNombre().equals(lectura)) {
-					saldo.setCantMonedas(obtenerRandom(100));
-					break;
+			Scanner in = new Scanner(System.in);
+			
+			System.out.printf("[Generar Activos]\n"
+					+ "Introduzca el nombre de la moneda (* para seleccionar todas): ");
+			String sigla = in.next();
+			System.out.printf("Introduzca la cantidad de monedas: ");
+			Double cantidad = in.nextDouble();
+			
+			if (sigla.equals("*")) {
+				for (Saldo saldo : user.getBilletera().getArregloMontos()) {
+					saldo.setCantMonedas(cantidad);
+				}
+			} else {
+				for (Saldo saldo : user.getBilletera().getArregloMontos()) {
+					if (saldo.getSigla().equals(sigla)) {
+						saldo.setCantMonedas(cantidad);
+						break;
+					}
 				}
 			}
-		}
 	}
 	
 	private static void optListarActivos(Usuario user) {
@@ -86,6 +83,7 @@ public class Programa {
 			     * Acá modificaríamos la lista de saldos de todos los usuarios almacenados en sistema,
 			     * para este entregable solo actualizaremos el usuario 'temp'
 			     */
+
 			    break;
 			case 2:
 				sistema.listarMonedas();
