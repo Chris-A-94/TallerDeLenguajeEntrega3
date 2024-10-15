@@ -19,7 +19,6 @@ public class Sistema {
 		cDao = new CoinDAO(); //se crea la tabla
 		if (monedas.isEmpty())
 		monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
-		
 		this.blockChain = new ArrayList<BlockChain>();
 		this.usuarios = new LinkedList<Usuario>();
 	}
@@ -125,17 +124,30 @@ public class Sistema {
 			System.out.println(c.getNombre()+": "+c.getStock());
 		}
 	}
-	public void removerMoneda() {
+	public void removerMoneda() { //remueve moneda de la lista y la base de datos...
 		String sigla;
 		Scanner n = new Scanner(System.in);
-		System.out.println("INGRESE LA SIGLA DE LA CRIPTOMONEDA: \n");
+		System.out.println("INGRESE LA SIGLA DE LA CRIPTOMONEDA: ");
 		sigla = n.next();
+		//Elimina de la lista.
+		for (Coin c : monedas)
+		{
+			if (c.getSigla().equals(sigla))
+			{
+				monedas.remove(c);
+				System.out.println("¡Se borró la moneda de la lista!");
+			}
+				
+		}
+		//elimina de la db
 		cDao.remover(sigla);
+		System.out.println("¡Se borró la moneda de la DB!");
 	}
 	public void generarStock() {
 		for(Coin c:monedas)
 		{
 			c.generarStock();
+			
 		}
 	}
 }

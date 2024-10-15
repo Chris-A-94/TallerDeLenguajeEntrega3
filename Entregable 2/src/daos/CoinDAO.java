@@ -55,6 +55,21 @@ public class CoinDAO {
 		return;
 
 	}
+	public void modificar(String sigla) {
+		try {
+			
+			String query = ("DELETE FROM COIN WHERE SIGLA = '"+sigla+"';");
+			Statement pstmt = con.createStatement();
+			pstmt.execute(query);
+			pstmt.close();
+			return;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} 
+
+		return;
+
+	}
 
 	public boolean guardar(Coin auxCoin)
 	{
