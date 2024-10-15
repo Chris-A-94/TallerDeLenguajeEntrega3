@@ -97,13 +97,14 @@ public class Sistema {
 	    return new Coin(nombre,sigla,tipo,price);
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...
-			public void listarMonedas() {
+	
+	public void listarMonedas() {
 		if (monedas.isEmpty()){
 			System.out.println("No hay monedas dentro de la base de datos");
 			return;
 		}
-
-		Collections.sort(monedas);
+		
+		Collections.sort(monedas); //ordena las monedas por precio.
 		for (Coin c: monedas)
 		{
 			System.out.println(c.toString());	
@@ -113,12 +114,13 @@ public class Sistema {
 		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 	}
 	
+
 	public void listarStock() {
 		if (monedas.isEmpty()){
 			System.out.println("No hay monedas dentro de la base de datos");
 			return;
 		}
-		monedas.sort(new doubleCompartor());
+		monedas.sort(new doubleComparator());
 		for (Coin c : monedas)
 		{
 			System.out.println(c.getNombre()+": "+c.getStock());
@@ -139,15 +141,15 @@ public class Sistema {
 			}
 				
 		}
-		//elimina de la db
+		//elimina de la db.
 		cDao.remover(sigla);
 		System.out.println("¡Se borró la moneda de la DB!");
 	}
 	public void generarStock() {
 		for(Coin c:monedas)
 		{
-			c.generarStock();
-			
+			c.generarStock(); //modifica los valores en la lista.
+			cDao.modificar(c); //modifica los valores en la base datos.
 		}
 	}
 }

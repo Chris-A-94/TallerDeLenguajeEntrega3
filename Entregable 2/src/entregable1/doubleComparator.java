@@ -2,7 +2,7 @@ package entregable1;
 
 import java.util.Comparator;
 
-public class doubleCompartor implements Comparator<Coin> {
+public class doubleComparator implements Comparator<Coin> {
 
 	@Override
 	public int compare(Coin o1, Coin o2) {

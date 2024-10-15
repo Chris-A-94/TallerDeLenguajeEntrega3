@@ -17,7 +17,7 @@ public class CoinDAO {
 		con = MyConnection.getCon();
 		this.crearTabla();
 	}
-	public void crearTabla() {
+	public void crearTabla() { //crea la base de datos si no existe ya.
 
 		try {
 			
@@ -39,7 +39,7 @@ public class CoinDAO {
 		return;
 
 	}
-	public void remover(String sigla) {
+	public void remover(String sigla) { //Remueve una moneda buscandola por sigla
 
 		try {
 			
@@ -55,23 +55,29 @@ public class CoinDAO {
 		return;
 
 	}
-	public void modificar(String sigla) {
+	/*
+	 * El 'modificar' recibe una moneda para no tener que hacer un modificar con cada columna de la tabla
+	 * esto con el fin de poder hacer una interface para todos los daos.
+	 */
+	public void modificar(Coin c) { //Recibe una moneda y la pisa en la base de datos.
 		try {
-			
-			String query = ("DELETE FROM COIN WHERE SIGLA = '"+sigla+"';");
-			Statement pstmt = con.createStatement();
-			pstmt.execute(query);
-			pstmt.close();
+				String query = ("UPDATE COIN SET SIGLA = ?, NOMBRE = ?, PRECIO_DOLAR = ?, TIPO = ?, STOCK = ? WHERE SIGLA = '"+c.getSigla()+"';");
+				PreparedStatement pstmt = con.prepareStatement(query);
+			    
+			    pstmt.setString(1,c.getSigla());
+			    pstmt.setString(2,c.getNombre());
+			    pstmt.setDouble(3,c.getPrecio());  
+			    pstmt.setString(4,c.getTipo());
+			    pstmt.setDouble(5,c.getStock());
+			    pstmt.executeUpdate();
+			    pstmt.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			} 
 			return;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} 
+		}
 
-		return;
-
-	}
-
-	public boolean guardar(Coin auxCoin)
+	public boolean guardar(Coin auxCoin) //guarda una moneda en la base de datos.
 	{
 		try {
 		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
@@ -85,6 +91,7 @@ public class CoinDAO {
 		    
 		    pstmt.executeUpdate();
 		    pstmt.close();
+		  
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
@@ -100,7 +107,7 @@ public class CoinDAO {
 		return true;
 	
 	}
-	public List<Coin> devolverTabla() {
+	public List<Coin> devolverTabla() { //devuelve una lista con todas las monedas guardadas en la base de datos.
 		
 		Coin auxCoin;
 		List<Coin> monedas = new LinkedList<Coin>();

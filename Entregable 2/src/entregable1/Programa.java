@@ -82,6 +82,10 @@ public class Programa {
 			switch (opt) {
 			case 1:
 			    sistema.crearMoneda();
+			    /*
+			     * Acá modificaríamos la lista de saldos de todos los usuarios almacenados en sistema,
+			     * para este entregable solo actualizaremos el usuario 'temp'
+			     */
 			    break;
 			case 2:
 				sistema.listarMonedas();

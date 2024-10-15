@@ -81,7 +81,7 @@ public class Coin implements Comparable<Coin>{
 	public String toString() {
 		return ("Nombre: "+this.nombre+" \nSigla: "+ this.sigla+ "\nTipo: "+this.tipo +"\nPrecio (USD): "+this.precio+ "\nStock: "+this.stock);
 	}
-
+	
 	@Override
 	public int compareTo(Coin c) { //COMPARA MONEDAS POR PRECIO...
 		return (int) (c.getPrecio()-this.getPrecio());
