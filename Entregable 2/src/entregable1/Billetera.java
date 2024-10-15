@@ -10,6 +10,10 @@ import daos.CoinDAO;
  * Es una única billetera, almacena los saldos de todas las cryptomonedas y las claves, ademas de realizar operaciones sobre las mismas.
  */
 public class Billetera {
+	/*
+	 *  ¿Qué sucede si se agrega una nueva moneda a la base de datos?
+	 */
+	
 	private Double balance;
 	private String divisa;
 	private String CVU;
@@ -35,6 +39,10 @@ public class Billetera {
 		
 		/*
 		 *  Monedas
+		 */
+		
+		/*
+		 * TODO: Agregar la lógica 
 		 */
 		
 		CoinDAO myCoin = new CoinDAO();
