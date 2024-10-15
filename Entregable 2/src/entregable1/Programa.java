@@ -39,18 +39,29 @@ public class Programa {
 		System.out.printf("[Listar Activos]\n"
 				+ "%s\n", list.toString());
 	}
-	
+	public static Usuario leerUsuario() {
+		return null;
+	}
 	public static void main(String[] args) {
 		final int _EXIT = 9;
+
+        //Agregar Login y Register...
+
 
 		final Scanner in = new Scanner(System.in);
         Sistema sistema = new Sistema();
         Integer opt = -1;
-
+        
+        
+        
+        
+        
+        
         Usuario temp = new Usuario(new String("admin"),
         						new String("0123"),
         						new String("Argentina"));
         
+
         do {
             System.out.printf("Seleccionar opción: \n"
             		+ "1. Crear moneda \n"
@@ -62,10 +73,12 @@ public class Programa {
                     + "7. Simular una compra \n"
                     + "8. Simular Swap \n"
                     + "9. Cerrar\n"
+                    + "10. remove\n"
                     + "opt: ");
             
             opt = in.nextInt();
-            System.out.printf("[%d] ", opt);
+            System.out.printf("[%d]\n\n", opt);
+
 			switch (opt) {
 			case 1:
 			    sistema.crearMoneda();
@@ -74,8 +87,10 @@ public class Programa {
 				sistema.listarMonedas();
 			    break;
 			case 3:
+				sistema.generarStock();
 			    break;
-			case 4:
+			case 4: 
+				sistema.listarStock();
 			    break;
 			case 5:
 				optGenerarActivos(temp);
@@ -89,10 +104,16 @@ public class Programa {
 			    break;
 			case _EXIT:
 			    break;
+			case 10: sistema.removerMoneda();
+				break;
 			default:
 			    System.out.printf("Opción incorrecta\n");
 			    break;
 			}
+			System.out.println("Presione [ENTER] para continuar...");
+			try{System.in.read();}
+			catch(Exception e){}
+		
         } while (opt != _EXIT);
 
         in.close();
