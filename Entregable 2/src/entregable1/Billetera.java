@@ -19,7 +19,7 @@ public class Billetera {
 	private String CVU;
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
-	private List<Saldo> arregloMontos;
+	private List<Saldo> arregloSaldo;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
 	public Billetera()
@@ -30,30 +30,10 @@ public class Billetera {
 		this.Transacciones = new LinkedList<Transaccion>();
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
-	
-		/*
-		 *  Saldo
-		 */
-		arregloMontos = new LinkedList<Saldo>();
 		
-		
-		/*
-		 *  Monedas
-		 */
-		
-		/*
-		 * TODO: Agregar la lógica 
-		 */
-		
-		CoinDAO myCoin = new CoinDAO();
-		
-		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll(myCoin.devolverTabla());
-		
-		for (Coin moneda : monedas) {
-			arregloMontos.add(new Saldo(moneda.getSigla(), 0.0));
-		}
+		generarArregloSaldo();
 	}
+	
 	public String getTarjetaDebito() {
 		return tarjeta.toString();
 	}
@@ -84,6 +64,33 @@ public class Billetera {
 	public void setClavePublica(String clavePublica) {
 		this.clavePublica = clavePublica;
 	}
+	public void generarArregloSaldo() {
+		CoinDAO myCoin = new CoinDAO(); // (DB API)
+		// Se instancia una nueva lista de objetos 'Saldo'
+		arregloSaldo = new LinkedList<Saldo>();
+		
+		
+		
+		// Se exportan las monedas
+		List<Coin> monedas = new LinkedList<Coin>();
+		monedas.addAll(myCoin.devolverTabla());
+		
+		// Se instancia un objeto 'Saldo' por cada moneda
+		for (Coin moneda : monedas) {
+			this.arregloSaldo.add(new Saldo(moneda.getSigla(), 0.0));
+		}
+	}
+	public void agregarMoneda(Coin moneda) {
+		// Si no hay ninguna lista, imprimir error y retornar
+		if (arregloSaldo.equals(null)) {
+			System.out.printf("ERROR::BILLETERA::ARREGLOSALDO_ES_NULL\n");
+			return;
+		}	
+		
+		// Insertar a la lista la nueva moneda
+		this.arregloSaldo.add(new Saldo(moneda.getSigla(), 0.0));
+	}
+	
 	public String historialTransacciones()
 	{
 		String historialString = "HISTORIAL DE TRANSACCIONES";
@@ -109,7 +116,7 @@ public class Billetera {
 		String saldosString = "SALDOS";
 		saldosString.concat("\n");
 		
-		for (Saldo saldo : this.arregloMontos) {
+		for (Saldo saldo : this.arregloSaldo) {
 			saldosString.concat(saldo.toString() + '\n');
 		}
 		
@@ -122,7 +129,7 @@ public class Billetera {
 	}
 	
 	public List<Saldo> getArregloMontos() {
-		return this.arregloMontos;
+		return this.arregloSaldo;
 	}
 	
 }

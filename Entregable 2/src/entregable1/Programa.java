@@ -26,7 +26,6 @@ public class Programa {
 				}
 			}
 	}
-	
 	private static void optListarActivos(Usuario user) {
 		LinkedList<Saldo> list = new LinkedList<Saldo>();
 		for (Saldo saldo : user.getBilletera().getArregloMontos()) {
@@ -36,9 +35,16 @@ public class Programa {
 		System.out.printf("[Listar Activos]\n"
 				+ "%s\n", list.toString());
 	}
+	private static void optCrearMoneda(Usuario user, Sistema sistema) {
+		Coin auxCoin = sistema.crearMoneda();
+		user.getBilletera().agregarMoneda(auxCoin);
+	}
+	
+	
 	public static Usuario leerUsuario() {
 		return null;
 	}
+	
 	public static void main(String[] args) {
 		final int _EXIT = 9;
 
@@ -46,19 +52,15 @@ public class Programa {
 
 
 		final Scanner in = new Scanner(System.in);
+		
         Sistema sistema = new Sistema();
-        Integer opt = -1;
-        
-        
-        
-        
-        
-        
         Usuario temp = new Usuario(new String("admin"),
         						new String("0123"),
         						new String("Argentina"));
         
-
+        Integer opt = -1;
+        
+        
         do {
             System.out.printf("Seleccionar opción: \n"
             		+ "1. Crear moneda \n"
@@ -78,8 +80,7 @@ public class Programa {
 
 			switch (opt) {
 			case 1:
-			    sistema.crearMoneda();
-			    
+			    optCrearMoneda(temp, sistema);
 			    break;
 			case 2:
 				sistema.listarMonedas();
