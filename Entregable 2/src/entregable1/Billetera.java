@@ -70,7 +70,6 @@ public class Billetera {
 		arregloSaldo = new LinkedList<Saldo>();
 		
 		
-		
 		// Se exportan las monedas
 		List<Coin> monedas = new LinkedList<Coin>();
 		monedas.addAll(myCoin.devolverTabla());
@@ -128,7 +127,7 @@ public class Billetera {
 		return saldosString;
 	}
 	
-	public List<Saldo> getArregloMontos() {
+	public List<Saldo> getArregloSaldo() {
 		return this.arregloSaldo;
 	}
 	
