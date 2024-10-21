@@ -23,11 +23,11 @@ public class Sistema {
 		this.usuarios = new LinkedList<Usuario>();
 	}
 		
-	public boolean crearMoneda() {
+	public Coin crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
 		
 		if (auxCoin == null)
-			return false;
+			return null;
 		this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
 		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
@@ -38,13 +38,13 @@ public class Sistema {
 	        i = in.nextInt();
 	    }
 	    if (i == 0)
-	    	return false;
+	    	return null;
 		else
 		{
 		cDao.guardar(auxCoin); //se agrega moneda
 			
 			
-			return true;
+			return auxCoin;
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class Sistema {
 		for(Coin c:monedas)
 		{
 			c.generarStock(); //modifica los valores en la lista.
-			cDao.modificar(c); //modifica los valores en la base datos.
+			 cDao.modificar(c); //modifica los valores en la base datos.
 		}
 	}
 }
