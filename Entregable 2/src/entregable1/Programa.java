@@ -90,9 +90,11 @@ public class Programa {
 		final Scanner in = new Scanner(System.in);
 		
         Sistema sistema = new Sistema();
-        Usuario temp = new Usuario(new String("admin"),
-        						new String("0123"),
-        						new String("Argentina"));
+        Usuario temp = new Usuario(new String("000"),
+        						new String("admin"),
+        						new String("admin"),
+        						new String("Argentina"),
+        						new String("taller@gmail.com"));
         
         Integer opt = -1;
         

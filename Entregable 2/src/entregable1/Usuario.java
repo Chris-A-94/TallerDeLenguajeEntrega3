@@ -14,15 +14,20 @@ public class Usuario {
 	private boolean habilitado;
 	private Seguridad seguridad;
 	private AltaBaja historialBajas;
+	private String DNI;
+	private String email;
 	public Usuario()
 	{
 		
 	}
-	public Usuario(String nombre, String apellido, String pais) {
+	public Usuario(String DNI,String nombre, String apellido, String pais, String email) {
 		super();
+		
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.pais = pais;
+		this.habilitado = true;
+		this.email = email;
 		this.billetera = new Billetera();
 	}
 	
@@ -74,6 +79,18 @@ public class Usuario {
 	}
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+	public String getDNI() {
+		return DNI;
+	}
+	public void setDNI(String dNI) {
+		DNI = dNI;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 }

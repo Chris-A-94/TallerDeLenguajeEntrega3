@@ -11,14 +11,13 @@ import java.util.List;
 
 import entregable1.Coin;
 
-public class CoinDAO {
+public class CoinDAO implements DaoInterface<Coin>{
 	private Connection con = null;
 	public CoinDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
 	}
 	public void crearTabla() { //crea la base de datos si no existe ya.
-
 		try {
 			
 			String query = "CREATE TABLE IF NOT EXISTS COIN (" +
@@ -26,7 +25,7 @@ public class CoinDAO {
                     "NOMBRE TEXT NOT NULL," +
                     "PRECIO_DOLAR REAL NOT NULL," +
                     "TIPO TEXT NOT NULL," +
-                    "STOCK INTEGER NOT NULL" +
+                    "STOCK DOUBLE NOT NULL" +
                     ");";
 			Statement pstmt = con.createStatement();
 			pstmt.execute(query);
@@ -77,7 +76,7 @@ public class CoinDAO {
 			return;
 		}
 
-	public boolean guardar(Coin auxCoin) //guarda una moneda en la base de datos.
+	public void guardar(Coin auxCoin) //guarda una moneda en la base de datos.
 	{
 		try {
 		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
@@ -101,10 +100,10 @@ public class CoinDAO {
 			    System.out.println(e.getMessage());
 			    break;
 			}
-			return false;
+			return;
 		}		
 		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
-		return true;
+		return;
 	
 	}
 	public List<Coin> devolverTabla() { //devuelve una lista con todas las monedas guardadas en la base de datos.
@@ -130,7 +129,6 @@ public class CoinDAO {
 		
 		
 	}
-
 
 	
 }
