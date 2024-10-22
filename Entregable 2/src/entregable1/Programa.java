@@ -89,7 +89,7 @@ public class Programa {
 		}
 		
 		temp.getBilletera().comprar(moneda);
-		in.close();
+		
 	}
 	
 	

@@ -51,7 +51,7 @@ public class Billetera {
 			}
 		}
 		this.balance += saldo;
-		in.close();
+		
 		System.out.println("Saldo cargado. Saldo actual: "+this.balance);
 		return this.balance;
 	}
@@ -65,12 +65,12 @@ public class Billetera {
 		{
 			System.out.println("Su balance actual es cero. ¿Desea cargar USD? y/n");			
 			String aux = in.next();
-			if(aux.equals('y') || aux.equals('Y'))
+			if(aux.equals("y") || aux.equals("Y"))
 				cargarSaldoUSD();
 			else
 			{
 				System.out.println("No puede comprar sin saldo.");
-				in.close();
+				
 				return;
 			}
 		}
@@ -78,11 +78,83 @@ public class Billetera {
 		double aUsar = in.nextDouble();
 		if(aUsar > this.balance)
 		{
-			in.close();
+			
 			System.out.println("Saldo insuficiente.");
 			return;
 		}
-		in.close();
+		
+		CoinDAO myCoin = new CoinDAO(); // (DB API)
+		List<Coin> monedas = new LinkedList<Coin>();
+		monedas.addAll(myCoin.devolverTabla());
+		
+		Coin aux = null;
+		for(Coin nioc: monedas)
+		{
+			if(moneda.equals(nioc.getSigla()))
+				aux = nioc;
+		}
+		
+		System.out.println("La moneda "+aux.getNombre()+" vale "+aux.getPrecio()+". Desea proceder? Y/N");
+		String proceder = in.next();
+		if(proceder.equals("Y") || proceder.equals("y"))
+		{
+			Double monedasAComprar = aUsar / aux.getPrecio();
+			if (monedasAComprar > aux.getStock())
+			{
+				System.out.println("Stock insuficiente para el valor pedido.");
+				System.out.println("1. Cambiar valor \n 2. Comprar maximo \n 3. Cancelar");
+				int moveValor = in.nextInt();
+				switch(moveValor)
+				{
+				case 1:
+					double valorMax = aux.getPrecio() * aux.getStock();
+					System.out.println("Valor nuevo en USD: (maximo: "+valorMax+")");
+					aUsar = in.nextDouble();
+					if( aUsar > valorMax)
+					{
+						System.out.println("Valor mas alto del posible. ERROR.");
+						
+						return;
+					}
+					monedasAComprar = aUsar / aux.getPrecio();
+					break;
+				case 2: monedasAComprar = aux.getStock();
+					break;
+				default: 
+					
+					return;					
+				}
+			}
+			double saldoFinal = 0;
+			for(Saldo saldos: this.arregloSaldo)
+			{
+				//aca agrego las monedas compradas al arreglo saldo de la billetera
+				if(saldos.getSigla().equals(moneda))
+				{
+					saldoFinal = saldos.getCantMonedas() + monedasAComprar;
+					saldos.setCantMonedas(saldoFinal);
+				}
+					
+			}
+			//modifico stock de coins en la DB
+			aux.setStock(aux.getStock() - monedasAComprar);
+			myCoin.modificar(aux);
+			this.balance -= aUsar;
+			System.out.println("Se ha cargado "+monedasAComprar+" "+aux.getNombre()+" a su saldo.");
+			System.out.println("Saldo actual en "+aux.getNombre()+" :"+saldoFinal);
+			System.out.println("Saldo actual en USD: "+this.balance);
+			
+			//FALTA DESCRIBIR LA TRANSACCION EN LA BASE DE DATOS
+			
+		}
+		else
+		{
+			System.out.println("Operacion cancelada");
+			
+			return;
+		}
+		
+		
 	}
 	
 	public String getTarjetaDebito() {
