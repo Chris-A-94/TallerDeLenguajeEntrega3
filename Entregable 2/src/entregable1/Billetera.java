@@ -2,6 +2,7 @@ package entregable1;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import daos.CoinDAO;
 
@@ -32,6 +33,17 @@ public class Billetera {
 		tarjeta = null;
 		
 		generarArregloSaldo();
+	}
+	
+	public double cargarSaldoUSD()
+	{
+		System.out.println("¿Cuanto saldo desea cargar?");
+		Scanner in = new Scanner(System.in);
+		double saldo = in.nextDouble();
+		this.balance += saldo;
+		in.close();
+		System.out.println("Saldo cargado. Saldo actual: "+this.balance);
+		return this.balance;
 	}
 	
 	public String getTarjetaDebito() {
