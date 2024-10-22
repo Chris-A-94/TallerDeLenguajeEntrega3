@@ -37,13 +37,66 @@ public class Billetera {
 	
 	public double cargarSaldoUSD()
 	{
+		//funcion para cargar saldo USD en memoria para comprar monedas
+		//a futuro se podria agregar a la db
 		System.out.println("¿Cuanto saldo desea cargar?");
 		Scanner in = new Scanner(System.in);
 		double saldo = in.nextDouble();
+		if(!(saldo >= 0.0))
+		{
+			while(!(saldo >= 0.0))
+			{
+				System.out.println("Saldo no valido, ingrese numero mayor a cero.");
+				saldo = in.nextDouble();
+			}
+		}
 		this.balance += saldo;
 		in.close();
 		System.out.println("Saldo cargado. Saldo actual: "+this.balance);
 		return this.balance;
+	}
+	public void comprar()
+	{
+		Scanner in = new Scanner(System.in);
+		if( this.balance == 0.0)
+		{
+			System.out.println("Su balance actual es cero. ¿Desea cargar USD? y/n");			
+			String aux = in.next();
+			if(aux.equals('y') | aux.equals('Y'))
+				cargarSaldoUSD();
+			else
+			{
+				System.out.println("No puede comprar sin saldo.");
+				in.close();
+				return;
+			}
+		}
+		int valor = 0;
+		while(valor < 1 && valor > 6)
+		{
+			System.out.println("¿Que desea comprar?");
+			System.out.println("1. Bitcoin \n 2. Ethereum \n 3. USDT \n 4. Doge \n 5. USDC \n 6. Cancelar Compra");
+			valor = in.nextInt();
+		}
+		
+		switch(valor)
+		{
+			case 1: 
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6: in.close();
+				return;
+			default:
+					System.out.println("Valor no valido.");
+		}
+		in.close();
 	}
 	
 	public String getTarjetaDebito() {
