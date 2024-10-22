@@ -14,7 +14,10 @@ public class Transaccion {
 		this.tipo = tipo;
 		this.monto = monto;
 	}
-	
+	public void transaccionCompra()
+	{
+		
+	}
 	public String getFecha() {
 		return fecha.toString();
 	}
