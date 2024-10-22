@@ -159,6 +159,6 @@ public class Programa {
 		
         } while (opt != _EXIT);
 
-        in.close();
+        in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
     }
 }

@@ -14,12 +14,14 @@ public class Sistema {
 	//private MonitoreoCoin APIcoins;
 	private CoinDAO cDao;
 	public Sistema() {
-		
+		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
 		this.monedas = new ArrayList<Coin>();
-		cDao = new CoinDAO(); //se crea la tabla
+		cDao = new CoinDAO(); //se crea la tabla monedas
 		if (monedas.isEmpty())
 		monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
+		//INICIALIZAR ARREGLO DE BLOCKCHAINS
 		this.blockChain = new ArrayList<BlockChain>();
+		//INICIALIZAR ARREGLO DE USUARIOS
 		this.usuarios = new LinkedList<Usuario>();
 	}
 		

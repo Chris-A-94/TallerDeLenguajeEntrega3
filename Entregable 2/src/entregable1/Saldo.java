@@ -30,9 +30,10 @@ public class Saldo implements Comparable<Saldo>{
 		String aux = (sigla +" "+cantMonedas);
 		return aux;
 	}
-	public String ConvertirADivisa(Double cantMonedas2) {
+	public Double ConvertirADivisa(Double cantMonedas2) {
 		// Aca se convierte a pesos.
-		return null;
+		
+		return 0.0;
 	}
 	
 	@Override

@@ -39,9 +39,8 @@ public class CoinDAO implements DaoInterface<Coin>{
 
 	}
 	public void remover(String sigla) { //Remueve una moneda buscandola por sigla
-
 		try {
-			
+			//BUSCA POR SIGLA PORQUE ES "PRIMARY ID"
 			String query = ("DELETE FROM COIN WHERE SIGLA = '"+sigla+"';");
 			Statement pstmt = con.createStatement();
 			pstmt.execute(query);
@@ -55,7 +54,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 
 	}
 	/*
-	 * El 'modificar' recibe una moneda para no tener que hacer un modificar con cada columna de la tabla
+	 * El método 'modificar' recibe una moneda para no tener que hacer un modificar con cada columna de la tabla
 	 * esto con el fin de poder hacer una interface para todos los daos.
 	 */
 	public void modificar(Coin c) { //Recibe una moneda y la pisa en la base de datos.

@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-
-import entregable1.Coin;
 import entregable1.Usuario;
 
 public class UsuarioDAO implements DaoInterface<Usuario>{
@@ -22,7 +20,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public void crearTabla() {
 		try {
-			
+			//Se crea una tabla si no existe ya en el archivo...
 			String query = "CREATE TABLE IF NOT EXISTS USUARIOS (" +
                     "DNI TEXT PRIMARY KEY," +
                     "NOMBRE TEXT NOT NULL," +
@@ -36,6 +34,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
 			 * Por ahora nos limitamos a esto para su funcionamiento.
+			 * Se omitieron todos los datos relacionados con seguridad.
 			 */
 			Statement pstmt = con.createStatement();
 			pstmt.execute(query);
