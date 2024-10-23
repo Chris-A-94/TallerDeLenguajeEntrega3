@@ -93,7 +93,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 			}
 			return;
 		}		
-		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
+		System.out.println("¡Se agregó con éxito el usuario sa la base de datos!");
 		return;
 
 	}

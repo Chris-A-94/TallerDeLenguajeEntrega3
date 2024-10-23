@@ -28,7 +28,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
                     "CANTIDAD DOUBLE,"+
                     "TIPO TEXT NOT NULL,"+
                     "USER_ID int NOT NULL,"+
-                    "FOREING KEY ('USER_ID') REFERENCES 'USUARIOS' ('ID')"+
+                    "FOREING KEY ('USER_ID') REFERENCES 'USUARIOS' ('DNI')"+
                     ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
@@ -63,27 +63,21 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 
 	}
 
+	
 	@Override
 	public void guardar(Saldo saldo) {
 		try {
-		    String query = "INSERT INTO saldos (SIGLA, NOMBRE, CANTIDAD, TIPO) VALUES (?, ?, ?)";
+		    String query = "INSERT INTO saldos (SIGLA, CANTIDAD, TIPO, USER_ID) VALUES (?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    pstmt.setString(1,saldo.getSigla());
-		    pstmt.setString(2,saldo.getNombre());
-		    pstmt.setDouble(3,saldo.getCantMonedas());
-		    pstmt.setString(4,saldo.getTipo());  
+		    pstmt.setString(4,saldo.getUser_id());
+		    pstmt.setString(3,saldo.getTipo());  
+		    pstmt.setDouble(2,saldo.getCantMonedas());
 		    pstmt.executeUpdate();
 		    pstmt.close();
 		  
 		} catch (SQLException e) {
-			switch (e.getErrorCode()) {
-			case 19:
-			    	System.out.println("ERROR: el DNI ya se encuentra en la base de datos");
-			    	break;
-			default:
-			    System.out.println(e.getMessage());
-			    break;
-			}
+			System.out.println(e.getMessage());
 			return;
 		}		
 		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
@@ -95,16 +89,15 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 	@Override
 	public List<Saldo> devolverTabla() {
 
-		Usuario auxSaldo=null;
+		Saldo auxSaldo=null;
 		List<Saldo> saldos = new LinkedList<Saldo>();
 		try {
 			Statement sent = con.createStatement();	
-			ResultSet resul = sent.executeQuery("SELECT * FROM saldos");
+			ResultSet resul = sent.executeQuery("SELECT * FROM SALDOS");
 			 
 			// Si entra al while obtuvo al menos una fila
 			while (resul.next()){
-			//Suponemos a todos los saldos habilitados...
-			//auxSaldo = new Usuario(resul.getString("SIGLA"),resul.getString("NOMBRE"),resul.getString("APELLIDO"),resul.getString("PAIS"),resul.getString("EMAIL"));
+			auxSaldo = new Saldo(resul.getInt("ID"),resul.getString("USER_ID"),resul.getString("TIPO"),resul.getString("SIGLA"),resul.getDouble("CANTIDAD"));
 			if (auxSaldo != null)
 			{
 				
@@ -120,7 +113,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 
 	@Override
 	public void remover(String s) {
-		
+		//No implementado.
 	}
 	
 }

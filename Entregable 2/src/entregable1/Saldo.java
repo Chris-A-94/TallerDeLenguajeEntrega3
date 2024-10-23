@@ -5,11 +5,10 @@ package entregable1;
  */
 public class Saldo implements Comparable<Saldo>{
 	private int id;
+	private String user_id;
 	private String tipo = "?";
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
-	private Double precio;
-	private String nombre;
 	
 	public Saldo(String sigla, Double cantMonedas)
 	{
@@ -17,14 +16,19 @@ public class Saldo implements Comparable<Saldo>{
 		this.sigla = sigla;
 		this.cantMonedas = cantMonedas;
 	}
-	public Saldo(String sigla, Double cantMonedas, Double precio, String nombre)
-	{
+
+	
+
+	public Saldo(int id, String user_id, String tipo, String sigla, Double cantMonedas) {
 		super();
+		this.id = id;
+		this.user_id = user_id;
+		this.tipo = tipo;
 		this.sigla = sigla;
 		this.cantMonedas = cantMonedas;
-		this.precio = precio;
-		this.nombre = nombre;
 	}
+
+
 
 	public String getSigla() {
 		return sigla;
@@ -73,6 +77,14 @@ public class Saldo implements Comparable<Saldo>{
 	}
 	public void setID(int id) {
 		this.id = id;
+	}
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 }

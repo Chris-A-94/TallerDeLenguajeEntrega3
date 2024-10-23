@@ -31,9 +31,8 @@ public class Billetera {
 		this.Transacciones = new LinkedList<Transaccion>();
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
-		
-		generarArregloSaldo();
-	}
+		arregloSaldo = new LinkedList<Saldo>();
+	}	
 	
 	public double cargarSaldoUSD(String fiat)
 	{
@@ -62,7 +61,7 @@ public class Billetera {
 		}
 		
 		
-		Saldo saldoConvertido = new Saldo(aux.getSigla(),saldo,aux.getPrecio(),aux.getNombre());
+		Saldo saldoConvertido = new Saldo(aux.getSigla(),saldo);
 		
 		
 		
