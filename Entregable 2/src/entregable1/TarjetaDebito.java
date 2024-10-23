@@ -33,9 +33,10 @@ public class TarjetaDebito extends Tarjeta {
 	public String toString()
 	{
 		String aux = "";
-		aux = "Sigla: "+super.getSigla()+ " Serie: "+super.getSerie()+" Codigo Seguridad: "+
+	/*	aux = "Sigla: "+super.getSigla()+ " Serie: "+super.getSerie()+" Codigo Seguridad: "+
 		super.getCodSeg()+ " Vencimiento: "+super.getVencimiento().toString()+" Saldo: "
 				+this.getSaldo().ConvertirADivisa(this.getSaldo().getCantMonedas());
+	*/	
 		return aux;
 	}
 	

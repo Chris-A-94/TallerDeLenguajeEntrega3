@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Es un usuario, contiene toda la información del usuario, incluyendo sus datos personales, de seguridad y billetera.
  */
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
 	private String nombre;
 	private String apellido;
 	private String pais;
@@ -14,18 +14,25 @@ public class Usuario {
 	private boolean habilitado;
 	private Seguridad seguridad;
 	private AltaBaja historialBajas;
+	private String DNI;
+	private String email;
 	public Usuario()
 	{
 		
 	}
-	public Usuario(String nombre, String apellido, String pais) {
+	public Usuario(String DNI,String nombre, String apellido, String pais, String email) {
 		super();
+		
 		this.nombre = nombre;
+		this.DNI = DNI;
 		this.apellido = apellido;
 		this.pais = pais;
+		this.habilitado = true;
+		this.email = email;
 		this.billetera = new Billetera();
 	}
 	
+
 	/**
 	 * 
 	 * @return
@@ -74,6 +81,29 @@ public class Usuario {
 	}
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+	public String getDNI() {
+		return DNI;
+	}
+	public void setDNI(String DNI) {
+		this.DNI = DNI;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	@Override
+	public int compareTo(Usuario u) {
+		return this.DNI.compareTo(u.getDNI());
+	}
+	public String toString() {
+		String aux = ("DNI: "+ this.DNI +"\nNombre y apellido: "+this.nombre+" "+this.apellido);
+		
+		
+		
+		return aux;
 	}
 	
 }

@@ -1,5 +1,5 @@
 package entregable1;
-
+import daos.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,19 +12,35 @@ public class Sistema {
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
 	//private MonitoreoCoin APIcoins;
-	
+	private CoinDAO cDao;
+	private UsuarioDAO uDao;
 	public Sistema() {
+		
+		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
 		this.monedas = new ArrayList<Coin>();
-		if (monedas.isEmpty())
-			this.cargarMonedasDB();
-		this.blockChain = new ArrayList<BlockChain>();
+		cDao = new CoinDAO(); //se crea la tabla monedas con algunas monedas predefinidas.
+		
+		if (monedas.isEmpty()) {
+			monedas.addAll(cDao.devolverTabla());
+			// traer todos los datos a una linked list
+		}
+			
+		
+		//INICIALIZAR ARREGLO DE BLOCKCHAINS
+		//this.blockChain = new ArrayList<BlockChain>();
+		
+		//INICIALIZAR ARREGLO DE USUARIOS
 		this.usuarios = new LinkedList<Usuario>();
+		uDao = new UsuarioDAO();
+		if (usuarios.isEmpty())
+			usuarios.addAll(uDao.devolverTabla());
 	}
-	
-	public boolean crearMoneda() {
+		
+	public Coin crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
-		if (auxCoin != null)
-			this.monedas.add(auxCoin);
+		if (auxCoin == null)
+			return null;
+		this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
 		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
 	    int i = in.nextInt(); //Variable para leer opciones...
@@ -34,15 +50,13 @@ public class Sistema {
 	        i = in.nextInt();
 	    }
 	    if (i == 0)
-	    	return false;
+	    	return null;
 		else
 		{
-			this.agregarAbaseDeDatos(auxCoin);
-			System.out.println("Presione [ENTER] para continuar...");
-			try{System.in.read();}
-			catch(Exception e){}
+		cDao.guardar(auxCoin); //se agrega moneda
 			
-			return true;
+			
+			return auxCoin;
 		}
 	}
 	
@@ -95,47 +109,14 @@ public class Sistema {
 	    return new Coin(nombre,sigla,tipo,price);
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...
-	private boolean agregarAbaseDeDatos(Coin auxCoin)
-	{
-		
-		Connection con = null;
-
-		try {
-		    con = DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
-		    PreparedStatement pstmt = con.prepareStatement(query);
-		    
-		    pstmt.setString(1,auxCoin.getSigla());
-		    pstmt.setString(2,auxCoin.getNombre());
-		    pstmt.setDouble(3,auxCoin.getPrecio());  
-		    pstmt.setString(4,auxCoin.getTipo());
-		    pstmt.setDouble(5,auxCoin.getStock());
-		    
-		    pstmt.executeUpdate();
-		    
-		    pstmt.close();
-		    con.close();
-		    return true;
-		} catch (SQLException e) {
-			switch (e.getErrorCode()) {
-			case 19:
-			    	System.out.println("La sigla de criptomoneda ya existe (debe ser única)");
-			    	break;
-			default:
-			    System.out.println(e.getMessage());
-			    break;
-			}
-        
-		}		
-		return false;
-	}
+	
 	public void listarMonedas() {
 		if (monedas.isEmpty()){
 			System.out.println("No hay monedas dentro de la base de datos");
 			return;
 		}
-
-		Collections.sort(monedas);
+		
+		Collections.sort(monedas); //ordena las monedas por precio.
 		for (Coin c: monedas)
 		{
 			System.out.println(c.toString());	
@@ -143,32 +124,61 @@ public class Sistema {
 
 		}
 		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
-		System.out.println("Presione [ENTER] para continuar...");
-		try{System.in.read();}
-		catch(Exception e){}
 	}
 	
-	private boolean cargarMonedasDB() {
-		Coin auxCoin;
-		Connection con=null;
-		try {
-			 con=DriverManager.getConnection("jdbc:sqlite:src/BASE_ENTREGABLE.db");
-		Statement sent = con.createStatement();	
-		ResultSet resul = sent.executeQuery("SELECT * FROM COIN");
-		 
-		// Si entra al while obtuvo al menos una fila
-		while (resul.next()){
-			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
-			if (auxCoin != null)
-				this.monedas.add(auxCoin);
-		}
-		sent.close();
-		con.close();
-		return true;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} 
 
-		return false;
+	public void listarStock() {
+		if (monedas.isEmpty()){
+			System.out.println("No hay monedas dentro de la base de datos");
+			return;
+		}
+		monedas.sort(new doubleComparator());
+		for (Coin c : monedas)
+		{
+			System.out.println(c.getNombre()+": "+c.getStock());
+		}
+	}
+
+	/*
+	 * Actualiza la base de datos con la lista modificada durante la ejecución del programa
+	 */
+	public void actualizarUserDB() { 
+		for (Usuario u:usuarios) {
+			uDao.modificar(u);
+		}
+	}
+	/*
+	 * Actualiza la base de datos de monedas
+	 * 
+	 */
+	public void actualizarCoinDB() {
+		for (Coin c:monedas) {
+			cDao.modificar(c);
+		}
+	}
+	public void listarUsuarios() {
+		Collections.sort(usuarios);
+		int i=1;
+		for (Usuario u: usuarios) {
+			System.out.print(i+". ");
+			System.out.println(u.toString());
+			i++;
+		}
+	}
+	public Usuario getUsuario(String DNI) { //Busca un usuario en la base mediante su DNI.
+		for (Usuario u : usuarios) {
+			if (u.getDNI().equals(DNI))
+				return u;
+		}
+		return null;
+	}
+	public void generarStock() {
+		for(Coin c:monedas)
+		{
+			c.generarStock(); //modifica los valores en la lista.
+		}
+	}
+	public List<Coin> getMonedas(){
+		return monedas;
 	}
 }
