@@ -28,8 +28,6 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
                     "PAIS TEXT NOT NULL," +
                     "HABILITADO BOOLEAN NOT NULL," +
                     "EMAIL TEXT NOT NULL,"+
-                    "WALLET_ID int NOT NULL AUTO_INCREMENT,"+
-                    "FOREING KEY ('WALLET_ID') REFERENCES 'BILLETERAS' ('ID')"+
                     ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
@@ -58,7 +56,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		  pstmt.setString(3,user.getApellido());  
 		  pstmt.setString(4,user.getPais());
 		  pstmt.setBoolean(5,user.isHabilitado());
-		  pstmt.setString(4,user.getEmail());
+		  pstmt.setString(6,user.getEmail());
 		  pstmt.executeUpdate();
 		  pstmt.close();
 		  

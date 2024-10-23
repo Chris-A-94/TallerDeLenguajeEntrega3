@@ -4,8 +4,10 @@ package entregable1;
  * Informa el balance de una cryptomoneda particular. Traduce el balance a USD.
  */
 public class Saldo implements Comparable<Saldo>{
+	private int id;
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
+	private String tipo = "?";
 	public Saldo(String sigla, Double cantMonedas) {
 		super();
 		this.sigla = sigla;
@@ -40,4 +42,21 @@ public class Saldo implements Comparable<Saldo>{
 	public int compareTo(Saldo s) {
 		return Double.compare(s.getCantMonedas(), this.getCantMonedas());
 	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public int getID() {
+		return id;
+	}
+	public void setID(int id) {
+		this.id = id;
+	}
+
 }

@@ -27,7 +27,6 @@ public class Sistema {
 		
 	public Coin crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
-		
 		if (auxCoin == null)
 			return null;
 		this.monedas.add(auxCoin);

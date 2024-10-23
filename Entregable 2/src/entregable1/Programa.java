@@ -6,6 +6,7 @@ import java.util.List;
 
 import daos.CoinDAO;
 
+
 public class Programa {
 	private static boolean existeMoneda(String sigla) {
 		boolean existe = false;
@@ -85,7 +86,6 @@ public class Programa {
 		final int _EXIT = 9;
 
         //Agregar Login y Register...
-
 
 		final Scanner in = new Scanner(System.in);
 		
