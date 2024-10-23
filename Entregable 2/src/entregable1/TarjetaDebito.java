@@ -38,6 +38,7 @@ public class TarjetaDebito extends Tarjeta {
 				+this.getSaldo().ConvertirADivisa(this.getSaldo().getCantMonedas());
 	*/	
 		return aux;
+		
 	}
 	
 	

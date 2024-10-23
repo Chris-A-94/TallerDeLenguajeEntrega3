@@ -9,6 +9,7 @@ public class Saldo implements Comparable<Saldo>{
 	private String tipo = "?";
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
+
 	
 	public Saldo(String sigla, Double cantMonedas)
 	{
@@ -17,7 +18,10 @@ public class Saldo implements Comparable<Saldo>{
 		this.cantMonedas = cantMonedas;
 	}
 
-	
+	public Saldo()
+	{
+		
+	}
 
 	public Saldo(int id, String user_id, String tipo, String sigla, Double cantMonedas) {
 		super();
@@ -26,9 +30,8 @@ public class Saldo implements Comparable<Saldo>{
 		this.tipo = tipo;
 		this.sigla = sigla;
 		this.cantMonedas = cantMonedas;
+
 	}
-
-
 
 	public String getSigla() {
 		return sigla;
@@ -47,21 +50,13 @@ public class Saldo implements Comparable<Saldo>{
 		return aux;
 	}
 
-	public Double ConvertirADolar(Double fiat) {
-		// Aca se convierte a pesos.
-		
-		return 0.0;
-	}
-	public Double dolarADivisa(Double dolar) {
-		// Aca se convierte a pesos.
-		return null;
-	}
 	
 	
 	@Override
 	public int compareTo(Saldo s) {
 		return Double.compare(s.getCantMonedas(), this.getCantMonedas());
 	}
+
 	public String getTipo() {
 		return tipo;
 	}
@@ -86,5 +81,8 @@ public class Saldo implements Comparable<Saldo>{
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-
+	
 }
+
+
+

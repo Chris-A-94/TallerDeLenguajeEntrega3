@@ -15,6 +15,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	public UsuarioDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
+		this.guardar(new Usuario("000","admin","admin", "Argentina", "mail")); //se agrega por defecto un usuario administrador
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public void guardar(Usuario user) {
 		try {
-		    String query = "INSERT INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT OR IGNORE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,user.getDNI());
@@ -78,10 +79,10 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		    pstmt.setString(3,user.getApellido());  
 		    pstmt.setString(4,user.getPais());
 		    pstmt.setBoolean(5,user.isHabilitado());
-		    pstmt.setString(4,user.getEmail());
+		    pstmt.setString(6,user.getEmail());
 		    pstmt.executeUpdate();
 		    pstmt.close();
-		  
+		    return;
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
@@ -93,8 +94,6 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 			}
 			return;
 		}		
-		System.out.println("¡Se agregó con éxito el usuario sa la base de datos!");
-		return;
 
 	}
 
