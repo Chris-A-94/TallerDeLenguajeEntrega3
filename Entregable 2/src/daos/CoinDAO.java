@@ -15,11 +15,11 @@ public class CoinDAO implements DaoInterface<Coin>{
 	private Connection con = null;
 	public CoinDAO() {
 		con = MyConnection.getCon();
+		this.crearTabla();
 		this.guardar(new Coin("Bitcoin","BTC","Criptomoneda",66362.79));
 		this.guardar(new Coin("Ethereum","ETH","Criptomoneda",2504.57));
 		this.guardar(new Coin("Pesos Argentinos","Pesos","Fiat",0.0010));
 		this.guardar(new Coin("Dolar","$","Fiat",1.0));
-		this.crearTabla();
 	}
 	public void crearTabla() { //crea la base de datos si no existe ya.
 		try {

@@ -15,11 +15,16 @@ public class Sistema {
 	private CoinDAO cDao;
 	private UsuarioDAO uDao;
 	public Sistema() {
+		
 		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
 		this.monedas = new ArrayList<Coin>();
 		cDao = new CoinDAO(); //se crea la tabla monedas
-		if (monedas.isEmpty())
-			monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
+		
+		if (monedas.isEmpty()) {
+			monedas.addAll(cDao.devolverTabla());
+			// traer todos los datos a una linked list
+		}
+			
 		
 		//INICIALIZAR ARREGLO DE BLOCKCHAINS
 		//this.blockChain = new ArrayList<BlockChain>();
@@ -133,31 +138,22 @@ public class Sistema {
 			System.out.println(c.getNombre()+": "+c.getStock());
 		}
 	}
-	public void removerMoneda() { //remueve moneda de la lista y la base de datos...
-		String sigla;
-		Scanner n = new Scanner(System.in);
-		System.out.println("INGRESE LA SIGLA DE LA CRIPTOMONEDA: ");
-		sigla = n.next();
-		//Elimina de la lista.
-		for (Coin c : monedas)
-		{
-			if (c.getSigla().equals(sigla))
-			{
-				monedas.remove(c);
-				System.out.println("¡Se borró la moneda de la lista!");
-			}
-				
-		}
-		//elimina de la db.
-		cDao.remover(sigla);
-		System.out.println("¡Se borró la moneda de la DB!");
-	}
+
 	/*
 	 * Actualiza la base de datos con la lista modificada durante la ejecución del programa
 	 */
 	public void actualizarUserDB() { 
 		for (Usuario u:usuarios) {
 			uDao.modificar(u);
+		}
+	}
+	/*
+	 * Actualiza la base de datos de monedas
+	 * 
+	 */
+	public void actualizarCoinDB() {
+		for (Coin c:monedas) {
+			cDao.modificar(c);
 		}
 	}
 	public void listarUsuarios() {
@@ -180,7 +176,6 @@ public class Sistema {
 		for(Coin c:monedas)
 		{
 			c.generarStock(); //modifica los valores en la lista.
-			 cDao.modificar(c); //modifica los valores en la base datos.
 		}
 	}
 	public List<Coin> getMonedas(){
