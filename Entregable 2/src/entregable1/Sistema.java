@@ -18,7 +18,7 @@ public class Sistema {
 		
 		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
 		this.monedas = new ArrayList<Coin>();
-		cDao = new CoinDAO(); //se crea la tabla monedas
+		cDao = new CoinDAO(); //se crea la tabla monedas con algunas monedas predefinidas.
 		
 		if (monedas.isEmpty()) {
 			monedas.addAll(cDao.devolverTabla());
