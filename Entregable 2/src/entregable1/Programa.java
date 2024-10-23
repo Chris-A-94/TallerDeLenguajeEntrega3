@@ -86,7 +86,7 @@ public class Programa {
 
 	private static void optSimularCompra(Usuario temp,Sistema sistema)
 	{
-		System.out.println("Ingrese sigla de moneda a comprar: ");
+		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
 		boolean existe = existeMoneda(moneda,sistema);
@@ -95,7 +95,7 @@ public class Programa {
 			System.out.println("La moneda actual no existe, se procede a generarla: ");
 			optCrearMoneda(temp,sistema);
 		}
-		System.out.println("Ingrese sigla de dinero Fiat a usar (USD/ARS/EUR):");
+		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
 		String fiat = in.next();
 		existe = existeMoneda(fiat,sistema);
 		
@@ -103,6 +103,26 @@ public class Programa {
 		{
 			System.out.println("La divisa Fiat no esta cargada, se procede a generarla: ");
 			optCrearMoneda(temp,sistema);
+		}
+		
+		//esto es para chequear el tipo, hasta que se me ocurra algo mas conveniente.
+		CoinDAO monedasDB = new CoinDAO();
+		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
+		monedasMem.addAll(monedasDB.devolverTabla());
+		Coin auxFiat = null;
+		Coin auxMoneda = null;
+		for(Coin monedaAux: monedasMem)
+		{
+			if(fiat.equals(monedaAux.getSigla()))
+				auxFiat = monedaAux;
+			if(moneda.equals(monedaAux.getSigla()))
+				auxMoneda = monedaAux;
+		}
+		
+		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
+		{
+			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
+			return;
 		}
 		
 		temp.getBilletera().comprar(moneda,fiat);
