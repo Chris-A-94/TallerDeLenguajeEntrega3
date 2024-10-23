@@ -175,8 +175,9 @@ public class Billetera {
 				}
 				//modifico stock de coins en la DB
 				auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
+				auxFiat.setStock(saldoFinalFiat);
 				monedasDB.modificar(auxMoneda);
-				this.balance -= saldoEmitido;
+				monedasDB.modificar(auxFiat);
 				System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getNombre()+" a su saldo.");
 				System.out.println("Saldo actual en "+auxMoneda.getNombre()+" :"+saldoFinalCoin);
 				System.out.println("Saldo actual en"+auxFiat.getNombre()+": "+saldoFinalFiat);
