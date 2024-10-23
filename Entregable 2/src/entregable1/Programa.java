@@ -77,6 +77,22 @@ public class Programa {
 		user.getBilletera().agregarMoneda(auxCoin);
 	}
 	
+	private static void optSimularCompra(Usuario temp,Sistema sistema)
+	{
+		System.out.println("Ingrese sigla de moneda a comprar: ");
+		Scanner in = new Scanner(System.in);
+		String moneda = in.next();
+		boolean existe = existeMoneda(moneda);
+		if(!existe)
+		{
+			System.out.println("La moneda actual no existe, se procede a generarla: ");
+			optCrearMoneda(temp,sistema);
+		}
+		
+		temp.getBilletera().comprar(moneda);
+		
+	}
+	
 	
 	public static Usuario leerUsuario() {
 		return null;
@@ -142,6 +158,7 @@ public class Programa {
 				optListarActivos(temp);
 			    break;
 			case 7:
+				optSimularCompra(temp,sistema);
 			    break;
 			case 8:
 			    break;

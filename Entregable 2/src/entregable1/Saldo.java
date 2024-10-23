@@ -8,13 +8,12 @@ public class Saldo implements Comparable<Saldo>{
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
 	private String tipo = "?";
-	public Saldo(String sigla, Double cantMonedas) {
-		super();
-		this.sigla = sigla;
-		this.cantMonedas = cantMonedas;
-	}
+	
 	public Saldo() {
 		super();
+	}
+	public Saldo(String sigla2, Double cantidad) {
+		// TODO Auto-generated constructor stub
 	}
 	public String getSigla() {
 		return sigla;
