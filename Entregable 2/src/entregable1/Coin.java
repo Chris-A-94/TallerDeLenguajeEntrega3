@@ -86,7 +86,8 @@ public class Coin implements Comparable<Coin>{
 	public int compareTo(Coin c) { //COMPARA MONEDAS POR PRECIO...
 		return (int) (c.getPrecio()-this.getPrecio());
 	}
-
+	
+	
 
 	
 }

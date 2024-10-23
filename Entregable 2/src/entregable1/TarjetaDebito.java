@@ -37,6 +37,7 @@ public class TarjetaDebito extends Tarjeta {
 		super.getCodSeg()+ " Vencimiento: "+super.getVencimiento().toString()+" Saldo: "
 				+this.getSaldo().ConvertirADivisa(this.getSaldo().getCantMonedas());
 		return aux;
+		
 	}
 	
 	
