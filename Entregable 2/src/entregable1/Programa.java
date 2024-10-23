@@ -1,6 +1,7 @@
 package entregable1;
 
 import java.util.Scanner;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,11 +64,47 @@ public class Programa {
 			}
 	}
 	private static void optListarActivos(Usuario user) {
+		// Comparators
+		// Nota: Se declara y define los 'Comparator's según por criterio unicamente dentro del
+		// Scope de este método.
+		Comparator<Saldo> porSigla = new Comparator<Saldo>() {
+			public int compare(Saldo s1, Saldo s2) {
+				return s1.getSigla().compareTo(s2.getSigla());
+			}
+		};
+		Comparator<Saldo> porCantidad = new Comparator<Saldo>() {
+			public int compare(Saldo s1, Saldo s2) {
+				return s1.getCantMonedas().compareTo(s2.getCantMonedas()) * (-1);
+			}
+		};
+		
+		// Scanner
+		Scanner in = new Scanner(System.in);
+		
+		// Obtener lista de Activos (Saldos)
 		LinkedList<Saldo> list = new LinkedList<Saldo>();
 		for (Saldo saldo : user.getBilletera().getArregloSaldo()) {
 			list.add(saldo);
 		}
-		list.sort(null);
+		
+		// Pregunta
+		System.out.printf("Ordenar por\n"
+				+ "SIGLA (1), CANTIDAD (2)\n:");
+		Integer lectura = in.nextInt();
+		
+		// Ordenar
+		if (lectura.equals(1)) {
+			list.sort(porSigla);
+		} else if (lectura.equals(2)) {
+			list.sort(porCantidad);
+		} else {
+			while (lectura < 1 || lectura > 2) {
+				System.out.printf("Valor Incorrecto: \n");
+				lectura = in.nextInt();
+			}
+		}
+		
+		// Listar los Activos
 		System.out.printf("[Listar Activos]\n"
 				+ "%s\n", list.toString());
 	}
