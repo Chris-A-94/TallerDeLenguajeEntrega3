@@ -117,24 +117,28 @@ public class Programa {
 	public static void main(String[] args) {
 		final int _EXIT = 9;
 
-        //Agregar Login y Register...
 
 		final Scanner in = new Scanner(System.in);
+
 		
+		//Esto es un login para un usuario administrador.
+		String dniTemp;
         Sistema sistema = new Sistema();
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
+        System.out.print("Ingrese el DNI del usuario que va a usar: ");
+        dniTemp = in.next();
+        Usuario temp = sistema.getUsuario(dniTemp);
+        while (temp == null)
+        {
+        	System.out.print("El DNI no existe, ingrese otro: ");
+            dniTemp = in.next();
+            temp = sistema.getUsuario(dniTemp);
+            
+        }
         
-        Usuario temp = new Usuario(new String("000"),
-        						new String("admin"),
-        						new String("admin"),
-        						new String("Argentina"),
-        						new String("taller@gmail.com"));
         
-        System.out.println("Presione [ENTER] para continuar...");
-		try{System.in.read();}
-		catch(Exception e){}
-		
+        
         Integer opt = -1;
         
         

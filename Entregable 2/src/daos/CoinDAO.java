@@ -15,6 +15,10 @@ public class CoinDAO implements DaoInterface<Coin>{
 	private Connection con = null;
 	public CoinDAO() {
 		con = MyConnection.getCon();
+		this.guardar(new Coin("Bitcoin","BTC","Criptomoneda",66362.79));
+		this.guardar(new Coin("Ethereum","ETH","Criptomoneda",2504.57));
+		this.guardar(new Coin("Pesos Argentinos","Pesos","Fiat",0.0010));
+		this.guardar(new Coin("Dolar","$","Fiat",1.0));
 		this.crearTabla();
 	}
 	public void crearTabla() { //crea la base de datos si no existe ya.
@@ -78,7 +82,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 	public void guardar(Coin auxCoin) //guarda una moneda en la base de datos.
 	{
 		try {
-		    String query = "INSERT INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
+		    String query = "INSERT OR IGNORE INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,auxCoin.getSigla());
@@ -101,7 +105,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 			}
 			return;
 		}		
-		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
+		//System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
 		return;
 	
 	}

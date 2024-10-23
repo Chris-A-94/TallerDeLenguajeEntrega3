@@ -169,6 +169,13 @@ public class Sistema {
 			i++;
 		}
 	}
+	public Usuario getUsuario(String DNI) { //Busca un usuario en la base mediante su DNI.
+		for (Usuario u : usuarios) {
+			if (u.getDNI().equals(DNI))
+				return u;
+		}
+		return null;
+	}
 	public void generarStock() {
 		for(Coin c:monedas)
 		{
