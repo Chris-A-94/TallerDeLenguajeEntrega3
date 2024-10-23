@@ -55,7 +55,7 @@ public class Billetera {
 		System.out.println("Saldo cargado. Saldo actual: "+this.balance);
 		return this.balance;
 	}
-	public void comprar(String moneda)
+	public void comprar(String moneda,String fiat)
 	{
 		//para arrancar asumo que todas las compras son en USD
 		//Si hay que soportar otras monedas FIAT, hay que consultar donde poner los exchange rates
