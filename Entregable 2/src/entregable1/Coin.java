@@ -65,7 +65,7 @@ public class Coin implements Comparable<Coin>{
 		{
 			Scanner in = new Scanner(System.in);
 			String resp;
-			System.out.printf("El stock tiene ya un valor asignado "+this.stock+"\n¿Desea cambiarlo? (y) SI | (n) NO\n");
+			System.out.printf("El stock de ["+ this.nombre+"] tiene ya un valor asignado "+this.stock+"\n¿Desea cambiarlo? (y) SI | (n) NO\n");
 			resp = in.next();
 			if (!resp.equals("y"))
 				return;

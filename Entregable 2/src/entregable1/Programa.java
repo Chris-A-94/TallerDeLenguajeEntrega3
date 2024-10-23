@@ -8,13 +8,12 @@ import daos.CoinDAO;
 
 
 public class Programa {
-	private static boolean existeMoneda(String sigla) {
+	private static boolean existeMoneda(String sigla,Sistema sistema) {
 		boolean existe = false;
 		
-		CoinDAO myCoin = new CoinDAO();
 		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll(myCoin.devolverTabla());
-		
+		monedas.addAll(sistema.getMonedas());
+		System.out.println(monedas.toString());
 		for (Coin coin : monedas) {
 			if (coin.getSigla().equals(sigla)) {
 				existe = true;
@@ -25,7 +24,7 @@ public class Programa {
 		return existe;
 	}
 	
-	private static void optGenerarActivos(Usuario user) {
+	private static void optGenerarActivos(Usuario user,Sistema sistema) {
 			Scanner in = new Scanner(System.in);
 			
 			System.out.printf("[Generar Activos]\n"
@@ -33,17 +32,25 @@ public class Programa {
 			String sigla = in.next();
 			System.out.printf("Introduzca la cantidad de monedas: ");
 			Double cantidad = in.nextDouble();
-			
+			boolean encontro = false;
 			// Actualizar el saldo en todas las monedas
 			if (sigla.equals("*")) {
-				for (Saldo saldo : user.getBilletera().getArregloSaldo()) {
-					saldo.setCantMonedas(cantidad);
+				for (Coin m : sistema.getMonedas()) {
+					encontro = false;
+					for (Saldo s: user.getBilletera().getArregloSaldo())
+						if (s.getSigla().equals(m.getSigla())) {
+							encontro = true;
+						}
+					if (encontro ==  false)
+						user.getBilletera().agregarMoneda(m, cantidad);
+					
+					
 				}
 			// Actualizar unicamente la moneda indicada
 			} else {
 				// Busca si la moneda existe en la base de datos
 				
-				if (!existeMoneda(sigla)) {
+				if (!existeMoneda(sigla,sistema)) {
 					System.out.printf("ERROR::DB::LA_MONEDA_NO_EXISTE\n");
 					return;
 				}
@@ -74,15 +81,15 @@ public class Programa {
 	}
 	private static void optCrearMoneda(Usuario user, Sistema sistema) {
 		Coin auxCoin = sistema.crearMoneda();
-		user.getBilletera().agregarMoneda(auxCoin);
+		//user.getBilletera().agregarMoneda(auxCoin);
 	}
-	
+
 	private static void optSimularCompra(Usuario temp,Sistema sistema)
 	{
 		System.out.println("Ingrese sigla de moneda a comprar: ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
-		boolean existe = existeMoneda(moneda);
+		boolean existe = existeMoneda(moneda,sistema);
 		if(!existe)
 		{
 			System.out.println("La moneda actual no existe, se procede a generarla: ");
@@ -90,7 +97,7 @@ public class Programa {
 		}
 		System.out.println("Ingrese sigla de dinero Fiat a usar (USD/ARS/EUR):");
 		String fiat = in.next();
-		existe = existeMoneda(fiat);
+		existe = existeMoneda(fiat,sistema);
 		
 		if(!existe)
 		{
@@ -115,12 +122,19 @@ public class Programa {
 		final Scanner in = new Scanner(System.in);
 		
         Sistema sistema = new Sistema();
+        System.out.println("[LISTA USUARIOS]");
+        sistema.listarUsuarios();
+        
         Usuario temp = new Usuario(new String("000"),
         						new String("admin"),
         						new String("admin"),
         						new String("Argentina"),
         						new String("taller@gmail.com"));
         
+        System.out.println("Presione [ENTER] para continuar...");
+		try{System.in.read();}
+		catch(Exception e){}
+		
         Integer opt = -1;
         
         
@@ -161,7 +175,7 @@ public class Programa {
 				sistema.listarStock();
 			    break;
 			case 5:
-				optGenerarActivos(temp);
+				optGenerarActivos(temp,sistema);
 			    break;
 			case 6:
 				optListarActivos(temp);
@@ -184,7 +198,10 @@ public class Programa {
 			catch(Exception e){}
 		
         } while (opt != _EXIT);
-
+        
+        //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
+        
+        
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
     }
 }

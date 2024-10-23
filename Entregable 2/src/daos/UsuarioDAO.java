@@ -27,7 +27,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
                     "APELLIDO TEXT NOT NULL," +
                     "PAIS TEXT NOT NULL," +
                     "HABILITADO BOOLEAN NOT NULL," +
-                    "EMAIL TEXT NOT NULL,"+
+                    "EMAIL TEXT NOT NULL"+
                     ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,

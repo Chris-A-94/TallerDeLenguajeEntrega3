@@ -13,16 +13,22 @@ public class Sistema {
 	private List<Usuario> usuarios;
 	//private MonitoreoCoin APIcoins;
 	private CoinDAO cDao;
+	private UsuarioDAO uDao;
 	public Sistema() {
 		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
 		this.monedas = new ArrayList<Coin>();
 		cDao = new CoinDAO(); //se crea la tabla monedas
 		if (monedas.isEmpty())
-		monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
+			monedas.addAll(cDao.devolverTabla()); // traer todos los datos a una linked list
+		
 		//INICIALIZAR ARREGLO DE BLOCKCHAINS
-		this.blockChain = new ArrayList<BlockChain>();
+		//this.blockChain = new ArrayList<BlockChain>();
+		
 		//INICIALIZAR ARREGLO DE USUARIOS
 		this.usuarios = new LinkedList<Usuario>();
+		uDao = new UsuarioDAO();
+		if (usuarios.isEmpty())
+			usuarios.addAll(uDao.devolverTabla());
 	}
 		
 	public Coin crearMoneda() {
@@ -146,11 +152,31 @@ public class Sistema {
 		cDao.remover(sigla);
 		System.out.println("¡Se borró la moneda de la DB!");
 	}
+	/*
+	 * Actualiza la base de datos con la lista modificada durante la ejecución del programa
+	 */
+	public void actualizarUserDB() { 
+		for (Usuario u:usuarios) {
+			uDao.modificar(u);
+		}
+	}
+	public void listarUsuarios() {
+		Collections.sort(usuarios);
+		int i=1;
+		for (Usuario u: usuarios) {
+			System.out.print(i+". ");
+			System.out.println(u.toString());
+			i++;
+		}
+	}
 	public void generarStock() {
 		for(Coin c:monedas)
 		{
 			c.generarStock(); //modifica los valores en la lista.
 			 cDao.modificar(c); //modifica los valores en la base datos.
 		}
+	}
+	public List<Coin> getMonedas(){
+		return monedas;
 	}
 }

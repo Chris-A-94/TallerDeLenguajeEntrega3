@@ -218,7 +218,7 @@ public class Billetera {
 			this.arregloSaldo.add(new Saldo(moneda.getSigla(), 0.0));
 		}
 	}
-	public void agregarMoneda(Coin moneda) {
+	public void agregarMoneda(Coin moneda,  Double cant) {
 		// Si no hay ninguna lista, imprimir error y retornar
 		if (arregloSaldo.equals(null)) {
 			System.out.printf("ERROR::BILLETERA::ARREGLOSALDO_ES_NULL\n");
@@ -226,7 +226,7 @@ public class Billetera {
 		}	
 		
 		// Insertar a la lista la nueva moneda
-		this.arregloSaldo.add(new Saldo(moneda.getSigla(), 0.0));
+		this.arregloSaldo.add(new Saldo(moneda.getSigla(), cant));
 	}
 	
 	public String historialTransacciones()
