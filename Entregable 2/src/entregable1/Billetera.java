@@ -35,7 +35,7 @@ public class Billetera {
 		generarArregloSaldo();
 	}
 	
-	public double cargarSaldoUSD()
+	public double cargarSaldoUSD(String fiat)
 	{
 		//funcion para cargar saldo USD en memoria para comprar monedas
 		//a futuro se podria agregar a la db
@@ -50,23 +50,40 @@ public class Billetera {
 				saldo = in.nextDouble();
 			}
 		}
-		this.balance += saldo;
 		
+		CoinDAO myCoin = new CoinDAO();
+		List<Coin> monedas = new LinkedList<Coin>();
+		monedas.addAll(myCoin.devolverTabla());
+		Coin aux = null;
+		for(Coin moneda: monedas)
+		{
+			if(fiat.equals(moneda.getSigla()))
+				aux = moneda;
+		}
+		
+		
+		Saldo saldoConvertido = new Saldo(aux.getSigla(),saldo,aux.getPrecio(),aux.getNombre());
+		
+		
+		
+		Double conversion = saldoConvertido.ConvertirADolar(saldo);
+		
+		this.balance += conversion;
+		
+			
 		System.out.println("Saldo cargado. Saldo actual: "+this.balance);
 		return this.balance;
 	}
-	public void comprar(String moneda)
+	public void comprar(String moneda,String fiat)
 	{
-		//para arrancar asumo que todas las compras son en USD
-		//Si hay que soportar otras monedas FIAT, hay que consultar donde poner los exchange rates
-		//no quiero enroscarme en eso aun
+		
 		Scanner in = new Scanner(System.in);
 		if( this.balance == 0.0)
 		{
-			System.out.println("Su balance actual es cero. ¿Desea cargar USD? y/n");			
+			System.out.println("Su balance actual es cero. ¿Desea cargar? y/n");			
 			String aux = in.next();
 			if(aux.equals("y") || aux.equals("Y"))
-				cargarSaldoUSD();
+				cargarSaldoUSD(fiat);
 			else
 			{
 				System.out.println("No puede comprar sin saldo.");

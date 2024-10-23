@@ -5,16 +5,27 @@ package entregable1;
  */
 public class Saldo implements Comparable<Saldo>{
 	private int id;
+	private String tipo = "?";
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
-	private String tipo = "?";
+	private Double precio;
+	private String nombre;
 	
-	public Saldo() {
+	public Saldo(String sigla, Double cantMonedas)
+	{
 		super();
+		this.sigla = sigla;
+		this.cantMonedas = cantMonedas;
 	}
-	public Saldo(String sigla2, Double cantidad) {
-		// TODO Auto-generated constructor stub
+	public Saldo(String sigla, Double cantMonedas, Double precio, String nombre)
+	{
+		super();
+		this.sigla = sigla;
+		this.cantMonedas = cantMonedas;
+		this.precio = precio;
+		this.nombre = nombre;
 	}
+
 	public String getSigla() {
 		return sigla;
 	}
@@ -31,11 +42,17 @@ public class Saldo implements Comparable<Saldo>{
 		String aux = (sigla +" "+cantMonedas);
 		return aux;
 	}
-	public Double ConvertirADivisa(Double cantMonedas2) {
+
+	public Double ConvertirADolar(Double fiat) {
 		// Aca se convierte a pesos.
 		
 		return 0.0;
 	}
+	public Double dolarADivisa(Double dolar) {
+		// Aca se convierte a pesos.
+		return null;
+	}
+	
 	
 	@Override
 	public int compareTo(Saldo s) {

@@ -88,8 +88,17 @@ public class Programa {
 			System.out.println("La moneda actual no existe, se procede a generarla: ");
 			optCrearMoneda(temp,sistema);
 		}
+		System.out.println("Ingrese sigla de dinero Fiat a usar (USD/ARS/EUR):");
+		String fiat = in.next();
+		existe = existeMoneda(fiat);
 		
-		temp.getBilletera().comprar(moneda);
+		if(!existe)
+		{
+			System.out.println("La divisa Fiat no esta cargada, se procede a generarla: ");
+			optCrearMoneda(temp,sistema);
+		}
+		
+		temp.getBilletera().comprar(moneda,fiat);
 		
 	}
 	
