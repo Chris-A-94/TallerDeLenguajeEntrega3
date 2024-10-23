@@ -112,7 +112,6 @@ public class Programa {
 		Coin auxCoin = sistema.crearMoneda();
 		user.getBilletera().agregarMoneda(auxCoin);
 	}
-	
 	private static void optSimularCompra(Usuario temp,Sistema sistema)
 	{
 		System.out.println("Ingrese sigla de moneda a comprar: ");
@@ -128,7 +127,6 @@ public class Programa {
 		temp.getBilletera().comprar(moneda);
 		
 	}
-	
 	
 	public static Usuario leerUsuario() {
 		return null;
