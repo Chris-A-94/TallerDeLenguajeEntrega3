@@ -179,6 +179,7 @@ public class Programa {
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
         Sistema sistema = new Sistema();
+      
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
         System.out.print("Ingrese el DNI del usuario que va a usar: ");

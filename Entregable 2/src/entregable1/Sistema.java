@@ -48,10 +48,9 @@ public class Sistema {
 		//this.blockChain = new ArrayList<BlockChain>();
 		
 		//INICIALIZAR ARREGLO DE USUARIOS
+		uDao = new UsuarioDAO(); //se crea la tabla de usuarios.
 		this.usuarios = new LinkedList<Usuario>();
-		uDao = new UsuarioDAO();
-		if (usuarios.isEmpty())
-			usuarios.addAll(uDao.devolverTabla());
+		usuarios.addAll(uDao.devolverTabla());
 	}
 		
 	public Coin crearMoneda() {
@@ -209,6 +208,7 @@ public class Sistema {
 	}
 	public void listarUsuarios() {
 		Collections.sort(usuarios);
+
 		int i=1;
 		for (Usuario u: usuarios) {
 			System.out.print(i+". ");
