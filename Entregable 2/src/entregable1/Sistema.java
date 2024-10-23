@@ -3,6 +3,7 @@ import daos.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +14,24 @@ public class Sistema {
 	private List<Usuario> usuarios;
 	//private MonitoreoCoin APIcoins;
 	private CoinDAO cDao;
+	
+	// Comparators
+	Comparator<Coin> porSigla = new Comparator<Coin>() {
+		public int compare(Coin c1, Coin c2) {
+			return c1.getSigla().compareTo(c2.getSigla());
+		}
+	};
+	Comparator<Coin> porStock = new Comparator<Coin>() {
+		public int compare(Coin c1, Coin c2) {
+			return c1.getStock().compareTo(c2.getStock()) * (-1);
+		}
+	};
+	Comparator<Coin> porValor = new Comparator<Coin>() {
+		public int compare(Coin c1, Coin c2) {
+			return c1.getPrecio().compareTo(c2.getPrecio()) * (-1);
+		}
+	};
+	
 	public Sistema() {
 		
 		this.monedas = new ArrayList<Coin>();
@@ -100,31 +119,64 @@ public class Sistema {
 	
 	public void listarMonedas() {
 		if (monedas.isEmpty()){
-			System.out.println("No hay monedas dentro de la base de datos");
+			System.out.println("No hay monedas dentro de la base de datos\n");
 			return;
 		}
 		
-		Collections.sort(monedas); //ordena las monedas por precio.
-		for (Coin c: monedas)
-		{
-			System.out.println(c.toString());	
-			System.out.println("\n-----\n");
-
+		// Scanner
+		Scanner in = new Scanner(System.in);
+		// Obtener lista de Activos (Saldos)
+		LinkedList<Coin> list = new LinkedList<Coin>();
+		list.addAll(monedas);
+		// Pregunta
+		System.out.printf("Ordenar por\n"
+				+ "SIGLA (1), VALOR (2)\n:");
+		Integer lectura = in.nextInt();
+		while (lectura < 1 || lectura > 2) {
+			System.out.printf("Valor Incorrecto: \n");
+			lectura = in.nextInt();
 		}
-		System.out.println("\u001B[31m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
+		
+		// Ordenar
+		if (lectura.equals(1)) {
+			list.sort(porSigla);
+		} else if (lectura.equals(2)) {
+			list.sort(porValor);
+		}
+		
+		System.out.printf("%s\n", list.toString());
+
+		System.out.println("\u001B[33m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 	}
 	
 
 	public void listarStock() {
 		if (monedas.isEmpty()){
-			System.out.println("No hay monedas dentro de la base de datos");
+			System.out.println("No hay monedas dentro de la base de datos\n");
 			return;
 		}
-		monedas.sort(new doubleComparator());
-		for (Coin c : monedas)
-		{
-			System.out.println(c.getNombre()+": "+c.getStock());
+		// Scanner
+		Scanner in = new Scanner(System.in);
+		// Obtener lista de Activos (Saldos)
+		LinkedList<Coin> list = new LinkedList<Coin>();
+		list.addAll(monedas);
+		// Pregunta
+		System.out.printf("Ordenar por\n"
+				+ "SIGLA (1), CANTIDAD (2)\n:");
+		Integer lectura = in.nextInt();
+		while (lectura < 1 || lectura > 2) {
+			System.out.printf("Valor Incorrecto: \n");
+			lectura = in.nextInt();
 		}
+		
+		// Ordenar
+		if (lectura.equals(1)) {
+			list.sort(porSigla);
+		} else if (lectura.equals(2)) {
+			list.sort(porStock);
+		}
+		
+		System.out.printf("%s\n", list.toString());
 	}
 	public void removerMoneda() { //remueve moneda de la lista y la base de datos...
 		String sigla;

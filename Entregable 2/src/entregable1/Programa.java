@@ -92,16 +92,16 @@ public class Programa {
 				+ "SIGLA (1), CANTIDAD (2)\n:");
 		Integer lectura = in.nextInt();
 		
+		while (lectura < 1 || lectura > 2) {
+			System.out.printf("Valor Incorrecto: \n");
+			lectura = in.nextInt();
+		}
+		
 		// Ordenar
 		if (lectura.equals(1)) {
 			list.sort(porSigla);
 		} else if (lectura.equals(2)) {
 			list.sort(porCantidad);
-		} else {
-			while (lectura < 1 || lectura > 2) {
-				System.out.printf("Valor Incorrecto: \n");
-				lectura = in.nextInt();
-			}
 		}
 		
 		// Listar los Activos
