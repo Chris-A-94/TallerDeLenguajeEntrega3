@@ -22,13 +22,13 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		try {
 			//Se crea una tabla si no existe ya en el archivo...
 			String query = "CREATE TABLE IF NOT EXISTS ACTIVOS (" +
-					"ID int PRIMARY KEY AUTO_INCREMENT" +
+					"ID INT AUTO_INCREMENT PRIMARY KEY," +
                     "SIGLA TEXT NOT NULL," +
 					"NOMBRE TEXT NOT NULL,"+
                     "CANTIDAD DOUBLE,"+
                     "TIPO TEXT NOT NULL,"+
-                    "USER_ID int NOT NULL,"+
-                    "FOREING KEY ('USER_ID') REFERENCES 'USUARIOS' ('DNI')"+
+                    "USER_ID INT NOT NULL,"+
+                    "FOREIGN KEY ('USER_ID') REFERENCES 'USUARIOS' ('DNI')"+
                     ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
@@ -50,7 +50,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 	@Override
 	public void modificar(Saldo saldo) { //SOLO MODIFICA LA CANTIDAD DE MONEDAS
 		try {
-			String query = ("UPDATE SALDOS SET CANTIDAD = ? WHERE ID = '"+saldo.getID()+"';");
+			String query = ("UPDATE ACTIVOS SET CANTIDAD = ? WHERE ID = '"+saldo.getID()+"';");
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setDouble(1,saldo.getCantMonedas());  
 			pstmt.executeUpdate();
@@ -93,7 +93,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		List<Saldo> saldos = new LinkedList<Saldo>();
 		try {
 			Statement sent = con.createStatement();	
-			ResultSet resul = sent.executeQuery("SELECT * FROM SALDOS");
+			ResultSet resul = sent.executeQuery("SELECT * FROM ACTIVOS");
 			 
 			// Si entra al while obtuvo al menos una fila
 			while (resul.next()){

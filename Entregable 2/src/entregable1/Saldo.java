@@ -9,20 +9,16 @@ public class Saldo implements Comparable<Saldo>{
 	private String tipo = "?";
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
-
-	
 	public Saldo(String sigla, Double cantMonedas)
 	{
 		super();
 		this.sigla = sigla;
 		this.cantMonedas = cantMonedas;
 	}
-
 	public Saldo()
 	{
 		
 	}
-
 	public Saldo(int id, String user_id, String tipo, String sigla, Double cantMonedas) {
 		super();
 		this.id = id;

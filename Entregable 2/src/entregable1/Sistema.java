@@ -12,10 +12,11 @@ public class Sistema {
 	private List<Coin> monedas;
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
+	private List<Saldo> saldosUsuarios;
 	//private MonitoreoCoin APIcoins;
 	private CoinDAO cDao;
 	private UsuarioDAO uDao;
-	
+	private ActivosDAO aDao;
 	// Comparators
 	Comparator<Coin> porSigla = new Comparator<Coin>() {
 		public int compare(Coin c1, Coin c2) {
@@ -29,9 +30,13 @@ public class Sistema {
 	};
 	Comparator<Coin> porValor = new Comparator<Coin>() {
 		public int compare(Coin c1, Coin c2) {
+			
 			return c1.getPrecio().compareTo(c2.getPrecio()) * (-1);
 		}
 	};
+	/*
+	 * Constructor de sistema, inicializa un arreglo de monedas, de usuarios y de activos.
+	 */
 	public Sistema() {
 		
 		//INICIALIZAR ARREGLO DE MONEDAS CON LA BASE
@@ -42,7 +47,7 @@ public class Sistema {
 			monedas.addAll(cDao.devolverTabla());
 			// traer todos los datos a una linked list
 		}
-			
+		
 		
 		//INICIALIZAR ARREGLO DE BLOCKCHAINS
 		//this.blockChain = new ArrayList<BlockChain>();
@@ -50,7 +55,11 @@ public class Sistema {
 		//INICIALIZAR ARREGLO DE USUARIOS
 		uDao = new UsuarioDAO(); //se crea la tabla de usuarios.
 		this.usuarios = new LinkedList<Usuario>();
-		usuarios.addAll(uDao.devolverTabla());
+		this.usuarios.addAll(uDao.devolverTabla());
+		//INICIALIZAR ARREGLO DE ACTIVOS (O SALDOS)
+		aDao = new ActivosDAO();
+		this.saldosUsuarios = new LinkedList<Saldo>();
+		this.saldosUsuarios.addAll(aDao.devolverTabla());
 	}
 		
 	public Coin crearMoneda() {
@@ -78,8 +87,9 @@ public class Sistema {
 	}
 	
 	
-	
-	//Método privado que devuelve una instancia de cripto inicializada con valores ingresados en teclado...
+	/*
+	 * Método privado que devuelve una instancia de cripto inicializada con valores ingresados en teclado...
+	 */
 	private Coin leerMoneda()
 	{
 		Scanner in = new Scanner(System.in);
@@ -118,8 +128,7 @@ public class Sistema {
 	        i = in.nextInt();
 	    }
 	    if (i == 0)
-		{
-			
+		{	
 			return null;
 		}
 	    
@@ -132,7 +141,6 @@ public class Sistema {
 			System.out.println("No hay monedas dentro de la base de datos\n");
 			return;
 		}
-		
 		// Scanner
 		Scanner in = new Scanner(System.in);
 		// Obtener lista de Activos (Saldos)
@@ -154,12 +162,13 @@ public class Sistema {
 			list.sort(porValor);
 		}
 		
-		System.out.printf("%s\n", list.toString());
-
+		// Imprimir
+		for (Coin c: list) {
+			System.out.println(c.toString());
+			System.out.println("------");
+		}
 		System.out.println("\u001B[33m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 	}
-	
-
 	public void listarStock() {
 		if (monedas.isEmpty()){
 			System.out.println("No hay monedas dentro de la base de datos\n");
@@ -178,17 +187,17 @@ public class Sistema {
 			System.out.printf("Valor Incorrecto: \n");
 			lectura = in.nextInt();
 		}
-		
 		// Ordenar
 		if (lectura.equals(1)) {
 			list.sort(porSigla);
 		} else if (lectura.equals(2)) {
-			list.sort(porStock);
+			list.sort(porValor);
+		}
+		for (Coin c : monedas) {
+			System.out.printf("%s: \t %f\n", c.getSigla(),c.getStock());
 		}
 		
-		System.out.printf("%s\n", list.toString());
 	}
-
 	/*
 	 * Actualiza la base de datos con la lista modificada durante la ejecución del programa
 	 */
@@ -199,7 +208,6 @@ public class Sistema {
 	}
 	/*
 	 * Actualiza la base de datos de monedas
-	 * 
 	 */
 	public void actualizarCoinDB() {
 		for (Coin c:monedas) {
@@ -218,16 +226,25 @@ public class Sistema {
 	}
 	public Usuario getUsuario(String DNI) { //Busca un usuario en la base mediante su DNI.
 		for (Usuario u : usuarios) {
-			if (u.getDNI().equals(DNI))
+			if (u.getDNI().equals(DNI)) {
+				for (Saldo s: this.saldosUsuarios) {
+					if (s.getUser_id() == u.getDNI())
+						u.getBilletera().agregarSaldo(s);
+				}
 				return u;
+			}	
 		}
 		return null;
 	}
 	public void generarStock() {
+		boolean aux=false;
 		for(Coin c:monedas)
 		{
-			c.generarStock(); //modifica los valores en la lista.
+			if (c.generarStock() == true) //modifica los valores en la lista.
+				aux = true;
 		}
+		if (aux == false)
+			System.out.println("¿Has entrado a esta opción para no cambiar nada?");
 	}
 	public List<Coin> getMonedas(){
 		return monedas;

@@ -21,13 +21,10 @@ public class Programa {
 				break;
 			}
 		}
-		
 		return existe;
 	}
-	
 	private static void optGenerarActivos(Usuario user,Sistema sistema) {
 			Scanner in = new Scanner(System.in);
-			
 			System.out.printf("[Generar Activos]\n"
 					+ "Introduzca las siglas de la moneda (* para seleccionar todas): ");
 			String sigla = in.next();
@@ -44,8 +41,6 @@ public class Programa {
 						}
 					if (encontro ==  false)
 						user.getBilletera().agregarMoneda(m, cantidad);
-					
-					
 				}
 			// Actualizar unicamente la moneda indicada
 			} else {
@@ -62,7 +57,6 @@ public class Programa {
 						return;
 					}
 				}
-				
 				// Si existe en la base de datos y no fue encontrada dentro de arregloSaldo[]...
 				// Agrega la moneda al arregloSaldo[]
 				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en la base de datos
