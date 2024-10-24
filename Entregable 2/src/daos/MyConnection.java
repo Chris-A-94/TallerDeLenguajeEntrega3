@@ -7,7 +7,7 @@ public class MyConnection {
 	
 	static {
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:./src/BASE_ENTREGABLE.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:myDB.db");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
