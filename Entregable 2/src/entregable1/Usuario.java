@@ -1,5 +1,5 @@
 package entregable1;
-
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -9,17 +9,14 @@ public class Usuario implements Comparable<Usuario> {
 	private String nombre;
 	private String apellido;
 	private String pais;
-	private Fecha fecha;
+	private Date fechaNac;
 	private Billetera billetera;
 	private boolean habilitado;
 	private Seguridad seguridad;
 	private AltaBaja historialBajas;
 	private String DNI;
 	private String email;
-	public Usuario()
-	{
-		
-	}
+	
 	public Usuario(String DNI,String nombre, String apellido, String pais, String email) {
 		super();
 		
@@ -55,8 +52,8 @@ public class Usuario implements Comparable<Usuario> {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	public String getFecha() {
-		return fecha.toString();
+	public String getfechaNac() {
+		return fechaNac.toString();
 	}
 	public String getSeguridad() {
 		return seguridad.toString();
@@ -67,8 +64,8 @@ public class Usuario implements Comparable<Usuario> {
 	public String getHistorialBajas() {
 		return historialBajas.toString();
 	}
-	public void setFecha(Fecha fecha) {
-		this.fecha = fecha;
+	public void setfechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
 	}
 	public Billetera getBilletera() {
 		return billetera;

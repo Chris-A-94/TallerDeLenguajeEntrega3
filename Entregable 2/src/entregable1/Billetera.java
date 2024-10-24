@@ -13,6 +13,7 @@ import daos.CoinDAO;
 public class Billetera {
 	/*
 	 *  ¿Qué sucede si se agrega una nueva moneda a la base de datos?
+	 *  respuesta: nada.
 	 */
 	
 	private Double balance;
@@ -291,5 +292,7 @@ public class Billetera {
 	public List<Saldo> getArregloSaldo() {
 		return this.arregloSaldo;
 	}
-	
+	public void agregarSaldo(Saldo s) { //Acá habría que verificar que el saldo que se agrega corresponde a una moneda en la base de datos
+		this.arregloSaldo.add(s);	
+	}
 }

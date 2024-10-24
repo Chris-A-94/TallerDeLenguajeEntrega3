@@ -59,7 +59,7 @@ public class Coin implements Comparable<Coin>{
 	public void setStock(Double stock) {
 		this.stock = stock;
 	}
-	public void generarStock()
+	public boolean generarStock()
 	{
 		if (this.stock != 0)
 		{
@@ -68,7 +68,7 @@ public class Coin implements Comparable<Coin>{
 			System.out.printf("El stock de ["+ this.nombre+"] tiene ya un valor asignado "+this.stock+"\n¿Desea cambiarlo? (y) SI | (n) NO\n");
 			resp = in.next();
 			if (!resp.equals("y"))
-				return;
+				return false;
 			
 		}
 		Random stock = new Random();
@@ -76,7 +76,7 @@ public class Coin implements Comparable<Coin>{
 		Double maximo = 9000.0;
 		//se cambia el stock que ya estaba.
 		this.stock = minimo + (maximo - minimo) * stock.nextDouble();
-		
+		return true;
 	}
 	public String toString() {
 		return ("Nombre: "+this.nombre+" \nSigla: "+ this.sigla+ "\nTipo: "+this.tipo +"\nPrecio (USD): "+this.precio+ "\nStock: "+this.stock);
@@ -86,8 +86,4 @@ public class Coin implements Comparable<Coin>{
 	public int compareTo(Coin c) { //COMPARA MONEDAS POR PRECIO...
 		return (int) (c.getPrecio()-this.getPrecio());
 	}
-	
-	
-
-	
 }
