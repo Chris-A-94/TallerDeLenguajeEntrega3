@@ -9,20 +9,7 @@ import daos.CoinDAO;
 
 
 public class Programa {
-	private static boolean existeMoneda(String sigla,Sistema sistema) {
-		boolean existe = false;
-		
-		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll(sistema.getMonedas());
-		System.out.println(monedas.toString());
-		for (Coin coin : monedas) {
-			if (coin.getSigla().equals(sigla)) {
-				existe = true;
-				break;
-			}
-		}
-		return existe;
-	}
+	
 	private static void optGenerarActivos(Usuario user,Sistema sistema) {
 			Scanner in = new Scanner(System.in);
 			System.out.printf("[Generar Activos]\n"
@@ -46,7 +33,7 @@ public class Programa {
 			} else {
 				// Busca si la moneda existe en la base de datos
 				
-				if (!existeMoneda(sigla,sistema)) {
+				if (!sistema.existeMoneda(sigla)) {
 					System.out.printf("ERROR::DB::LA_MONEDA_NO_EXISTE\n");
 					return;
 				}
@@ -119,7 +106,7 @@ public class Programa {
 		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
-		boolean existe = existeMoneda(moneda,sistema);
+		boolean existe = sistema.existeMoneda(moneda);
 		if(!existe)
 		{
 			System.out.println("La moneda actual no existe, se procede a generarla: ");
@@ -127,7 +114,7 @@ public class Programa {
 		}
 		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
 		String fiat = in.next();
-		existe = existeMoneda(fiat,sistema);
+		existe = sistema.existeMoneda(fiat);
 		
 		if(!existe)
 		{
@@ -235,7 +222,7 @@ public class Programa {
 			    break;
 			case 7:
 				optSimularCompra(temp,sistema);
-			    break;
+				break;
 			case 8:
 			    break;
 			case _EXIT:
