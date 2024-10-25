@@ -37,22 +37,16 @@ public class Billetera {
 
 	public void comprar(String moneda,String fiat)
 	{
-		
-		Scanner in = new Scanner(System.in);
-		System.out.println("¿Cuanto desea comprar?");
-		Double saldoEmitido = in.nextDouble();		
-		
-		Saldo enDivisa = new Saldo();
-		int posSaldo = -1;
+		//Se obtiene el Saldo de la divisa fiat ingresda
+		Scanner in = new Scanner(System.in);				
+		Saldo enDivisa = new Saldo();		
 		for(Saldo auxSaldo: this.arregloSaldo)
 		{
 			if(fiat.equals(auxSaldo.getSigla()))
-			{
-				enDivisa = auxSaldo;
-			}
-			posSaldo++;	
+				enDivisa = auxSaldo;				
 		}
 		
+		//Si el saldo es cero, se ofrecen opciones de cargar saldo
 		if(enDivisa.getCantMonedas() == 0)
 		{
 			System.out.println("No tiene saldo en la divisa "+enDivisa.getSigla()+" ¿Desea cargar? Y/N");
@@ -69,6 +63,10 @@ public class Billetera {
 				return;
 			}
 		}
+		//Se pide cuanto del saldo se usara en la operacion
+		System.out.println("Su saldo en "+fiat+" es de: "+enDivisa.getCantMonedas()+".\n ¿Cuanto desea usar?");
+		Double saldoEmitido = in.nextDouble();	
+		//Si el saldo a gastar es mayor que el que se tiene, se ofrece gastar menos o cargar mas
 		if(enDivisa.getCantMonedas() < saldoEmitido)
 		{
 			System.out.println("Su saldo actual en "+fiat+" es de "+enDivisa.getCantMonedas()+
@@ -104,6 +102,7 @@ public class Billetera {
 				return;
 			}
 		}
+			//obtengo monedas de la base de datos para poder modificarlas y reenviarlas
 			CoinDAO monedasDB = new CoinDAO();
 			LinkedList<Coin> monedasMem = new LinkedList<Coin>();
 			monedasMem.addAll(monedasDB.devolverTabla());
@@ -116,13 +115,13 @@ public class Billetera {
 				if(moneda.equals(monedaAux.getSigla()))
 					auxMoneda = monedaAux;
 			}
-			
-			double precio = auxFiat.getPrecio() / auxMoneda.getPrecio();
+			//precio de la criptomoneda expresada en el fiat ingresado
+			double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
 			
 			System.out.println("La moneda "+moneda+" vale "+precio+" "+fiat+".\n¿Desea proceder? y/n");
 			String carga = in.next();
 			if(carga.equals("y") || carga.equals("Y"))
-				//DANGER
+				//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
 			{
 				
 				double enDolares = auxFiat.getPrecio() * saldoEmitido;
@@ -157,10 +156,9 @@ public class Billetera {
 				}
 				double saldoFinalCoin = 0.0;
 				double saldoFinalFiat = 0.0;
-				//this.generarArregloSaldo(); //conceptualmente mal, pero no carga los valores del foreach sino
 				for(Saldo saldos: this.arregloSaldo)
 				{ 
-					//aca agrego las monedas compradas al arreglo saldo de la billetera
+					//Se agregan las monedas fiats de la compra, y se restan las vendidas al usuario en la memoria dinamica
 					if(saldos.getSigla().equals(moneda))
 					{
 						saldoFinalCoin = saldos.getCantMonedas() + monedasAComprar;
@@ -168,12 +166,13 @@ public class Billetera {
 					}
 					if(saldos.getSigla().equals(fiat))
 					{
-						saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;
+						//saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;
+						saldoFinalFiat = saldoEmitido;
 						saldos.setCantMonedas(saldoFinalFiat);
 					}
 						
 				}
-				//modifico stock de coins en la DB
+				//mismo calculo de arriba pero para la database
 				auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
 				auxFiat.setStock(saldoFinalFiat);
 				monedasDB.modificar(auxMoneda);
@@ -185,7 +184,7 @@ public class Billetera {
 				//FALTA DESCRIBIR LA TRANSACCION EN LA BASE DE DATOS
 				
 			}
-			//DANGER
+			
 			else
 			{
 				System.out.println("Operacion cancelada.");
