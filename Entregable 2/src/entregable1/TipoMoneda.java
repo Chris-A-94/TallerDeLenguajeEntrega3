@@ -14,4 +14,14 @@ public enum TipoMoneda {
 	public String toString() {
 		return this.name;
 	}
+	
+	public static TipoMoneda fromString(String text) {
+		for (TipoMoneda tipoMoneda : TipoMoneda.values()) {
+			if (tipoMoneda.toString().equalsIgnoreCase(text)) {
+				return tipoMoneda;
+			}
+		}
+		
+		return null;
+	}
 }
