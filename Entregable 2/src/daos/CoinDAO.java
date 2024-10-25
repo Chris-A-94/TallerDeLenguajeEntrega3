@@ -10,16 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import entregable1.Coin;
+import entregable1.TipoMoneda;
 
 public class CoinDAO implements DaoInterface<Coin>{
 	private Connection con = null;
 	public CoinDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
-		this.guardar(new Coin("Bitcoin","BTC","Criptomoneda",66362.79));
-		this.guardar(new Coin("Ethereum","ETH","Criptomoneda",2504.57));
-		this.guardar(new Coin("Pesos Argentinos","ARS","Fiat",0.0010));
-		this.guardar(new Coin("Dolar","USD","Fiat",1.0));
+		this.guardar(new Coin("Bitcoin","BTC",TipoMoneda.CRIPTOMONEDA,66362.79));
+		this.guardar(new Coin("Ethereum","ETH",TipoMoneda.CRIPTOMONEDA,2504.57));
+		this.guardar(new Coin("Pesos Argentinos","ARS",TipoMoneda.FIAT,0.0010));
+		this.guardar(new Coin("Dolar","USD",TipoMoneda.FIAT,1.0));
 	}
 	public void crearTabla() { //crea la base de datos si no existe ya.
 		try {
@@ -69,7 +70,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 			    pstmt.setString(1,c.getSigla());
 			    pstmt.setString(2,c.getNombre());
 			    pstmt.setDouble(3,c.getPrecio());  
-			    pstmt.setString(4,c.getTipo());
+			    pstmt.setString(4,c.getTipo().toString());
 			    pstmt.setDouble(5,c.getStock());
 			    pstmt.executeUpdate();
 			    pstmt.close();
@@ -88,7 +89,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 		    pstmt.setString(1,auxCoin.getSigla());
 		    pstmt.setString(2,auxCoin.getNombre());
 		    pstmt.setDouble(3,auxCoin.getPrecio());  
-		    pstmt.setString(4,auxCoin.getTipo());
+		    pstmt.setString(4,auxCoin.getTipo().toString());
 		    pstmt.setDouble(5,auxCoin.getStock());
 		    
 		    pstmt.executeUpdate();
@@ -119,7 +120,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 			 
 			// Si entra al while obtuvo al menos una fila
 			while (resul.next()){
-			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), resul.getString("TIPO"),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
+			auxCoin = new Coin(resul.getString("NOMBRE"),resul.getString("SIGLA"), TipoMoneda.fromString(resul.getString("TIPO")),resul.getDouble("PRECIO_DOLAR"),resul.getDouble("STOCK"));
 			if (auxCoin != null)
 				monedas.add(auxCoin);
 		}

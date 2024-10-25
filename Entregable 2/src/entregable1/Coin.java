@@ -1,5 +1,4 @@
 package entregable1;
-import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,11 +7,11 @@ import java.util.Scanner;
  */
 public class Coin implements Comparable<Coin>{
 	private String nombre;
-	private String tipo;
+	private TipoMoneda tipo;
 	private String sigla;
 	private Double precio;
 	private Double stock = 0.0;
-	public Coin(String nombre, String sigla, String tipo,Double precio) {
+	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio) {
 
 		this.nombre = nombre;
 		this.sigla = sigla;
@@ -20,7 +19,7 @@ public class Coin implements Comparable<Coin>{
 		this.tipo = tipo;
 		this.generarStock();
 	}
-	public Coin(String nombre, String sigla, String tipo,Double precio,Double stock) {
+	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio,Double stock) {
 		this.nombre = nombre;
 		this.sigla = sigla;
 		this.precio = precio;
@@ -29,10 +28,10 @@ public class Coin implements Comparable<Coin>{
 	}
 
 	
-	public String getTipo() {
+	public TipoMoneda getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(TipoMoneda tipo) {
 		this.tipo = tipo;
 	}
 	public String getNombre() {

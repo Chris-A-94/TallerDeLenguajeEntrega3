@@ -33,9 +33,7 @@ public class Billetera {
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
 		arregloSaldo = new LinkedList<Saldo>();
-	}	
-
-	
+	}
 
 	public void comprar(String moneda,String fiat)
 	{
