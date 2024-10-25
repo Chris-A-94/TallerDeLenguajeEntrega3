@@ -11,6 +11,14 @@ public enum TipoMoneda {
 		name = s;
 	}
 	
+	public boolean equals(String text) {
+		if (name.equalsIgnoreCase(text)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public String toString() {
 		return this.name;
 	}
@@ -24,4 +32,6 @@ public enum TipoMoneda {
 		
 		return null;
 	}
+	
+	
 }
