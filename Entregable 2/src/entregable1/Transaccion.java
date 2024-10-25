@@ -6,9 +6,9 @@ import java.time.*;
  */
 public class Transaccion {
 	private Fecha fecha;
-	private String tipo;
+	private TipoTransaccion tipo;
 	private Double monto;
-	public Transaccion(String tipo, Double monto,int dia,int mes,int year) {
+	public Transaccion(TipoTransaccion tipo, Double monto,int dia,int mes,int year) {
 		//super(); no se porque estaba esto aca
 		this.fecha = new Fecha(dia,mes,year);
 		this.tipo = tipo;
@@ -24,10 +24,10 @@ public class Transaccion {
 	public void setFecha(int dia,int mes,int year) {
 		this.fecha = new Fecha(dia,mes,year);
 	}
-	public String getTipo() {
+	public TipoTransaccion getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(TipoTransaccion tipo) {
 		this.tipo = tipo;
 	}
 	public Double getMonto() {
