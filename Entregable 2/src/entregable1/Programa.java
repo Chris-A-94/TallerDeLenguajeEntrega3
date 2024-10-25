@@ -9,12 +9,9 @@ import daos.CoinDAO;
 
 
 public class Programa {
-	private static boolean existeMoneda(String sigla,Sistema sistema) {
+	private static boolean existeMoneda(String sigla, List<Coin> monedas) {
 		boolean existe = false;
 		
-		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll(sistema.getMonedas());
-		System.out.println(monedas.toString());
 		for (Coin coin : monedas) {
 			if (coin.getSigla().equals(sigla)) {
 				existe = true;
@@ -51,7 +48,7 @@ public class Programa {
 			} else {
 				// Busca si la moneda existe en la base de datos
 				
-				if (!existeMoneda(sigla,sistema)) {
+				if (!existeMoneda(sigla, sistema.getMonedas())) {
 					System.out.printf("ERROR::DB::LA_MONEDA_NO_EXISTE\n");
 					return;
 				}
@@ -65,10 +62,10 @@ public class Programa {
 				
 				// Si existe en la base de datos y no fue encontrada dentro de arregloSaldo[]...
 				// Agrega la moneda al arregloSaldo[]
-				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en la base de datos
-				// y que no se encuentre instanciada un 'saldo' dentro de la billetera del usuario, para quitarle responsabilidad 
-				// a '.optCrearMoneda()', se agrega un paso extra con el fin de evitar un posible error en el futuro.
 				user.getBilletera().getArregloSaldo().add(new Saldo(sigla, cantidad));
+				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en el Sistema y
+				// que no se encuentre instanciada un 'saldo' dentro de la billetera del usuario se agrega un paso extra con
+				// el fin de evitar un error a futuro.
 			}
 	}
 	private static void optListarActivos(Usuario user) {
@@ -97,11 +94,11 @@ public class Programa {
 		
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), CANTIDAD (2)\n:");
+				+ "SIGLA (1), CANTIDAD (2)\n: ");
 		Integer lectura = in.nextInt();
 		
 		while (lectura < 1 || lectura > 2) {
-			System.out.printf("Valor Incorrecto: \n");
+			System.out.printf("Valor Incorrecto\n: ");
 			lectura = in.nextInt();
 		}
 		
@@ -116,53 +113,91 @@ public class Programa {
 		System.out.printf("[Listar Activos]\n"
 				+ "%s\n", list.toString());
 	}
-	private static void optCrearMoneda(Usuario user, Sistema sistema) {
+	private static void optCrearMoneda(Sistema sistema) {
 		Coin auxCoin = sistema.crearMoneda();
-		//user.getBilletera().agregarMoneda(auxCoin);
 	}
-	private static void optSimularCompra(Usuario temp,Sistema sistema)
+	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
-		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
-		Scanner in = new Scanner(System.in);
-		String moneda = in.next();
-		boolean existe = existeMoneda(moneda,sistema);
-		if(!existe)
-		{
-			System.out.println("La moneda actual no existe, se procede a generarla: ");
-			optCrearMoneda(temp,sistema);
-		}
-		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
-		String fiat = in.next();
-		existe = existeMoneda(fiat,sistema);
+		// Monedas
+		LinkedList<Coin> monedasCripto = new LinkedList<Coin>();
+		LinkedList<Coin> monedasFiat = new LinkedList<Coin>();
 		
-		if(!existe)
-		{
-			System.out.println("La divisa Fiat no esta cargada, se procede a generarla: ");
-			optCrearMoneda(temp,sistema);
+		sistema.getMonedas().forEach((coin) -> {
+			if (coin.getTipo().equals("Criptomoneda")) { 								// Reemplazar el tipo con un Enum
+				monedasCripto.add(coin);
+			} else if (coin.getTipo().equals("Fiat")) {									// Idem
+				monedasFiat.add(coin);
+			}
+		});
+		
+		// Scanner
+		Scanner in = new Scanner(System.in);
+		
+		// Se listan todas las criptomonedas
+		System.out.println("Ingrese sigla de crypto a comprar");
+		System.out.printf("( ");
+		for (Coin coin : monedasCripto) {
+			System.out.printf("%s ", coin.getSigla());
 		}
+		System.out.printf(")\n: ");
+		// Lectura de la Criptomoneda
+		String siglaMoneda = in.next();
+		
+		if(!existeMoneda(siglaMoneda,monedasCripto))
+		{
+			System.out.println("La moneda actual no existe, se procede a generarla.");
+			optCrearMoneda(sistema);
+		}
+		
+		// Se listan todas las monedas fiat
+		System.out.println("Ingrese sigla de Fiat a usar");
+		System.out.printf("( ");
+		for (Coin coin : monedasFiat) {
+			System.out.printf("%s ", coin.getSigla());
+		}
+		System.out.printf(")\n: ");
+		
+		// Lectura de la Moneda Fiat
+		String siglaFiat = in.next();
+		
+		while (!existeMoneda(siglaFiat,monedasFiat)) {
+			System.out.printf("La sigla no existe\n: ");
+			siglaFiat = in.next();
+		}
+		
+//		if(!existeMoneda(siglaFiat,sistema))
+//		{
+//			System.out.println("La divisa Fiat no esta cargada, se procede a generarla.");
+//			optCrearMoneda(sistema);
+//			
+//			Nota: Por ahora queda comentado ya que el enunciado no solicita que se cree una Moneda Fiat si no existe.
+//		}
 		
 		//esto es para chequear el tipo, hasta que se me ocurra algo mas conveniente.
-		CoinDAO monedasDB = new CoinDAO();
-		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-		monedasMem.addAll(monedasDB.devolverTabla());
-		Coin auxFiat = null;
-		Coin auxMoneda = null;
-		for(Coin monedaAux: monedasMem)
-		{
-			if(fiat.equals(monedaAux.getSigla()))
-				auxFiat = monedaAux;
-			if(moneda.equals(monedaAux.getSigla()))
-				auxMoneda = monedaAux;
-		}
+//		CoinDAO monedasDB = new CoinDAO();
+//		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
+//		monedasMem.addAll(monedasDB.devolverTabla());
+//		Coin auxFiat = null;
+//		Coin auxMoneda = null;
+//		for(Coin monedaAux: monedasMem)
+//		{
+//			if(siglaFiat.equals(monedaAux.getSigla()))
+//				auxFiat = monedaAux;
+//			if(siglaMoneda.equals(monedaAux.getSigla()))
+//				auxMoneda = monedaAux;
+//		}
+//		
+//		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
+//		{
+//			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
+//			return;
+//		}
+//		Nota: Para las consultas de las monedas presentes en el Sistema, se debe intentar reducir los accesos 
+//		a la Base de Datos y en su lugar, usar el arreglo 'arregloSaldo[]' de 'Sistema'.
+//		Se presenta otra solución al problema, la cual es crear un arreglo por cada tipo de moneda (Cripto o Fiat)
+//		y consultar la presencia de la moneda en estos arreglos.
 		
-		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
-		{
-			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
-			return;
-		}
-		
-		temp.getBilletera().comprar(moneda,fiat);
-		
+		temp.getBilletera().comprar(siglaMoneda,siglaFiat);	
 	}
 	
 	public static Usuario leerUsuario() {
@@ -221,7 +256,7 @@ public class Programa {
 			     * para este entregable solo actualizaremos el usuario 'temp'
 			     */
 
-			    optCrearMoneda(temp, sistema);
+			    optCrearMoneda(sistema);
 
 			    break;
 			case 2:
