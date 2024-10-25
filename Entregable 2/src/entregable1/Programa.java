@@ -111,6 +111,7 @@ public class Programa {
 		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
+		moneda = moneda.toUpperCase();
 		boolean existe = sistema.existeMoneda(moneda);
 		if(!existe)
 		{
@@ -119,6 +120,7 @@ public class Programa {
 		}
 		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
 		String fiat = in.next();
+		fiat = fiat.toUpperCase();
 		existe = sistema.existeMoneda(fiat);
 		
 		if(!existe)
