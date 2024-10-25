@@ -240,7 +240,7 @@ public class Sistema {
 		boolean aux=false;
 		for(Coin c:monedas)
 		{
-			if (c.generarStock() == true) //modifica los valores en la lista.
+			if (c.generarStock()) //modifica los valores en la lista.
 				aux = true;
 		}
 		if (aux == false)

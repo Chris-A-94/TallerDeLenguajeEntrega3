@@ -1,5 +1,7 @@
 package daos;
+
 import java.sql.*;
+
 public class MyConnection {
 	private static Connection conn = null;
 	
@@ -10,12 +12,15 @@ public class MyConnection {
 			e.printStackTrace();
 		}
 	}
+	
 	public static Connection getCon() {
 		return conn;
 	}
-	private MyConnection() {		
-			
+	
+	private MyConnection() {
+		
 	}
+	
 	public void close() {
 		if (conn == null) {
 			System.out.printf("Ya está cerrado!.\n");
