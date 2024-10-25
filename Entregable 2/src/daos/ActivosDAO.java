@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import entregable1.Saldo;
+import entregable1.TipoMoneda;
 import entregable1.Usuario;
 
 public class ActivosDAO implements DaoInterface<Saldo>{
@@ -71,7 +72,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    pstmt.setString(1,saldo.getSigla());
 		    pstmt.setString(4,saldo.getUser_id());
-		    pstmt.setString(3,saldo.getTipo());  
+		    pstmt.setString(3,saldo.getTipo().toString());  
 		    pstmt.setDouble(2,saldo.getCantMonedas());
 		    pstmt.executeUpdate();
 		    pstmt.close();
@@ -97,7 +98,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			 
 			// Si entra al while obtuvo al menos una fila
 			while (resul.next()){
-			auxSaldo = new Saldo(resul.getInt("ID"),resul.getString("USER_ID"),resul.getString("TIPO"),resul.getString("SIGLA"),resul.getDouble("CANTIDAD"));
+			auxSaldo = new Saldo(resul.getInt("ID"),resul.getString("USER_ID"),TipoMoneda.fromString(resul.getString("TIPO")),resul.getString("SIGLA"),resul.getDouble("CANTIDAD"));
 			if (auxSaldo != null)
 			{
 				

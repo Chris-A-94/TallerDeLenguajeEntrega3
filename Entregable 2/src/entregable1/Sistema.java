@@ -123,7 +123,7 @@ public class Sistema {
 			return null;
 		}
 	    
-	    return new Coin(nombre,sigla,tipo,price);
+	    return new Coin(nombre,sigla,TipoMoneda.fromString(tipo),price);
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...
 	

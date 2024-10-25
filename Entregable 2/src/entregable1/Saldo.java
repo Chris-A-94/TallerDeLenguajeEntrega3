@@ -6,7 +6,7 @@ package entregable1;
 public class Saldo implements Comparable<Saldo>{
 	private int id;
 	private String user_id;
-	private String tipo = "?";
+	private TipoMoneda tipo = TipoMoneda.UNDEFINED;
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
 
@@ -23,7 +23,7 @@ public class Saldo implements Comparable<Saldo>{
 		
 	}
 
-	public Saldo(int id, String user_id, String tipo, String sigla, Double cantMonedas) {
+	public Saldo(int id, String user_id, TipoMoneda tipo, String sigla, Double cantMonedas) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
@@ -57,10 +57,10 @@ public class Saldo implements Comparable<Saldo>{
 		return Double.compare(s.getCantMonedas(), this.getCantMonedas());
 	}
 
-	public String getTipo() {
+	public TipoMoneda getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(TipoMoneda tipo) {
 		this.tipo = tipo;
 	}
 	public String getNombre() {
