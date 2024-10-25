@@ -39,6 +39,7 @@ public class Billetera {
 
 	public void comprar(String moneda,String fiat)
 	{
+		
 		Scanner in = new Scanner(System.in);
 		System.out.println("¿Cuanto desea comprar?");
 		Double saldoEmitido = in.nextDouble();		
@@ -156,10 +157,11 @@ public class Billetera {
 						return;					
 					}
 				}
-				double saldoFinalCoin = 0;
-				double saldoFinalFiat = 0;
+				double saldoFinalCoin = 0.0;
+				double saldoFinalFiat = 0.0;
+				//this.generarArregloSaldo(); //conceptualmente mal, pero no carga los valores del foreach sino
 				for(Saldo saldos: this.arregloSaldo)
-				{
+				{ 
 					//aca agrego las monedas compradas al arreglo saldo de la billetera
 					if(saldos.getSigla().equals(moneda))
 					{

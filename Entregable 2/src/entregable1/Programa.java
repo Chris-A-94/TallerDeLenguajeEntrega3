@@ -103,6 +103,11 @@ public class Programa {
 	}
 	private static void optSimularCompra(Usuario temp,Sistema sistema)
 	{
+		if (temp.getBilletera().getArregloSaldo().isEmpty()) {
+			System.out.printf("No tiene saldos cargados para este usuario.\n");
+			return;
+		}
+		
 		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
