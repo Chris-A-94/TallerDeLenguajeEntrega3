@@ -1,13 +1,13 @@
 package entregable1;
 
-public enum TipoMoneda {
-	FIAT ("FIAT"),
-	CRIPTOMONEDA ("CRIPTOMONEDA"),
+public enum TipoTransaccion {
+	COMPRA ("COMPRA"),
+	SWAP ("SWAP"),
 	UNDEFINED ("UNDEFINED");
 	
 	private final String name;
 	
-	private TipoMoneda(String s) {
+	private TipoTransaccion (String s) {
 		name = s;
 	}
 	
@@ -25,11 +25,10 @@ public enum TipoMoneda {
 	/*
 	 * No requiere una instancia
 	 */
-	public static TipoMoneda fromString(String text) {
-		for (TipoMoneda tipoMoneda : TipoMoneda.values()) {
-			if (text.equalsIgnoreCase(tipoMoneda.toString())) {
-				return tipoMoneda;
-			}
+	public static TipoTransaccion fromString(String text) {
+		for (TipoTransaccion tipoTransaccion : TipoTransaccion.values()) {
+			if (text.equalsIgnoreCase(tipoTransaccion.toString()))
+				return tipoTransaccion;
 		}
 		
 		return null;

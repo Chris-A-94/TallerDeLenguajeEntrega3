@@ -179,7 +179,6 @@ public class Programa {
 
 
 		final Scanner in = new Scanner(System.in);
-
 		
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
