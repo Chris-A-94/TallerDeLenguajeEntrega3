@@ -112,8 +112,21 @@ public class Sistema {
 	    System.out.println("Ingrese el nombre de la moneda");
 	    String nombre = in.next();
 	    
+	    nombre = nombre.toUpperCase();
+	    if (this.existeMoneda(nombre)) {
+	    	System.out.println("Esta moneda ya existe en la base de datos.");
+	    	return null;
+	    }
+	    	
 	    System.out.println("Ingrese la sigla de la moneda");
 	    String sigla = in.next();
+	    
+	    sigla = sigla.toUpperCase();
+	    if (this.existeMoneda(sigla)) {
+	    	System.out.println("Esta moneda ya existe en la base de datos.");
+	    	return null;
+	    }
+	    	
 	    
 	    //El Stock se genera de forma aleatoria
 	    
@@ -211,14 +224,17 @@ public class Sistema {
 	 */
 	public void actualizarCoinDB() {
 		for (Coin c:monedas) {
-			if (!cDao.modificar(c))
-				cDao.guardar(c);
+			cDao.modificar(c);
+			cDao.guardar(c);
+			
 		}
 	}
 	public void actualizarActivosDB(Usuario user) {
+		
 		for (Saldo s: user.getBilletera().getArregloSaldo()) {
-			if (!aDao.modificar(s))
-				aDao.guardar(s);
+			s.setUser_id(user.getDNI());
+			aDao.modificar(s);
+			aDao.guardar(s);
 		}
 	}
 	public void listarUsuarios() {
@@ -256,11 +272,11 @@ public class Sistema {
 	public List<Coin> getMonedas(){
 		return monedas;
 	}
-	public boolean existeMoneda(String sigla) {
+	public boolean existeMoneda(String moneda) {
 		boolean existe = false;
 		
-		for (Coin coin : monedas) {
-			if (coin.getSigla().equals(sigla)) {
+		for (Coin coin : monedas) { 
+			if (coin.getSigla().equals(moneda) || coin.getNombre().equals(moneda)) { //pregunta si el nombre o la sigla existe.
 				existe = true;
 				break;
 			}

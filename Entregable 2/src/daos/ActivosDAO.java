@@ -24,7 +24,6 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			String query = "CREATE TABLE IF NOT EXISTS ACTIVOS (" +
 		               "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
 		               "SIGLA TEXT NOT NULL," +
-		               "NOMBRE TEXT NOT NULL," +
 		               "CANTIDAD DOUBLE," +
 		               "TIPO TEXT NOT NULL," +
 		               "USER_ID TEXT NOT NULL," +
@@ -60,10 +59,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			System.out.println(e.getMessage());
 		} 
 		return false;
-
 	}
-
-	
 	@Override
 	public boolean guardar(Saldo saldo) {
 		try {
@@ -79,15 +75,11 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			System.out.println(e.getMessage());
 			return false;
 		}		
-		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
+		//System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
 		return true;
-
-
 	}
-
 	@Override
 	public List<Saldo> devolverTabla() {
-
 		Saldo auxSaldo=null;
 		List<Saldo> saldos = new LinkedList<Saldo>();
 		try {

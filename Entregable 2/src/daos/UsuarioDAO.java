@@ -71,7 +71,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public boolean guardar(Usuario user) {
 		try {
-		    String query = "INSERT OR IGNORE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT OR REPLACE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,user.getDNI());
