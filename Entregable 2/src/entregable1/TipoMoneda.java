@@ -12,26 +12,26 @@ public enum TipoMoneda {
 	}
 	
 	public boolean equals(String text) {
-		if (name.equalsIgnoreCase(text)) {
+		if (this.toString().equalsIgnoreCase(text))
 			return true;
-		} else {
-			return false;
-		}
+		
+		return false;
 	}
 	
 	public String toString() {
 		return this.name;
 	}
 	
+	/*
+	 * No requiere una instancia
+	 */
 	public static TipoMoneda fromString(String text) {
 		for (TipoMoneda tipoMoneda : TipoMoneda.values()) {
-			if (tipoMoneda.toString().equalsIgnoreCase(text)) {
+			if (text.equalsIgnoreCase(tipoMoneda.toString())) {
 				return tipoMoneda;
 			}
 		}
 		
 		return null;
 	}
-	
-	
 }

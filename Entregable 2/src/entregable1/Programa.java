@@ -180,6 +180,8 @@ public class Programa {
 
 		final Scanner in = new Scanner(System.in);
 
+		TransaccionCompra transac = new TransaccionCompra(1000.0, 1, 1, 1);
+		System.out.printf("%s\n", transac.toString());
 		
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
