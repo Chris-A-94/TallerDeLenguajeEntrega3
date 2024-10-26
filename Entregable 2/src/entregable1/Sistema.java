@@ -17,6 +17,7 @@ public class Sistema {
 	private CoinDAO cDao;
 	private UsuarioDAO uDao;
 	private ActivosDAO aDao;
+	private TransaccionDAO tDao;
 	// Comparators
 	Comparator<Coin> porSigla = new Comparator<Coin>() {
 		public int compare(Coin c1, Coin c2) {
@@ -60,6 +61,9 @@ public class Sistema {
 		aDao = new ActivosDAO();
 		this.saldosUsuarios = new LinkedList<Saldo>();
 		this.saldosUsuarios.addAll(aDao.devolverTabla());
+		
+		//INICIALIZAR tDAO
+		tDao = new TransaccionDAO();
 	}
 		
 	public Coin crearMoneda() {
