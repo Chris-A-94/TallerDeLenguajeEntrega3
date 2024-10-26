@@ -211,7 +211,14 @@ public class Sistema {
 	 */
 	public void actualizarCoinDB() {
 		for (Coin c:monedas) {
-			cDao.modificar(c);
+			if (!cDao.modificar(c))
+				cDao.guardar(c);
+		}
+	}
+	public void actualizarActivosDB(Usuario user) {
+		for (Saldo s: user.getBilletera().getArregloSaldo()) {
+			if (!aDao.modificar(s))
+				aDao.guardar(s);
 		}
 	}
 	public void listarUsuarios() {
@@ -260,4 +267,13 @@ public class Sistema {
 		}
 		return existe;
 	}
+	public void devolverActivosUsuario(Usuario user) {
+		
+			for (Saldo s:this.saldosUsuarios) {
+				if (s.getUser_id().equals(user.getDNI())) {
+					user.getBilletera().agregarSaldo(s);
+				}
+			}
+	}
+	
 }

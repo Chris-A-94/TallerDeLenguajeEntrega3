@@ -103,6 +103,10 @@ public class Programa {
 	}
 	private static void optSimularCompra(Usuario temp,Sistema sistema)
 	{
+		if (temp.getBilletera().getArregloSaldo().isEmpty()) {
+			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
+			return;
+		}
 		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
 		String moneda = in.next();
@@ -160,7 +164,6 @@ public class Programa {
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
         Sistema sistema = new Sistema();
-      
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
         System.out.print("Ingrese el DNI del usuario que va a usar: ");
@@ -173,9 +176,8 @@ public class Programa {
             temp = sistema.getUsuario(dniTemp);
             
         }
-        
-        
-        
+        sistema.devolverActivosUsuario(temp);    
+        System.out.println(temp.getBilletera().getArregloSaldo().toString());
         Integer opt = -1;
         
         
@@ -242,6 +244,8 @@ public class Programa {
         
         //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
         sistema.actualizarCoinDB();
+        System.out.println(temp.getBilletera().getArregloSaldo().toString());
+        sistema.actualizarActivosDB(temp);
         
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
     }
