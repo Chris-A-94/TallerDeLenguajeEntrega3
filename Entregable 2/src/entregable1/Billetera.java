@@ -34,6 +34,114 @@ public class Billetera {
 		tarjeta = null;
 		arregloSaldo = new LinkedList<Saldo>();
 	}
+	
+	private int choose(int limite)
+	{
+		Scanner in = new Scanner(System.in);
+		int index = in.nextInt();
+		while(index < 0 || index > limite)
+		{
+			System.out.println("Error, por favor elija un numero positivo menor que "+limite+".");
+			index = in.nextInt();
+		}
+		return index;
+	}
+	
+
+	
+	public void swap(List<Coin> monedas)
+	{
+		//Asumo que necesita tener saldo de la primera moneda, pero la segunda puede tener 0
+		//Asumo que puede intercambiar cripto x fiat
+		if(this.arregloSaldo.isEmpty())
+		{
+			System.out.println("Error, usted no posee activos.");
+			return;
+		}
+		System.out.println("Usted posee las siguientes monedas: ");
+		for(int i = 0; i < arregloSaldo.size(); i++)
+		{
+			System.out.println((i+1)+"."+arregloSaldo.get(i).getSigla()+": "+arregloSaldo.get(i).getCantMonedas());
+		}
+		System.out.println("Ingrese el numero del cripto a swappear: ");
+		int indexOne = choose(this.arregloSaldo.size()) - 1;
+		System.out.println("Ingrese el numero del cripto que desea obtener: ");
+		int indexTwo = choose(this.arregloSaldo.size()) - 1;
+		
+		Saldo primeraMoneda = this.arregloSaldo.get(indexOne);
+		Saldo segundaMoneda = this.arregloSaldo.get(indexTwo);
+		
+		if(primeraMoneda.getCantMonedas() == 0.00 &&
+				segundaMoneda.getCantMonedas() == 0.00)
+		{
+			System.out.println("Error, usted no posee saldo en ningun activo elegido.");
+			return;
+		}
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese la cantidad de "+primeraMoneda.getSigla()+" a usar: ");
+		double canToSwap = in.nextDouble();
+		while(canToSwap > primeraMoneda.getCantMonedas() || canToSwap <= 0)
+		{
+			System.out.println("Error, monto invalido.");
+			System.out.println("1. Cambiar monto. \n 2. Cancelar operacion.");
+			int sophie = in.nextInt();
+			if(sophie == 1)
+			{
+				System.out.println("Ingrese nuevo monto: ");
+				canToSwap = in.nextDouble();
+			}
+			else if(sophie == 2)
+				return;
+			else
+				System.out.println("Opcion invalida.");
+		}
+		
+		//todo lo anterior fue chequeo del ingreso correcto de variables
+		//a partir de aca es calculo y conversion
+		
+		Coin primeraCoin = null;
+		Coin segundaCoin = null;
+		
+		for(Coin myCoins: monedas)
+		{
+			if(myCoins.getSigla().equals(primeraMoneda.getSigla()))
+				primeraCoin = myCoins;
+			if(myCoins.getSigla().equals(segundaMoneda.getSigla()))
+				segundaCoin = myCoins;
+		}
+		
+		//etimologia: "primero" es moneda a ser swapeada y "segundo" es el target
+		//Coin en ingles es variable de tipo saldo, Moneda en español es de tipo coin
+		//good luck
+		
+		double dolarPrimeraMoneda = canToSwap * primeraCoin.getPrecio();
+		double totalSegundaEnDolares = segundaCoin.getPrecio() * segundaCoin.getStock();
+		
+		if(dolarPrimeraMoneda > totalSegundaEnDolares)
+		{
+			System.out.println("Error, la moneda "+segundaCoin.getNombre()+" no tiene suficiente stock.");
+			System.out.println("Abortando operacion");
+			return;
+		}
+		double canToGet = dolarPrimeraMoneda / segundaCoin.getPrecio();
+		
+		segundaMoneda.setCantMonedas(segundaMoneda.getCantMonedas() + canToGet);
+		primeraMoneda.setCantMonedas(primeraMoneda.getCantMonedas() - canToSwap);
+		//el razonamiento que tomo es que la cantidad de monedas que swappea lo tramita con nosotros
+		//nosotros le damos el extra, y tomamos lo que da, en vez de un cambio equivalente entre sus activos
+		//el enunciado dice que hay que chequear stock, y eso no tendria sentido sino interactua con el lado del server
+		
+		primeraCoin.setStock(primeraCoin.getStock() + canToSwap);
+		segundaCoin.setStock(segundaCoin.getStock() - canToGet);
+		CoinDAO monedasDB = new CoinDAO();
+		monedasDB.modificar(primeraCoin);
+		monedasDB.modificar(segundaCoin);
+		
+		System.out.println("Swap exitoso!");
+		System.out.println("Su nuevo saldo de "+primeraCoin.getNombre()+" es de: "+primeraMoneda.getCantMonedas());
+		System.out.println("Su nuevo saldo de "+segundaCoin.getNombre()+" es de: "+segundaMoneda.getCantMonedas());
+	}
 
 	public void comprar(String moneda,String fiat)
 	{

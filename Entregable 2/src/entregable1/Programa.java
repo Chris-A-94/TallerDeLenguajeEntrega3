@@ -237,6 +237,7 @@ public class Programa {
 				optSimularCompra(temp,sistema);
 				break;
 			case 8:
+				temp.getBilletera().swap(sistema.getMonedas());
 			    break;
 			case _EXIT:
 			    break;
