@@ -63,7 +63,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 	@Override
 	public boolean guardar(Saldo saldo) {
 		try {
-		    String query = "INSERT OR REPLACE INTO ACTIVOS (SIGLA, CANTIDAD, TIPO, USER_ID) VALUES (?, ?, ?, ?)";
+		    String query = "INSERT OR IGNORE INTO ACTIVOS (SIGLA, CANTIDAD, TIPO, USER_ID) VALUES (?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    pstmt.setString(1,saldo.getSigla());
 		    pstmt.setDouble(2,saldo.getCantMonedas());

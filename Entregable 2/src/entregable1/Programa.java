@@ -26,7 +26,7 @@ public class Programa {
 						if (s.getSigla().equals(m.getSigla())) {
 							encontro = true;
 						}
-					if (encontro ==  false)
+					if (encontro == false)
 						user.getBilletera().agregarMoneda(m, cantidad);
 				}
 			// Actualizar unicamente la moneda indicada
