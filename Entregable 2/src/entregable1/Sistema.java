@@ -230,10 +230,9 @@ public class Sistema {
 		}
 	}
 	public void actualizarActivosDB(Usuario user) {
-		
 		for (Saldo s: user.getBilletera().getArregloSaldo()) {
 			s.setUser_id(user.getDNI());
-			aDao.modificar(s);
+			
 			aDao.guardar(s);
 		}
 	}
