@@ -3,8 +3,11 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.sql.Time;
+import java.time.*;
 import daos.CoinDAO;
+
+import daos.TransaccionDAO;
 
 
 /**
@@ -182,7 +185,13 @@ public class Billetera {
 				System.out.println("Saldo actual en"+auxFiat.getNombre()+": "+saldoFinalFiat);
 				
 				//FALTA DESCRIBIR LA TRANSACCION EN LA BASE DE DATOS
+				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
+				String mes = java.time.ZonedDateTime.now().getMonth().toString();
+				String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
 				
+				Transaccion archivarTransaccion = new TransaccionCompra(monedasAComprar,dia,mes,year, "?)", auxMoneda.getNombre());
+				TransaccionDAO yafue = new TransaccionDAO(); // hacer el morido
+				yafue.guardar(archivarTransaccion);
 			}
 			
 			else

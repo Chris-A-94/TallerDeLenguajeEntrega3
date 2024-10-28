@@ -4,30 +4,30 @@ package entregable1;
  * Guarda fecha como DD/MM/AAAA.
  */
 public class Fecha {
-	private int dia;
-	private int mes;
-	private int año;
-	public Fecha(int dia, int mes, int año) {
+	private String dia;
+	private String mes;
+	private String año;
+	public Fecha(String dia, String mes, String año) {
 		this.dia = dia;
 		this.mes = mes;
 		this.año = año;
 	}
-	public int getDia() {
+	public String getDia() {
 		return dia;
 	}
-	public void setDia(int dia) {
+	public void setDia(String dia) {
 		this.dia = dia;
 	}
-	public int getMes() {
+	public String getMes() {
 		return mes;
 	}
-	public void setMes(int mes) {
+	public void setMes(String mes) {
 		this.mes = mes;
 	}
-	public int getAño() {
+	public String getAño() {
 		return año;
 	}
-	public void setAño(int año) {
+	public void setAño(String año) {
 		this.año = año;
 	}
 	public String toString()

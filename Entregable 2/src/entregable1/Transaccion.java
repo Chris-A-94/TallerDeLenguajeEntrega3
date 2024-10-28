@@ -8,11 +8,13 @@ public abstract class Transaccion {
 	private TipoTransaccion tipo = TipoTransaccion.UNDEFINED;
 	private Double monto;
 	private String user_id;
+	private String sigla;
 	
-	public Transaccion(Double monto, int dia, int mes, int year, String user_id) {
+	public Transaccion(Double monto, String dia, String mes, String year, String user_id, String sigla) {
 		this.fecha = new Fecha(dia, mes, year);
 		this.monto = monto;
 		this.user_id = user_id;
+		this.sigla = sigla;
 	}
 	
 	public String getFecha() {
@@ -27,8 +29,11 @@ public abstract class Transaccion {
 	public String getUserID() {
 		return this.user_id;
 	}
+	public String getSigla() {
+		return this.sigla;
+	}
 	
-	public void setFecha(int dia, int mes, int year) {
+	public void setFecha(String dia, String mes, String year) {
 		this.fecha = new Fecha(dia,mes,year);
 	}
 	public void setTipo(TipoTransaccion tipo) {
@@ -41,6 +46,6 @@ public abstract class Transaccion {
 	@Override
 	public String toString()
 	{
-		return new String("(" + this.fecha.toString() + ") " + this.getTipo().toString() + " : " + this.getMonto() + " USD");
+		return new String("(" + this.fecha.toString() + ") " + this.getSigla() + " " + this.getTipo().toString() + " : " + this.getMonto() + " USD");
 	}
 }
