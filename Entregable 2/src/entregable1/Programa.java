@@ -33,10 +33,11 @@ public class Programa {
 					encontro = false;
 					for (Saldo s: user.getBilletera().getArregloSaldo())
 						if (s.getSigla().equals(m.getSigla())) {
+							// No toca activos ya generados.
 							encontro = true;
 						}
 					if (encontro ==  false)
-						user.getBilletera().agregarMoneda(m, cantidad);
+						user.getBilletera().agregarSaldo(new Saldo(user.getDNI(), m.getTipo(), m.getSigla(), cantidad));
 				}
 			// Actualizar unicamente la moneda indicada
 			} else {
