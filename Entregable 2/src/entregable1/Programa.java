@@ -241,7 +241,6 @@ public class Programa {
 			}
 		
         } while (opt != _EXIT);
-        
         //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
         sistema.actualizarCoinDB();
         System.out.println(temp.getBilletera().getArregloSaldo().toString());

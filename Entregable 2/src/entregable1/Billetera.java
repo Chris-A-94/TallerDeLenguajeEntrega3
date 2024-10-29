@@ -43,7 +43,7 @@ public class Billetera {
 		System.out.println("¿Cuanto desea comprar?");
 		Double saldoEmitido = in.nextDouble();		
 		
-		Saldo enDivisa = new Saldo();
+		Saldo enDivisa = new Saldo(); //REVISAR NECESIDAD DEL CONSTRUCTOR...
 		int posSaldo = -1;
 		for(Saldo auxSaldo: this.arregloSaldo)
 		{
