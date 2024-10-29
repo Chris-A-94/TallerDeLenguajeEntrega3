@@ -118,44 +118,7 @@ public class Programa {
 			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
 			return;
 		}
-		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
 		Scanner in = new Scanner(System.in);
-		String moneda = in.next();
-		boolean existe = sistema.existeMoneda(moneda);
-		if(!existe)
-		{
-			System.out.println("La moneda actual no existe, se procede a generarla: ");
-			optCrearMoneda(sistema);
-		}
-		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
-		String fiat = in.next();
-		existe = sistema.existeMoneda(fiat);
-		
-		if(!existe)
-		{
-			System.out.println("La divisa Fiat no esta cargada, se procede a generarla: ");
-			optCrearMoneda(sistema);
-		}
-		
-		//esto es para chequear el tipo, hasta que se me ocurra algo mas conveniente.
-		CoinDAO monedasDB = new CoinDAO();
-		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-		monedasMem.addAll(monedasDB.devolverTabla());
-		Coin auxFiat = null;
-		Coin auxMoneda = null;
-		for(Coin monedaAux: monedasMem)
-		{
-			if(fiat.equals(monedaAux.getSigla()))
-				auxFiat = monedaAux;
-			if(moneda.equals(monedaAux.getSigla()))
-				auxMoneda = monedaAux;
-		}
-		
-		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
-		{
-			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
-			return;
-		}
 		
 		// Monedas
 		LinkedList<Coin> monedasCripto = new LinkedList<Coin>();
@@ -178,7 +141,7 @@ public class Programa {
 		System.out.printf(")\n: ");
 		// Lectura de la Criptomoneda
 		String siglaMoneda = in.next();
-		
+		siglaMoneda = siglaMoneda.toUpperCase();
 		if(!existeMoneda(siglaMoneda,monedasCripto))
 		{
 			System.out.println("La moneda actual no existe, se procede a generarla.");
@@ -195,16 +158,32 @@ public class Programa {
 		
 		// Lectura de la Moneda Fiat
 		String siglaFiat = in.next();
-		
-		while (!existeMoneda(siglaFiat,monedasFiat)) {
-			System.out.printf("La sigla no existe\n: ");
-			siglaFiat = in.next();
+		siglaFiat = siglaFiat.toUpperCase();
+		if(!existeMoneda(siglaFiat,monedasFiat))
+		{
+			System.out.println("La moneda actual no existe, se procede a generarla.");
+			optCrearMoneda(sistema);
 		}
 		
-//		Nota: Para las consultas de las monedas presentes en el Sistema, se debe intentar reducir los accesos 
-//		a la Base de Datos y en su lugar, usar el arreglo 'arregloSaldo[]' de 'Sistema'.
-//		Se presenta otra solución al problema, la cual es crear un arreglo por cada tipo de moneda (Cripto o Fiat)
-//		y consultar la presencia de la moneda en estos arreglos.
+		CoinDAO monedasDB = new CoinDAO();
+		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
+		monedasMem.addAll(monedasDB.devolverTabla());
+		Coin auxFiat = null;
+		Coin auxMoneda = null;
+		for(Coin monedaAux: monedasMem)
+		{
+			if(siglaFiat.equals(monedaAux.getSigla()))
+				auxFiat = monedaAux;
+			if(siglaMoneda.equals(monedaAux.getSigla()))
+				auxMoneda = monedaAux;
+		}
+		
+		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
+		{
+			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
+			return;
+		}
+		
 		
 		temp.getBilletera().comprar(siglaMoneda,siglaFiat);	
 	}
