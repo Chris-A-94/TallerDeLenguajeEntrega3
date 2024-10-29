@@ -9,12 +9,12 @@
 - Billetera:
   - [X] Listar Activos
   - [X] Generar Mis Activos
-  - [ ] Simular Compra de Cripto 
-  - [ ] Simular Swap
+  - [X] Simular Compra de Cripto 
+  - [X] Simular Swap
   
 - Coin:
   - [X] Generar Stock
-  - [ ] Listar Stock
+  - [X] Listar Stock
   
 - Sistema:
   - [X] Crear Monedas
