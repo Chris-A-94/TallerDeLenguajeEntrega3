@@ -27,7 +27,8 @@ public class Billetera {
 	private List<Saldo> arregloSaldo;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
-	public Billetera()
+	private String userID;
+	public Billetera(String userID)
 	{
 		this.balance = 0.0;
 		this.divisa = "USD";
@@ -36,6 +37,161 @@ public class Billetera {
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
 		arregloSaldo = new LinkedList<Saldo>();
+		this.userID = userID;
+	}
+	
+	private int choose(int limite)
+	{
+		Scanner in = new Scanner(System.in);
+		int index = in.nextInt();
+		while(index < 0 || index > limite)
+		{
+			System.out.println("Error, por favor elija un numero positivo menor que "+limite+".");
+			index = in.nextInt();
+		}
+		return index;
+	}
+	
+	public void swap(List<Coin> monedas)
+	{
+		if(this.arregloSaldo.isEmpty())
+		{
+			System.out.println("Error, usted no posee activos.");
+			return;
+		}
+		Scanner in = new Scanner(System.in);
+		System.out.println("Usted posee las siguientes monedas: ");
+		for(Saldo saldo: this.arregloSaldo)
+			System.out.println(saldo.getSigla()+": "+saldo.getCantMonedas());
+		System.out.println("Desea hacer swap entre: \n 1. Criptomonedas \n 2. Fiat currency \n 3. Cancelar");
+		int opcion = in.nextInt();
+		while(opcion < 1 || opcion > 3)
+		{
+			System.out.println("Valor invalido.");
+			System.out.println("Desea hacer swap entre: \n 1. Criptomonedas \n 2. Fiat currency \n 3. Cancelar");
+			opcion = in.nextInt();
+		}
+		List<Coin> monedasASwap = new LinkedList<Coin>();
+		if(opcion == 1)
+		{
+			for(Coin moneda: monedas)
+				if(moneda.getTipo().equals("CRIPTOMONEDA"))
+					monedasASwap.add(moneda);
+		}
+		else if(opcion == 2)
+		{
+			for(Coin moneda: monedas)
+				if(moneda.getTipo().equals("FIAT"))
+					monedasASwap.add(moneda);
+		}
+		else
+		{
+			System.out.println("Operacion cancelada.");
+			return;
+		}
+		swapping(monedasASwap);
+	}
+
+	
+	private void swapping(List<Coin> monedas)
+	{
+		//Asumo que necesita tener saldo de la primera moneda, pero la segunda puede tener 0
+		
+		List<Saldo> arregloSaldoFiltrado = new LinkedList<Saldo>();
+		
+		//absolutamente horrible, si se agrega el Tipo a la construccion de this.arregloSaldo podria quedar mejor
+		for(Saldo saldo: this.arregloSaldo)
+			for(Coin moneda: monedas)
+				if(saldo.getSigla().equals(moneda.getSigla()))
+				{
+					arregloSaldoFiltrado.add(saldo);
+					System.out.println("Entro");
+				}
+				
+		
+		System.out.println("Usted posee las siguientes monedas de tipo "+monedas.get(0).getTipo().toString()+": ");
+		for(int i = 0; i < arregloSaldoFiltrado.size(); i++)
+		{
+			System.out.println((i+1)+"."+arregloSaldoFiltrado.get(i).getSigla()+": "+arregloSaldoFiltrado.get(i).getCantMonedas());
+		}
+		System.out.println("Ingrese el indice del activo a swappear: ");
+		int indexOne = choose(arregloSaldoFiltrado.size()) - 1;
+		System.out.println("Ingrese el indice del activo que desea obtener: ");
+		int indexTwo = choose(arregloSaldoFiltrado.size()) - 1;
+		
+		Saldo primeraMoneda = arregloSaldoFiltrado.get(indexOne);
+		Saldo segundaMoneda = arregloSaldoFiltrado.get(indexTwo);
+		
+		if(primeraMoneda.getCantMonedas() == 0.00 &&
+				segundaMoneda.getCantMonedas() == 0.00)
+		{
+			System.out.println("Error, usted no posee saldo en ningun activo elegido.");
+			return;
+		}
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese la cantidad de "+primeraMoneda.getSigla()+" a usar: ");
+		double canToSwap = in.nextDouble();
+		while(canToSwap > primeraMoneda.getCantMonedas() || canToSwap <= 0)
+		{
+			System.out.println("Error, monto invalido.");
+			System.out.println("1. Cambiar monto. \n 2. Cancelar operacion.");
+			int sophie = in.nextInt();
+			if(sophie == 1)
+			{
+				System.out.println("Ingrese nuevo monto: ");
+				canToSwap = in.nextDouble();
+			}
+			else if(sophie == 2)
+				return;
+			else
+				System.out.println("Opcion invalida.");
+		}
+		
+		//todo lo anterior fue chequeo del ingreso correcto de variables
+		//a partir de aca es calculo y conversion
+		
+		Coin primeraCoin = null;
+		Coin segundaCoin = null;
+		
+		for(Coin myCoins: monedas)
+		{
+			if(myCoins.getSigla().equals(primeraMoneda.getSigla()))
+				primeraCoin = myCoins;
+			if(myCoins.getSigla().equals(segundaMoneda.getSigla()))
+				segundaCoin = myCoins;
+		}
+		
+		//etimologia: "primero" es moneda a ser swapeada y "segundo" es el target
+		//Coin en ingles es variable de tipo saldo, Moneda en español es de tipo coin
+		//good luck
+		
+		double dolarPrimeraMoneda = canToSwap * primeraCoin.getPrecio();
+		double totalSegundaEnDolares = segundaCoin.getPrecio() * segundaCoin.getStock();
+		
+		if(dolarPrimeraMoneda > totalSegundaEnDolares)
+		{
+			System.out.println("Error, la moneda "+segundaCoin.getNombre()+" no tiene suficiente stock.");
+			System.out.println("Abortando operacion");
+			return;
+		}
+		double canToGet = dolarPrimeraMoneda / segundaCoin.getPrecio();
+		
+		segundaMoneda.setCantMonedas(segundaMoneda.getCantMonedas() + canToGet);
+		primeraMoneda.setCantMonedas(primeraMoneda.getCantMonedas() - canToSwap);
+		//el razonamiento que tomo es que la cantidad de monedas que swappea lo tramita con nosotros
+		//nosotros le damos el extra, y tomamos lo que da, en vez de un cambio equivalente entre sus activos
+		//el enunciado dice que hay que chequear stock, y eso no tendria sentido sino interactua con el lado del server
+		
+		primeraCoin.setStock(primeraCoin.getStock() + canToSwap);
+		segundaCoin.setStock(segundaCoin.getStock() - canToGet);
+		CoinDAO monedasDB = new CoinDAO();
+		monedasDB.modificar(primeraCoin);
+		monedasDB.modificar(segundaCoin);
+		
+		System.out.println("Swap exitoso!");
+		System.out.println("Su nuevo saldo de "+primeraCoin.getNombre()+" es de: "+primeraMoneda.getCantMonedas());
+		System.out.println("Su nuevo saldo de "+segundaCoin.getNombre()+" es de: "+segundaMoneda.getCantMonedas());
 	}
 
 	public void comprar(String moneda,String fiat)
