@@ -47,29 +47,75 @@ public class Billetera {
 		return index;
 	}
 	
-
-	
 	public void swap(List<Coin> monedas)
 	{
-		//Asumo que necesita tener saldo de la primera moneda, pero la segunda puede tener 0
-		//Asumo que puede intercambiar cripto x fiat
 		if(this.arregloSaldo.isEmpty())
 		{
 			System.out.println("Error, usted no posee activos.");
 			return;
 		}
+		Scanner in = new Scanner(System.in);
 		System.out.println("Usted posee las siguientes monedas: ");
-		for(int i = 0; i < arregloSaldo.size(); i++)
+		for(Saldo saldo: this.arregloSaldo)
+			System.out.println(saldo.getSigla()+": "+saldo.getCantMonedas());
+		System.out.println("Desea hacer swap entre: \n 1. Criptomonedas \n 2. Fiat currency \n 3. Cancelar");
+		int opcion = in.nextInt();
+		while(opcion < 1 || opcion > 3)
 		{
-			System.out.println((i+1)+"."+arregloSaldo.get(i).getSigla()+": "+arregloSaldo.get(i).getCantMonedas());
+			System.out.println("Valor invalido.");
+			System.out.println("Desea hacer swap entre: \n 1. Criptomonedas \n 2. Fiat currency \n 3. Cancelar");
+			opcion = in.nextInt();
+		}
+		List<Coin> monedasASwap = new LinkedList<Coin>();
+		if(opcion == 1)
+		{
+			for(Coin moneda: monedas)
+				if(moneda.getTipo().equals("CRIPTOMONEDA"))
+					monedasASwap.add(moneda);
+		}
+		else if(opcion == 2)
+		{
+			for(Coin moneda: monedas)
+				if(moneda.getTipo().equals("FIAT"))
+					monedasASwap.add(moneda);
+		}
+		else
+		{
+			System.out.println("Operacion cancelada.");
+			return;
+		}
+		swapping(monedasASwap);
+	}
+
+	
+	private void swapping(List<Coin> monedas)
+	{
+		//Asumo que necesita tener saldo de la primera moneda, pero la segunda puede tener 0
+		
+		List<Saldo> arregloSaldoFiltrado = new LinkedList<Saldo>();
+		
+		//absolutamente horrible, si se agrega el Tipo a la construccion de this.arregloSaldo podria quedar mejor
+		for(Saldo saldo: this.arregloSaldo)
+			for(Coin moneda: monedas)
+				if(saldo.getSigla().equals(moneda.getSigla()))
+				{
+					arregloSaldoFiltrado.add(saldo);
+					System.out.println("Entro");
+				}
+				
+		
+		System.out.println("Usted posee las siguientes monedas de tipo "+monedas.get(0).getTipo().toString()+": ");
+		for(int i = 0; i < arregloSaldoFiltrado.size(); i++)
+		{
+			System.out.println((i+1)+"."+arregloSaldoFiltrado.get(i).getSigla()+": "+arregloSaldoFiltrado.get(i).getCantMonedas());
 		}
 		System.out.println("Ingrese el numero del cripto a swappear: ");
-		int indexOne = choose(this.arregloSaldo.size()) - 1;
+		int indexOne = choose(arregloSaldoFiltrado.size()) - 1;
 		System.out.println("Ingrese el numero del cripto que desea obtener: ");
-		int indexTwo = choose(this.arregloSaldo.size()) - 1;
+		int indexTwo = choose(arregloSaldoFiltrado.size()) - 1;
 		
-		Saldo primeraMoneda = this.arregloSaldo.get(indexOne);
-		Saldo segundaMoneda = this.arregloSaldo.get(indexTwo);
+		Saldo primeraMoneda = arregloSaldoFiltrado.get(indexOne);
+		Saldo segundaMoneda = arregloSaldoFiltrado.get(indexTwo);
 		
 		if(primeraMoneda.getCantMonedas() == 0.00 &&
 				segundaMoneda.getCantMonedas() == 0.00)
