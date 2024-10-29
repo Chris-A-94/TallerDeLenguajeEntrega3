@@ -24,7 +24,8 @@ public class Billetera {
 	private List<Saldo> arregloSaldo;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
-	public Billetera()
+	private String userID;
+	public Billetera(String userID)
 	{
 		this.balance = 0.0;
 		this.divisa = "USD";
@@ -33,6 +34,7 @@ public class Billetera {
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
 		arregloSaldo = new LinkedList<Saldo>();
+		this.userID = userID;
 	}
 	
 	private int choose(int limite)
@@ -109,9 +111,9 @@ public class Billetera {
 		{
 			System.out.println((i+1)+"."+arregloSaldoFiltrado.get(i).getSigla()+": "+arregloSaldoFiltrado.get(i).getCantMonedas());
 		}
-		System.out.println("Ingrese el numero del cripto a swappear: ");
+		System.out.println("Ingrese el indice del activo a swappear: ");
 		int indexOne = choose(arregloSaldoFiltrado.size()) - 1;
-		System.out.println("Ingrese el numero del cripto que desea obtener: ");
+		System.out.println("Ingrese el indice del activo que desea obtener: ");
 		int indexTwo = choose(arregloSaldoFiltrado.size()) - 1;
 		
 		Saldo primeraMoneda = arregloSaldoFiltrado.get(indexOne);
