@@ -105,7 +105,6 @@ public class Billetera {
 				if(saldo.getSigla().equals(moneda.getSigla()))
 				{
 					arregloSaldoFiltrado.add(saldo);
-					System.out.println("Entro");
 				}
 				
 		
@@ -200,14 +199,14 @@ public class Billetera {
 		String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
 		
 		TransaccionDAO archivarSwap = new TransaccionDAO();
-		//transacciondatabase
+		archivarSwap.guardar(new TransaccionSwap(dia, mes, year, this.userID, segundaCoin.getSigla(), canToGet, primeraCoin.getSigla(), canToSwap));
 		
 		System.out.println("Swap exitoso!");
 		System.out.println("Su nuevo saldo de "+primeraCoin.getNombre()+" es de: "+primeraMoneda.getCantMonedas());
 		System.out.println("Su nuevo saldo de "+segundaCoin.getNombre()+" es de: "+segundaMoneda.getCantMonedas());
 	}
 
-	public void comprar(String moneda,String fiat)
+	public void comprar(String moneda,String fiat, List<Coin> monedas)
 	{
 		//Se obtiene el Saldo de la divisa fiat ingresda
 				Scanner in = new Scanner(System.in);				
@@ -277,14 +276,14 @@ public class Billetera {
 					//obtengo monedas de la base de datos para poder modificarlas y reenviarlas
 					CoinDAO monedasDB = new CoinDAO();
 					LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-					monedasMem.addAll(monedasDB.devolverTabla());
+					monedasMem.addAll(monedas);
 					Coin auxFiat = null;
 					Coin auxMoneda = null;
 					for(Coin monedaAux: monedasMem)
 					{
-						if(fiat.equals(monedaAux.getSigla()))
+						if(fiat.equalsIgnoreCase(monedaAux.getSigla()))
 							auxFiat = monedaAux;
-						if(moneda.equals(monedaAux.getSigla()))
+						if(moneda.equalsIgnoreCase(monedaAux.getSigla()))
 							auxMoneda = monedaAux;
 					}
 					//precio de la criptomoneda expresada en el fiat ingresado
@@ -346,20 +345,41 @@ public class Billetera {
 						//mismo calculo de arriba pero para la database
 						auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
 						auxFiat.setStock(saldoFinalFiat);
-						monedasDB.modificar(auxMoneda);
-						monedasDB.modificar(auxFiat);
-						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getNombre()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getNombre()+" :"+auxMoneda.getStock());
-						System.out.println("Saldo actual en"+auxFiat.getNombre()+": "+auxFiat.getStock());
+						
+						// Búsqueda de la moneda
+						List<Coin> table = monedasDB.devolverTabla();
+						boolean existeCoin, existeFiat;
+						existeCoin = existeFiat = false;
+						for (Coin c : table) {
+							if (c.getSigla().equals(auxMoneda.getSigla())) {
+								existeCoin = true;
+								continue;
+							} else if (c.getSigla().equals(auxFiat.getSigla())){
+								existeFiat = true;
+							} else if (existeCoin && existeFiat) {
+								break;
+							}
+						}
+						
+						if (existeCoin) {
+							monedasDB.modificar(auxMoneda);
+						}
+						if (existeFiat) {
+							monedasDB.modificar(auxFiat);
+						}
+						
+						
+						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
+						System.out.println("Saldo actual en "+auxMoneda.getSigla()+") :"+auxMoneda.getStock());
+						System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
 				
 				
 				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
 				String mes = java.time.ZonedDateTime.now().getMonth().toString();
 				String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
 				
-				Transaccion archivarTransaccion = new TransaccionCompra(monedasAComprar,dia,mes,year,this.userID, auxMoneda.getNombre());
-				TransaccionDAO guardarTransaccion = new TransaccionDAO(); 
-				guardarTransaccion.guardar(archivarTransaccion);
+				TransaccionDAO guardarTransaccion = new TransaccionDAO();
+				guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,auxMoneda.getSigla(),auxFiat.getSigla(),saldoEmitido,monedasAComprar));
 			}
 			
 			else

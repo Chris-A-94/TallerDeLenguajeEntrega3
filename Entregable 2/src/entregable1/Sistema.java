@@ -249,8 +249,8 @@ public class Sistema {
 
 		int i=1;
 		for (Usuario u: usuarios) {
-			System.out.print(i+". ");
-			System.out.println(u.toString());
+			System.out.print(i+".\n");
+			System.out.println(u.toString()+"\n...");
 			i++;
 		}
 	}

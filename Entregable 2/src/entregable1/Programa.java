@@ -165,9 +165,8 @@ public class Programa {
 			optCrearMoneda(sistema);
 		}
 		
-		CoinDAO monedasDB = new CoinDAO();
 		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-		monedasMem.addAll(monedasDB.devolverTabla());
+		monedasMem.addAll(sistema.getMonedas());
 		Coin auxFiat = null;
 		Coin auxMoneda = null;
 		for(Coin monedaAux: monedasMem)
@@ -185,7 +184,7 @@ public class Programa {
 		}
 		
 		
-		temp.getBilletera().comprar(siglaMoneda,siglaFiat);	
+		temp.getBilletera().comprar(siglaMoneda,siglaFiat, sistema.getMonedas());	
 	}
 	
 	public static Usuario leerUsuario() {
@@ -203,17 +202,18 @@ public class Programa {
         Sistema sistema = new Sistema();
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
-        System.out.print("Ingrese el DNI del usuario que va a usar: ");
+        System.out.print("----------------------------\n"
+        		+ "Ingrese el DNI del usuario que va a usar\n: ");
         dniTemp = in.next();
         Usuario temp = sistema.getUsuario(dniTemp);
         while (temp == null)
         {
-        	System.out.print("El DNI no existe, ingrese otro: ");
+        	System.out.print("El DNI no existe, ingrese otro\n: ");
             dniTemp = in.next();
             temp = sistema.getUsuario(dniTemp);
         }
 
-        sistema.devolverActivosUsuario(temp);    
+        // sistema.devolverActivosUsuario(temp);    
         System.out.println(temp.getBilletera().getArregloSaldo().toString());
         Integer opt = -1;
         
@@ -231,7 +231,7 @@ public class Programa {
                     + "opt: ");
             
             opt = in.nextInt();
-            System.out.printf("[%d]\n\n", opt);
+            System.out.printf("\n[%d]\n", opt);
 
 			switch (opt) {
 			case 1:

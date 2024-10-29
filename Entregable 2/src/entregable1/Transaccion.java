@@ -6,15 +6,11 @@ package entregable1;
 public abstract class Transaccion {
 	private Fecha fecha;
 	private TipoTransaccion tipo = TipoTransaccion.UNDEFINED;
-	private Double monto;
 	private String user_id;
-	private String sigla;
 	
-	public Transaccion(Double monto, String dia, String mes, String year, String user_id, String sigla) {
+	public Transaccion(String dia, String mes, String year, String user_id) {
 		this.fecha = new Fecha(dia, mes, year);
-		this.monto = monto;
 		this.user_id = user_id;
-		this.sigla = sigla;
 	}
 	
 	public String getFecha() {
@@ -23,14 +19,8 @@ public abstract class Transaccion {
 	public TipoTransaccion getTipo() {
 		return tipo;
 	}
-	public Double getMonto() {
-		return monto;
-	}
 	public String getUserID() {
 		return this.user_id;
-	}
-	public String getSigla() {
-		return this.sigla;
 	}
 	
 	public void setFecha(String dia, String mes, String year) {
@@ -39,13 +29,10 @@ public abstract class Transaccion {
 	public void setTipo(TipoTransaccion tipo) {
 		this.tipo = tipo;
 	}
-	public void setMonto(Double monto) {
-		this.monto = monto;
-	}
 	
 	@Override
 	public String toString()
 	{
-		return new String("(" + this.fecha.toString() + ") " + this.getSigla() + " " + this.getTipo().toString() + " : " + this.getMonto() + " USD");
+		return new String("(" + this.fecha.toString() + ") ");
 	}
 }

@@ -15,7 +15,8 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	public UsuarioDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
-		this.guardar(new Usuario("000","admin","admin", "Argentina", "mail")); //se agrega por defecto un usuario administrador
+		this.guardar(new Usuario("0","admin","admin", "Argentina", "mail")); //se agrega por defecto un usuario administrador
+		this.guardar(new Usuario("1","chimichurri","admin", "Argentina", "mail")); //se agrega por defecto un usuario administrador
 	}
 
 	@Override
