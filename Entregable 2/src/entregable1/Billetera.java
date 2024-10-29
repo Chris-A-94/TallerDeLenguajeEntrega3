@@ -40,9 +40,12 @@ public class Billetera {
 
 	public void comprar(String moneda,String fiat)
 	{
-		//Se obtiene el Saldo de la divisa fiat ingresda
-		Scanner in = new Scanner(System.in);				
-		Saldo enDivisa = new Saldo();		
+		Scanner in = new Scanner(System.in);
+		System.out.println("¿Cuanto desea comprar?");
+		Double saldoEmitido = in.nextDouble();		
+		
+		Saldo enDivisa = new Saldo(); //REVISAR NECESIDAD DEL CONSTRUCTOR...
+		int posSaldo = -1;
 		for(Saldo auxSaldo: this.arregloSaldo)
 		{
 			if(fiat.equals(auxSaldo.getSigla()))
@@ -68,7 +71,7 @@ public class Billetera {
 		}
 		//Se pide cuanto del saldo se usara en la operacion
 		System.out.println("Su saldo en "+fiat+" es de: "+enDivisa.getCantMonedas()+".\n ¿Cuanto desea usar?");
-		Double saldoEmitido = in.nextDouble();	
+		saldoEmitido = in.nextDouble();	
 		//Si el saldo a gastar es mayor que el que se tiene, se ofrece gastar menos o cargar mas
 		if(enDivisa.getCantMonedas() < saldoEmitido)
 		{

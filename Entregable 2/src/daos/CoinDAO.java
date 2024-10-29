@@ -17,10 +17,10 @@ public class CoinDAO implements DaoInterface<Coin>{
 	public CoinDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
-		this.guardar(new Coin("Bitcoin","BTC",TipoMoneda.CRIPTOMONEDA,66362.79));
-		this.guardar(new Coin("Ethereum","ETH",TipoMoneda.CRIPTOMONEDA,2504.57));
-		this.guardar(new Coin("Pesos Argentinos","ARS",TipoMoneda.FIAT,0.0010));
-		this.guardar(new Coin("Dolar","USD",TipoMoneda.FIAT,1.0));
+		this.guardar(new Coin("BITCOIN","BTC",TipoMoneda.CRIPTOMONEDA,66362.79));
+		this.guardar(new Coin("ETHEREUM","ETH",TipoMoneda.CRIPTOMONEDA,2504.57));
+		this.guardar(new Coin("PESOS","ARS",TipoMoneda.FIAT,0.0010));
+		this.guardar(new Coin("DOLAR","USD",TipoMoneda.FIAT,1.0));
 	}
 	public void crearTabla() { //crea la base de datos si no existe ya.
 		try {
@@ -62,7 +62,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 	 * El método 'modificar' recibe una moneda para no tener que hacer un modificar con cada columna de la tabla
 	 * esto con el fin de poder hacer una interface para todos los daos.
 	 */
-	public void modificar(Coin c) { //Recibe una moneda y la pisa en la base de datos.
+	public boolean modificar(Coin c) { //Recibe una moneda y la pisa en la base de datos.
 		try {
 				String query = ("UPDATE COIN SET SIGLA = ?, NOMBRE = ?, PRECIO_DOLAR = ?, TIPO = ?, STOCK = ? WHERE SIGLA = '"+c.getSigla()+"';");
 				PreparedStatement pstmt = con.prepareStatement(query);
@@ -74,13 +74,14 @@ public class CoinDAO implements DaoInterface<Coin>{
 			    pstmt.setDouble(5,c.getStock());
 			    pstmt.executeUpdate();
 			    pstmt.close();
+			    return true;
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			} 
-			return;
+			return false;
 		}
 
-	public void guardar(Coin auxCoin) //guarda una moneda en la base de datos.
+	public boolean guardar(Coin auxCoin) //guarda una moneda en la base de datos.
 	{
 		try {
 		    String query = "INSERT OR IGNORE INTO COIN (SIGLA, NOMBRE, PRECIO_DOLAR, TIPO, STOCK) VALUES (?, ?, ?, ?, ?)";
@@ -94,7 +95,7 @@ public class CoinDAO implements DaoInterface<Coin>{
 		    
 		    pstmt.executeUpdate();
 		    pstmt.close();
-		  
+		  return true;
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
@@ -104,10 +105,9 @@ public class CoinDAO implements DaoInterface<Coin>{
 			    System.out.println(e.getMessage());
 			    break;
 			}
-			return;
 		}		
 		//System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
-		return;
+		return false;
 	
 	}
 	public List<Coin> devolverTabla() { //devuelve una lista con todas las monedas guardadas en la base de datos.

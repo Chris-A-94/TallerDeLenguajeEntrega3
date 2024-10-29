@@ -23,14 +23,13 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		try {
 			//Se crea una tabla si no existe ya en el archivo...
 			String query = "CREATE TABLE IF NOT EXISTS ACTIVOS (" +
-					"ID INT AUTO_INCREMENT PRIMARY KEY," +
-                    "SIGLA TEXT NOT NULL," +
-					"NOMBRE TEXT NOT NULL,"+
-                    "CANTIDAD DOUBLE,"+
-                    "TIPO TEXT NOT NULL,"+
-                    "USER_ID INT NOT NULL,"+
-                    "FOREIGN KEY ('USER_ID') REFERENCES 'USUARIOS' ('DNI')"+
-                    ");";
+		               "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+		               "SIGLA TEXT NOT NULL," +
+		               "CANTIDAD DOUBLE," +
+		               "TIPO TEXT NOT NULL," +
+		               "USER_ID TEXT NOT NULL," +
+		               "FOREIGN KEY (USER_ID) REFERENCES USUARIOS(DNI)" +
+		               ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
 			 * Por ahora nos limitamos a esto para su funcionamiento.
@@ -49,47 +48,40 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 
 	}
 	@Override
-	public void modificar(Saldo saldo) { //SOLO MODIFICA LA CANTIDAD DE MONEDAS
+	public boolean modificar(Saldo saldo) { //SOLO MODIFICA LA CANTIDAD DE MONEDAS
 		try {
 			String query = ("UPDATE ACTIVOS SET CANTIDAD = ? WHERE ID = '"+saldo.getID()+"';");
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setDouble(1,saldo.getCantMonedas());  
 			pstmt.executeUpdate();
 			pstmt.close();
-		  
+		  return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} 
-		return;
-
+		return false;
 	}
-
-	
 	@Override
-	public void guardar(Saldo saldo) {
+	public boolean guardar(Saldo saldo) {
 		try {
-		    String query = "INSERT INTO saldos (SIGLA, CANTIDAD, TIPO, USER_ID) VALUES (?, ?, ?, ?)";
+		    String query = "INSERT OR IGNORE INTO ACTIVOS (SIGLA, CANTIDAD, TIPO, USER_ID) VALUES (?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    pstmt.setString(1,saldo.getSigla());
-		    pstmt.setString(4,saldo.getUser_id());
-		    pstmt.setString(3,saldo.getTipo().toString());  
 		    pstmt.setDouble(2,saldo.getCantMonedas());
+		    pstmt.setString(3,saldo.getTipo().toString());  
+		    pstmt.setString(4,saldo.getUser_id());
+		    
 		    pstmt.executeUpdate();
 		    pstmt.close();
-		  
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return;
+			return false;
 		}		
-		System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
-		return;
-
-
+		//System.out.println("¡Se agregó con éxito la criptomoneda a la base de datos!");
+		return true;
 	}
-
 	@Override
 	public List<Saldo> devolverTabla() {
-
 		Saldo auxSaldo=null;
 		List<Saldo> saldos = new LinkedList<Saldo>();
 		try {
@@ -101,7 +93,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			auxSaldo = new Saldo(resul.getInt("ID"),resul.getString("USER_ID"),TipoMoneda.fromString(resul.getString("TIPO")),resul.getString("SIGLA"),resul.getDouble("CANTIDAD"));
 			if (auxSaldo != null)
 			{
-				
+				saldos.add(auxSaldo);
 			}
 		}
 			sent.close();
@@ -111,7 +103,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 			return saldos;
 		}
 	}
-
+	
 	@Override
 	public void remover(String s) {
 		//No implementado.

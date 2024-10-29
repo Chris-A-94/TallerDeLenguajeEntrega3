@@ -1,6 +1,9 @@
 package entregable1;
 
 import java.util.Scanner;
+
+import daos.CoinDAO;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,7 +115,45 @@ public class Programa {
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
 		if (temp.getBilletera().getArregloSaldo().isEmpty()) {
-			System.out.printf("No tiene saldos cargados para este usuario.\n");
+			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
+			return;
+		}
+		System.out.println("Ingrese sigla de crypto a comprar (BTC/ETH/USDT): ");
+		Scanner in = new Scanner(System.in);
+		String moneda = in.next();
+		boolean existe = sistema.existeMoneda(moneda);
+		if(!existe)
+		{
+			System.out.println("La moneda actual no existe, se procede a generarla: ");
+			optCrearMoneda(sistema);
+		}
+		System.out.println("Ingrese sigla de Fiat a usar (USD/ARS/EUR):");
+		String fiat = in.next();
+		existe = sistema.existeMoneda(fiat);
+		
+		if(!existe)
+		{
+			System.out.println("La divisa Fiat no esta cargada, se procede a generarla: ");
+			optCrearMoneda(sistema);
+		}
+		
+		//esto es para chequear el tipo, hasta que se me ocurra algo mas conveniente.
+		CoinDAO monedasDB = new CoinDAO();
+		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
+		monedasMem.addAll(monedasDB.devolverTabla());
+		Coin auxFiat = null;
+		Coin auxMoneda = null;
+		for(Coin monedaAux: monedasMem)
+		{
+			if(fiat.equals(monedaAux.getSigla()))
+				auxFiat = monedaAux;
+			if(moneda.equals(monedaAux.getSigla()))
+				auxMoneda = monedaAux;
+		}
+		
+		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
+		{
+			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
 			return;
 		}
 		
@@ -127,9 +168,6 @@ public class Programa {
 				monedasFiat.add(coin);
 			}
 		});
-		
-		// Scanner
-		Scanner in = new Scanner(System.in);
 		
 		// Se listan todas las criptomonedas
 		System.out.println("Ingrese sigla de crypto a comprar");
@@ -184,7 +222,6 @@ public class Programa {
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
         Sistema sistema = new Sistema();
-      
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
         System.out.print("Ingrese el DNI del usuario que va a usar: ");
@@ -196,6 +233,9 @@ public class Programa {
             dniTemp = in.next();
             temp = sistema.getUsuario(dniTemp);
         }
+
+        sistema.devolverActivosUsuario(temp);    
+        System.out.println(temp.getBilletera().getArregloSaldo().toString());
         Integer opt = -1;
         
         do {
@@ -249,9 +289,10 @@ public class Programa {
 			catch(Exception e){}
 		
         } while (opt != _EXIT);
-        
         //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
         sistema.actualizarCoinDB();
+        System.out.println(temp.getBilletera().getArregloSaldo().toString());
+        sistema.actualizarActivosDB(temp);
         
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
     }

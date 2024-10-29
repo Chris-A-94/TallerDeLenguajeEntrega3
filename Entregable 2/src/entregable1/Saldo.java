@@ -5,6 +5,13 @@ package entregable1;
  */
 public class Saldo implements Comparable<Saldo>{
 	private int id = 0;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String user_id;
 	private TipoMoneda tipo = TipoMoneda.UNDEFINED;
 	private String sigla = "?";

@@ -31,7 +31,7 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 		}
 	}
 	@Override
-	public void modificar(Transaccion t) {
+	public boolean modificar(Transaccion t) {
 		try {
 			String query = ("UPDATE TRANSACCION SET TEXTO = ?;");
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -39,13 +39,14 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 		  pstmt.setString(1,t.toString());
 		  pstmt.executeUpdate();
 		  pstmt.close();
-		  
+		  return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return false;
 	}
 	@Override
-	public void guardar(Transaccion t) {
+	public boolean guardar(Transaccion t) {
 			try {
 			    String query = "INSERT INTO TRANSACCION (TEXTO, USER_ID) VALUES (?, ?)";
 			    PreparedStatement pstmt = con.prepareStatement(query);
@@ -55,10 +56,11 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 			    
 			    pstmt.executeUpdate();
 			    pstmt.close();
-			  
+			  return true;
 			} catch (SQLException e) {
 				    System.out.println(e.getMessage());
 			}
+			return false;
 }
 	@Override
 	public List<Transaccion> devolverTabla() {

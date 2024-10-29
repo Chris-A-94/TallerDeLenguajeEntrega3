@@ -48,7 +48,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	}
 
 	@Override
-	public void modificar(Usuario user) {
+	public boolean modificar(Usuario user) {
 		try {
 			String query = ("UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, PAIS = ?, HABILITADO = ?, EMAIL = ? WHERE DNI = '"+user.getDNI()+"';");
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -60,18 +60,18 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		  pstmt.setString(6,user.getEmail());
 		  pstmt.executeUpdate();
 		  pstmt.close();
-		  
+		  return true;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} 
-		return;
+		return false;
 	}
 	
 
 	@Override
-	public void guardar(Usuario user) {
+	public boolean guardar(Usuario user) {
 		try {
-		    String query = "INSERT OR IGNORE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT OR REPLACE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,user.getDNI());
@@ -82,7 +82,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		    pstmt.setString(6,user.getEmail());
 		    pstmt.executeUpdate();
 		    pstmt.close();
-		    return;
+		    return true;
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
@@ -92,7 +92,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 			    System.out.println(e.getMessage());
 			    break;
 			}
-			return;
+			return false;
 		}		
 
 	}
