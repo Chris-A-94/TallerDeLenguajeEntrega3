@@ -70,7 +70,6 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		    pstmt.setDouble(2,saldo.getCantMonedas());
 		    pstmt.setString(3,saldo.getTipo().toString());  
 		    pstmt.setString(4,saldo.getUser_id());
-		    
 		    pstmt.executeUpdate();
 		    pstmt.close();
 		} catch (SQLException e) {

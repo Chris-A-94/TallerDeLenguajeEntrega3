@@ -284,9 +284,11 @@ public class Programa {
 			    System.out.printf("Opción incorrecta\n");
 			    break;
 			}
-			System.out.println("Presione [ENTER] para continuar...");
-			try{System.in.read();}
-			catch(Exception e){}
+			if (opt != 9) {
+				System.out.println("Presione [ENTER] para continuar...");
+				try{System.in.read();}
+				catch(Exception e){}
+			}
 		
         } while (opt != _EXIT);
         //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
