@@ -96,7 +96,7 @@ public class Usuario implements Comparable<Usuario> {
 		return this.DNI.compareTo(u.getDNI());
 	}
 	public String toString() {
-		String aux = (" DNI: "+ this.DNI +"\n Nombre y apellido: "+this.nombre+" "+this.apellido);
+		String aux = (" DNI: "+ this.DNI +"\n Nombre completo: "+this.nombre+" "+this.apellido+"\n eMail: "+this.email+"\n Pais/Residencia: "+this.pais);
 		
 		
 		

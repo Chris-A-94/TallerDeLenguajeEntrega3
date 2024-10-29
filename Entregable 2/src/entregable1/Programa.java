@@ -25,9 +25,15 @@ public class Programa {
 	private static void optGenerarActivos(Usuario user,Sistema sistema) {
 			Scanner in = new Scanner(System.in);
 			System.out.printf("[Generar Activos]\n"
-					+ "Introduzca las siglas de la moneda (* para seleccionar todas): ");
+					+ "Introduzca las siglas de la moneda (* para seleccionar todas)\n"
+					+ "( ");
+			for (Coin c : sistema.getMonedas()) {
+				System.out.printf("%s ", c.getSigla());
+			}
+			System.out.printf(")\n:> ");
+			
 			String sigla = in.next();
-			System.out.printf("Introduzca la cantidad de monedas: ");
+			System.out.printf("Introduzca la cantidad de monedas a generar\n:> ");
 			Double cantidad = in.nextDouble();
 			boolean encontro = false;
 			// Actualizar el saldo en todas las monedas
@@ -63,6 +69,8 @@ public class Programa {
 				// que no se encuentre instanciada un 'Saldo' dentro de la billetera del usuario se agrega un paso extra con
 				// el fin de evitar un error a futuro.
 			}
+			
+			System.out.printf("Monedas generadas\n");
 	}
 	private static void optListarActivos(Usuario user) {
 		// Comparators
@@ -90,7 +98,7 @@ public class Programa {
 		
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), CANTIDAD (2)\n: ");
+				+ "SIGLA (1), CANTIDAD (2)\n:> ");
 		Integer lectura = in.nextInt();
 		
 		while (lectura < 1 || lectura > 2) {
@@ -203,18 +211,18 @@ public class Programa {
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
         System.out.print("----------------------------\n"
-        		+ "Ingrese el DNI del usuario que va a usar\n: ");
+        		+ "Ingrese el DNI del usuario que va a usar\n:> ");
         dniTemp = in.next();
         Usuario temp = sistema.getUsuario(dniTemp);
         while (temp == null)
         {
-        	System.out.print("El DNI no existe, ingrese otro\n: ");
+        	System.out.print("El DNI no existe, ingrese otro\n:> ");
             dniTemp = in.next();
             temp = sistema.getUsuario(dniTemp);
         }
 
         // sistema.devolverActivosUsuario(temp);    
-        System.out.println(temp.getBilletera().getArregloSaldo().toString());
+        // System.out.println(temp.getBilletera().getArregloSaldo().toString());
         Integer opt = -1;
         
         do {
@@ -227,8 +235,8 @@ public class Programa {
                     + "6. Listar Mis Activos \n"
                     + "7. Simular una compra \n"
                     + "8. Simular Swap \n"
-                    + "9. Cerrar\n"
-                    + "opt: ");
+                    + "%d. Cerrar\n"
+                    + "opt: ", _EXIT);
             
             opt = in.nextInt();
             System.out.printf("\n[%d]\n", opt);
@@ -261,7 +269,7 @@ public class Programa {
 			case _EXIT:
 			    break;
 			default:
-			    System.out.printf("Opción incorrecta\n");
+			    System.out.printf("Opción incorrecta, intente de nuevo\n");
 			    break;
 			}
 			if (opt != 9) {

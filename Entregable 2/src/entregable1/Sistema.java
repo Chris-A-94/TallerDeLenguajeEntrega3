@@ -198,10 +198,10 @@ public class Sistema {
 		list.addAll(monedas);
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), CANTIDAD (2)\n:");
+				+ "SIGLA (1), VALOR (2)\n:> ");
 		Integer lectura = in.nextInt();
 		while (lectura < 1 || lectura > 2) {
-			System.out.printf("Valor Incorrecto: \n");
+			System.out.printf("Valor Incorrecto:\n:> ");
 			lectura = in.nextInt();
 		}
 		// Ordenar
@@ -211,7 +211,7 @@ public class Sistema {
 			list.sort(porValor);
 		}
 		for (Coin c : monedas) {
-			System.out.printf("%s: \t %f\n", c.getSigla(),c.getStock());
+			System.out.printf("%s: \t %f \tUSD\n", c.getSigla(),c.getPrecio());
 		}
 		
 	}
