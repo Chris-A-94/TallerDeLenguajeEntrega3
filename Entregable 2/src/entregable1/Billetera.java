@@ -338,8 +338,7 @@ public class Billetera {
 							}
 							if(saldos.getSigla().equals(fiat))
 							{
-								//saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;
-								saldoFinalFiat = saldoEmitido;
+								saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;								
 								saldos.setCantMonedas(saldoFinalFiat);
 							}
 								
@@ -350,8 +349,8 @@ public class Billetera {
 						monedasDB.modificar(auxMoneda);
 						monedasDB.modificar(auxFiat);
 						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getNombre()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getNombre()+" :"+saldoFinalCoin);
-						System.out.println("Saldo actual en"+auxFiat.getNombre()+": "+saldoFinalFiat);
+						System.out.println("Saldo actual en "+auxMoneda.getNombre()+" :"+auxMoneda.getStock());
+						System.out.println("Saldo actual en"+auxFiat.getNombre()+": "+auxFiat.getStock());
 				
 				
 				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
