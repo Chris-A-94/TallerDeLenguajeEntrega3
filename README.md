@@ -5,6 +5,7 @@
 - Implementar el proyecto con una base de datos funcional en SQLite.
 - Hacer uso de API's que consulten precios actuales de las criptomonedas.
 - Implementar una GUI con javax.Swing.
+- Implementar patrones de diseño como el Singleton o DAO.
 ## Checklist:
 - Billetera:
   - [X] Listar Activos
