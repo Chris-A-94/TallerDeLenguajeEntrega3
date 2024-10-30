@@ -423,21 +423,6 @@ public class Billetera {
 	public void setClavePublica(String clavePublica) {
 		this.clavePublica = clavePublica;
 	}
-	public void generarArregloSaldo() {
-		CoinDAO myCoin = new CoinDAO(); // (DB API)
-		// Se instancia una nueva lista de objetos 'Saldo'
-		arregloSaldo = new LinkedList<Saldo>();
-		
-		
-		// Se exportan las monedas
-		List<Coin> monedas = new LinkedList<Coin>();
-		monedas.addAll(myCoin.devolverTabla());
-		
-		// Se instancia un objeto 'Saldo' por cada moneda
-		for (Coin moneda : monedas) {
-			this.arregloSaldo.add(new Saldo(moneda.getSigla(), 0.0));
-		}
-	}
 	public void agregarMoneda(Coin moneda,  Double cant) {
 		// Si no hay ninguna lista, imprimir error y retornar
 		if (arregloSaldo.equals(null)) {
@@ -446,7 +431,7 @@ public class Billetera {
 		}	
 		
 		// Insertar a la lista la nueva moneda
-		this.arregloSaldo.add(new Saldo(moneda.getSigla(), cant));
+		this.arregloSaldo.add(new Saldo(this.userID, moneda.getTipo(), moneda.getSigla(), cant));
 	}
 	
 	public String historialTransacciones()
