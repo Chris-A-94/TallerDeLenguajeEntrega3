@@ -213,7 +213,7 @@ public class Billetera {
 				Saldo enDivisa = null;		
 				for(Saldo auxSaldo: this.arregloSaldo)
 				{
-					if(fiat.equalsIgnoreCase(auxSaldo.getSigla())) {
+					if ( fiat.equalsIgnoreCase(auxSaldo.getSigla()) ) {
 						enDivisa = auxSaldo;
 					}
 				}
@@ -293,9 +293,8 @@ public class Billetera {
 					System.out.println("La moneda "+moneda+" vale "+precio+" "+fiat+".\n¿Desea proceder? y/n");
 					String carga = in.next();
 					if(carga.equals("y") || carga.equals("Y"))
-						//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
+					//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
 					{
-						
 						double enDolares = auxFiat.getPrecio() * saldoEmitido;
 						double monedasAComprar = enDolares / auxMoneda.getPrecio();
 						if (monedasAComprar > auxMoneda.getStock())
@@ -341,12 +340,11 @@ public class Billetera {
 								saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;								
 								saldos.setCantMonedas(saldoFinalFiat);
 							}
-								
 						}
 						//mismo calculo de arriba pero para la database
 						auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
-						auxFiat.setStock(saldoFinalFiat);
-						
+
+						auxFiat.setStock(saldoEmitido + auxFiat.getStock());
 						// Búsqueda de la moneda
 						List<Coin> table = monedasDB.devolverTabla();
 						boolean existeCoin, existeFiat;
@@ -370,15 +368,12 @@ public class Billetera {
 						}
 						
 						
-						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getSigla()+" :"+auxMoneda.getStock());
-						System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
-				
-				
+				System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
+				System.out.println("Saldo actual en "+auxMoneda.getSigla()+" :"+auxMoneda.getStock());
+				System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
 				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
 				String mes = java.time.ZonedDateTime.now().getMonth().toString();
 				String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
-				
 				TransaccionDAO guardarTransaccion = new TransaccionDAO();
 				guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,auxMoneda.getSigla(),auxFiat.getSigla(),saldoEmitido,monedasAComprar));
 			}
