@@ -328,6 +328,7 @@ public class Billetera {
 						}
 						double saldoFinalCoin = 0.0;
 						double saldoFinalFiat = 0.0;
+						Saldo coinSaldo = null;
 						for(Saldo saldos: this.arregloSaldo)
 						{ 
 							//Se agregan las monedas fiats de la compra, y se restan las vendidas al usuario en la memoria dinamica
@@ -335,6 +336,7 @@ public class Billetera {
 							{
 								saldoFinalCoin = saldos.getCantMonedas() + monedasAComprar;
 								saldos.setCantMonedas(saldoFinalCoin);
+								coinSaldo = saldos;
 							}
 							if(saldos.getSigla().equals(fiat))
 							{
@@ -371,7 +373,7 @@ public class Billetera {
 						
 						
 						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getSigla()+" :"+auxMoneda.getStock());
+						System.out.println("Saldo actual en "+coinSaldo.getSigla()+" :"+coinSaldo.getCantMonedas());
 						System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
 				
 				
