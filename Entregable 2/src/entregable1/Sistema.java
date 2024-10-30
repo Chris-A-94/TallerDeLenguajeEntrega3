@@ -72,15 +72,20 @@ public class Sistema {
 			return null;
 		this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
-		System.out.println("¿Desea almacenar la moneda en la base de datos? (La carga igualmente se hará al finalizar la ejecución) \n (1) SI (0) NO");
+		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
 	    int i = in.nextInt(); //Variable para leer opciones...
 	    
 	    while ((i != 1) && (i != 0)) {  
-	        System.out.println("Entrada incorrecta. Ingrese (1) SI (0) NO");
+	        System.out.printf("Entrada incorrecta. Ingrese (1) SI (0) NO\n: ");
 	        i = in.nextInt();
 	    }
-	    if(i == 1)
+	    if(i == 1) {
 	    	cDao.guardar(auxCoin); // se agrega moneda
+	    	System.out.printf("\u001B[42mSe registró la moneda %s en la Base de Datos.\u001B[0m\n", auxCoin.getSigla());
+	    } else {
+	    	System.out.printf("\u001B[41mNo se registró la moneda %s en la Base de Datos.\u001B[0m\n", auxCoin.getSigla());
+	    }
+	    	
 	    return auxCoin;			
 			
 		}
@@ -95,12 +100,12 @@ public class Sistema {
 	{
 		Scanner in = new Scanner(System.in);
 	    
-	    System.out.println("Ingrese el tipo de moneda (1) FIAT (0) Cripto");
+	    System.out.printf("Ingrese el tipo de moneda\n(1) FIAT (0) Cripto\n: ");
 	    int i = in.nextInt();
 	    
 	    String tipo;
 	    while ((i != 1) && (i != 0)) {
-	        System.out.println("Entrada incorrecta. Ingrese el tipo de moneda (1) FIAT (0) Cripto");
+	        System.out.printf("Entrada incorrecta.\nIngrese el tipo de moneda\n(1) FIAT (0) Cripto\n: ");
 	        i = in.nextInt();
 	    }
 	    
@@ -110,44 +115,46 @@ public class Sistema {
 	        tipo = "CRIPTOMONEDA";
 	    }
 	    
-	    System.out.println("Ingrese el nombre de la moneda");
+	    System.out.printf("Ingrese el nombre de la moneda\n: ");
 	    String nombre = in.next();
 	    
 	    nombre = nombre.toUpperCase();
 	    if (this.existeMoneda(nombre)) {
-	    	System.out.println("Esta moneda ya existe en la base de datos.");
-	    	return null;
+	    	System.out.printf("Esta moneda ya existe en la base de datos. Intende con otro nombre...\n: ");
+	    	nombre = in.next();
 	    }
 	    	
-	    System.out.println("Ingrese la sigla de la moneda");
+	    System.out.printf("Ingrese la sigla de la moneda\n: ");
 	    String sigla = in.next();
 	    
 	    sigla = sigla.toUpperCase();
 	    if (this.existeMoneda(sigla)) {
-	    	System.out.println("Esta moneda ya existe en la base de datos.");
-	    	return null;
+	    	System.out.printf("Esta sigla ya se encuentra en uso. Intente con otra sigla...\n: ");
+	    	nombre = in.next();
 	    }
 	    	
 	    
 	    //El Stock se genera de forma aleatoria
 	    
-	    System.out.println("Ingrese el precio en USD");
+	    System.out.printf("Ingrese el precio en USD\n: ");
 	    double price = in.nextDouble();
 	    Coin aux = new Coin(nombre,sigla,TipoMoneda.fromString(tipo),price);
-	    System.out.println(".......\n[MONEDA CREADA]\n"+aux.toString());   
-	    System.out.println("Confirmar: (1) SI (0) NO");
+	    System.out.printf(".......\n[CONFIRMAR INFORMACIÓN DE LA MONEDA]\n%s\n", aux.toString());   
+	    System.out.printf("Confirmar: (1) SI (0) NO\n: ");
 	    
 	    i = in.nextInt();
 	   
 	    while ((i != 1) && (i != 0)) {
-	        System.out.println("Entrada incorrecta. Ingrese (1) SI (0) NO");
+	        System.out.printf("Entrada incorrecta. Ingrese (1) SI (0) NO\n: ");
 	        i = in.nextInt();
 	    }
 	    if (i == 0)
 		{	
+	    	System.out.printf("\u001B[41mNo se registró la moneda %s en el Sistema\u001B[0m\n", aux.getSigla());
 			return null;
 		}
 	    
+	    System.out.printf("\u001B[46mSe registró la moneda %s en el Sistema\u001B[0m\n", aux.getSigla());
 	    return aux;
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...

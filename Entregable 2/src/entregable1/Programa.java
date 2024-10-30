@@ -32,8 +32,19 @@ public class Programa {
 			
 			String sigla = in.next();
 			sigla = sigla.toUpperCase();
+			if (!sistema.existeMoneda(sigla)) {
+				System.out.printf("La sigla de la moneda no existe, intente de nuevo\n:> ");
+				sigla = in.next();
+				sigla = sigla.toUpperCase();
+			}
+			
 			System.out.printf("Introduzca la cantidad de monedas a generar\n:> ");
 			Double cantidad = in.nextDouble();
+			if (cantidad < 0.0) {
+				System.out.printf("La cantidad no es un valor válido, intente de nuevo\n:> ");
+				cantidad = in.nextDouble();
+			}
+			
 			boolean encontro = false;
 			// Actualizar el saldo en todas las monedas
 			if (sigla.equals("*")) {
@@ -78,6 +89,16 @@ public class Programa {
 		// Comparators
 		// Nota: Se declara y define los 'Comparator's según por criterio unicamente dentro del
 		// Scope de este método.
+		if (user.getBilletera().getArregloSaldo().isEmpty()) {
+			System.out.printf("No tenés activos en la cuenta!...\n");
+			return;
+		}
+		if (user.getBilletera().getArregloSaldo().size() == 1) {
+			Saldo s = user.getBilletera().getArregloSaldo().get(0);
+			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
+			return;
+		}
+		
 		Comparator<Saldo> porSigla = new Comparator<Saldo>() {
 			public int compare(Saldo s1, Saldo s2) {
 				return s1.getSigla().compareTo(s2.getSigla());
@@ -118,7 +139,7 @@ public class Programa {
 		// Listar los Activos
 		System.out.printf("[Listar Activos]\n");
 		for (Saldo s : list) {
-			System.out.printf("\033[1;37m%s \033[0;33m%.3f\033[0m\n", s.getSigla(), s.getCantMonedas());
+			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
 	
@@ -139,9 +160,8 @@ public class Programa {
 				monedasCripto.add(c);
 		}
 		for (Saldo s : temp.getBilletera().getArregloSaldo()) {
-			if (s.getTipo().equals("Fiat")) {
+			if (s.getTipo().equals("Fiat"))
 				monedasFiat.add(sistema.buscarMoneda(s.getSigla()));
-			}
 		}
 		if (monedasFiat.isEmpty()) {
 			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
@@ -157,10 +177,20 @@ public class Programa {
 		// Lectura de la Criptomoneda
 		String siglaMoneda = in.next();
 		siglaMoneda = siglaMoneda.toUpperCase();
-		if(!existeMoneda(siglaMoneda,monedasCripto))
+		while(!existeMoneda(siglaMoneda,monedasCripto))
 		{
-			System.out.println("La moneda actual no existe, se procede a generarla.");
+			System.out.printf("La criptomoneda %s no existe, se procede a generarla.\n", siglaMoneda);
 			optCrearMoneda(sistema,temp);
+			
+			monedasCripto.clear();
+			for (Coin c : sistema.getMonedas()) {
+				if (c.getTipo().equals("Criptomoneda")) 
+					monedasCripto.add(c);
+			}
+			if (existeMoneda(siglaMoneda, monedasCripto)) {
+				break;
+			}
+				
 		}
 		
 		// Se listan todas las monedas fiat
@@ -173,34 +203,14 @@ public class Programa {
 		
 		// Lectura de la Moneda Fiat
 		String siglaFiat = in.next();
-		siglaFiat = siglaFiat.toUpperCase();
 		
-		if(!existeMoneda(siglaFiat,monedasFiat))
+		while(!existeMoneda(siglaFiat,monedasFiat))
 		{
-			System.out.println("La moneda actual no existe, se procede a generarla.");
-			optCrearMoneda(sistema,temp);
+			System.out.printf("La moneda fiat %s no existe, intente de nuevo:\n ", siglaFiat);
+			siglaFiat = in.next();
 		}
 		
-		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-		monedasMem.addAll(sistema.getMonedas());
-		Coin auxFiat = null;
-		Coin auxMoneda = null;
-		for(Coin monedaAux: monedasMem)
-		{
-			if(siglaFiat.equals(monedaAux.getSigla()))
-				auxFiat = monedaAux;
-			if(siglaMoneda.equals(monedaAux.getSigla()))
-				auxMoneda = monedaAux;
-		}
-		
-		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
-		{
-			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
-			return;
-		}
-		
-		// Arreglar: No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
-		temp.getBilletera().comprar(auxMoneda,siglaFiat,sistema.getMonedas());	
+		temp.getBilletera().comprar(sistema.buscarMoneda(siglaMoneda),siglaFiat,sistema.getMonedas());	
 	}
 
 	public static Usuario leerUsuario() {

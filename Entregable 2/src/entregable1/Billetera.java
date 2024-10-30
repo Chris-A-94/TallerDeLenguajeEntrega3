@@ -237,6 +237,7 @@ public class Billetera {
 			}
 			//Se pide cuanto del saldo se usara en la operacion
 			System.out.println("Su saldo en "+fiat+" es de: "+fiatSaldo.getCantMonedas()+".\n ¿Cuanto desea usar?");
+			System.out.print(": ");
 			Double saldoEmitido = in.nextDouble();	
 			//Si el saldo a gastar es mayor que el que se tiene, se ofrece gastar menos o cargar mas
 			if(fiatSaldo.getCantMonedas() < saldoEmitido)
@@ -289,7 +290,8 @@ public class Billetera {
 			//precio de la criptomoneda expresada en el fiat ingresado
 			double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
 			
-			System.out.println("1 "+moneda.getSigla()+" equivale a "+precio+" "+fiat+".\n¿Desea proceder? y/n");
+			System.out.println("1 "+moneda.getSigla()+" equivale a "+precio+" "+fiat+". Estarias comprado "+ saldoEmitido/precio + " " + moneda.getSigla() +".\n¿Desea proceder? y/n");
+			System.out.print(": ");
 			String carga = in.next();
 			if(carga.equals("y") || carga.equals("Y"))
 			//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
@@ -356,8 +358,8 @@ public class Billetera {
 				auxFiat.setStock(saldoEmitido + auxFiat.getStock());
 						
 				System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
-				System.out.println("Saldo actual en "+coinSaldo.getSigla()+" :"+coinSaldo.getCantMonedas());
-				System.out.println("Saldo actual en "+fiatSaldo.getSigla()+": "+fiatSaldo.getCantMonedas());
+				System.out.println("Saldo actual de "+coinSaldo.getSigla()+": "+coinSaldo.getCantMonedas());
+				System.out.println("Saldo actual de "+fiatSaldo.getSigla()+": "+fiatSaldo.getCantMonedas());
 				
 				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
 				String mes = java.time.ZonedDateTime.now().getMonth().toString();
