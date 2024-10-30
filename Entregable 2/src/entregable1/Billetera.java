@@ -290,8 +290,7 @@ public class Billetera {
 					//precio de la criptomoneda expresada en el fiat ingresado
 					double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
 					
-					System.out.println("La moneda "+moneda+" vale "+precio+" "+fiat+". Se cobrara una comision del 2.5%\n"
-							+ "¿Desea proceder? y/n");
+					System.out.println("La moneda "+moneda+" vale "+precio+" "+fiat+".\n¿Desea proceder? y/n");
 					String carga = in.next();
 					if(carga.equals("y") || carga.equals("Y"))
 						//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
