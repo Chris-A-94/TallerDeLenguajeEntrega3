@@ -72,7 +72,7 @@ public class Sistema {
 			return null;
 		this.monedas.add(auxCoin);
 		Scanner in = new Scanner(System.in);
-		System.out.println("¿Desea almacenar la moneda en la base de datos? \n (1) SI (0) NO");
+		System.out.println("¿Desea almacenar la moneda en la base de datos? (La carga igualmente se hará al finalizar la ejecución) \n (1) SI (0) NO");
 	    int i = in.nextInt(); //Variable para leer opciones...
 	    
 	    while ((i != 1) && (i != 0)) {  
@@ -133,10 +133,12 @@ public class Sistema {
 	    
 	    System.out.println("Ingrese el precio en USD");
 	    double price = in.nextDouble();
-	    
+	    Coin aux = new Coin(nombre,sigla,TipoMoneda.fromString(tipo),price);
+	    System.out.println(".......\n[MONEDA CREADA]\n"+aux.toString());   
 	    System.out.println("Confirmar: (1) SI (0) NO");
-	    i = in.nextInt();
 	    
+	    i = in.nextInt();
+	   
 	    while ((i != 1) && (i != 0)) {
 	        System.out.println("Entrada incorrecta. Ingrese (1) SI (0) NO");
 	        i = in.nextInt();
@@ -146,7 +148,7 @@ public class Sistema {
 			return null;
 		}
 	    
-	    return new Coin(nombre,sigla,TipoMoneda.fromString(tipo),price);
+	    return aux;
 	}
 	//Agrega una instancia de criptomoneda a la base de datos...
 	

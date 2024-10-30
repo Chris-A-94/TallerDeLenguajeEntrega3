@@ -228,7 +228,7 @@ public class Programa {
         }
 
         sistema.devolverActivosUsuario(temp);    
-        System.out.println(temp.getBilletera().getArregloSaldo().toString());
+        //BUEN LUGAR PARA DEBUGGEAR BASE DE DATOS
         Integer opt = -1;
         
         do {
@@ -288,9 +288,7 @@ public class Programa {
         } while (opt != _EXIT);
         //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
         sistema.actualizarCoinDB();
-        System.out.println(temp.getBilletera().getArregloSaldo().toString());
         sistema.actualizarActivosDB(temp);
-        
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
     }
 }
