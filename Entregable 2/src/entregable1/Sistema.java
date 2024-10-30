@@ -282,7 +282,7 @@ public class Sistema {
 	}
 	public Coin buscarMoneda(String siglaMoneda) {
 		for (Coin c : this.getMonedas()) {
-			if (c.getSigla().equals(siglaMoneda))
+			if (c.getSigla().equalsIgnoreCase(siglaMoneda))
 				return c;
 		}
 		

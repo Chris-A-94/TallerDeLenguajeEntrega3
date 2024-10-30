@@ -66,7 +66,8 @@ public class Programa {
 				}
 				// Si existe en la base de datos y no fue encontrada dentro de arregloSaldo[]...
 				// Agrega la moneda al arregloSaldo[]
-				user.getBilletera().getArregloSaldo().add(new Saldo(user.getDNI(),sistema.buscarMoneda(sigla).getTipo(), sigla, cantidad));
+				Coin moneda = sistema.buscarMoneda(sigla);
+				user.getBilletera().getArregloSaldo().add(new Saldo(user.getDNI(),moneda.getTipo(), moneda.getSigla(), cantidad));
 				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en el Sistema y
 				// que no se encuentre instanciada un 'Saldo' dentro de la billetera del usuario se agrega un paso extra con
 				// el fin de evitar un error a futuro.
@@ -124,7 +125,7 @@ public class Programa {
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
 		// dudoso
-		//temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
+		temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
 		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
