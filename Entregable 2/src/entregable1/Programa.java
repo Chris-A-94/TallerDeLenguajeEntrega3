@@ -125,7 +125,7 @@ public class Programa {
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
 		// dudoso
-		temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
+		temp.getBilletera().agregarMoneda(auxCoin, 0.0);
 		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
