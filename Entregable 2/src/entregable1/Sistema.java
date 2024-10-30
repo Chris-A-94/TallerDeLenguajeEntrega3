@@ -79,16 +79,13 @@ public class Sistema {
 	        System.out.println("Entrada incorrecta. Ingrese (1) SI (0) NO");
 	        i = in.nextInt();
 	    }
-	    if (i == 0)
-	    	return null;
-		else
-		{
-		cDao.guardar(auxCoin); //se agrega moneda
+	    if(i == 1)
+	    	cDao.guardar(auxCoin); // se agrega moneda
+	    return auxCoin;			
 			
-			
-			return auxCoin;
 		}
-	}
+	    
+	
 	
 	
 	/*
