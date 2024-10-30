@@ -213,8 +213,9 @@ public class Billetera {
 				Saldo enDivisa = null;		
 				for(Saldo auxSaldo: this.arregloSaldo)
 				{
-					if(fiat.equals(auxSaldo.getSigla()))
-						enDivisa = auxSaldo;				
+					if(fiat.equalsIgnoreCase(auxSaldo.getSigla())) {
+						enDivisa = auxSaldo;
+					}
 				}
 				
 				//Si el saldo es cero, se ofrecen opciones de cargar saldo

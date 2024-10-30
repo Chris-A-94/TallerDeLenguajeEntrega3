@@ -13,7 +13,7 @@ public class Programa {
 		boolean existe = false;
 		
 		for (Coin coin : monedas) {
-			if (coin.getSigla().equals(sigla)) {
+			if (coin.getSigla().equalsIgnoreCase(sigla)) {
 				existe = true;
 				break;
 			}
@@ -70,7 +70,7 @@ public class Programa {
 				// el fin de evitar un error a futuro.
 			}
 			
-			System.out.printf("Monedas generadas\n");
+			System.out.printf("La operación se realizó con exito\n");
 	}
 	private static void optListarActivos(Usuario user) {
 		// Comparators
@@ -114,8 +114,10 @@ public class Programa {
 		}
 		
 		// Listar los Activos
-		System.out.printf("[Listar Activos]\n"
-				+ "%s\n", list.toString());
+		System.out.printf("[Listar Activos]\n");
+		for (Saldo s : list) {
+			System.out.printf("\033[1;37m%s \033[0;33m%.3f\033[0m\n", s.getSigla(), s.getCantMonedas());
+		}
 	}
 	private static void optCrearMoneda(Sistema sistema) {
 		Coin auxCoin = sistema.crearMoneda();
@@ -191,6 +193,7 @@ public class Programa {
 			return;
 		}
 		
+		// No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
 		
 		temp.getBilletera().comprar(siglaMoneda,siglaFiat, sistema.getMonedas());	
 	}
@@ -202,8 +205,8 @@ public class Programa {
 	public static void main(String[] args) {
 		final int _EXIT = 9;
 
-
 		final Scanner in = new Scanner(System.in);
+		
 		
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
@@ -221,8 +224,8 @@ public class Programa {
             temp = sistema.getUsuario(dniTemp);
         }
 
-        // sistema.devolverActivosUsuario(temp);    
-        // System.out.println(temp.getBilletera().getArregloSaldo().toString());
+        sistema.devolverActivosUsuario(temp);    
+        System.out.println(temp.getBilletera().getArregloSaldo().toString());
         Integer opt = -1;
         
         do {
@@ -235,11 +238,11 @@ public class Programa {
                     + "6. Listar Mis Activos \n"
                     + "7. Simular una compra \n"
                     + "8. Simular Swap \n"
-                    + "%d. Cerrar\n"
+                    + "%d. \033[1;37mCerrar\033[0m\n"
                     + "opt: ", _EXIT);
             
             opt = in.nextInt();
-            System.out.printf("\n[%d]\n", opt);
+            System.out.printf("----------------------------\n[%d]\n", opt);
 
 			switch (opt) {
 			case 1:
@@ -273,7 +276,8 @@ public class Programa {
 			    break;
 			}
 			if (opt != 9) {
-				System.out.println("Presione [ENTER] para continuar...");
+				System.out.println("----------------------------\n"
+						+ "Presione [ENTER] para continuar...");
 				try{System.in.read();}
 				catch(Exception e){}
 			}
