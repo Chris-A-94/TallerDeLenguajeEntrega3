@@ -2,8 +2,6 @@ package entregable1;
 
 import java.util.Scanner;
 
-import daos.CoinDAO;
-
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -202,7 +200,7 @@ public class Programa {
 		}
 		
 		// Arreglar: No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
-		temp.getBilletera().comprar(siglaMoneda,siglaFiat, sistema.getMonedas());	
+		temp.getBilletera().comprar(auxMoneda,siglaFiat,sistema.getMonedas());	
 	}
 
 	public static Usuario leerUsuario() {
