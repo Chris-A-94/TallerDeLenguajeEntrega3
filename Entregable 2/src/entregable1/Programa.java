@@ -122,10 +122,9 @@ public class Programa {
 			System.out.printf("\033[1;37m%s \033[0;33m%.3f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
+	
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
-		// dudoso
-		temp.getBilletera().agregarMoneda(auxCoin, 0.0);
 		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
