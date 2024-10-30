@@ -45,14 +45,16 @@ public class Programa {
 							// No toca activos ya generados.
 							encontro = true;
 						}
-					if (encontro ==  false)
+					if (encontro ==  false) {
 						user.getBilletera().agregarSaldo(new Saldo(user.getDNI(), m.getTipo(), m.getSigla(), cantidad));
+					}
+						
 				}
 			// Actualizar unicamente la moneda indicada
 			} else {
-				// Busca si la moneda existe en la base de datos
+				// Busca si la moneda existe en el sistema
 				if (!existeMoneda(sigla, sistema.getMonedas())) {
-					System.out.printf("ERROR::DB::LA_MONEDA_NO_EXISTE\n");
+					System.out.printf("ERROR::LA_MONEDA_NO_EXISTE\n");
 					return;
 				}
 				// Se busca la moneda en arregloSaldo[]
@@ -64,7 +66,7 @@ public class Programa {
 				}
 				// Si existe en la base de datos y no fue encontrada dentro de arregloSaldo[]...
 				// Agrega la moneda al arregloSaldo[]
-				user.getBilletera().getArregloSaldo().add(new Saldo(sigla, cantidad));
+				user.getBilletera().getArregloSaldo().add(new Saldo(user.getDNI(),sistema.buscarMoneda(sigla).getTipo(), sigla, cantidad));
 				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en el Sistema y
 				// que no se encuentre instanciada un 'Saldo' dentro de la billetera del usuario se agrega un paso extra con
 				// el fin de evitar un error a futuro.
@@ -207,10 +209,10 @@ public class Programa {
 
 		final Scanner in = new Scanner(System.in);
 		
-		
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
         Sistema sistema = new Sistema();
+        
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
         System.out.print("----------------------------\n"
