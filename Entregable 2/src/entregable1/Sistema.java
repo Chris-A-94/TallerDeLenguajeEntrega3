@@ -165,7 +165,7 @@ public class Sistema {
 		list.addAll(monedas);
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), VALOR (2)\n:");
+				+ "SIGLA (1), VALOR (2)\n: ");
 		Integer lectura = in.nextInt();
 		while (lectura < 1 || lectura > 2) {
 			System.out.printf("Valor Incorrecto: \n");
@@ -184,7 +184,7 @@ public class Sistema {
 			System.out.println(c.toString());
 			System.out.println("------");
 		}
-		System.out.println("\u001B[33m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
+		System.out.println("\033[4;33m" +"Cantidad de monedas: "+ monedas.size() + "\u001B[0m");
 	}
 	public void listarStock() {
 		if (monedas.isEmpty()){
@@ -198,20 +198,22 @@ public class Sistema {
 		list.addAll(monedas);
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), CANTIDAD (2)\n:");
+				+ "SIGLA (1), STOCK (2)\n:> ");
 		Integer lectura = in.nextInt();
 		while (lectura < 1 || lectura > 2) {
-			System.out.printf("Valor Incorrecto: \n");
+			System.out.printf("Valor Incorrecto:\n:> ");
 			lectura = in.nextInt();
 		}
 		// Ordenar
 		if (lectura.equals(1)) {
 			list.sort(porSigla);
 		} else if (lectura.equals(2)) {
-			list.sort(porValor);
+			list.sort(porStock);
 		}
-		for (Coin c : monedas) {
-			System.out.printf("%s: \t %f\n", c.getSigla(),c.getStock());
+		
+		System.out.printf("SIGLA\t STOCK\n");
+		for (Coin c : list) {
+			System.out.printf("\033[1;37m%s\033[0m: \t \033[0;33m%f\033[0m\n", c.getSigla(),c.getStock());
 		}
 		
 	}
@@ -249,8 +251,8 @@ public class Sistema {
 
 		int i=1;
 		for (Usuario u: usuarios) {
-			System.out.print(i+". ");
-			System.out.println(u.toString());
+			System.out.print(i+".\n");
+			System.out.println(u.toString()+"\n...");
 			i++;
 		}
 	}

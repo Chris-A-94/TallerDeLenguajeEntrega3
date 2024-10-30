@@ -78,7 +78,7 @@ public class Coin implements Comparable<Coin>{
 		return true;
 	}
 	public String toString() {
-		return ("Nombre: "+this.nombre+" \nSigla: "+ this.sigla+ "\nTipo: "+this.tipo +"\nPrecio (USD): "+this.precio+ "\nStock: "+this.stock);
+		return ("Nombre: \033[1;37m"+this.nombre+" \033[0m\nSigla: "+ this.sigla+ "\nTipo: "+this.tipo +"\n\033[0;32mPrecio (USD): "+this.precio+ "\033[0m\n\033[0;33mStock: "+this.stock+"\033[0m");
 	}
 	
 	@Override
