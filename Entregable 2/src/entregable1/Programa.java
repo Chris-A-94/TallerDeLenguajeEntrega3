@@ -119,9 +119,10 @@ public class Programa {
 			System.out.printf("\033[1;37m%s \033[0;33m%.3f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
-	private static void optCrearMoneda(Sistema sistema) {
+	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
-	}
+		temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
+		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
 		if (temp.getBilletera().getArregloSaldo().isEmpty()) {
@@ -155,7 +156,7 @@ public class Programa {
 		if(!existeMoneda(siglaMoneda,monedasCripto))
 		{
 			System.out.println("La moneda actual no existe, se procede a generarla.");
-			optCrearMoneda(sistema);
+			optCrearMoneda(sistema,temp);
 		}
 		
 		// Se listan todas las monedas fiat
@@ -172,7 +173,7 @@ public class Programa {
 		if(!existeMoneda(siglaFiat,monedasFiat))
 		{
 			System.out.println("La moneda actual no existe, se procede a generarla.");
-			optCrearMoneda(sistema);
+			optCrearMoneda(sistema,temp);
 		}
 		
 		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
@@ -245,7 +246,7 @@ public class Programa {
 
 			switch (opt) {
 			case 1:
-			    optCrearMoneda(sistema);
+			    optCrearMoneda(sistema,temp);
 			    break;
 			case 2:
 				sistema.listarMonedas();
