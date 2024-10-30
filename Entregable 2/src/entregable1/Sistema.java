@@ -278,6 +278,14 @@ public class Sistema {
 	public List<Coin> getMonedas(){
 		return monedas;
 	}
+	public Coin buscarMoneda(String siglaMoneda) {
+		for (Coin c : this.getMonedas()) {
+			if (c.getSigla().equals(siglaMoneda))
+				return c;
+		}
+		
+		return null;
+	}
 	public boolean existeMoneda(String moneda) {
 		boolean existe = false;
 		
