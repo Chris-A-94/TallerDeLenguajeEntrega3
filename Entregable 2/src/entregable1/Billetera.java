@@ -371,7 +371,7 @@ public class Billetera {
 						
 						
 						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getSigla()+") :"+auxMoneda.getStock());
+						System.out.println("Saldo actual en "+auxMoneda.getSigla()+" :"+auxMoneda.getStock());
 						System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
 				
 				

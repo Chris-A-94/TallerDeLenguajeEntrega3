@@ -198,7 +198,7 @@ public class Sistema {
 		list.addAll(monedas);
 		// Pregunta
 		System.out.printf("Ordenar por\n"
-				+ "SIGLA (1), VALOR (2)\n:> ");
+				+ "SIGLA (1), STOCK (2)\n:> ");
 		Integer lectura = in.nextInt();
 		while (lectura < 1 || lectura > 2) {
 			System.out.printf("Valor Incorrecto:\n:> ");
@@ -208,11 +208,11 @@ public class Sistema {
 		if (lectura.equals(1)) {
 			list.sort(porSigla);
 		} else if (lectura.equals(2)) {
-			list.sort(porValor);
+			list.sort(porStock);
 		}
 		
 		System.out.printf("SIGLA\t STOCK\n");
-		for (Coin c : monedas) {
+		for (Coin c : list) {
 			System.out.printf("\033[1;37m%s\033[0m: \t \033[0;33m%f\033[0m\n", c.getSigla(),c.getStock());
 		}
 		
