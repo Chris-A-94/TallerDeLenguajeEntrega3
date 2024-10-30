@@ -193,8 +193,7 @@ public class Programa {
 			return;
 		}
 		
-		// No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
-		
+		// Arreglar: No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
 		temp.getBilletera().comprar(siglaMoneda,siglaFiat, sistema.getMonedas());	
 	}
 	

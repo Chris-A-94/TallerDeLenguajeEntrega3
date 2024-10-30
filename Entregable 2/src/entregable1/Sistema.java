@@ -210,6 +210,8 @@ public class Sistema {
 		} else if (lectura.equals(2)) {
 			list.sort(porValor);
 		}
+		
+		System.out.printf("SIGLA\t STOCK\n");
 		for (Coin c : monedas) {
 			System.out.printf("\033[1;37m%s\033[0m: \t \033[0;33m%f\033[0m\n", c.getSigla(),c.getStock());
 		}
