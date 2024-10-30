@@ -123,7 +123,8 @@ public class Programa {
 	}
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
-		temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
+		// dudoso
+		//temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
 		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{

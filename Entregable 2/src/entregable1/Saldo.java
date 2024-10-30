@@ -16,12 +16,6 @@ public class Saldo implements Comparable<Saldo>{
 	private TipoMoneda tipo = TipoMoneda.UNDEFINED;
 	private String sigla = "?";
 	private Double cantMonedas = 0.0;
-	public Saldo(String sigla, Double cantMonedas)
-	{
-		super();
-		this.sigla = sigla;
-		this.cantMonedas = cantMonedas;
-	}
 	public Saldo()
 	{
 		
