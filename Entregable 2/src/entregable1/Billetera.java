@@ -231,7 +231,7 @@ public class Billetera {
 				}
 				else
 				{
-					System.out.println("No puede comprar "+moneda+" sin saldo.");
+					System.out.println("No puede comprar "+moneda.getSigla()+" sin saldo.");
 					return;
 				}
 			}

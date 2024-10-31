@@ -65,6 +65,9 @@ public class Sistema {
 		//INICIALIZAR tDAO
 		tDao = new TransaccionDAO();
 	}
+	public void guardarMonedaDB(Coin moneda) {
+		this.cDao.guardar(moneda);
+	}
 		
 	public Coin crearMoneda() {
 		Coin auxCoin = this.leerMoneda(); //Leo la moneda desde teclado y lo guardo en una variable coin.
@@ -80,7 +83,7 @@ public class Sistema {
 	        i = in.nextInt();
 	    }
 	    if(i == 1) {
-	    	cDao.guardar(auxCoin); // se agrega moneda
+	    	this.guardarMonedaDB(auxCoin);
 	    	System.out.printf("\u001B[42mSe registró la moneda %s en la Base de Datos.\u001B[0m\n", auxCoin.getSigla());
 	    } else {
 	    	System.out.printf("\u001B[41mNo se registró la moneda %s en la Base de Datos.\u001B[0m\n", auxCoin.getSigla());

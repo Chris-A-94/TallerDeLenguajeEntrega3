@@ -7,6 +7,74 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Programa {
+	private static Coin crearCripto(String sigla, Sistema sistema) {
+		Coin return_coin = null;
+		
+		// Se asume que la sigla 
+		
+		Scanner in = new Scanner(System.in);
+		TipoMoneda tipoMoneda = TipoMoneda.CRIPTOMONEDA;
+		
+		String nombre;
+		
+		System.out.printf("Ingrese el nombre de la moneda\n: ");
+		nombre = in.next();
+		if (sistema.existeMoneda(nombre)) {
+			System.out.printf("Esta moneda ya existe en la base de datos.\n");
+			return null;
+		}
+		
+		sigla = sigla.toUpperCase();
+		if (sistema.existeMoneda(sigla)) {
+			System.out.printf("Esta moneda ya existe en la base de datos.\n");
+			return null;
+		}
+		
+		// Generar stock
+		System.out.printf("Ingrese el precio en USD\n: ");
+		double precio = in.nextDouble();
+		if (precio <= 0.0) {
+			System.out.printf("El precio no es un valor válido (Debe ser mayor que 0), intente de nuevo\n: ");
+			precio = in.nextDouble();
+		}
+		
+		int confirmar;
+		System.out.printf("Confirmar: (1) SI (0) NO\n: ");
+		confirmar = in.nextInt();
+		while (confirmar < 0 || confirmar > 1) {
+			System.out.printf("Opción incorrecta, intente de nuevo\n: ");
+			confirmar = in.nextInt();
+		}
+		
+		if (confirmar == 1) {
+			System.out.printf("\u001B[46mSe registró la moneda %s en el Sistema\u001B[0m\n", sigla);
+			return_coin = new Coin(nombre, sigla, tipoMoneda, precio);
+			
+			System.out.printf("¿Desea almacenar la moneda en la base de datos?: (1) SI (0) NO\n: ");
+			confirmar = in.nextInt();
+			while (confirmar < 0 || confirmar > 1) {
+				System.out.printf("Opción incorrecta, intente de nuevo\n: ");
+				confirmar = in.nextInt();
+			}
+			if (confirmar == 1) {
+				sistema.guardarMonedaDB(return_coin);
+				System.out.printf("\u001B[42mSe registró la moneda %s en la Base de Datos.\u001B[0m\n", sigla);
+			} else {
+				System.out.printf("\u001B[41mNo se registró la moneda %s en la Base de Datos.\u001B[0m\n", sigla);
+			}
+			
+		} else {
+			System.out.printf("\u001B[41mNo se registró la moneda %s en el Sistema\u001B[0m\n", sigla);
+		}
+		
+		if (return_coin != null) {
+			sistema.getMonedas().add(return_coin);
+		}
+		System.out.printf("----------------------------\n");
+		
+		return return_coin;
+	}
+	
 	private static boolean existeMoneda(String sigla, List<Coin> monedas) {
 		boolean existe = false;
 		
@@ -33,7 +101,7 @@ public class Programa {
 			String sigla = in.next();
 			sigla = sigla.toUpperCase();
 			if (!sistema.existeMoneda(sigla)) {
-				System.out.printf("La sigla de la moneda no existe, intente de nuevo\n:> ");
+				System.out.printf("La moneda %s no existe, intente de nuevo\n:> ", sigla);
 				sigla = in.next();
 				sigla = sigla.toUpperCase();
 			}
@@ -180,7 +248,20 @@ public class Programa {
 		while(!existeMoneda(siglaMoneda,monedasCripto))
 		{
 			System.out.printf("La criptomoneda %s no existe, se procede a generarla.\n", siglaMoneda);
-			optCrearMoneda(sistema,temp);
+			if (crearCripto(siglaMoneda, sistema) == null) {
+				System.out.printf("¿Desea cancelar la operación? (1) SI (0) NO\n: ");
+				int opt = in.nextInt();
+				while (opt < 0 || opt > 1) {
+					in.nextInt();
+				}
+				if (opt == 0) {
+					continue;
+				}
+				else {
+					return;
+				}
+					
+			}
 			
 			monedasCripto.clear();
 			for (Coin c : sistema.getMonedas()) {
