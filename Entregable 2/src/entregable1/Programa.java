@@ -33,7 +33,7 @@ public class Programa {
 		// Generar stock
 		System.out.printf("Ingrese el precio en USD\n: ");
 		double precio = in.nextDouble();
-		if (precio <= 0.0) {
+		while (precio <= 0.0) {
 			System.out.printf("El precio no es un valor válido (Debe ser mayor que 0), intente de nuevo\n: ");
 			precio = in.nextDouble();
 		}
@@ -271,7 +271,6 @@ public class Programa {
 			if (existeMoneda(siglaMoneda, monedasCripto)) {
 				break;
 			}
-				
 		}
 		
 		// Se listan todas las monedas fiat

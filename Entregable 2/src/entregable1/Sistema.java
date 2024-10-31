@@ -141,6 +141,10 @@ public class Sistema {
 	    
 	    System.out.printf("Ingrese el precio en USD\n: ");
 	    double price = in.nextDouble();
+	    while (price <= 0.0) {
+	    	System.out.printf("El precio no es un valor válido (Debe ser mayor que 0), intente de nuevo\n: ");
+	    	price = in.nextDouble();
+	    }
 	    Coin aux = new Coin(nombre,sigla,TipoMoneda.fromString(tipo),price);
 	    System.out.printf(".......\n[CONFIRMAR INFORMACIÓN DE LA MONEDA]\n%s\n", aux.toString());   
 	    System.out.printf("Confirmar: (1) SI (0) NO\n: ");
