@@ -1,6 +1,5 @@
 package entregable1;
 import java.util.Date;
-import java.util.LinkedList;
 
 /**
  * Es un usuario, contiene toda la información del usuario, incluyendo sus datos personales, de seguridad y billetera.

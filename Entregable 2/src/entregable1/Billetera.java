@@ -3,8 +3,6 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.sql.Time;
-import java.time.*;
 import daos.CoinDAO;
 
 import daos.TransaccionDAO;
@@ -206,183 +204,169 @@ public class Billetera {
 		System.out.println("Su nuevo saldo de "+segundaCoin.getNombre()+" es de: "+segundaMoneda.getCantMonedas());
 	}
 
-	public void comprar(String moneda,String fiat, List<Coin> monedas)
+	public void comprar(Coin moneda, String fiat, List<Coin> monedas)
 	{
-		//Se obtiene el Saldo de la divisa fiat ingresda
-				Scanner in = new Scanner(System.in);				
-				Saldo enDivisa = null;		
-				for(Saldo auxSaldo: this.arregloSaldo)
-				{
-					if(fiat.equalsIgnoreCase(auxSaldo.getSigla())) {
-						enDivisa = auxSaldo;
-					}
+	//Se obtiene el Saldo de la divisa fiat ingresda
+			Scanner in = new Scanner(System.in);				
+			Saldo fiatSaldo = null;
+			
+			for(Saldo auxSaldo: this.arregloSaldo)
+			{
+				if ( fiat.equalsIgnoreCase(auxSaldo.getSigla()) ) {
+					fiatSaldo = auxSaldo;
+					break;
 				}
-				
-				//Si el saldo es cero, se ofrecen opciones de cargar saldo
-				if(enDivisa.getCantMonedas() == 0)
+			}
+			
+			//Si el saldo es cero, se ofrecen opciones de cargar saldo
+			if(fiatSaldo.getCantMonedas() == 0)
+			{
+				System.out.println("No tiene saldo en la divisa "+fiatSaldo.getSigla()+" ¿Desea cargar? Y/N");
+				String carga = in.next();
+				if(carga.equals("y") || carga.equals("Y"))
 				{
-					System.out.println("No tiene saldo en la divisa "+enDivisa.getSigla()+" ¿Desea cargar? Y/N");
-					String carga = in.next();
-					if(carga.equals("y") || carga.equals("Y"))
-					{
-						System.out.println("Ingrese nuevo saldo: ");
-						Double mySaldo = in.nextDouble();
-						enDivisa.setCantMonedas(mySaldo);
-					}
-					else
-					{
-						System.out.println("No puede comprar "+moneda+" sin saldo.");
-						return;
-					}
+					System.out.println("Ingrese nuevo saldo: ");
+					Double mySaldo = in.nextDouble();
+					fiatSaldo.setCantMonedas(mySaldo);
 				}
-				//Se pide cuanto del saldo se usara en la operacion
-				System.out.println("Su saldo en "+fiat+" es de: "+enDivisa.getCantMonedas()+".\n ¿Cuanto desea usar?");
-				Double saldoEmitido = in.nextDouble();	
-				//Si el saldo a gastar es mayor que el que se tiene, se ofrece gastar menos o cargar mas
-				if(enDivisa.getCantMonedas() < saldoEmitido)
+				else
 				{
-					System.out.println("Su saldo actual en "+fiat+" es de "+enDivisa.getCantMonedas()+
-							". Insuficiente para su compra.");
-					System.out.println("1. Usar maximo saldo actual \n 2. Cambiar monto a comprar \n 3. Cargar mas \n 4. Cancelar");
-					int i = in.nextInt();
-					switch(i)
-					{
-					case 1: saldoEmitido = enDivisa.getCantMonedas();
-						break;
-					case 2: System.out.println("Saldo maximo: "+enDivisa.getCantMonedas()+". Ingrese monto menor: ");
-							saldoEmitido = in.nextDouble();
-							if( saldoEmitido > enDivisa.getCantMonedas())
-							{
-								System.out.println("No puede hacer esa transaccion.");
-								return;
-							}
-						break;
-					case 3: double requerido = saldoEmitido - enDivisa.getCantMonedas();
-							System.out.println("Necesita "+requerido+" para realizar su compra."
-							+ "Ingrese balance extra:");
-							double newBalance = in.nextDouble();
-							enDivisa.setCantMonedas(enDivisa.getCantMonedas() + newBalance);
-							if(enDivisa.getCantMonedas() < saldoEmitido)
-							{
-								System.out.println("Saldo cargado, pero sigue siendo insuficiente. Error.");
-								return;
-							}				
-							
-						break;
-						default:
-						System.out.println("Error.");
-						return;
-					}
+					System.out.println("No puede comprar "+moneda.getSigla()+" sin saldo.");
+					return;
 				}
-					//obtengo monedas de la base de datos para poder modificarlas y reenviarlas
-					CoinDAO monedasDB = new CoinDAO();
-					LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-					monedasMem.addAll(monedas);
-					Coin auxFiat = null;
-					Coin auxMoneda = null;
-					for(Coin monedaAux: monedasMem)
-					{
-						if(fiat.equalsIgnoreCase(monedaAux.getSigla()))
-							auxFiat = monedaAux;
-						if(moneda.equalsIgnoreCase(monedaAux.getSigla()))
-							auxMoneda = monedaAux;
-					}
-					//precio de la criptomoneda expresada en el fiat ingresado
-					double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
-					
-					System.out.println("La moneda "+moneda+" vale "+precio+" "+fiat+".\n¿Desea proceder? y/n");
-					String carga = in.next();
-					if(carga.equals("y") || carga.equals("Y"))
-						//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
-					{
-						
-						double enDolares = auxFiat.getPrecio() * saldoEmitido;
-						double monedasAComprar = enDolares / auxMoneda.getPrecio();
-						if (monedasAComprar > auxMoneda.getStock())
+			}
+			//Se pide cuanto del saldo se usara en la operacion
+			System.out.println("Su saldo en "+fiat+" es de: "+fiatSaldo.getCantMonedas()+".\n ¿Cuanto desea usar?");
+			System.out.print(": ");
+			Double saldoEmitido = in.nextDouble();	
+			//Si el saldo a gastar es mayor que el que se tiene, se ofrece gastar menos o cargar mas
+			if(fiatSaldo.getCantMonedas() < saldoEmitido)
+			{
+				System.out.println("Su saldo actual en "+fiat+" es de "+fiatSaldo.getCantMonedas()+
+						". Insuficiente para su compra.");
+				System.out.println("1. Usar maximo saldo actual \n 2. Cambiar monto a comprar \n 3. Cargar mas \n 4. Cancelar");
+				int i = in.nextInt();
+				switch(i)
+				{
+				case 1: saldoEmitido = fiatSaldo.getCantMonedas();
+					break;
+				case 2: System.out.println("Saldo maximo: "+fiatSaldo.getCantMonedas()+". Ingrese monto menor: ");
+						saldoEmitido = in.nextDouble();
+						if( saldoEmitido > fiatSaldo.getCantMonedas())
 						{
-							System.out.println("Stock insuficiente para el valor pedido.");
-							System.out.println("1. Cambiar valor \n 2. Comprar maximo \n 3. Cancelar");
-							int moveValor = in.nextInt();
-							switch(moveValor)
-							{
-							case 1:
-								double valorMaxDolar = auxMoneda.getPrecio() * auxMoneda.getStock();
-								double valorMaxFiat = valorMaxDolar * auxFiat.getPrecio();
-								System.out.println("Valor nuevo: (maximo: "+valorMaxFiat+")");
-								saldoEmitido = in.nextDouble();
-								if( saldoEmitido > valorMaxFiat)
-								{
-									System.out.println("Valor mas alto del posible. ERROR.");
-									
-									return;
-								}
-								enDolares = auxFiat.getPrecio() * saldoEmitido;
-								monedasAComprar = enDolares / auxMoneda.getPrecio();
-								break;
-							case 2: monedasAComprar = auxMoneda.getStock();
-								break;
-							default: 
-								
-								return;					
-							}
+							System.out.println("No puede hacer esa transaccion.");
+							return;
 						}
-						double saldoFinalCoin = 0.0;
-						double saldoFinalFiat = 0.0;
-						for(Saldo saldos: this.arregloSaldo)
-						{ 
-							//Se agregan las monedas fiats de la compra, y se restan las vendidas al usuario en la memoria dinamica
-							if(saldos.getSigla().equals(moneda))
-							{
-								saldoFinalCoin = saldos.getCantMonedas() + monedasAComprar;
-								saldos.setCantMonedas(saldoFinalCoin);
-							}
-							if(saldos.getSigla().equals(fiat))
-							{
-								saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;								
-								saldos.setCantMonedas(saldoFinalFiat);
-							}
-								
-						}
-						//mismo calculo de arriba pero para la database
-						auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
-						auxFiat.setStock(saldoFinalFiat);
+					break;
+				case 3: double requerido = saldoEmitido - fiatSaldo.getCantMonedas();
+						System.out.println("Necesita "+requerido+" para realizar su compra."
+						+ "Ingrese balance extra:");
+						double newBalance = in.nextDouble();
+						fiatSaldo.setCantMonedas(fiatSaldo.getCantMonedas() + newBalance);
+						if(fiatSaldo.getCantMonedas() < saldoEmitido)
+						{
+							System.out.println("Saldo cargado, pero sigue siendo insuficiente. Error.");
+							return;
+						}				
 						
-						// Búsqueda de la moneda
-						List<Coin> table = monedasDB.devolverTabla();
-						boolean existeCoin, existeFiat;
-						existeCoin = existeFiat = false;
-						for (Coin c : table) {
-							if (c.getSigla().equals(auxMoneda.getSigla())) {
-								existeCoin = true;
-								continue;
-							} else if (c.getSigla().equals(auxFiat.getSigla())){
-								existeFiat = true;
-							} else if (existeCoin && existeFiat) {
-								break;
-							}
+					break;
+					default:
+					System.out.println("Error.");
+					return;
+				}
+			}
+			//obtengo monedas de la base de datos para poder modificarlas y reenviarlas
+			LinkedList<Coin> monedasMem = new LinkedList<Coin>();
+			monedasMem.addAll(monedas);
+			Coin auxFiat = null;
+			Coin auxMoneda = null;
+			for(Coin monedaAux: monedasMem)
+			{
+				if(fiat.equalsIgnoreCase(monedaAux.getSigla()))
+					auxFiat = monedaAux;
+				if(moneda.getSigla().equalsIgnoreCase(monedaAux.getSigla()))
+					auxMoneda = monedaAux;
+			}
+			//precio de la criptomoneda expresada en el fiat ingresado
+			double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
+			
+			System.out.println("1 "+moneda.getSigla()+" equivale a "+precio+" "+fiat+". Estarias por comprar "+ saldoEmitido/precio + " " + moneda.getSigla() +".\n¿Desea proceder? y/n");
+			System.out.print(": ");
+			String carga = in.next();
+			if(carga.equals("y") || carga.equals("Y"))
+			//Se tienen en cuenta los problemas de que el usuario intente comprar mas de lo que el sistema tiene
+			{
+				double enDolares = auxFiat.getPrecio() * saldoEmitido;
+				double monedasAComprar = enDolares / auxMoneda.getPrecio();
+				if (monedasAComprar > auxMoneda.getStock())
+				{
+					System.out.println("Stock insuficiente para el valor pedido.");
+					System.out.println("1. Cambiar valor \n 2. Comprar maximo \n 3. Cancelar");
+					int moveValor = in.nextInt();
+					switch(moveValor)
+					{
+					case 1:
+						double valorMaxDolar = auxMoneda.getPrecio() * auxMoneda.getStock();
+						double valorMaxFiat = valorMaxDolar * auxFiat.getPrecio();
+						System.out.println("Valor nuevo: (maximo: "+valorMaxFiat+")");
+						saldoEmitido = in.nextDouble();
+						if( saldoEmitido > valorMaxFiat)
+						{
+							System.out.println("Valor mas alto del posible. ERROR.");
+							
+							return;
 						}
+						enDolares = auxFiat.getPrecio() * saldoEmitido;
+						monedasAComprar = enDolares / auxMoneda.getPrecio();
+						break;
+					case 2: monedasAComprar = auxMoneda.getStock();
+						break;
+					default: 
 						
-						if (existeCoin) {
-							monedasDB.modificar(auxMoneda);
-						}
-						if (existeFiat) {
-							monedasDB.modificar(auxFiat);
-						}
-						
-						
-						System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
-						System.out.println("Saldo actual en "+auxMoneda.getSigla()+" :"+auxMoneda.getStock());
-						System.out.println("Saldo actual en "+auxFiat.getSigla()+": "+auxFiat.getStock());
+						return;					
+					}
+				}
+				double saldoFinalCoin = 0.0;
+				double saldoFinalFiat = 0.0;
+				Saldo coinSaldo = null;
 				
+				boolean seEncontroLaCripto = false;
+				for(Saldo saldos: this.arregloSaldo)
+				{
+					//Se agregan las monedas fiats de la compra, y se restan las vendidas al usuario en la memoria dinamica
+					if(saldos.getSigla().equalsIgnoreCase(moneda.getSigla()))
+					{
+						saldoFinalCoin = saldos.getCantMonedas() + monedasAComprar;
+						saldos.setCantMonedas(saldoFinalCoin);
+						coinSaldo = saldos;
+						seEncontroLaCripto = true;
+					}
+					if(saldos.getSigla().equalsIgnoreCase(fiat))
+					{
+						saldoFinalFiat = saldos.getCantMonedas() - saldoEmitido;								
+						saldos.setCantMonedas(saldoFinalFiat);
+					}
+				}
+				if (!seEncontroLaCripto) {
+					coinSaldo = new Saldo(this.userID, moneda.getTipo(), moneda.getSigla(), monedasAComprar);
+					this.arregloSaldo.add(coinSaldo);
+				}
+				
+				//mismo calculo de arriba pero para la database
+				auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
+
+				auxFiat.setStock(saldoEmitido + auxFiat.getStock());
+						
+				System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");
+				System.out.println("Saldo actual de "+coinSaldo.getSigla()+": "+coinSaldo.getCantMonedas());
+				System.out.println("Saldo actual de "+fiatSaldo.getSigla()+": "+fiatSaldo.getCantMonedas());
 				
 				String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
 				String mes = java.time.ZonedDateTime.now().getMonth().toString();
 				String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
-				
 				TransaccionDAO guardarTransaccion = new TransaccionDAO();
 				guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,auxMoneda.getSigla(),auxFiat.getSigla(),saldoEmitido,monedasAComprar));
 			}
-			
 			else
 			{
 				System.out.println("Operacion cancelada.");

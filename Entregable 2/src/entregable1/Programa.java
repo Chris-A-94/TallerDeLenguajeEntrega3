@@ -2,13 +2,79 @@ package entregable1;
 
 import java.util.Scanner;
 
-import daos.CoinDAO;
-
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Programa {
+	private static Coin crearCripto(String sigla, Sistema sistema) {
+		Coin return_coin = null;
+		
+		// Se asume que la sigla 
+		
+		Scanner in = new Scanner(System.in);
+		TipoMoneda tipoMoneda = TipoMoneda.CRIPTOMONEDA;
+		
+		String nombre;
+		
+		System.out.printf("Ingrese el nombre de la moneda\n: ");
+		nombre = in.next();
+		if (sistema.existeMoneda(nombre)) {
+			System.out.printf("Esta moneda ya existe en la base de datos.\n");
+			return null;
+		}
+		
+		sigla = sigla.toUpperCase();
+		if (sistema.existeMoneda(sigla)) {
+			System.out.printf("Esta moneda ya existe en la base de datos.\n");
+			return null;
+		}
+		
+		// Generar stock
+		System.out.printf("Ingrese el precio en USD\n: ");
+		double precio = in.nextDouble();
+		if (precio <= 0.0) {
+			System.out.printf("El precio no es un valor válido (Debe ser mayor que 0), intente de nuevo\n: ");
+			precio = in.nextDouble();
+		}
+		
+		int confirmar;
+		System.out.printf("Confirmar: (1) SI (0) NO\n: ");
+		confirmar = in.nextInt();
+		while (confirmar < 0 || confirmar > 1) {
+			System.out.printf("Opción incorrecta, intente de nuevo\n: ");
+			confirmar = in.nextInt();
+		}
+		
+		if (confirmar == 1) {
+			System.out.printf("\u001B[46mSe registró la moneda %s en el Sistema\u001B[0m\n", sigla);
+			return_coin = new Coin(nombre, sigla, tipoMoneda, precio);
+			
+			System.out.printf("¿Desea almacenar la moneda en la base de datos?: (1) SI (0) NO\n: ");
+			confirmar = in.nextInt();
+			while (confirmar < 0 || confirmar > 1) {
+				System.out.printf("Opción incorrecta, intente de nuevo\n: ");
+				confirmar = in.nextInt();
+			}
+			if (confirmar == 1) {
+				sistema.guardarMonedaDB(return_coin);
+				System.out.printf("\u001B[42mSe registró la moneda %s en la Base de Datos.\u001B[0m\n", sigla);
+			} else {
+				System.out.printf("\u001B[41mNo se registró la moneda %s en la Base de Datos.\u001B[0m\n", sigla);
+			}
+			
+		} else {
+			System.out.printf("\u001B[41mNo se registró la moneda %s en el Sistema\u001B[0m\n", sigla);
+		}
+		
+		if (return_coin != null) {
+			sistema.getMonedas().add(return_coin);
+		}
+		System.out.printf("----------------------------\n");
+		
+		return return_coin;
+	}
+	
 	private static boolean existeMoneda(String sigla, List<Coin> monedas) {
 		boolean existe = false;
 		
@@ -33,8 +99,20 @@ public class Programa {
 			System.out.printf(")\n:> ");
 			
 			String sigla = in.next();
+			sigla = sigla.toUpperCase();
+			if (!sistema.existeMoneda(sigla)) {
+				System.out.printf("La moneda %s no existe, intente de nuevo\n:> ", sigla);
+				sigla = in.next();
+				sigla = sigla.toUpperCase();
+			}
+			
 			System.out.printf("Introduzca la cantidad de monedas a generar\n:> ");
 			Double cantidad = in.nextDouble();
+			if (cantidad < 0.0) {
+				System.out.printf("La cantidad no es un valor válido, intente de nuevo\n:> ");
+				cantidad = in.nextDouble();
+			}
+			
 			boolean encontro = false;
 			// Actualizar el saldo en todas las monedas
 			if (sigla.equals("*")) {
@@ -66,7 +144,8 @@ public class Programa {
 				}
 				// Si existe en la base de datos y no fue encontrada dentro de arregloSaldo[]...
 				// Agrega la moneda al arregloSaldo[]
-				user.getBilletera().getArregloSaldo().add(new Saldo(user.getDNI(),sistema.buscarMoneda(sigla).getTipo(), sigla, cantidad));
+				Coin moneda = sistema.buscarMoneda(sigla);
+				user.getBilletera().getArregloSaldo().add(new Saldo(user.getDNI(),moneda.getTipo(), moneda.getSigla(), cantidad));
 				// Nota: Es medio redundante hacer esto pero existe la posibilidad de que la moneda exista en el Sistema y
 				// que no se encuentre instanciada un 'Saldo' dentro de la billetera del usuario se agrega un paso extra con
 				// el fin de evitar un error a futuro.
@@ -78,6 +157,16 @@ public class Programa {
 		// Comparators
 		// Nota: Se declara y define los 'Comparator's según por criterio unicamente dentro del
 		// Scope de este método.
+		if (user.getBilletera().getArregloSaldo().isEmpty()) {
+			System.out.printf("No tenés activos en la cuenta!...\n");
+			return;
+		}
+		if (user.getBilletera().getArregloSaldo().size() == 1) {
+			Saldo s = user.getBilletera().getArregloSaldo().get(0);
+			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
+			return;
+		}
+		
 		Comparator<Saldo> porSigla = new Comparator<Saldo>() {
 			public int compare(Saldo s1, Saldo s2) {
 				return s1.getSigla().compareTo(s2.getSigla());
@@ -118,34 +207,34 @@ public class Programa {
 		// Listar los Activos
 		System.out.printf("[Listar Activos]\n");
 		for (Saldo s : list) {
-			System.out.printf("\033[1;37m%s \033[0;33m%.3f\033[0m\n", s.getSigla(), s.getCantMonedas());
+			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
+	
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
-		// dudoso
-		//temp.getBilletera().agregarMoneda(auxCoin, auxCoin.getStock());
 		}
 	private static void optSimularCompra(Usuario temp, Sistema sistema)
 	{
-		if (temp.getBilletera().getArregloSaldo().isEmpty()) {
-			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
-			return;
-		}
+		
 		Scanner in = new Scanner(System.in);
 		
 		// Monedas
 		LinkedList<Coin> monedasCripto = new LinkedList<Coin>();
 		LinkedList<Coin> monedasFiat = new LinkedList<Coin>();
 		
-		sistema.getMonedas().forEach((coin) -> {
-			if (coin.getTipo().equals("Criptomoneda")) {
-				monedasCripto.add(coin);
-			} else if (coin.getTipo().equals("Fiat")) {
-				monedasFiat.add(coin);
-			}
-		});
-		
+		for (Coin c : sistema.getMonedas()) {
+			if (c.getTipo().equals("Criptomoneda")) 
+				monedasCripto.add(c);
+		}
+		for (Saldo s : temp.getBilletera().getArregloSaldo()) {
+			if (s.getTipo().equals("Fiat"))
+				monedasFiat.add(sistema.buscarMoneda(s.getSigla()));
+		}
+		if (monedasFiat.isEmpty()) {
+			System.out.println("¡No tenés saldos cargados!\nIngresá a la opción 5 para generarlos.");
+			return;
+		}
 		// Se listan todas las criptomonedas
 		System.out.println("Ingrese sigla de crypto a comprar");
 		System.out.printf("( ");
@@ -156,51 +245,55 @@ public class Programa {
 		// Lectura de la Criptomoneda
 		String siglaMoneda = in.next();
 		siglaMoneda = siglaMoneda.toUpperCase();
-		if(!existeMoneda(siglaMoneda,monedasCripto))
+		while(!existeMoneda(siglaMoneda,monedasCripto))
 		{
-			System.out.println("La moneda actual no existe, se procede a generarla.");
-			optCrearMoneda(sistema,temp);
+			System.out.printf("La criptomoneda %s no existe, se procede a generarla.\n", siglaMoneda);
+			if (crearCripto(siglaMoneda, sistema) == null) {
+				System.out.printf("¿Desea cancelar la operación? (1) SI (0) NO\n: ");
+				int opt = in.nextInt();
+				while (opt < 0 || opt > 1) {
+					in.nextInt();
+				}
+				if (opt == 0) {
+					continue;
+				}
+				else {
+					return;
+				}
+					
+			}
+			
+			monedasCripto.clear();
+			for (Coin c : sistema.getMonedas()) {
+				if (c.getTipo().equals("Criptomoneda")) 
+					monedasCripto.add(c);
+			}
+			if (existeMoneda(siglaMoneda, monedasCripto)) {
+				break;
+			}
+				
 		}
 		
 		// Se listan todas las monedas fiat
 		System.out.println("Ingrese sigla de Fiat a usar");
 		System.out.printf("( ");
-		for (Coin coin : monedasFiat) {
-			System.out.printf("%s ", coin.getSigla());
+		for (Coin c : monedasFiat) {
+			System.out.printf("%s ", c.getSigla());
 		}
 		System.out.printf(")\n: ");
 		
 		// Lectura de la Moneda Fiat
 		String siglaFiat = in.next();
-		siglaFiat = siglaFiat.toUpperCase();
-		if(!existeMoneda(siglaFiat,monedasFiat))
+		
+		while(!existeMoneda(siglaFiat,monedasFiat))
 		{
-			System.out.println("La moneda actual no existe, se procede a generarla.");
-			optCrearMoneda(sistema,temp);
+			System.out.printf("La moneda fiat %s no existe, intente de nuevo:\n ", siglaFiat);
+			siglaFiat = in.next();
 		}
 		
-		LinkedList<Coin> monedasMem = new LinkedList<Coin>();
-		monedasMem.addAll(sistema.getMonedas());
-		Coin auxFiat = null;
-		Coin auxMoneda = null;
-		for(Coin monedaAux: monedasMem)
-		{
-			if(siglaFiat.equals(monedaAux.getSigla()))
-				auxFiat = monedaAux;
-			if(siglaMoneda.equals(monedaAux.getSigla()))
-				auxMoneda = monedaAux;
-		}
-		
-		if(auxFiat.getTipo().equals("CRIPTOMONEDA") || auxMoneda.getTipo().equals("FIAT"))
-		{
-			System.out.println("Error, necesita una moneda de tipo fiat para comprar una de tipo cripto.");
-			return;
-		}
-		
-		// Arreglar: No tiene en cuenta si la moneda FIAT no está instanciada en 'arregloSaldo' de billetera.
-		temp.getBilletera().comprar(siglaMoneda,siglaFiat, sistema.getMonedas());	
+		temp.getBilletera().comprar(sistema.buscarMoneda(siglaMoneda),siglaFiat,sistema.getMonedas());	
 	}
-	
+
 	public static Usuario leerUsuario() {
 		return null;
 	}

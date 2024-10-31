@@ -10,7 +10,6 @@ import java.util.List;
 
 import entregable1.Saldo;
 import entregable1.TipoMoneda;
-import entregable1.Usuario;
 
 public class ActivosDAO implements DaoInterface<Saldo>{
 	private Connection con = null;
