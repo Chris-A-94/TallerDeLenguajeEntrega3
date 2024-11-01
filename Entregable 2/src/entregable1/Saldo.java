@@ -53,8 +53,6 @@ public class Saldo implements Comparable<Saldo>{
 		String aux = (sigla +" "+cantMonedas);
 		return aux;
 	}
-
-	
 	
 	@Override
 	public int compareTo(Saldo s) {

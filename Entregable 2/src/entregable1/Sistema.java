@@ -92,10 +92,7 @@ public class Sistema {
 	    return auxCoin;			
 			
 		}
-	    
-	
-	
-	
+
 	/*
 	 * Método privado que devuelve una instancia de cripto inicializada con valores ingresados en teclado...
 	 */

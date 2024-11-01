@@ -100,7 +100,7 @@ public class Programa {
 			
 			String sigla = in.next();
 			sigla = sigla.toUpperCase();
-			if (!sistema.existeMoneda(sigla)) {
+			while (!sistema.existeMoneda(sigla) && !sigla.equals("*")) {
 				System.out.printf("La moneda %s no existe, intente de nuevo\n:> ", sigla);
 				sigla = in.next();
 				sigla = sigla.toUpperCase();
@@ -108,7 +108,7 @@ public class Programa {
 			
 			System.out.printf("Introduzca la cantidad de monedas a generar\n:> ");
 			Double cantidad = in.nextDouble();
-			if (cantidad < 0.0) {
+			while (cantidad < 0.0) {
 				System.out.printf("La cantidad no es un valor válido, intente de nuevo\n:> ");
 				cantidad = in.nextDouble();
 			}
@@ -290,7 +290,9 @@ public class Programa {
 			siglaFiat = in.next();
 		}
 		
-		temp.getBilletera().comprar(sistema.buscarMoneda(siglaMoneda),siglaFiat,sistema.getMonedas());	
+		temp.getBilletera().comprar(sistema.buscarMoneda(siglaMoneda),siglaFiat,sistema.getMonedas());
+		
+		sistema.actualizarActivosDB(temp);
 	}
 
 	public static Usuario leerUsuario() {
@@ -337,7 +339,9 @@ public class Programa {
                     + "opt: ", _EXIT);
             
             opt = in.nextInt();
-            System.out.printf("----------------------------\n[%d]\n", opt);
+            System.out.printf("----------------------------\n");
+            if (!opt.equals(_EXIT))
+            	System.out.printf("[%d]\n", opt);
 
 			switch (opt) {
 			case 1:
@@ -354,6 +358,7 @@ public class Programa {
 			    break;
 			case 5:
 				optGenerarActivos(temp,sistema);
+				sistema.actualizarActivosDB(temp);
 			    break;
 			case 6:
 				optListarActivos(temp);
@@ -370,7 +375,7 @@ public class Programa {
 			    System.out.printf("Opción incorrecta, intente de nuevo\n");
 			    break;
 			}
-			if (opt != 9) {
+			if (opt != _EXIT) {
 				System.out.println("----------------------------\n"
 						+ "Presione [ENTER] para continuar...");
 				try{System.in.read();}
@@ -382,5 +387,7 @@ public class Programa {
         sistema.actualizarCoinDB();
         sistema.actualizarActivosDB(temp);
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
+        
+        System.out.printf("Fin.\n");
     }
 }

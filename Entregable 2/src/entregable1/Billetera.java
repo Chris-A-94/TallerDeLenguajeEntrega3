@@ -153,6 +153,12 @@ public class Billetera {
 			System.out.printf("Se selecciono automaticamente la única moneda de tipo %s en su billetera\n: %s\n", tipoSwap, arregloSaldoFiltrado.get(0).getSigla());
 			saldoSeleccionado = arregloSaldoFiltrado.get(0);
 		}
+		
+		// Comprobación del Saldo
+		if (saldoSeleccionado.getCantMonedas() <= 0.0) {
+			System.out.printf("La moneda seleccionada no tiene saldo\n");
+			return;
+		}
 		for (Coin c : opciones) {
 			if (c.getSigla().equalsIgnoreCase(saldoSeleccionado.getSigla()))
 				monedaSaldoSeleccionado = c;
