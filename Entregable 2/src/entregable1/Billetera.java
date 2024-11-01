@@ -213,6 +213,9 @@ public class Billetera {
 		}
 		
 		// Se solicita la confirmación del usuario
+		System.out.printf("%f %s equivale a %f %s \n", cantSwap, monedaSaldoSeleccionado.getSigla(), cantidadConversion, monedaAConvertir.getSigla());
+		System.out.println("Aplicando comision del 3%");
+		cantidadConversion -= cantidadConversion * 0.03;
 		System.out.printf("Se convertiran %f %s a %f %s \n¿Confirmar? (1) SI (0) NO\n: ", cantSwap, monedaSaldoSeleccionado.getSigla(), cantidadConversion, monedaAConvertir.getSigla());
 		int confirmar = in.nextInt();
 		while (confirmar < 0 || confirmar > 1) {
