@@ -247,13 +247,11 @@ public class Sistema {
 	}
 	public void actualizarActivosDB(Usuario user) {
 		for (Saldo s: user.getBilletera().getArregloSaldo()) {
-			s.setUser_id(user.getDNI());
-			aDao.modificar(s);
-			
 			if (s.getID() == 0) {
 				aDao.guardar(s);
+			} else {
+				aDao.modificar(s);
 			}
-			
 		}
 	}
 	public void listarUsuarios() {

@@ -245,6 +245,7 @@ public class Billetera {
 		monedaAConvertir.setStock(monedaAConvertir.getStock() - cantidadConversion);
 		monedaSaldoSeleccionado.setStock(monedaSaldoSeleccionado.getStock() + cantSwap);
 		
+		// Se modifica el Stock
 		CoinDAO monedasDB = new CoinDAO();
 		monedasDB.modificar(monedaSaldoSeleccionado);
 		monedasDB.modificar(monedaAConvertir);

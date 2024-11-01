@@ -370,6 +370,8 @@ public class Programa {
 				break;
 			case 8:
 				temp.getBilletera().swap(sistema.getMonedas());
+				// Actualización de DB
+				sistema.actualizarActivosDB(temp);
 			    break;
 			case _EXIT:
 			    break;

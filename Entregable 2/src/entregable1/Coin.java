@@ -71,8 +71,8 @@ public class Coin implements Comparable<Coin>{
 			
 		}
 		Random stock = new Random();
-		Double minimo = 1000.0;
-		Double maximo = 9000.0;
+		Double minimo = 10000.0;
+		Double maximo = 90000.0;
 		//se cambia el stock que ya estaba.
 		this.stock = minimo + (maximo - minimo) * stock.nextDouble();
 		return true;
