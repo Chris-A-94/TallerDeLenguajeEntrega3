@@ -230,7 +230,8 @@ public class Billetera {
 		saldoSeleccionado.setCantMonedas(saldoSeleccionado.getCantMonedas() - cantSwap);
 		Saldo saldoSwap = this.buscarSaldo(monedaAConvertir.getSigla());
 		if (saldoSwap == null) {
-			this.arregloSaldo.add(new Saldo(this.userID, tipoSwap, monedaAConvertir.getSigla(), cantidadConversion));
+			saldoSwap = new Saldo(this.userID, tipoSwap, monedaAConvertir.getSigla(), cantidadConversion);
+			this.arregloSaldo.add(saldoSwap);
 		} else {
 			saldoSwap.setCantMonedas(saldoSwap.getCantMonedas() + cantidadConversion);
 		}
@@ -252,8 +253,8 @@ public class Billetera {
 		archivarSwap.guardar(new TransaccionSwap(dia, mes, year, this.userID, monedaSaldoSeleccionado.getSigla(), cantSwap, monedaAConvertir.getSigla(), cantidadConversion));
 //		
 		System.out.println("Swap exitoso!");
-//		System.out.println("Su nuevo saldo de "+primeraCoin.getNombre()+" es de: "+primeraMoneda.getCantMonedas());
-//		System.out.println("Su nuevo saldo de "+segundaCoin.getNombre()+" es de: "+segundaMoneda.getCantMonedas());
+		System.out.println("Su nuevo saldo de "+saldoSeleccionado.getSigla()+" es de: "+saldoSeleccionado.getCantMonedas());
+		System.out.println("Su nuevo saldo de "+saldoSwap.getSigla()+" es de: "+saldoSwap.getCantMonedas());
 	}
 
 	public void comprar(Coin moneda, String fiat, List<Coin> monedas)
