@@ -38,19 +38,7 @@ public class Billetera {
 		this.userID = userID;
 	}
 	
-	private int choose(int inf, int sup)
-	{
-		Scanner in = new Scanner(System.in);
-		int index = in.nextInt();
-		while(index < inf || index > sup)
-		{
-			System.out.printf("Número no válido. Elija un valor entre %d y %d\n: ",
-					inf, sup
-			);
-			index = in.nextInt();
-		}
-		return index;
-	}
+	
 	
 	private Saldo buscarSaldo(String sigla) {
 		for (Saldo s : this.arregloSaldo) {
@@ -351,7 +339,12 @@ public class Billetera {
 			//precio de la criptomoneda expresada en el fiat ingresado
 			double precio = (1 / auxFiat.getPrecio()) * auxMoneda.getPrecio();
 			
-			System.out.println("1 "+moneda.getSigla()+" equivale a "+precio+" "+fiat+". Estarias por comprar "+ saldoEmitido/precio + " " + moneda.getSigla() +".\n¿Desea proceder? y/n");
+			System.out.println("1 "+moneda.getSigla()+" equivale a "+precio+" "+fiat+".");
+			System.out.println("Se cobrara una comision del 2.5%");
+			double compraTotal= saldoEmitido/precio;
+			double compraConComision = compraTotal - compraTotal * 0.025;
+			System.out.println("Compra total: "+compraTotal+ " " + moneda.getSigla() +"\nCon comision aplicada: "+compraConComision +" " + moneda.getSigla());
+			System.out.println(".\n¿Desea proceder? y/n");
 			System.out.print(": ");
 			String carga = in.next();
 			if(carga.equals("y") || carga.equals("Y"))
@@ -390,6 +383,9 @@ public class Billetera {
 				double saldoFinalCoin = 0.0;
 				double saldoFinalFiat = 0.0;
 				Saldo coinSaldo = null;
+				
+				//aplico comision
+				monedasAComprar -= monedasAComprar * 0.025;
 				
 				boolean seEncontroLaCripto = false;
 				for(Saldo saldos: this.arregloSaldo)
