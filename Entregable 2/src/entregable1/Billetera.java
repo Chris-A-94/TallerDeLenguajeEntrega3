@@ -421,7 +421,6 @@ public class Billetera {
 				
 				//mismo calculo de arriba pero para la database
 				auxMoneda.setStock(auxMoneda.getStock() - monedasAComprar);
-
 				auxFiat.setStock(saldoEmitido + auxFiat.getStock());
 						
 				System.out.println("Se ha cargado "+monedasAComprar+" "+auxMoneda.getSigla()+" a su saldo.");

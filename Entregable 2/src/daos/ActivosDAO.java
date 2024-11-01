@@ -71,6 +71,13 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		    pstmt.setString(4,saldo.getUser_id());
 		    pstmt.executeUpdate();
 		    pstmt.close();
+		    
+		    // Asigno la ID del activo al Saldo
+		    Statement sent = con.createStatement();
+		    ResultSet resul = sent.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'ACTIVOS'");
+		    saldo.setID(resul.getInt("seq"));
+		    sent.close();
+		    
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return false;

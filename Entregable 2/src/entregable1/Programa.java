@@ -286,13 +286,11 @@ public class Programa {
 		
 		while(!existeMoneda(siglaFiat,monedasFiat))
 		{
-			System.out.printf("La moneda fiat %s no existe, intente de nuevo:\n ", siglaFiat);
+			System.out.printf("La moneda fiat %s no existe, intente de nuevo\n: ", siglaFiat);
 			siglaFiat = in.next();
 		}
 		
 		temp.getBilletera().comprar(sistema.buscarMoneda(siglaMoneda),siglaFiat,sistema.getMonedas());
-		
-		sistema.actualizarActivosDB(temp);
 	}
 
 	public static Usuario leerUsuario() {
@@ -358,6 +356,7 @@ public class Programa {
 			    break;
 			case 5:
 				optGenerarActivos(temp,sistema);
+				// Actualización de DB
 				sistema.actualizarActivosDB(temp);
 			    break;
 			case 6:
@@ -365,6 +364,9 @@ public class Programa {
 			    break;
 			case 7:
 				optSimularCompra(temp,sistema);
+				// Actualización de DB
+				sistema.actualizarCoinDB();
+		        sistema.actualizarActivosDB(temp);
 				break;
 			case 8:
 				temp.getBilletera().swap(sistema.getMonedas());
@@ -381,11 +383,9 @@ public class Programa {
 				try{System.in.read();}
 				catch(Exception e){}
 			}
-		
+			
         } while (opt != _EXIT);
-        //GUARDAR LOS CAMBIOS EN TEMP Y EN SISTEMA
-        sistema.actualizarCoinDB();
-        sistema.actualizarActivosDB(temp);
+        
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
         
         System.out.printf("Fin.\n");
