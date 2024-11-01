@@ -152,10 +152,12 @@ public class Billetera {
 			
 			// Lectura
 			String sigla = in.next();
+			sigla = sigla.toUpperCase();
 			// Comprobación
 			while ((saldoSeleccionado = this.buscarSaldo(sigla)) == null) {
 				System.out.printf("La moneda no existe, intente de nuevo\n: ");
 				sigla = in.next();
+				sigla = sigla.toUpperCase();
 			}
 		} else {
 			// Nota: Si se llegó hasta aca, es porque hay como mínimo un Saldo en 'arregloSaldo' y en la lista de 'monedas' hay como mínimo 2 Monedas.
@@ -182,7 +184,7 @@ public class Billetera {
 		
 		// Selección de la moneda que se va a Convertir
 		Coin monedaAConvertir = null;
-		String sigla = in.next();
+		String sigla = in.next();		
 		for (Coin c : opciones) {
 			if (c.getSigla().equalsIgnoreCase(sigla))
 				monedaAConvertir = c;
