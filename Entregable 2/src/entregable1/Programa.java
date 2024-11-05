@@ -6,6 +6,7 @@ import java.util.Scanner;
 import controladores.RegistroControlador;
 
 import vistas.RegistroVista;
+import vistas.MenuVista;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -305,11 +306,11 @@ public class Programa {
 
 		
 
-		RegistroVista registroVista = new RegistroVista();
-		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+//		RegistroVista registroVista = new RegistroVista();
+//		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
 		
-		
+		MenuVista menuVista = new MenuVista();
 		
 		
 		
