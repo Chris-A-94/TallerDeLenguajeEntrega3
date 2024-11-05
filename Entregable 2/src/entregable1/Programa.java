@@ -2,10 +2,12 @@ package entregable1;
 
 import java.util.Scanner;
 
+import javax.swing.JFrame;
 
 import controladores.RegistroControlador;
 
 import vistas.RegistroVista;
+import vistas.logInPage;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -303,19 +305,7 @@ public class Programa {
 	
 	public static void main(String[] args) {
 
-		
-
-		RegistroVista registroVista = new RegistroVista();
-		RegistroControlador registroControlador = new RegistroControlador(registroVista);
-		
-		
-		
-		
-		
-		
-
-		
-		
+		logInPage test = new logInPage();
 		
 		/*
 		final int _EXIT = 9;
