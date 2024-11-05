@@ -1,5 +1,6 @@
 package controladores;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -14,7 +15,6 @@ public class RegistroControlador {
 	public RegistroControlador(RegistroVista vista) {
 		this.vista = vista;
 		for (JTextField tf : vista.devolverCampos()) {
-			System.out.println(tf.getText());
 			tf.addMouseListener(new controlMouse(tf));
 		}
 	}
@@ -26,7 +26,6 @@ public class RegistroControlador {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			try {
-				System.out.println(tf.getText());
 				this.tf.setText(null);
 			}catch (NumberFormatException ex) {
 				
@@ -47,14 +46,12 @@ public class RegistroControlador {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+			tf.setSelectedTextColor(Color.BLUE);
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+		
 		}
 		
 	}
