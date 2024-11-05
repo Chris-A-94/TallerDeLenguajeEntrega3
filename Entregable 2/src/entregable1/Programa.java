@@ -302,13 +302,7 @@ public class Programa {
 	public static void main(String[] args) {
 
 		
-		RegistroVista registroVista = new RegistroVista();
-		
-		
-		
-		
-		
-		
+	//	RegistroVista registroVista = new RegistroVista();		
 		
 		
 		

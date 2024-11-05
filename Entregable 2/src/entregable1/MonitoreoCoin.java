@@ -115,7 +115,7 @@ public class MonitoreoCoin {
 		}
 		for(int i = 0; i < precios.size(); i++)
 		{
-			aRetorno = "\n La moneda "+IDs.get(i)+" cuesta: "+precios.get(i)+" dolares.";
+			aRetorno += "\n La moneda "+IDs.get(i)+" cuesta: "+precios.get(i)+" dolares.";
 		}
 		return aRetorno;
 	}
