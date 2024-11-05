@@ -5,19 +5,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JTextField;
+
 import vistas.RegistroVista;
 
 public class RegistroControlador {
-	p RegistroVista vista;
+	private RegistroVista vista;
 	public RegistroControlador(RegistroVista vista) {
 		this.vista = vista;
-		this.vista.addMouseListener(new eraseLabel());
+		for (JTextField tf : vista.devolverCampos()) {
+			System.out.println(tf.getText());
+			tf.addMouseListener(new controlMouse(tf));
+		}
 	}
-	class eraseLabel implements MouseListener{
+	class controlMouse implements MouseListener{
+		private JTextField tf;
+		public controlMouse(JTextField tf) {
+			this.tf = tf;
+		}
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			try {
-				
+				System.out.println(tf.getText());
+				this.tf.setText(null);
 			}catch (NumberFormatException ex) {
 				
 			}

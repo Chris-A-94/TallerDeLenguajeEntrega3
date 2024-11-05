@@ -1,6 +1,8 @@
 package vistas;
 
 import java.awt.GridLayout;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -27,6 +29,9 @@ public class RegistroVista extends JFrame{
 		this.setLayout(new GridLayout(6,1));
 		//CONFIGURACIÓN DE LOS CAMPOS DE TEXTO
 		passField.setEchoChar('*');
+		
+		
+		//AGREGRO AL JFRAME
 		this.add(this.textFieldTit);
 		this.add(this.textFieldName);
 		this.add(this.textFieldSur);
@@ -35,5 +40,33 @@ public class RegistroVista extends JFrame{
 		//
 		this.setVisible(true);
 		
+	}
+	public JLabel getTextFieldTit() {
+		return textFieldTit;
+	}
+	public JTextField getTextFieldName() {
+		return textFieldName;
+	}
+	public JTextField getTextFieldSur() {
+		return textFieldSur;
+	}
+	public JTextField getTextFieldMail() {
+		return textFieldMail;
+	}
+	public JPasswordField getPassField() {
+		return passField;
+	}
+	public JButton getBotonAceptar() {
+		return botonAceptar;
+	}
+	public JButton getBotonAtras() {
+		return botonAtras;
+	}
+	public List<JTextField> devolverCampos(){
+		List<JTextField> listaCampos = new LinkedList<JTextField>();
+		listaCampos.add(textFieldName);
+		listaCampos.add(textFieldSur);
+		listaCampos.add(textFieldMail);
+		return listaCampos;
 	}
 }
