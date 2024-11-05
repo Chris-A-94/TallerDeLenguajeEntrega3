@@ -1,6 +1,8 @@
 package vistas;
 
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class RegistroVista extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel textFieldTit	 =	new JLabel("Sign in");
-	private JTextField textFieldName =	new JTextField("Nombre");
+	private JTextField textFieldName =	new JTextField("Nombre",100);
 	private JTextField textFieldSur  =	new JTextField("Apellido");
 	private JTextField textFieldMail =	new JTextField("Email");
 	private JPasswordField passField =	new JPasswordField("Contraseña");
@@ -24,9 +26,11 @@ public class RegistroVista extends JFrame{
 		//CONFIGURACION DEL JFRAME
 		this.setTitle("Sign in"); //Titulo del frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		this.setSize(400,150); //Tamaño del frame
+		this.setSize(1500,5000); //Tamaño del frame
 		this.setLocationRelativeTo(null); 
-		this.setLayout(new GridLayout(6,1));
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setBackground(Color.BLUE);
 		//CONFIGURACIÓN DE LOS CAMPOS DE TEXTO
 		passField.setEchoChar('*');
 		

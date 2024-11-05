@@ -2,6 +2,7 @@ package entregable1;
 
 import java.util.Scanner;
 
+import controladores.RegistroControlador;
 import vistas.RegistroVista;
 
 import java.util.Comparator;
@@ -302,6 +303,7 @@ public class Programa {
 	public static void main(String[] args) {
 		
 		RegistroVista registroVista = new RegistroVista();
+		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
 		
 		
