@@ -1,6 +1,10 @@
 package entregable1;
 
 import java.util.Scanner;
+
+
+import vistas.RegistroVista;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -296,7 +300,22 @@ public class Programa {
 	}
 	
 	public static void main(String[] args) {
-		final int _EXIT = 9;		
+
+		
+		RegistroVista registroVista = new RegistroVista();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		final int _EXIT = 9;
+
+>>>>>>> 55904842fcf9ac98268075387d83d72a2b24886d
 		final Scanner in = new Scanner(System.in);
 		
 		//Esto es un login para un usuario administrador.
@@ -388,5 +407,7 @@ public class Programa {
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
         
         System.out.printf("Fin.\n");
-    }
+    
+    */
+	}	
 }
