@@ -2,6 +2,8 @@ package entregable1;
 
 import java.util.Scanner;
 
+import vistas.RegistroVista;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -298,6 +300,18 @@ public class Programa {
 	}
 	
 	public static void main(String[] args) {
+		
+		RegistroVista registroVista = new RegistroVista();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
 		final int _EXIT = 9;
 
 		final Scanner in = new Scanner(System.in);
@@ -391,5 +405,7 @@ public class Programa {
         in.close();//El scanner solo se cierra acá, para evitar problemas en lectura.
         
         System.out.printf("Fin.\n");
-    }
+    
+    */
+	}	
 }
