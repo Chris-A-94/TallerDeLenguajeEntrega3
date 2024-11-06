@@ -2,13 +2,14 @@ package entregable1;
 
 import java.util.Scanner;
 
+
 import controladores.RegistroControlador;
+
 import vistas.RegistroVista;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-
 public class Programa {
 	private static Coin crearCripto(String sigla, Sistema sistema) {
 		Coin return_coin = null;
@@ -301,21 +302,21 @@ public class Programa {
 	}
 	
 	public static void main(String[] args) {
+
+		//inicio
 		
+		//login
+	
+		//sign Up
 		RegistroVista registroVista = new RegistroVista();
 		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-		
-		
-		
-		
-		
-		
-		
+		//menu
 		
 		/*
 		final int _EXIT = 9;
 
+>>>>>>> 55904842fcf9ac98268075387d83d72a2b24886d
 		final Scanner in = new Scanner(System.in);
 		
 		//Esto es un login para un usuario administrador.

@@ -81,7 +81,6 @@ public class RegistroControlador {
 			vista.getBotonSalir().setBackground(new Color(0xE4E0E1));
 		}
 
-		
 	}
 	class MouseControlTexts implements MouseListener{
 		private JTextComponent tf;
@@ -106,7 +105,7 @@ public class RegistroControlador {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			tf.setBackground(new Color(0x94847b));
+			tf.setBackground(new Color(0xf5ded0));
 		}
 
 		@Override
