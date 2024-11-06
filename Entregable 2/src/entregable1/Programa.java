@@ -8,9 +8,12 @@ import controladores.RegistroControlador;
 import vistas.RegistroVista;
 import vistas.MenuVista;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 public class Programa {
 	private static Coin crearCripto(String sigla, Sistema sistema) {
 		Coin return_coin = null;
@@ -215,7 +218,6 @@ public class Programa {
 			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
-	
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
 		}
@@ -309,14 +311,7 @@ public class Programa {
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-		
 		MenuVista menuVista = new MenuVista();
-		
-		
-		
-
-		
-		
 		
 		/*
 		final int _EXIT = 9;
