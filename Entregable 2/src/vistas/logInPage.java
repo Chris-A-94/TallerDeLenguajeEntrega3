@@ -1,5 +1,8 @@
 package vistas;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -10,18 +13,21 @@ public class logInPage extends JSplitPane{
 
 	private JPanel leftPanel;
 	private JPanel rightPanel;
+	BasicSplitPaneDivider divider;
 	
 	public logInPage()
 	{
 		super(JSplitPane.HORIZONTAL_SPLIT);
-		leftPanel = new panelIzquierdo();
+		BasicSplitPaneUI ui = (BasicSplitPaneUI)this.getUI();
+		divider = ui.getDivider();
+		leftPanel = new panelIzquierdo(); //cada lado es su clase privada propia
 		rightPanel = new JPanel();
 		rightPanel.add(new JButton("Login"));
 		this.setLeftComponent(leftPanel);
 		this.setRightComponent(rightPanel);
 		this.setDividerLocation(0.5); 
         this.setResizeWeight(0.5);
-        this.setEnabled(false);
+        this.setEnabled(false);            
         
         this.inicializarFrame();
 	}
