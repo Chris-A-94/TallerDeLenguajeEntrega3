@@ -47,18 +47,56 @@ public class logInPage extends JSplitPane{
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
-		private JTextArea Email, Password;
+		private JLabel nEmail,nPasword;
+		private JTextField Email, Password;
 		private Image emblema;
-		private JTextArea welcomeMessage;
-		
-		
+		private JTextArea welcomeMessage;	
+		private Font agusFont;
 		
 		public panelDerecho()
 		{
 			//a llenar
 			this.setLayout(new GridBagLayout()); //4 filas minimo
-			
+			this.agusFont = new Font("Tahoma",Font.PLAIN,12);
+			setForms();
 			setButtons();
+		}
+		
+		private void setForms()
+		{
+			//inicializacion
+			this.nEmail = new JLabel("Email: ");
+			this.nPasword = new JLabel("Password: ");
+			this.Email = new JTextField("example@mail.com");
+			this.Password = new JTextField("     Contraseña     ");
+			
+			//personalizacion
+			this.Email.setFont(this.agusFont);
+			this.Password.setFont(this.agusFont);
+			this.nEmail.setFont(this.agusFont);
+			this.nPasword.setFont(this.agusFont);
+			
+			//posicionamiento
+			GridBagConstraints posEmail = new GridBagConstraints();
+			GridBagConstraints posPassword = new GridBagConstraints();
+			GridBagConstraints posnEmail = new GridBagConstraints();
+			GridBagConstraints posnPassword = new GridBagConstraints();
+			
+			posnEmail.gridy = 0;
+			posnEmail.gridx = 0;
+			posEmail.gridy = 0;
+			posEmail.gridx = 1;
+			
+			posnPassword.gridy = 1;
+			posnPassword.gridx = 0;
+			posPassword.gridy = 1;
+			posPassword.gridx = 1;
+			
+			//agregado al JPanel
+			this.add(nEmail,posnEmail);
+			this.add(Email,posEmail);
+			this.add(nPasword,posnPassword);			
+			this.add(Password,posPassword);
 		}
 		
 		private void setButtons()
@@ -69,19 +107,19 @@ public class logInPage extends JSplitPane{
 			forgotPass = new JButton("Olvido su contraseña?");
 			
 			GridBagConstraints posLog = new GridBagConstraints();
-			posLog.gridy = 1;
+			posLog.gridy = 5;
 			posLog.gridx = 0;
 			posLog.anchor = GridBagConstraints.SOUTH;
 			posLog.insets = new Insets(10, 5, 10, 5);
 			
 			GridBagConstraints posSign = new GridBagConstraints();
-			posSign.gridy = 1;
+			posSign.gridy = 5;
 			posSign.gridx = 1;
 			posSign.anchor = GridBagConstraints.SOUTH;
 			posSign.insets = new Insets(10, 5, 10, 5);
 			
 			GridBagConstraints posForgot = new GridBagConstraints();
-			posForgot.gridy = 2;
+			posForgot.gridy = 6;
 			posForgot.gridx = 0;
 			posForgot.gridwidth = 2;
 			posForgot.anchor = GridBagConstraints.SOUTH;
