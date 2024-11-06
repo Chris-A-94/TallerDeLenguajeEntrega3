@@ -306,8 +306,10 @@ public class Programa {
 	
 	public static void main(String[] args) {
 
+		// Nota: En pantallas con alto DPI la UI se rompe.
+		// Esto se soluciona forzando la escala en 1
+		System.setProperty("sun.java2d.uiScale", "1");
 		
-
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		

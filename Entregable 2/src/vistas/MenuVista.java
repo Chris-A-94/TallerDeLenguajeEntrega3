@@ -46,8 +46,8 @@ public class MenuVista extends JFrame {
 	    }
 	}
 	
-	private int _WIDTH 	= 720*2,
-				_HEIGHT = 420*2;
+	private int _WIDTH 	= 1270,
+				_HEIGHT = 720;
 	
 	public MenuVista() {
 		// Atributos
@@ -96,7 +96,7 @@ public class MenuVista extends JFrame {
 		greenPanel5.addLabel("Demostración 5", icon);
 		
 		redPanel.newButton("Mis Activos", greenPanel1);
-		redPanel.newButton("Visualisar Cryptos", greenPanel2);
+		redPanel.newButton("Visualizar Cryptos", greenPanel2);
 		redPanel.newButton("Comprar Crypto", greenPanel3);
 		redPanel.newButton("Swap Crypto", greenPanel4);
 		redPanel.newButton("Mis transacciones", greenPanel5);
@@ -164,7 +164,7 @@ public class MenuVista extends JFrame {
 			JPanel panelAsignado;
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
-				this.setFont(new Font("Standard Symbols PS", Font.PLAIN, 20));
+				//this.setFont(new Font("Standard Symbols PS", Font.PLAIN, 20));
 			}
 			
 			public JPanel getPanel() {
