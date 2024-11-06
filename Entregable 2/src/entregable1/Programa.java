@@ -305,7 +305,19 @@ public class Programa {
 	
 	public static void main(String[] args) {
 
+
+		
+
+		//inicio
+		
+		//login
 		logInPage test = new logInPage();
+		//sign Up
+	//	RegistroVista registroVista = new RegistroVista();
+	//	RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		
+		//menu
+
 		
 		/*
 		final int _EXIT = 9;

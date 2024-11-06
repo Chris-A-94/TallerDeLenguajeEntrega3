@@ -1,10 +1,5 @@
-/json-20140107.jar
-/entregable1/
-<<<<<<< HEAD
-=======
-/manifest
-/sqlite-jdbc-3.46.1.2.jar
-/vistas/
 /controladores/
->>>>>>> 55904842fcf9ac98268075387d83d72a2b24886d
+/daos/
+/entregable1/
+/vistas/
 /Imagenes/
