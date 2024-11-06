@@ -21,8 +21,7 @@ public class logInPage extends JSplitPane{
 		BasicSplitPaneUI ui = (BasicSplitPaneUI)this.getUI();
 		divider = ui.getDivider();
 		leftPanel = new panelIzquierdo(); //cada lado es su clase privada propia
-		rightPanel = new JPanel();
-		rightPanel.add(new JButton("Login"));
+		rightPanel = new panelDerecho();		
 		this.setLeftComponent(leftPanel);
 		this.setRightComponent(rightPanel);
 		this.setDividerLocation(0.5); 
@@ -43,7 +42,60 @@ public class logInPage extends JSplitPane{
         ventana.setVisible(true);
 	}	
 	
+	//Clase panel derecho
+	private class panelDerecho extends JPanel{
+		private JButton login;
+		private JButton signin;
+		private JButton forgotPass;
+		private JTextArea Email, Password;
+		private Image emblema;
+		private JTextArea welcomeMessage;
+		
+		
+		
+		public panelDerecho()
+		{
+			//a llenar
+			this.setLayout(new GridBagLayout()); //4 filas minimo
+			
+			setButtons();
+		}
+		
+		private void setButtons()
+		{
+			//nota: si implementas una subclase que simule un boton los podes personalizar mucho mas
+			login = new JButton("Log in");
+			signin = new JButton("Sign in");
+			forgotPass = new JButton("Olvido su contraseña?");
+			
+			GridBagConstraints posLog = new GridBagConstraints();
+			posLog.gridy = 1;
+			posLog.gridx = 0;
+			posLog.anchor = GridBagConstraints.SOUTH;
+			posLog.insets = new Insets(10, 5, 10, 5);
+			
+			GridBagConstraints posSign = new GridBagConstraints();
+			posSign.gridy = 1;
+			posSign.gridx = 1;
+			posSign.anchor = GridBagConstraints.SOUTH;
+			posSign.insets = new Insets(10, 5, 10, 5);
+			
+			GridBagConstraints posForgot = new GridBagConstraints();
+			posForgot.gridy = 2;
+			posForgot.gridx = 0;
+			posForgot.gridwidth = 2;
+			posForgot.anchor = GridBagConstraints.SOUTH;
+			posForgot.insets = new Insets(10, 5, 10, 5);
+			
+			//agrego a la UI
+			this.add(login, posLog);
+			this.add(signin, posSign);
+			this.add(forgotPass, posForgot);			
+				
+		}
+	}
 	
+	//Clase panel izquierdo
 	private class panelIzquierdo extends JPanel{
 		private String imageName = "Imagenes/logIn.png";
 		private Image imagen;
