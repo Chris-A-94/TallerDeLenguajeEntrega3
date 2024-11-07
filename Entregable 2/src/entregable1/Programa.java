@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
 import vistas.RegistroVista;
 import vistas.logInPage;
+import vistas.vista;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -312,9 +314,14 @@ public class Programa {
 		
 		//login
 		logInPage test = new logInPage();
+		
 		//sign Up
-		//RegistroVista registroVista = new RegistroVista();
-		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		
+		/*
+		RegistroVista registroVista = new RegistroVista();
+		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+	    ControladorTextField conTf = new ControladorTextField(registroVista);
+		*/
 		
 		//menu
 
@@ -322,10 +329,7 @@ public class Programa {
 		/*
 		final int _EXIT = 9;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> signIn
 		final Scanner in = new Scanner(System.in);
 		
 		//Esto es un login para un usuario administrador.

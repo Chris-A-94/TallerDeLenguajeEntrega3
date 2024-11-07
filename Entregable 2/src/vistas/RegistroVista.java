@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-public class RegistroVista extends JFrame{
+public class RegistroVista extends JFrame implements vista{
 	private static final long serialVersionUID = 1L;
 	private JLabel labelTit	=	new JLabel("Sign Up",SwingConstants.CENTER);
 	private JLabel jlName 	= 	new JLabel("Nombre");
@@ -176,6 +176,31 @@ public class RegistroVista extends JFrame{
 	}
 	public JButton getBotonSalir() {
 		return botonSalir;
+	}
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		List<JLabel> etiquetas = new LinkedList<JLabel>();
+		etiquetas.add(jlName);
+		etiquetas.add(jlMail);
+		etiquetas.add(jlPass);
+		etiquetas.add(jlSur);
+		
+		return etiquetas;
+	}
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		List<JTextComponent> campos = new LinkedList<JTextComponent>();
+		campos.add(passField);
+		campos.add(textFieldMail);
+		campos.add(textFieldName);
+		campos.add(textFieldSur);
+		
+		return campos;
+	}
+	@Override
+	public List<JButton> devolverBotones() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

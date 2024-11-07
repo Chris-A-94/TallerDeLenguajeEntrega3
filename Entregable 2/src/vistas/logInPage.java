@@ -2,16 +2,20 @@ package vistas;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
+import javax.swing.text.JTextComponent;
 
+import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.*;
 
-public class logInPage extends JSplitPane{
+public class logInPage extends JSplitPane {
 
 	private JPanel leftPanel;
 	private JPanel rightPanel;
@@ -29,8 +33,10 @@ public class logInPage extends JSplitPane{
 		this.setDividerLocation(0.5); 
         this.setResizeWeight(0.5);
         this.setEnabled(true);            
-        
         this.inicializarFrame();
+        
+        ControladorTextField conTf = new ControladorTextField((vista) rightPanel);
+	
 	}
 	
 	private void inicializarFrame()
@@ -40,12 +46,14 @@ public class logInPage extends JSplitPane{
 		ventana.setSize(800, 400);      
         
         ventana.add(this);
-
+        ventana.setResizable(false);
+        ventana.setUndecorated(true);
+		
         ventana.setVisible(true);
 	}	
 	
 	//Clase panel derecho
-	private class panelDerecho extends JPanel{
+	private class panelDerecho extends JPanel implements vista{
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
@@ -69,7 +77,7 @@ public class logInPage extends JSplitPane{
 		
 		private void setEmblema()
 		{
-			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaBowl.png");	
+			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaIntro.png");	
 			
 			if(imgURL == null)
 			{
@@ -132,9 +140,14 @@ public class logInPage extends JSplitPane{
 			this.Email.setBorder(null);
 			this.Email.setFont(new Font("Tahoma",Font.PLAIN,12));
 			this.Email.setForeground(new Color(0xAB886D));
-			
+			this.Email.setBackground(new Color(0xD6C0B3));
 			
 			this.Password.setFont(this.agusFont);
+			this.Password.setBorder(null);
+			this.Password.setFont(new Font("Tahoma",Font.PLAIN,12));
+			this.Password.setForeground(new Color(0xAB886D));
+			this.Password.setBackground(new Color(0xD6C0B3));
+			
 			this.nEmail.setFont(this.agusFont);
 			this.nPasword.setFont(this.agusFont);
 			
@@ -194,16 +207,37 @@ public class logInPage extends JSplitPane{
 			this.add(forgotPass, posForgot);			
 				
 		}
+
+		@Override
+		public List<JLabel> devolverEtiquetas() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<JTextComponent> devolverCamposTexto() {
+			List<JTextComponent> campos = new LinkedList<JTextComponent>();
+			campos.add(Email);
+			campos.add(Password);
+			return campos;
+		}
+
+		@Override
+		public List<JButton> devolverBotones() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 	
 	//Clase panel izquierdo
 	private class panelIzquierdo extends JPanel{
-		private String imageName = "Imagenes/logIn.png";
+		private String imageName = "Imagenes/warning.png";
 		private Image imagen;
 		
 		public panelIzquierdo()
 		{
 			super();
+			this.setBackground(new Color(0xE4E0E1));
 			cargarImagen();
 			this.setSize(getPreferredSize());
 		}
