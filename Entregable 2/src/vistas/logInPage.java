@@ -26,7 +26,7 @@ public class logInPage extends JSplitPane{
 		this.setRightComponent(rightPanel);
 		this.setDividerLocation(0.5); 
         this.setResizeWeight(0.5);
-        this.setEnabled(false);            
+        this.setEnabled(true);            
         
         this.inicializarFrame();
 	}
@@ -56,10 +56,65 @@ public class logInPage extends JSplitPane{
 		public panelDerecho()
 		{
 			//a llenar
-			this.setLayout(new GridBagLayout()); //4 filas minimo
+			this.setLayout(new GridBagLayout()); 
 			this.agusFont = new Font("Tahoma",Font.PLAIN,12);
+			this.setPreferredSize(new Dimension(400, 400));
+			setMessage();
 			setForms();
 			setButtons();
+			setEmblema();
+		}
+		
+		private void setEmblema()
+		{
+			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaBowl.png");	
+			
+			if(imgURL == null)
+			{
+				System.err.println("Simbolo no encontrado.");
+				return;
+			}
+			else
+			{
+				try
+				{
+					emblema = ImageIO.read(imgURL);
+				}
+				catch (IOException ex) {
+					ex.printStackTrace();
+					}
+			}
+		
+			if(this.emblema != null)
+			{
+				//podria cargar emblema directamente con repaint(), pero quiero posicionarlo con gridbagconstraints
+				ImageIcon icono = new ImageIcon(emblema.getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+				JLabel	imagenMem = new JLabel(icono);
+				GridBagConstraints imagePos = new GridBagConstraints();
+	            imagePos.gridx = 0;
+	            imagePos.gridy = 1;	       
+	            imagePos.gridwidth = 2;
+	            imagePos.insets = new Insets(10, 10, 10, 10);
+	            this.add(imagenMem,imagePos);
+			}		
+						    
+		}
+
+		
+		private void setMessage()
+		{
+			this.welcomeMessage = new JTextArea("Bienvenido!");
+			this.welcomeMessage.setSize(150, 50);			
+			this.welcomeMessage.setFont(new Font("Tahoma", Font.BOLD,30));
+			this.welcomeMessage.setForeground(new Color(0x291e17));
+			
+			GridBagConstraints messagePos = new GridBagConstraints();
+			messagePos.gridy = 0;
+			messagePos.gridwidth = 2;
+			
+			this.add(welcomeMessage,messagePos);
+			
+			
 		}
 		
 		private void setForms()
@@ -82,14 +137,14 @@ public class logInPage extends JSplitPane{
 			GridBagConstraints posnEmail = new GridBagConstraints();
 			GridBagConstraints posnPassword = new GridBagConstraints();
 			
-			posnEmail.gridy = 0;
+			posnEmail.gridy = 2;
 			posnEmail.gridx = 0;
-			posEmail.gridy = 0;
+			posEmail.gridy = 2;
 			posEmail.gridx = 1;
 			
-			posnPassword.gridy = 1;
+			posnPassword.gridy = 3;
 			posnPassword.gridx = 0;
-			posPassword.gridy = 1;
+			posPassword.gridy = 3;
 			posPassword.gridx = 1;
 			
 			//agregado al JPanel

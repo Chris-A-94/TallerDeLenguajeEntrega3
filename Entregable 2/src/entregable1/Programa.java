@@ -313,8 +313,8 @@ public class Programa {
 		//login
 		logInPage test = new logInPage();
 		//sign Up
-		RegistroVista registroVista = new RegistroVista();
-		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+	//	RegistroVista registroVista = new RegistroVista();
+	//	RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
 		//menu
 
