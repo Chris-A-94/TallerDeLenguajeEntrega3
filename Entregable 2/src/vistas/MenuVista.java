@@ -3,48 +3,84 @@ package vistas;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.RoundRectangle2D;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
 
 public class MenuVista extends JFrame {
+	public class MoveListener implements MouseListener, MouseMotionListener {
+	        
+	        private Point pressedPoint;
+	        private Rectangle frameBounds;
+	        private Date lastTimeStamp;
+	        private JFrame frame;
+	        
+	        public MoveListener(JFrame frame) {
+	        	this.frame = frame;
+	        }
 	
-	public class MotionPanel extends JPanel{
-	    private Point initialClick;
-	    private JFrame parent;
-
-	    public MotionPanel(final JFrame parent){
-	    this.parent = parent;
-
-	    addMouseListener(new MouseAdapter() {
-	        public void mousePressed(MouseEvent e) {
-	            initialClick = e.getPoint();
-	            getComponentAt(initialClick);
-	        }
-	    });
-
-	    addMouseMotionListener(new MouseMotionAdapter() {
 	        @Override
-	        public void mouseDragged(MouseEvent e) {
-
-	            // get location of Window
-	            int thisX = parent.getLocation().x;
-	            int thisY = parent.getLocation().y;
-
-	            // Determine how much the mouse moved since the initial click
-	            int xMoved = e.getX() - initialClick.x;
-	            int yMoved = e.getY() - initialClick.y;
-
-	            // Move window to this position
-	            int X = thisX + xMoved;
-	            int Y = thisY + yMoved;
-	            parent.setLocation(X, Y);
+	        public void mouseClicked(MouseEvent event) {
 	        }
-	    });
+	
+	        @Override
+	        public void mousePressed(MouseEvent event) {
+	            this.frameBounds = frame.getBounds();
+	            this.pressedPoint = event.getPoint();
+	            this.lastTimeStamp = new Date();
+	        }
+	
+	        @Override
+	        public void mouseReleased(MouseEvent event) {
+	            moveJFrame(event);
+	        }
+	
+	        @Override
+	        public void mouseEntered(MouseEvent event) {
+	        }
+	
+	        @Override
+	        public void mouseExited(MouseEvent event) {
+	        }
+	
+	        @Override
+	        public void mouseDragged(MouseEvent event) {
+	            moveJFrame(event);
+	        }
+	
+	        @Override
+	        public void mouseMoved(MouseEvent event) {
+	        }
+	        
+	        private void moveJFrame(MouseEvent event) {
+	            Point endPoint = event.getPoint();
+	
+	            int xDiff = endPoint.x - pressedPoint.x;
+	            int yDiff = endPoint.y - pressedPoint.y;
+	
+	            Date timestamp = new Date();
+	
+	            //One move action per 60ms to avoid frame glitching
+	            if(Math.abs(timestamp.getTime() - lastTimeStamp.getTime()) > 20){ 
+	                if((xDiff>0 || yDiff>0)||(xDiff<0 || yDiff<0)) {
+	                    frameBounds.x += xDiff;
+	                    frameBounds.y += yDiff;
+	                    //System.out.println(frameBounds);
+	                    frame.setBounds(frameBounds);
+	                }
+	                this.lastTimeStamp = timestamp;
+	            }
+	        }
+	        
 	    }
-	}
 	
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
@@ -56,12 +92,14 @@ public class MenuVista extends JFrame {
 		this.setResizable(false);
 		this.setSize(_WIDTH, _HEIGHT);
 		this.setUndecorated(true);
+		this.getContentPane().setBackground(new Color(0x493628));
 		
 		// 'Look and Feel' Settings
-		UIManager.put("Button.disabledText", new ColorUIResource(Color.GRAY));
+		UIManager.put("Button.disabledText", new ColorUIResource(new Color(0x5e8da8)));
 		
 		// LayoutManager
 		this.setLayout(null);
+		this.setShape(new RoundRectangle2D.Double(0, 0, _WIDTH, _HEIGHT, 25, 25));
 		
 		// Instanciación de los Componentes
 		RedPanel redPanel = new RedPanel();
@@ -70,8 +108,7 @@ public class MenuVista extends JFrame {
 		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
-		MotionPanel bluePanel = new MotionPanel(this);
-		
+		JPanel bluePanel = new JPanel();
 		
 		bluePanel.setBackground(new Color(0x493628));
 		bluePanel.setBounds(0, 0, _WIDTH, 40);
@@ -79,7 +116,7 @@ public class MenuVista extends JFrame {
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
 		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
-		greenPanel1.addLabel("Demostración 1", icon);
+		greenPanel5.addLabel("Demostración 1", icon);
 		
 		icon = new ImageIcon("0.gif");
 		greenPanel2.addLabel("Demostración 2", icon);
@@ -89,11 +126,6 @@ public class MenuVista extends JFrame {
 		
 		icon = new ImageIcon("2.gif");
 		greenPanel4.addLabel("Demostración 4", icon);
-		
-		icon = new ImageIcon("3.png");
-		image = icon.getImage();
-		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
-		greenPanel5.addLabel("Demostración 5", icon);
 		
 		redPanel.newButton("Mis Activos", greenPanel1);
 		redPanel.newButton("Visualizar Cryptos", greenPanel2);
@@ -113,6 +145,10 @@ public class MenuVista extends JFrame {
 		
 		greenPanel1.enablePanel();
 		
+		MoveListener listener = new MoveListener(this);
+		bluePanel.addMouseListener(listener);
+		bluePanel.addMouseMotionListener(listener);
+		
 		this.setVisible(true);
 	}
 	
@@ -125,6 +161,7 @@ public class MenuVista extends JFrame {
 			this.setBounds(0, 40, 180, _HEIGHT - 40);
 			this.setLayout(null);
 			
+			this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
 		};
 		
 		public void newButton(String msg, GreenPanel panel) {
@@ -135,15 +172,18 @@ public class MenuVista extends JFrame {
 			// Atributos
 			button.setBounds(0, 40*buttons.size(), 180, 40);
 			button.setFocusable(false);
-			//button.setBorder(null);
-			button.setBackground(new Color(0xFFFFFF));
+			button.setBorder(null);
+			button.setBackground(new Color(0xB3C9D6));
 			button.setForeground(new Color(0x291e17));
 			button.setOpaque(false);
 			
 			// ActionListener
 			button.addActionListener(e -> {
 				resetButtons();
+				
 				button.setEnabled(false);
+				button.setOpaque(true);
+				//button.setBorder(BorderFactory.createLoweredBevelBorder());
 				button.getPanel().setVisible(true);
 			});
 			
@@ -154,6 +194,8 @@ public class MenuVista extends JFrame {
 		public void resetButtons() {
 			for (RedButton button : buttons) {
 				button.setEnabled(true);
+				button.setOpaque(false);
+				button.setBorder(null);
 				button.getPanel().setEnabled(false);
 				button.getPanel().setVisible(false);
 			}
@@ -162,9 +204,10 @@ public class MenuVista extends JFrame {
 		private class RedButton extends JButton {
 			private static final long serialVersionUID = 228929574725506575L;
 			JPanel panelAsignado;
+			
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
-				//this.setFont(new Font("Standard Symbols PS", Font.PLAIN, 20));
+				this.setFont(new Font("system-ui", Font.ITALIC, 15));
 			}
 			
 			public JPanel getPanel() {
