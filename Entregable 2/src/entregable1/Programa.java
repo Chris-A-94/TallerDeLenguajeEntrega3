@@ -322,6 +322,10 @@ public class Programa {
 		/*
 		final int _EXIT = 9;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> signIn
 		final Scanner in = new Scanner(System.in);
 		
 		//Esto es un login para un usuario administrador.
