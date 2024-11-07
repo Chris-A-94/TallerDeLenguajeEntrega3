@@ -4,18 +4,20 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+
 import javax.swing.plaf.ColorUIResource;
 
 public class MenuVista extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2999836563834513296L;
 	public class MoveListener implements MouseListener, MouseMotionListener {
 	        
 	        private Point pressedPoint;
@@ -108,24 +110,22 @@ public class MenuVista extends JFrame {
 		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		JPanel bluePanel = new JPanel();
 		
-		bluePanel.setBackground(new Color(0x493628));
-		bluePanel.setBounds(0, 0, _WIDTH, 40);
+		BluePanel bluePanel = new BluePanel(new Color(0x493628));
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
-		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
-		greenPanel5.addLabel("Demostración 1", icon);
+//		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
+//		greenPanel5.addLabel("Demostración 1", icon);
 		
 		icon = new ImageIcon("0.gif");
 		greenPanel2.addLabel("Demostración 2", icon);
 		
 		icon = new ImageIcon("1.gif");
 		greenPanel3.addLabel("Demostración 3", icon);
-		
-		icon = new ImageIcon("2.gif");
-		greenPanel4.addLabel("Demostración 4", icon);
+//		
+//		icon = new ImageIcon("2.gif");
+//		greenPanel4.addLabel("Demostración 4", icon);
 		
 		redPanel.newButton("", greenPanel1);
 		redPanel.newButton("Mis Activos", greenPanel1);
@@ -221,18 +221,19 @@ public class MenuVista extends JFrame {
 	private class GreenPanel extends JPanel {
 		private static final long serialVersionUID = -6824823559208147547L;
 
-		private JPanel header;
+		private JPanel header, leftBorder;
 		
 		public GreenPanel(Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 			this.setBackground(backgroundColor);
 			this.setOpaque(true);
+			
 			this.setBounds(180, 40, _WIDTH - 180, _HEIGHT - 40);
 			this.setLayout(layoutManager);
 			
-			JPanel leftBorder = new JPanel();
-			leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
-			leftBorder.setBackground(backgroundColor);
-			leftBorder.setOpaque(true);
+			this.leftBorder = new JPanel();
+			this.leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
+			this.leftBorder.setBackground(backgroundColor);
+			this.leftBorder.setOpaque(true);
 			this.add(leftBorder);
 			
 			this.header = new JPanel();
@@ -259,10 +260,18 @@ public class MenuVista extends JFrame {
 			JLabel label = new JLabel();
 			label.setText(msg);
 			label.setIcon(image);
-			label.setVerticalAlignment(JLabel.TOP);
-			label.setHorizontalAlignment(JLabel.LEFT);
-			label.setVerticalTextPosition(JLabel.TOP);
-			label.setHorizontalTextPosition(JLabel.CENTER);
+//			label.setVerticalTextPosition(JLabel.TOP);
+//			label.setHorizontalTextPosition(JLabel.CENTER);
+//			label.setVerticalAlignment(JLabel.TOP);
+//			label.setHorizontalAlignment(JLabel.LEFT);
+
+			
+			label.addMouseListener(new MouseAdapter(){
+				 @Override
+		            public void mouseEntered(MouseEvent me) {
+		                System.out.printf("Hover over Label\n");
+		            }
+			});
 			
 			label.setVisible(true);
 			this.add(label);
@@ -273,6 +282,29 @@ public class MenuVista extends JFrame {
 			label.setFont(new Font("system-ui", Font.BOLD, 25));
 			label.setBounds(25, 10, 1000, 25);
 			this.header.add(label);
+		}
+	}
+	private class BluePanel extends JPanel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6995007480578444605L;
+		
+		private JButton exitButton;
+
+		BluePanel(Color backgroundColor) {
+			this.setBackground(backgroundColor);
+			this.setBounds(0, 0, _WIDTH, 40);
+			
+			this.setLayout(null);
+			
+			exitButton = new JButton();
+			exitButton.setFont(new Font("system-ui", Font.BOLD, 20));
+			exitButton.setText("X");
+			exitButton.setBounds(0, 0, 50, 50);
+			exitButton.setFocusable(false);
+			
+			this.add(exitButton);
 		}
 	}
 }
