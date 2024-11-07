@@ -227,6 +227,16 @@ public class logInPage extends JSplitPane {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		public JButton getExit() {
+			return null;
+		}
+
+		@Override
+		public void close() {
+			//algo, manejate chris.
+		}
 	}
 	
 	//Clase panel izquierdo

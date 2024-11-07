@@ -2,11 +2,14 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
+
+import controladores.ExitButton;
 
 public class RegistroVista extends JFrame implements vista{
 	private static final long serialVersionUID = 1L;
@@ -118,6 +121,9 @@ public class RegistroVista extends JFrame implements vista{
 		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(textColor);
+		ExitButton conEB = new ExitButton(this);
+		   
+		
 		
 		botonAceptar.setBounds(posIniX,posIniY+4*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
@@ -201,6 +207,14 @@ public class RegistroVista extends JFrame implements vista{
 	public List<JButton> devolverBotones() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public JButton getExit() {
+		return this.botonSalir;
+	}
+	@Override
+	public void close() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	
 }

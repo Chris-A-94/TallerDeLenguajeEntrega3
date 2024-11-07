@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+import controladores.ExitButton;
 import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
@@ -322,9 +323,8 @@ public class Programa {
 		
 		
 		RegistroVista registroVista = new RegistroVista();
-		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
 	    ControladorTextField conTf = new ControladorTextField(registroVista);
-		
 		
 		//menu
 
@@ -335,7 +335,7 @@ public class Programa {
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-		MenuVista menuVista = new MenuVista();
+		//MenuVista menuVista = new MenuVista();
 		/*
 		final int _EXIT = 9;
 

@@ -9,19 +9,25 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.text.JTextComponent;
 
-public class MenuVista extends JFrame {
+public class MenuVista extends JFrame implements vista {
+	private JButton botonSalir = new JButton("X");
+    
 	public class MoveListener implements MouseListener, MouseMotionListener {
 	        
 	        private Point pressedPoint;
 	        private Rectangle frameBounds;
 	        private Date lastTimeStamp;
 	        private JFrame frame;
+	        
+	        
 	        
 	        public MoveListener(JFrame frame) {
 	        	this.frame = frame;
@@ -112,6 +118,13 @@ public class MenuVista extends JFrame {
 		
 		bluePanel.setBackground(new Color(0x493628));
 		bluePanel.setBounds(0, 0, _WIDTH, 40);
+		botonSalir.setBorder(null);
+		botonSalir.setBackground(null);
+		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
+		botonSalir.setFocusPainted(false);
+		botonSalir.setForeground(new Color(0xAB886D));
+		bluePanel.add(botonSalir);
+		
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
@@ -274,5 +287,28 @@ public class MenuVista extends JFrame {
 			label.setBounds(25, 10, 1000, 25);
 			this.header.add(label);
 		}
+	}
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<JButton> devolverBotones() {
+		
+		return null;
+	}
+	@Override
+	public JButton getExit() {
+		return this.botonSalir;
+	}
+	@Override
+	public void close() {
+		this.close();
 	}
 }
