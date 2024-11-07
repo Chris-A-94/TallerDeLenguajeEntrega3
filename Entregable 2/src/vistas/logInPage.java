@@ -379,12 +379,26 @@ public class logInPage extends JSplitPane {
 		        g.drawImage(scaledImage, 0, 0, this);
 
 		        // Dibuja el texto
-		        FontMetrics metrics = g.getFontMetrics(g.getFont());
-		        String text = "Maneje sus finanzas de la mejor manera";
-		        int textWidth = metrics.stringWidth(text);
-		        int textX = (panelWidth - textWidth) / 2; // Centra el texto horizontalmente
-		        g.setColor(Color.red);
-		        g.drawString(text, textX, 30); // Dibuja el texto centrado		        
+		        
+		        String text = "Billetera Tutuca";		      
+		        g.setFont(new Font("Tahoma", Font.BOLD,30));
+		        g.setColor(Color.black);
+		        Graphics2D graphics2D = (Graphics2D) g;		      
+		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON); 
+		        graphics2D.drawString(text, 120, 30); // Dibuja el texto centrado
+		        
+		        String text1 = "Compra y venta de cripto segura y confiable";		      
+		        g.setFont(new Font("Tahoma", Font.BOLD,13));		 
+		        g.setColor(Color.BLACK);
+		        graphics2D = (Graphics2D) g;		      
+		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		        graphics2D.drawString(text1, 80, 350); // Dibuja el texto centrado
 		    } else {
 		        System.err.println("La imagen no se ha cargado."); // Mensaje de depuración
 		    }
