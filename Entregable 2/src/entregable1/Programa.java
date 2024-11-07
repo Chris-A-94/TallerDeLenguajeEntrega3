@@ -7,13 +7,17 @@ import javax.swing.JFrame;
 import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
-import vistas.RegistroVista;
 import vistas.logInPage;
-import vistas.vista;
 
+import vistas.MenuVista;
+import vistas.RegistroVista;
+
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 public class Programa {
 	private static Coin crearCripto(String sigla, Sistema sistema) {
 		Coin return_coin = null;
@@ -218,7 +222,6 @@ public class Programa {
 			System.out.printf("\033[1;37m%s \033[0;33m%f\033[0m\n", s.getSigla(), s.getCantMonedas());
 		}
 	}
-	
 	private static void optCrearMoneda(Sistema sistema,Usuario temp) {
 		Coin auxCoin = sistema.crearMoneda();
 		}
@@ -313,19 +316,26 @@ public class Programa {
 		//inicio
 		
 		//login
-		logInPage test = new logInPage();
+		//logInPage test = new logInPage();
 		
 		//sign Up
 		
-		/*
+		
 		RegistroVista registroVista = new RegistroVista();
 		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 	    ControladorTextField conTf = new ControladorTextField(registroVista);
-		*/
+		
 		
 		//menu
 
+		// Nota: En pantallas con alto DPI la UI se rompe.
+		// Esto se soluciona forzando la escala en 1
+		System.setProperty("sun.java2d.uiScale", "1");
 		
+//		RegistroVista registroVista = new RegistroVista();
+//		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		
+		MenuVista menuVista = new MenuVista();
 		/*
 		final int _EXIT = 9;
 
