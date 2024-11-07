@@ -316,26 +316,26 @@ public class Programa {
 		//inicio
 		
 		//login
-		//logInPage test = new logInPage();
+		logInPage test = new logInPage();
 		
 		//sign Up
 		
 		
-		RegistroVista registroVista = new RegistroVista();
+	/*	RegistroVista registroVista = new RegistroVista();
 		RegistroControlador registroControlador = new RegistroControlador(registroVista);
-	    ControladorTextField conTf = new ControladorTextField(registroVista);
+	    ControladorTextField conTf = new ControladorTextField(registroVista);*/
 		
 		
 		//menu
 
 		// Nota: En pantallas con alto DPI la UI se rompe.
 		// Esto se soluciona forzando la escala en 1
-		System.setProperty("sun.java2d.uiScale", "1");
+	//	System.setProperty("sun.java2d.uiScale", "1");
 		
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-		MenuVista menuVista = new MenuVista();
+	//	MenuVista menuVista = new MenuVista();
 		/*
 		final int _EXIT = 9;
 

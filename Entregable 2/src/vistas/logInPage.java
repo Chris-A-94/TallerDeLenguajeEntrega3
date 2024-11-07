@@ -8,6 +8,7 @@ import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -20,6 +21,9 @@ public class logInPage extends JSplitPane {
 	private JPanel leftPanel;
 	private JPanel rightPanel;
 	BasicSplitPaneDivider divider;
+	private JButton botonSalir;
+	private JFrame ventana;
+	private JPanel mainPanel;
 	
 	public logInPage()
 	{
@@ -27,30 +31,64 @@ public class logInPage extends JSplitPane {
 		BasicSplitPaneUI ui = (BasicSplitPaneUI)this.getUI();
 		divider = ui.getDivider();
 		leftPanel = new panelIzquierdo(); //cada lado es su clase privada propia
-		rightPanel = new panelDerecho();		
+		rightPanel = new panelDerecho();	
+		
 		this.setLeftComponent(leftPanel);
-		this.setRightComponent(rightPanel);
-		this.setDividerLocation(0.5); 
+		this.setRightComponent(rightPanel);	
+		this.setExit();
         this.setResizeWeight(0.5);
         this.setEnabled(true);            
         this.inicializarFrame();
-        
+        this.setDividerLocation(0.6);
         ControladorTextField conTf = new ControladorTextField((vista) rightPanel);
 	
 	}
 	
 	private void inicializarFrame()
 	{
-		JFrame ventana = new JFrame("Login Page");
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setSize(800, 400);      
-        
-        ventana.add(this);
-        ventana.setResizable(false);
-        ventana.setUndecorated(true);
 		
-        ventana.setVisible(true);
+		mainPanel = new JPanel(new BorderLayout());		
+		mainPanel.setBackground(Color.LIGHT_GRAY);
+		
+		JPanel titleBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		titleBar.add(this.botonSalir);
+		titleBar.setBorder(null);
+		mainPanel.add(titleBar, BorderLayout.NORTH);
+		mainPanel.add(this, BorderLayout.CENTER);
+		
+		this.ventana = new JFrame("Login Page");
+		this.ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.ventana.setSize(800, 400);      
+		this.ventana.add(mainPanel);    
+		this.ventana.setLocationRelativeTo(null); 
+		this.ventana.setUndecorated(true);	        
+		this.ventana.setResizable(false);
+		this.ventana.setBackground(new Color(0, 0, 0, 0));
+		ventana.setShape(new RoundRectangle2D.Double(0, 0, 800, 400, 25, 25));
+		this.ventana.setVisible(true);
+		
 	}	
+	
+	private void setExit()
+	{
+		//seteo el boton
+		this.botonSalir  = new JButton("X");		
+		this.botonSalir.setBounds(rightPanel.getWidth()-40, 10, 30, 30);
+		this.botonSalir.setBorder(null);
+		this.botonSalir.setBackground(null);
+		this.botonSalir.setFont(new Font("Arial", Font.BOLD,20));
+		this.botonSalir.setFocusPainted(false);
+		this.botonSalir.setForeground(new Color(0xAB886D));
+		//ROTURA DE MVC, ARREGLAR LUEGO
+		this.botonSalir.addActionListener(e -> ventana.dispose());	
+		
+		
+		this.rightPanel.add(botonSalir);
+	}
+	
+	
+	
+	
 	
 	//Clase panel derecho
 	private class panelDerecho extends JPanel implements vista{
@@ -77,7 +115,7 @@ public class logInPage extends JSplitPane {
 		
 		private void setEmblema()
 		{
-			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaIntro.png");	
+			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaBowl.png");	
 			
 			if(imgURL == null)
 			{
