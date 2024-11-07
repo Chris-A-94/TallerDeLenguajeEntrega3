@@ -103,11 +103,11 @@ public class MenuVista extends JFrame {
 		
 		// Instanciación de los Componentes
 		RedPanel redPanel = new RedPanel();
-		GreenPanel greenPanel1 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel2 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new BorderLayout());
+		GreenPanel greenPanel1 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), null);
+		GreenPanel greenPanel2 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		JPanel bluePanel = new JPanel();
 		
 		bluePanel.setBackground(new Color(0x493628));
@@ -127,6 +127,7 @@ public class MenuVista extends JFrame {
 		icon = new ImageIcon("2.gif");
 		greenPanel4.addLabel("Demostración 4", icon);
 		
+		redPanel.newButton("", greenPanel1);
 		redPanel.newButton("Mis Activos", greenPanel1);
 		redPanel.newButton("Visualizar Cryptos", greenPanel2);
 		redPanel.newButton("Comprar Crypto", greenPanel3);
@@ -168,6 +169,8 @@ public class MenuVista extends JFrame {
 			RedButton button = new RedButton(panel);
 			// Asigno el mensaje al Botón.
 			button.setText(msg);
+			// Asigno el título
+			panel.setTitle(msg);
 			
 			// Atributos
 			button.setBounds(0, 40*buttons.size(), 180, 40);
@@ -218,13 +221,26 @@ public class MenuVista extends JFrame {
 	private class GreenPanel extends JPanel {
 		private static final long serialVersionUID = -6824823559208147547L;
 
-		public GreenPanel(Color backgroundColor, LayoutManager layoutManager) {
+		private JPanel header;
+		
+		public GreenPanel(Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 			this.setBackground(backgroundColor);
 			this.setOpaque(true);
-			
 			this.setBounds(180, 40, _WIDTH - 180, _HEIGHT - 40);
-			
 			this.setLayout(layoutManager);
+			
+			JPanel leftBorder = new JPanel();
+			leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
+			leftBorder.setBackground(backgroundColor);
+			leftBorder.setOpaque(true);
+			this.add(leftBorder);
+			
+			this.header = new JPanel();
+			this.header.setBounds(0, 0, _WIDTH - 180, 40);
+			this.header.setBackground(headerColor);
+			this.header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0x493628)));
+			this.header.setLayout(null);
+			this.add(header);
 			
 			this.disablePanel();
 		}
@@ -250,6 +266,13 @@ public class MenuVista extends JFrame {
 			
 			label.setVisible(true);
 			this.add(label);
+		}
+		
+		public void setTitle(String title) {
+			JLabel label = new JLabel(title);
+			label.setFont(new Font("system-ui", Font.BOLD, 25));
+			label.setBounds(25, 10, 1000, 25);
+			this.header.add(label);
 		}
 	}
 }
