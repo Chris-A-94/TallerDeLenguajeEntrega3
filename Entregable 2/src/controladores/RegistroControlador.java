@@ -18,7 +18,6 @@ public class RegistroControlador {
 	public RegistroControlador(RegistroVista vista) {
 		this.vista = vista;
 		for (JTextComponent tf : vista.devolverCampos()) {
-			tf.addMouseListener(new MouseControlTexts(tf));
 			tf.addFocusListener(new FocusControlTexts(tf));
 		}
 		this.vista.getBotonSalir().addMouseListener(new MouseControlExit());

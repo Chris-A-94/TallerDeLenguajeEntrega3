@@ -313,8 +313,8 @@ public class Programa {
 		//login
 		logInPage test = new logInPage();
 		//sign Up
-	//	RegistroVista registroVista = new RegistroVista();
-	//	RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		//RegistroVista registroVista = new RegistroVista();
+		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
 		//menu
 
@@ -322,7 +322,6 @@ public class Programa {
 		/*
 		final int _EXIT = 9;
 
->>>>>>> 55904842fcf9ac98268075387d83d72a2b24886d
 		final Scanner in = new Scanner(System.in);
 		
 		//Esto es un login para un usuario administrador.

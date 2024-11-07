@@ -2,9 +2,9 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
@@ -19,7 +19,7 @@ public class RegistroVista extends JFrame{
 	private JTextField textFieldName =	new JTextField("Joaquín Victor");
 	private JTextField textFieldSur  =	new JTextField("Gonzales");
 	private JTextField textFieldMail =	new JTextField("buenas@gmail.com");
-	private JPasswordField passField =	new JPasswordField();
+	private JPasswordField passField =	new JPasswordField("Password");
 	
 	private JButton botonAceptar = new JButton("Aceptar");
 	private JButton botonSalir 	 = new JButton("X");
@@ -43,6 +43,8 @@ public class RegistroVista extends JFrame{
 		Color camposTextColor = new Color(0xD6C0B3);
 		Color textColor = new Color(0xAB886D);
 		int cons=40;
+		//CONFIGURACIÓN DE IMÁGENES
+		
 		
 		//CONFIGURACIÓN DE LAS ETIQUETAS
 		int posIniY = dimY/4;
@@ -113,8 +115,9 @@ public class RegistroVista extends JFrame{
 		botonSalir.setBounds(dimX-cons, 10, 30, 30);
 		botonSalir.setBorder(null);
 		botonSalir.setBackground(null);
-		botonSalir.setFont(new Font("Arial", Font.PLAIN,20));
+		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
 		botonSalir.setFocusPainted(false);
+		botonSalir.setForeground(textColor);
 		
 		botonAceptar.setBounds(posIniX,posIniY+4*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
@@ -160,6 +163,9 @@ public class RegistroVista extends JFrame{
 	public JButton getBotonAtras() {
 		return botonAtras;
 	}
+
+
+	
 	public List<JTextComponent> devolverCampos(){
 		List<JTextComponent> listaCampos = new LinkedList<JTextComponent>();
 		listaCampos.add(textFieldName);
@@ -171,4 +177,5 @@ public class RegistroVista extends JFrame{
 	public JButton getBotonSalir() {
 		return botonSalir;
 	}
+	
 }

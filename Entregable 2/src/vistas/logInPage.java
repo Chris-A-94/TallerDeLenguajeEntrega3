@@ -3,6 +3,8 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
+import controladores.RegistroControlador;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +52,7 @@ public class logInPage extends JSplitPane{
 		private JLabel nEmail,nPasword;
 		private JTextField Email, Password;
 		private Image emblema;
-		private JTextArea welcomeMessage;	
+		private JLabel welcomeMessage;	
 		private Font agusFont;
 		
 		public panelDerecho()
@@ -103,7 +105,7 @@ public class logInPage extends JSplitPane{
 		
 		private void setMessage()
 		{
-			this.welcomeMessage = new JTextArea("Bienvenido!");
+			this.welcomeMessage = new JLabel("Bienvenido!");
 			this.welcomeMessage.setSize(150, 50);			
 			this.welcomeMessage.setFont(new Font("Tahoma", Font.BOLD,30));
 			this.welcomeMessage.setForeground(new Color(0x291e17));
@@ -127,9 +129,15 @@ public class logInPage extends JSplitPane{
 			
 			//personalizacion
 			this.Email.setFont(this.agusFont);
+			this.Email.setBorder(null);
+			this.Email.setFont(new Font("Tahoma",Font.PLAIN,12));
+			this.Email.setForeground(new Color(0xAB886D));
+			
+			
 			this.Password.setFont(this.agusFont);
 			this.nEmail.setFont(this.agusFont);
 			this.nPasword.setFont(this.agusFont);
+			
 			
 			//posicionamiento
 			GridBagConstraints posEmail = new GridBagConstraints();
