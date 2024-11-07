@@ -321,9 +321,9 @@ public class Programa {
 		//sign Up
 		
 		
-	/*	RegistroVista registroVista = new RegistroVista();
+		RegistroVista registroVista = new RegistroVista();
 		RegistroControlador registroControlador = new RegistroControlador(registroVista);
-	    ControladorTextField conTf = new ControladorTextField(registroVista);*/
+	    ControladorTextField conTf = new ControladorTextField(registroVista);
 		
 		
 		//menu
