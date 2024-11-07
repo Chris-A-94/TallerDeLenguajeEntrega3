@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Date;
 import java.util.LinkedList;
@@ -112,6 +113,9 @@ public class MenuVista extends JFrame {
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		
 		BluePanel bluePanel = new BluePanel(new Color(0x493628));
+		bluePanel.getExitButton().addActionListener(e -> {
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		});
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
@@ -264,14 +268,6 @@ public class MenuVista extends JFrame {
 //			label.setHorizontalTextPosition(JLabel.CENTER);
 //			label.setVerticalAlignment(JLabel.TOP);
 //			label.setHorizontalAlignment(JLabel.LEFT);
-
-			
-			label.addMouseListener(new MouseAdapter(){
-				 @Override
-		            public void mouseEntered(MouseEvent me) {
-		                System.out.printf("Hover over Label\n");
-		            }
-			});
 			
 			label.setVisible(true);
 			this.add(label);
@@ -281,6 +277,12 @@ public class MenuVista extends JFrame {
 			JLabel label = new JLabel(title);
 			label.setFont(new Font("system-ui", Font.BOLD, 25));
 			label.setBounds(25, 10, 1000, 25);
+			label.addMouseListener(new MouseAdapter(){
+				 @Override
+		            public void mouseEntered(MouseEvent me) {
+		                System.out.printf("Hover over Label\n");
+		            }
+			});
 			this.header.add(label);
 		}
 	}
@@ -306,5 +308,9 @@ public class MenuVista extends JFrame {
 			
 			this.add(exitButton);
 		}
+		
+		public JButton getExitButton() {
+			return this.exitButton;
+		};
 	}
 }
