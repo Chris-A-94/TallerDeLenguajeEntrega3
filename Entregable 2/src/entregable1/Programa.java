@@ -327,14 +327,14 @@ public class Programa {
 		//inicio
 		
 		//login
-		logInPage test = new logInPage();
+		//logInPage test = new logInPage();
 		
 		//sign Up
 		
 		
-		RegistroVista registroVista = new RegistroVista();
+		//RegistroVista registroVista = new RegistroVista();
 		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
-	    ControladorTextField conTf = new ControladorTextField(registroVista);
+	    //ControladorTextField conTf = new ControladorTextField(registroVista);
 		
 		//menu
 
@@ -345,13 +345,15 @@ public class Programa {
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-//		MenuVista menuVista = new MenuVista();
+		MenuVista menuVista = new MenuVista();
 		
+		/*
 		MakeSound ms = new MakeSound();
 		while (true) {
 			ms.playSound("src/Imagenes/Portal.wav",(float) -20.0);
 				
 		}
+		
 		/*
 		final int _EXIT = 9;
 
