@@ -17,9 +17,9 @@ public class BluePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -6995007480578444605L;	
 	private JButton exitButton;
-	private JFrame parent;
+	private Vista parent;
 
-	BluePanel(JFrame parent, Color backgroundColor, int WIDTH, int HEIGHT) {
+	BluePanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT) {
 		class MouseBehaviour implements MouseListener {
 
 			public MouseBehaviour() {
@@ -83,7 +83,7 @@ public class BluePanel extends JPanel {
 		
 		exitButton.addMouseListener(new MouseBehaviour());
 		exitButton.addActionListener(e -> {
-			parent.dispatchEvent(new WindowEvent(parent, WindowEvent.WINDOW_CLOSING));
+			parent.callExit();
 		});
 		
 		this.add(exitButton);

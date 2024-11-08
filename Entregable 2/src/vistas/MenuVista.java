@@ -8,12 +8,14 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.*;
 
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.text.JTextComponent;
 
-public class MenuVista extends JFrame {
+public class MenuVista extends JFrame implements Vista {
 	/**
 	 * 
 	 */
@@ -87,6 +89,8 @@ public class MenuVista extends JFrame {
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
 	
+	private RedPanel redPanel;
+	
 	public MenuVista() {
 		// Atributos
 		this.setTitle("Menu");
@@ -104,7 +108,7 @@ public class MenuVista extends JFrame {
 		this.setShape(new RoundRectangle2D.Double(0, 0, _WIDTH, _HEIGHT, 25, 25));
 		
 		// Instanciación de los Componentes
-		RedPanel redPanel = new RedPanel();
+		this.redPanel = new RedPanel();
 		GreenPanel greenPanel1 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), null);
 		GreenPanel greenPanel2 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
@@ -177,7 +181,7 @@ public class MenuVista extends JFrame {
 				resetButtons();
 				
 				button.setEnabled(false);
-				button.setOpaque(true);
+				button.setSelected(true);
 				//button.setBorder(BorderFactory.createLoweredBevelBorder());
 				button.getPanel().setVisible(true);
 			});
@@ -189,8 +193,8 @@ public class MenuVista extends JFrame {
 		public void resetButtons() {
 			for (RedButton button : buttons) {
 				button.setEnabled(true);
-				button.setOpaque(false);
 				button.setBorder(null);
+				button.setSelected(false);
 				button.getPanel().setEnabled(false);
 				button.getPanel().setVisible(false);
 			}
@@ -200,19 +204,57 @@ public class MenuVista extends JFrame {
 			private static final long serialVersionUID = 228929574725506575L;
 			JPanel panelAsignado;
 			
+			boolean selected = false;
+			
+			public boolean isSelected() {
+				return selected;
+			}
+
+			public void setSelected(boolean selected) {
+				this.selected = selected;
+			}
+
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
 				this.setFont(new Font("system-ui", Font.ITALIC, 15));
-				this.setBounds(0, 40 + 40*buttons.size(), 180, 40);
+				this.setBounds(0, 80 + 40*buttons.size(), 180, 40);
 				this.setFocusable(false);
 				this.setBorder(null);
 				this.setBackground(new Color(0xB3C9D6));
-				this.setForeground(new Color(0x291e17));
 				this.setOpaque(false);
+			}
+			
+			@Override
+			public void repaint() {
+				super.repaint();
 			}
 			
 			public JPanel getPanel() {
 				return this.panelAsignado;
+			}
+			
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent (g);
+				Graphics2D g2 = (Graphics2D)g;
+				
+				// Render Hints
+				g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+	            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+	            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+	
+				if (this.isSelected()) {
+					g2.setPaint(new Color(0xCAB0A3));  // need a way to draw stiple pattern
+					g2.fill(new RoundRectangle2D.Double(4, 0, 170, 36, 10, 10)); // fills the entire button
+					 // this implementation works with my borders but the Button Text is beneath the fill
+					g2.setPaint(new Color(0x000000));
+					g2.drawString(this.getText(), 20, 20);
+				}
 			}
 		}
 	}
@@ -273,5 +315,29 @@ public class MenuVista extends JFrame {
 			label.setBounds(25, 10, 1000, 25);
 			this.header.add(label);
 		}
+	}
+
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JButton> devolverBotones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JButton callExit() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		return null;
 	}
 }
