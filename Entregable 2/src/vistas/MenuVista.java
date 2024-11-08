@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -114,6 +115,12 @@ public class MenuVista extends JFrame implements Vista {
 		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+
+		redPanel.newButton("Mis Activos", greenPanel1);
+		redPanel.newButton("Visualizar Cryptos", greenPanel2);
+		redPanel.newButton("Comprar Crypto", greenPanel3);
+		redPanel.newButton("Swap Crypto", greenPanel4);
+		redPanel.newButton("Mis transacciones", greenPanel5);
 		
 		BluePanel bluePanel = new BluePanel(this, new Color(0x493628), _WIDTH, 40);
 		
@@ -127,16 +134,6 @@ public class MenuVista extends JFrame implements Vista {
 		
 		icon = new ImageIcon("1.gif");
 		greenPanel3.addLabel("Demostración 3", icon);
-//		
-//		icon = new ImageIcon("2.gif");
-//		greenPanel4.addLabel("Demostración 4", icon);
-		
-		redPanel.newButton("Mis Activos", greenPanel1);
-		redPanel.newButton("Visualizar Cryptos", greenPanel2);
-		redPanel.newButton("Comprar Crypto", greenPanel3);
-		redPanel.newButton("Swap Crypto", greenPanel4);
-		redPanel.newButton("Mis transacciones", greenPanel5);
-
 		
 		// Add Components
 		this.add(redPanel);
@@ -176,16 +173,6 @@ public class MenuVista extends JFrame implements Vista {
 			// Asigno el título
 			panel.setTitle(msg);
 			
-			// ActionListener
-			button.addActionListener(e -> {
-				resetButtons();
-				
-				button.setEnabled(false);
-				button.setSelected(true);
-				//button.setBorder(BorderFactory.createLoweredBevelBorder());
-				button.getPanel().setVisible(true);
-			});
-			
 			// Agregar al Panel
 			this.add(button);
 			buttons.add(button);
@@ -197,6 +184,8 @@ public class MenuVista extends JFrame implements Vista {
 				button.setSelected(false);
 				button.getPanel().setEnabled(false);
 				button.getPanel().setVisible(false);
+				
+				button.boxColor = button.defaultColor;
 			}
 		}
 	
@@ -204,8 +193,14 @@ public class MenuVista extends JFrame implements Vista {
 			private static final long serialVersionUID = 228929574725506575L;
 			JPanel panelAsignado;
 			
-			boolean selected = false;
+			boolean selected 	= false;
 			
+			final Color defaultColor = new Color(0xD6C0B3);
+			final Color lightColor	 = new Color(0xe3d4c4);
+			final Color shadowColor	 = new Color(0xCAB0A3);
+			Color boxColor;
+			
+			@Override
 			public boolean isSelected() {
 				return selected;
 			}
@@ -216,14 +211,63 @@ public class MenuVista extends JFrame implements Vista {
 
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
-				this.setFont(new Font("system-ui", Font.ITALIC, 15));
+				
+				/*
+				 * Atributos
+				 */
+				
+				// Posicionamiento
 				this.setBounds(0, 80 + 40*buttons.size(), 180, 40);
+				
 				this.setFocusable(false);
 				this.setBorder(null);
-				this.setBackground(new Color(0xB3C9D6));
-				this.setOpaque(false);
-			}
+				this.setContentAreaFilled(false);
+				
+				// Estética
+				this.boxColor = this.defaultColor;
+				this.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+				
+				// ActionListener
+				this.addActionListener(e -> {
+					resetButtons();
+					
+					this.setEnabled(false);
+					this.setSelected(true);
+					this.boxColor = this.shadowColor;
+					this.getPanel().setVisible(true);
+				});
+				// MouseListener
+				this.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						if (!RedButton.this.isSelected()) {
+							RedButton.this.boxColor = RedButton.this.lightColor;
+						}
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						if (!RedButton.this.isSelected()) {
+							RedButton.this.boxColor = RedButton.this.defaultColor;
+						}
+					}
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						RedButton.this.boxColor = RedButton.this.shadowColor;
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub	
+					}
+				});
 			
+			}
 			@Override
 			public void repaint() {
 				super.repaint();
@@ -247,14 +291,22 @@ public class MenuVista extends JFrame implements Vista {
 	            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 	            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 	            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-	
-				if (this.isSelected()) {
-					g2.setPaint(new Color(0xCAB0A3));  // need a way to draw stiple pattern
-					g2.fill(new RoundRectangle2D.Double(4, 0, 170, 36, 10, 10)); // fills the entire button
-					 // this implementation works with my borders but the Button Text is beneath the fill
-					g2.setPaint(new Color(0x000000));
-					g2.drawString(this.getText(), 20, 20);
-				}
+	            
+				// Dibujar la caja de fondo
+				g2.setPaint(boxColor);  
+				g2.fill(new RoundRectangle2D.Double(4, 0, 170, 36, 10, 10));
+				
+				// Dibujar el texto
+				Font font = this.getFont();
+				
+				// Cálculo de la posición del texto
+				FontMetrics metrics = getFontMetrics(font);
+				int dX = (this.getWidth() - metrics.stringWidth(this.getText())) / 2;
+				int dY = ((this.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+				
+				g2.setFont(font);
+				g2.setPaint(new Color(0x000000));
+				g2.drawString(this.getText(), dX, dY);
 			}
 		}
 	}
