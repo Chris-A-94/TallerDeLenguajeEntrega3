@@ -2,14 +2,22 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
 import controladores.ExitButton;
+import vistas.MenuVista.MoveListener;
 
 public class RegistroVista extends JFrame implements vista{
 	private static final long serialVersionUID = 1L;
@@ -40,6 +48,10 @@ public class RegistroVista extends JFrame implements vista{
 		this.setResizable(false);
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(new Color(0xE4E0E1));
+		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 25, 25));
+		MoveListener listener = new MoveListener(this);
+		this.addMouseListener(listener);
+		this.addMouseMotionListener(listener);
 		//CONSTANTES
 		int dimX = this.getWidth();
 		int dimY = this.getHeight();
@@ -215,6 +227,77 @@ public class RegistroVista extends JFrame implements vista{
 	@Override
 	public void close() {
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	
 	}
+	
+	
+	public class MoveListener implements MouseListener, MouseMotionListener {
+        
+        private Point pressedPoint;
+        private Rectangle frameBounds;
+        private Date lastTimeStamp;
+        private JFrame frame;
+        
+        
+        
+        public MoveListener(JFrame frame) {
+        	this.frame = frame;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent event) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent event) {
+            this.frameBounds = frame.getBounds();
+            this.pressedPoint = event.getPoint();
+            this.lastTimeStamp = new Date();
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent event) {
+            moveJFrame(event);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent event) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent event) {
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent event) {
+            moveJFrame(event);
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent event) {
+        }
+        
+        private void moveJFrame(MouseEvent event) {
+            Point endPoint = event.getPoint();
+
+            int xDiff = endPoint.x - pressedPoint.x;
+            int yDiff = endPoint.y - pressedPoint.y;
+
+            Date timestamp = new Date();
+
+            //One move action per 60ms to avoid frame glitching
+            if(Math.abs(timestamp.getTime() - lastTimeStamp.getTime()) > 20){ 
+                if((xDiff>0 || yDiff>0)||(xDiff<0 || yDiff<0)) {
+                    frameBounds.x += xDiff;
+                    frameBounds.y += yDiff;
+                    //System.out.println(frameBounds);
+                    frame.setBounds(frameBounds);
+                }
+                this.lastTimeStamp = timestamp;
+            }
+        }
+        
+    }
+
 	
 }

@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Date;
 import java.util.LinkedList;
@@ -16,6 +17,8 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
+
+import controladores.ExitButton;
 
 public class MenuVista extends JFrame implements vista {
 	private JButton botonSalir = new JButton("X");
@@ -123,8 +126,9 @@ public class MenuVista extends JFrame implements vista {
 		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(new Color(0xAB886D));
-		bluePanel.add(botonSalir);
+		ExitButton conEB = new ExitButton(this);
 		
+		bluePanel.add(botonSalir);
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
@@ -309,6 +313,7 @@ public class MenuVista extends JFrame implements vista {
 	}
 	@Override
 	public void close() {
-		this.close();
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		
 	}
 }

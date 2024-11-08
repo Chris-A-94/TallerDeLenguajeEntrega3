@@ -9,6 +9,16 @@ import controladores.ControladorTextField;
 import controladores.RegistroControlador;
 
 import vistas.logInPage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 
 import vistas.MenuVista;
 import vistas.RegistroVista;
@@ -317,7 +327,7 @@ public class Programa {
 		//inicio
 		
 		//login
-		//logInPage test = new logInPage();
+		logInPage test = new logInPage();
 		
 		//sign Up
 		
@@ -335,7 +345,13 @@ public class Programa {
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-		//MenuVista menuVista = new MenuVista();
+//		MenuVista menuVista = new MenuVista();
+		
+		MakeSound ms = new MakeSound();
+		while (true) {
+			ms.playSound("src/Imagenes/Portal.wav",(float) -20.0);
+				
+		}
 		/*
 		final int _EXIT = 9;
 
@@ -434,4 +450,74 @@ public class Programa {
     
     */
 	}	
+
 }
+	
+class MakeSound {
+
+    private final int BUFFER_SIZE = 10000;
+    private File soundFile;
+    private AudioInputStream audioStream;
+    private AudioFormat audioFormat;
+    private SourceDataLine sourceLine;
+
+    /**
+     * @param filename the name of the file that is going to be played
+     */
+    public void playSound(String filename, float volume) {
+        String strFilename = filename;
+
+        try {
+            soundFile = new File(strFilename);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {
+            audioStream = AudioSystem.getAudioInputStream(soundFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        audioFormat = audioStream.getFormat();
+        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+
+        try {
+            sourceLine = (SourceDataLine) AudioSystem.getLine(info);
+            sourceLine.open(audioFormat);
+
+            // Ajustar el volumen
+            if (sourceLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl volumeControl = (FloatControl) sourceLine.getControl(FloatControl.Type.MASTER_GAIN);
+                volumeControl.setValue(volume); // volumen en dB (e.g., -10.0 reduce el volumen)
+            }
+
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        sourceLine.start();
+
+        int nBytesRead = 0;
+        byte[] abData = new byte[BUFFER_SIZE];
+        while (nBytesRead != -1) {
+            try {
+                nBytesRead = audioStream.read(abData, 0, abData.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (nBytesRead >= 0) {
+                sourceLine.write(abData, 0, nBytesRead);
+            }
+        }
+
+        sourceLine.drain();
+        sourceLine.close();
+    }}
+
