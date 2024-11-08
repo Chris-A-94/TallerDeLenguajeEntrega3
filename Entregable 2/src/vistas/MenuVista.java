@@ -1,7 +1,6 @@
 package vistas;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -112,10 +111,7 @@ public class MenuVista extends JFrame {
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		
-		BluePanel bluePanel = new BluePanel(new Color(0x493628), _WIDTH, 40);
-		bluePanel.getExitButton().addActionListener(e -> {
-			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		});
+		BluePanel bluePanel = new BluePanel(this, new Color(0x493628), _WIDTH, 40);
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
