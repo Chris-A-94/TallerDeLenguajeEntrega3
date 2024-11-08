@@ -23,12 +23,9 @@ import javax.sound.sampled.SourceDataLine;
 import vistas.MenuVista;
 import vistas.RegistroVista;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 public class Programa {
 	private static Coin crearCripto(String sigla, Sistema sistema) {
 		Coin return_coin = null;
@@ -339,11 +336,12 @@ public class Programa {
 		//menu
 
 		// Nota: En pantallas con alto DPI la UI se rompe.
-		// Esto se soluciona forzando la escala en 1
+		// Esto se soluciona forzando la escala en 1	
+		
 		System.setProperty("sun.java2d.uiScale", "1");
 		
-//		RegistroVista registroVista = new RegistroVista();
-//		RegistroControlador registroControlador = new RegistroControlador(registroVista);
+		RegistroVista registroVista = new RegistroVista();
+		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
 		MenuVista menuVista = new MenuVista();
 		

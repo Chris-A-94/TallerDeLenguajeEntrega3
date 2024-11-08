@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
+import controladores.ControladorTextField;
 import controladores.ExitButton;
 import vistas.MenuVista.MoveListener;
 
@@ -52,12 +53,16 @@ public class RegistroVista extends JFrame implements vista{
 		MoveListener listener = new MoveListener(this);
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
+		ControladorTextField conTF = new ControladorTextField(this);
+		
 		//CONSTANTES
 		int dimX = this.getWidth();
 		int dimY = this.getHeight();
 		Color camposTextColor = new Color(0xD6C0B3);
 		Color textColor = new Color(0xAB886D);
 		int cons=40;
+		
+				
 		//CONFIGURACIÓN DE IMÁGENES
 		
 		
@@ -156,6 +161,7 @@ public class RegistroVista extends JFrame implements vista{
 		this.add(this.jlPass);
 		this.add(botonSalir);
 		this.add(botonAceptar);
+		
 		//
 		this.setVisible(true);
 		

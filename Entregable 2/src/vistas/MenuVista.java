@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -13,16 +12,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
-import controladores.ExitButton;
 
-public class MenuVista extends JFrame implements vista {
-	private JButton botonSalir = new JButton("X");
-    
+public class MenuVista extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2999836563834513296L;
 	public class MoveListener implements MouseListener, MouseMotionListener {
 	        
 	        private Point pressedPoint;
@@ -117,34 +116,26 @@ public class MenuVista extends JFrame implements vista {
 		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		JPanel bluePanel = new JPanel();
 		
-		bluePanel.setBackground(new Color(0x493628));
-		bluePanel.setBounds(0, 0, _WIDTH, 40);
-		botonSalir.setBorder(null);
-		botonSalir.setBackground(null);
-		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
-		botonSalir.setFocusPainted(false);
-		botonSalir.setForeground(new Color(0xAB886D));
-		ExitButton conEB = new ExitButton(this);
-		
-		bluePanel.add(botonSalir);
-		
+
+		BluePanel bluePanel = new BluePanel(new Color(0x493628), _WIDTH, 40);
+		bluePanel.getExitButton().addActionListener(e -> {
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		});
 		ImageIcon icon = new ImageIcon("image.jpg");
 		Image image = icon.getImage();
-		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
-		greenPanel5.addLabel("Demostración 1", icon);
+//		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
+//		greenPanel5.addLabel("Demostración 1", icon);
 		
 		icon = new ImageIcon("0.gif");
 		greenPanel2.addLabel("Demostración 2", icon);
 		
 		icon = new ImageIcon("1.gif");
 		greenPanel3.addLabel("Demostración 3", icon);
+//		
+//		icon = new ImageIcon("2.gif");
+//		greenPanel4.addLabel("Demostración 4", icon);
 		
-		icon = new ImageIcon("2.gif");
-		greenPanel4.addLabel("Demostración 4", icon);
-		
-		redPanel.newButton("", greenPanel1);
 		redPanel.newButton("Mis Activos", greenPanel1);
 		redPanel.newButton("Visualizar Cryptos", greenPanel2);
 		redPanel.newButton("Comprar Crypto", greenPanel3);
@@ -163,6 +154,7 @@ public class MenuVista extends JFrame implements vista {
 		
 		greenPanel1.enablePanel();
 		
+		// BluePanel makes the JFrame move
 		MoveListener listener = new MoveListener(this);
 		bluePanel.addMouseListener(listener);
 		bluePanel.addMouseMotionListener(listener);
@@ -188,14 +180,6 @@ public class MenuVista extends JFrame implements vista {
 			button.setText(msg);
 			// Asigno el título
 			panel.setTitle(msg);
-			
-			// Atributos
-			button.setBounds(0, 40*buttons.size(), 180, 40);
-			button.setFocusable(false);
-			button.setBorder(null);
-			button.setBackground(new Color(0xB3C9D6));
-			button.setForeground(new Color(0x291e17));
-			button.setOpaque(false);
 			
 			// ActionListener
 			button.addActionListener(e -> {
@@ -228,6 +212,12 @@ public class MenuVista extends JFrame implements vista {
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
 				this.setFont(new Font("system-ui", Font.ITALIC, 15));
+				this.setBounds(0, 40 + 40*buttons.size(), 180, 40);
+				this.setFocusable(false);
+				this.setBorder(null);
+				this.setBackground(new Color(0xB3C9D6));
+				this.setForeground(new Color(0x291e17));
+				this.setOpaque(false);
 			}
 			
 			public JPanel getPanel() {
@@ -238,18 +228,19 @@ public class MenuVista extends JFrame implements vista {
 	private class GreenPanel extends JPanel {
 		private static final long serialVersionUID = -6824823559208147547L;
 
-		private JPanel header;
+		private JPanel header, leftBorder;
 		
 		public GreenPanel(Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 			this.setBackground(backgroundColor);
 			this.setOpaque(true);
+			
 			this.setBounds(180, 40, _WIDTH - 180, _HEIGHT - 40);
 			this.setLayout(layoutManager);
 			
-			JPanel leftBorder = new JPanel();
-			leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
-			leftBorder.setBackground(backgroundColor);
-			leftBorder.setOpaque(true);
+			this.leftBorder = new JPanel();
+			this.leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
+			this.leftBorder.setBackground(backgroundColor);
+			this.leftBorder.setOpaque(true);
 			this.add(leftBorder);
 			
 			this.header = new JPanel();
@@ -276,10 +267,10 @@ public class MenuVista extends JFrame implements vista {
 			JLabel label = new JLabel();
 			label.setText(msg);
 			label.setIcon(image);
-			label.setVerticalAlignment(JLabel.TOP);
-			label.setHorizontalAlignment(JLabel.LEFT);
-			label.setVerticalTextPosition(JLabel.TOP);
-			label.setHorizontalTextPosition(JLabel.CENTER);
+//			label.setVerticalTextPosition(JLabel.TOP);
+//			label.setHorizontalTextPosition(JLabel.CENTER);
+//			label.setVerticalAlignment(JLabel.TOP);
+//			label.setHorizontalAlignment(JLabel.LEFT);
 			
 			label.setVisible(true);
 			this.add(label);
@@ -292,28 +283,5 @@ public class MenuVista extends JFrame implements vista {
 			this.header.add(label);
 		}
 	}
-	@Override
-	public List<JLabel> devolverEtiquetas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<JTextComponent> devolverCamposTexto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<JButton> devolverBotones() {
-		
-		return null;
-	}
-	@Override
-	public JButton getExit() {
-		return this.botonSalir;
-	}
-	@Override
-	public void close() {
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		
-	}
+	
 }
