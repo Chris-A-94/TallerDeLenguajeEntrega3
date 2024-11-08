@@ -112,7 +112,7 @@ public class MenuVista extends JFrame {
 		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 		
-		BluePanel bluePanel = new BluePanel(new Color(0x493628));
+		BluePanel bluePanel = new BluePanel(new Color(0x493628), _WIDTH, 40);
 		bluePanel.getExitButton().addActionListener(e -> {
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		});
@@ -150,6 +150,7 @@ public class MenuVista extends JFrame {
 		
 		greenPanel1.enablePanel();
 		
+		// BluePanel makes the JFrame move
 		MoveListener listener = new MoveListener(this);
 		bluePanel.addMouseListener(listener);
 		bluePanel.addMouseMotionListener(listener);
@@ -175,14 +176,6 @@ public class MenuVista extends JFrame {
 			button.setText(msg);
 			// Asigno el título
 			panel.setTitle(msg);
-			
-			// Atributos
-			button.setBounds(0, 40*buttons.size(), 180, 40);
-			button.setFocusable(false);
-			button.setBorder(null);
-			button.setBackground(new Color(0xB3C9D6));
-			button.setForeground(new Color(0x291e17));
-			button.setOpaque(false);
 			
 			// ActionListener
 			button.addActionListener(e -> {
@@ -215,6 +208,12 @@ public class MenuVista extends JFrame {
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
 				this.setFont(new Font("system-ui", Font.ITALIC, 15));
+				this.setBounds(0, 40*buttons.size(), 180, 40);
+				this.setFocusable(false);
+				this.setBorder(null);
+				this.setBackground(new Color(0xB3C9D6));
+				this.setForeground(new Color(0x291e17));
+				this.setOpaque(false);
 			}
 			
 			public JPanel getPanel() {
@@ -277,40 +276,7 @@ public class MenuVista extends JFrame {
 			JLabel label = new JLabel(title);
 			label.setFont(new Font("system-ui", Font.BOLD, 25));
 			label.setBounds(25, 10, 1000, 25);
-			label.addMouseListener(new MouseAdapter(){
-				 @Override
-		            public void mouseEntered(MouseEvent me) {
-		                System.out.printf("Hover over Label\n");
-		            }
-			});
 			this.header.add(label);
 		}
-	}
-	private class BluePanel extends JPanel {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -6995007480578444605L;
-		
-		private JButton exitButton;
-
-		BluePanel(Color backgroundColor) {
-			this.setBackground(backgroundColor);
-			this.setBounds(0, 0, _WIDTH, 40);
-			
-			this.setLayout(null);
-			
-			exitButton = new JButton();
-			exitButton.setFont(new Font("system-ui", Font.BOLD, 20));
-			exitButton.setText("X");
-			exitButton.setBounds(0, 0, 50, 50);
-			exitButton.setFocusable(false);
-			
-			this.add(exitButton);
-		}
-		
-		public JButton getExitButton() {
-			return this.exitButton;
-		};
 	}
 }

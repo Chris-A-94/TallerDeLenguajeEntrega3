@@ -33,6 +33,6 @@ public class MyConnection {
 		}
 	}
 	public Connection getConnection() {
-		return conn;
+		return this.conn;
 	}
 }
