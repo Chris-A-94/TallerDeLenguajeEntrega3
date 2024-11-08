@@ -131,7 +131,6 @@ public class MenuVista extends JFrame {
 //		icon = new ImageIcon("2.gif");
 //		greenPanel4.addLabel("Demostración 4", icon);
 		
-		redPanel.newButton("", greenPanel1);
 		redPanel.newButton("Mis Activos", greenPanel1);
 		redPanel.newButton("Visualizar Cryptos", greenPanel2);
 		redPanel.newButton("Comprar Crypto", greenPanel3);
@@ -208,7 +207,7 @@ public class MenuVista extends JFrame {
 			RedButton(JPanel panel) {
 				this.panelAsignado = panel;
 				this.setFont(new Font("system-ui", Font.ITALIC, 15));
-				this.setBounds(0, 40*buttons.size(), 180, 40);
+				this.setBounds(0, 40 + 40*buttons.size(), 180, 40);
 				this.setFocusable(false);
 				this.setBorder(null);
 				this.setBackground(new Color(0xB3C9D6));
