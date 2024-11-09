@@ -1,7 +1,10 @@
 package vistas;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -91,6 +94,12 @@ public class MenuVista extends JFrame implements Vista {
 				_HEIGHT = 720;
 	
 	private RedPanel redPanel;
+	private GreenPanel greenPanel;
+	private BluePanel bluePanel;
+	
+	private List<GreenPanel> listGreenPanel;
+	
+	private JLayeredPane mainPane;
 	
 	public MenuVista() {
 		// Atributos
@@ -99,7 +108,7 @@ public class MenuVista extends JFrame implements Vista {
 		this.setResizable(false);
 		this.setSize(_WIDTH, _HEIGHT);
 		this.setUndecorated(true);
-		this.getContentPane().setBackground(new Color(0x493628));
+		this.getContentPane().setBackground(new Color(0xE4E0E1));
 		
 		// 'Look and Feel' Settings
 		UIManager.put("Button.disabledText", new ColorUIResource(new Color(0x5e8da8)));
@@ -109,6 +118,11 @@ public class MenuVista extends JFrame implements Vista {
 		this.setShape(new RoundRectangle2D.Double(0, 0, _WIDTH, _HEIGHT, 25, 25));
 		
 		// Instanciación de los Componentes
+		mainPane = new JLayeredPane();
+		mainPane.setBounds(0, 0, _WIDTH, _HEIGHT);
+		mainPane.setBackground(new Color(0xE4E0E1));
+		mainPane.setOpaque(false);
+		
 		this.redPanel = new RedPanel();
 		GreenPanel greenPanel1 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), null);
 		GreenPanel greenPanel2 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
@@ -122,10 +136,10 @@ public class MenuVista extends JFrame implements Vista {
 		redPanel.newButton("Swap Crypto", greenPanel4);
 		redPanel.newButton("Mis transacciones", greenPanel5);
 		
-		BluePanel bluePanel = new BluePanel(this, new Color(0x493628), _WIDTH, 40);
+		this.bluePanel = new BluePanel(this, new Color(0x493628), _WIDTH, 40);
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
-		Image image = icon.getImage();
+//		Image image = icon.getImage();
 //		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
 //		greenPanel5.addLabel("Demostración 1", icon);
 		
@@ -135,21 +149,71 @@ public class MenuVista extends JFrame implements Vista {
 		icon = new ImageIcon("1.gif");
 		greenPanel3.addLabel("Demostración 3", icon);
 		
-		// Add Components
-		this.add(redPanel);
-		this.add(bluePanel);
-		this.add(greenPanel1);
-		this.add(greenPanel2);
-		this.add(greenPanel3);
-		this.add(greenPanel4);
-		this.add(greenPanel5);
-		
-		greenPanel1.enablePanel();
-		
-		// BluePanel makes the JFrame move
+		// Add window dragging when grabbing BluePanel
 		MoveListener listener = new MoveListener(this);
 		bluePanel.addMouseListener(listener);
 		bluePanel.addMouseMotionListener(listener);
+		
+		// Temporal & Experimental. May not be implemented.
+		ActionListener taskPerformer = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.printf("1999\n");
+			}
+		};
+		Timer timer = new Timer(1000, taskPerformer);
+		timer.setRepeats(false);
+		timer.start();
+		
+		this.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int keyCode = e.getKeyCode();
+				RedPanel panel = MenuVista.this.redPanel;
+				
+				if (keyCode == KeyEvent.VK_C) {
+					panel.setBounds(panel.getX() + 10, 
+							panel.getY(), 
+							panel.getWidth(), 
+							panel.getHeight());
+				} else if (keyCode == KeyEvent.VK_Z) {
+					panel.setBounds(panel.getX() - 10, 
+							panel.getY(), 
+							panel.getWidth(), 
+							panel.getHeight());
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		// Setup layers
+		this.mainPane.add(redPanel, JLayeredPane.POPUP_LAYER);
+		this.mainPane.add(bluePanel, JLayeredPane.DRAG_LAYER);
+		this.mainPane.add(greenPanel1, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(greenPanel2, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(greenPanel3, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(greenPanel4, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(greenPanel5, JLayeredPane.DEFAULT_LAYER);
+		
+		// Add MainPane
+		this.add(mainPane);
+		
+		// Default Panel
+		greenPanel = greenPanel1;
+		greenPanel.enablePanel();
 		
 		this.setVisible(true);
 	}
@@ -184,6 +248,7 @@ public class MenuVista extends JFrame implements Vista {
 				button.setSelected(false);
 				button.getPanel().setEnabled(false);
 				button.getPanel().setVisible(false);
+				greenPanel = button.getPanel();
 				
 				button.boxColor = button.defaultColor;
 			}
@@ -191,7 +256,7 @@ public class MenuVista extends JFrame implements Vista {
 	
 		private class RedButton extends JButton {
 			private static final long serialVersionUID = 228929574725506575L;
-			JPanel panelAsignado;
+			GreenPanel panelAsignado;
 			
 			boolean selected 	= false;
 			
@@ -209,7 +274,7 @@ public class MenuVista extends JFrame implements Vista {
 				this.selected = selected;
 			}
 
-			RedButton(JPanel panel) {
+			RedButton(GreenPanel panel) {
 				this.panelAsignado = panel;
 				
 				/*
@@ -225,7 +290,7 @@ public class MenuVista extends JFrame implements Vista {
 				
 				// Estética
 				this.boxColor = this.defaultColor;
-				this.setFont(new Font("Times New Roman", Font.PLAIN, 17));
+				this.setFont(new Font("Nimbus Roman", Font.PLAIN, 20));
 				
 				// ActionListener
 				this.addActionListener(e -> {
@@ -273,7 +338,7 @@ public class MenuVista extends JFrame implements Vista {
 				super.repaint();
 			}
 			
-			public JPanel getPanel() {
+			public GreenPanel getPanel() {
 				return this.panelAsignado;
 			}
 			
@@ -283,14 +348,16 @@ public class MenuVista extends JFrame implements Vista {
 				Graphics2D g2 = (Graphics2D)g;
 				
 				// Render Hints
-				g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-	            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	            g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-	            g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-	            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-	            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-	            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+				{
+					g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		            g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		            g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+		            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+		            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+				}
 	            
 				// Dibujar la caja de fondo
 				g2.setPaint(boxColor);  
@@ -305,7 +372,7 @@ public class MenuVista extends JFrame implements Vista {
 				int dY = ((this.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
 				
 				g2.setFont(font);
-				g2.setPaint(new Color(0x000000));
+				g2.setPaint(new Color(0x3d3d3d));
 				g2.drawString(this.getText(), dX, dY);
 			}
 		}
@@ -314,12 +381,13 @@ public class MenuVista extends JFrame implements Vista {
 		private static final long serialVersionUID = -6824823559208147547L;
 
 		private JPanel header, leftBorder;
+		private JLabel title;
 		
 		public GreenPanel(Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 			this.setBackground(backgroundColor);
 			this.setOpaque(true);
 			
-			this.setBounds(180, 40, _WIDTH - 180, _HEIGHT - 40);
+			this.setBounds(0, 40, _WIDTH, _HEIGHT - 40);
 			this.setLayout(layoutManager);
 			
 			this.leftBorder = new JPanel();
@@ -329,7 +397,7 @@ public class MenuVista extends JFrame implements Vista {
 			this.add(leftBorder);
 			
 			this.header = new JPanel();
-			this.header.setBounds(0, 0, _WIDTH - 180, 40);
+			this.header.setBounds(0, 0, _WIDTH - this.leftBorder.getWidth(), 40);
 			this.header.setBackground(headerColor);
 			this.header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0x493628)));
 			this.header.setLayout(null);
@@ -362,10 +430,14 @@ public class MenuVista extends JFrame implements Vista {
 		}
 		
 		public void setTitle(String title) {
-			JLabel label = new JLabel(title);
-			label.setFont(new Font("system-ui", Font.BOLD, 25));
-			label.setBounds(25, 10, 1000, 25);
-			this.header.add(label);
+			this.title = new JLabel(title);
+			this.title.setFont(new Font("Nimbus Roman", Font.BOLD, 25));
+			this.title.setBounds(25, 10, 1000, 40);
+			this.header.add(this.title);
+		}
+		
+		public JLabel getTitle() {
+			return this.title;
 		}
 	}
 
