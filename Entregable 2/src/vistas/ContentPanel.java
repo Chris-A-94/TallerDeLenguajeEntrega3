@@ -9,17 +9,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ContentPanel extends JPanel {
 	private JPanel header, leftBorder;
 	private JLabel title;
 	
-	private MenuVista parent;
-	
 	public ContentPanel(MenuVista parent, Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 		this.setBackground(backgroundColor);
 		this.setOpaque(true);
-		
-		this.parent = parent;
 		
 		this.setBounds(180, 40, parent.getWidth(), parent.getHeight() - 40);
 		this.setLayout(layoutManager);

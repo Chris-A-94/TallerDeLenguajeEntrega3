@@ -17,74 +17,6 @@ import javax.swing.text.JTextComponent;
 
 @SuppressWarnings("serial")
 public class MenuVista extends JFrame implements Vista {
-	/**
-	 * 
-	 */
-	public class MoveListener implements MouseListener, MouseMotionListener {
-	        
-	        private Point pressedPoint;
-	        private Rectangle frameBounds;
-	        private Date lastTimeStamp;
-	        private JFrame frame;
-	        
-	        public MoveListener(JFrame frame) {
-	        	this.frame = frame;
-	        }
-	
-	        @Override
-	        public void mouseClicked(MouseEvent event) {
-	        }
-	
-	        @Override
-	        public void mousePressed(MouseEvent event) {
-	            this.frameBounds = frame.getBounds();
-	            this.pressedPoint = event.getPoint();
-	            this.lastTimeStamp = new Date();
-	        }
-	
-	        @Override
-	        public void mouseReleased(MouseEvent event) {
-	            moveJFrame(event);
-	        }
-	
-	        @Override
-	        public void mouseEntered(MouseEvent event) {
-	        }
-	
-	        @Override
-	        public void mouseExited(MouseEvent event) {
-	        }
-	
-	        @Override
-	        public void mouseDragged(MouseEvent event) {
-	            moveJFrame(event);
-	        }
-	
-	        @Override
-	        public void mouseMoved(MouseEvent event) {
-	        }
-	        
-	        private void moveJFrame(MouseEvent event) {
-	            Point endPoint = event.getPoint();
-	
-	            int xDiff = endPoint.x - pressedPoint.x;
-	            int yDiff = endPoint.y - pressedPoint.y;
-	
-	            Date timestamp = new Date();
-	
-	            //One move action per 60ms to avoid frame glitching
-	            if(Math.abs(timestamp.getTime() - lastTimeStamp.getTime()) > 20){ 
-	                if((xDiff>0 || yDiff>0)||(xDiff<0 || yDiff<0)) {
-	                    frameBounds.x += xDiff;
-	                    frameBounds.y += yDiff;
-	                    //System.out.println(frameBounds);
-	                    frame.setBounds(frameBounds);
-	                }
-	                this.lastTimeStamp = timestamp;
-	            }
-	        }
-	        
-	    }
 	
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
@@ -92,8 +24,6 @@ public class MenuVista extends JFrame implements Vista {
 	private LateralPanel lateralPanel;
 	private ContentPanel contentPanel;
 	private WindowBarPanel windowBar;
-	
-	private List<ContentPanel> listGreenPanel;
 	
 	private JLayeredPane mainPane;
 	
@@ -133,22 +63,6 @@ public class MenuVista extends JFrame implements Vista {
 		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
 		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
-		
-		ImageIcon icon = new ImageIcon("image.jpg");
-//		Image image = icon.getImage();
-//		icon = new ImageIcon(image.getScaledInstance(350, 350, java.awt.Image.SCALE_SMOOTH));
-//		greenPanel5.addLabel("Demostración 1", icon);
-		
-		icon = new ImageIcon("0.gif");
-		contentPanel2.addLabel("Demostración 2", icon);
-		
-		icon = new ImageIcon("1.gif");
-		contentPanel3.addLabel("Demostración 3", icon);
-		
-		// Add window dragging when grabbing BluePanel
-		MoveListener listener = new MoveListener(this);
-		windowBar.addMouseListener(listener);
-		windowBar.addMouseMotionListener(listener);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
