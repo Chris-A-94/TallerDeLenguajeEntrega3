@@ -1,8 +1,6 @@
 package vistas;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -153,51 +151,6 @@ public class MenuVista extends JFrame implements Vista {
 		MoveListener listener = new MoveListener(this);
 		bluePanel.addMouseListener(listener);
 		bluePanel.addMouseMotionListener(listener);
-		
-		// Temporal & Experimental. May not be implemented.
-		ActionListener taskPerformer = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.printf("1999\n");
-			}
-		};
-		Timer timer = new Timer(1000, taskPerformer);
-		timer.setRepeats(false);
-		timer.start();
-		
-		this.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				int keyCode = e.getKeyCode();
-				RedPanel panel = MenuVista.this.redPanel;
-				
-				if (keyCode == KeyEvent.VK_C) {
-					panel.setBounds(panel.getX() + 10, 
-							panel.getY(), 
-							panel.getWidth(), 
-							panel.getHeight());
-				} else if (keyCode == KeyEvent.VK_Z) {
-					panel.setBounds(panel.getX() - 10, 
-							panel.getY(), 
-							panel.getWidth(), 
-							panel.getHeight());
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		// Setup layers
 		this.mainPane.add(redPanel, JLayeredPane.POPUP_LAYER);
@@ -387,7 +340,7 @@ public class MenuVista extends JFrame implements Vista {
 			this.setBackground(backgroundColor);
 			this.setOpaque(true);
 			
-			this.setBounds(0, 40, _WIDTH, _HEIGHT - 40);
+			this.setBounds(180, 40, _WIDTH, _HEIGHT - 40);
 			this.setLayout(layoutManager);
 			
 			this.leftBorder = new JPanel();
