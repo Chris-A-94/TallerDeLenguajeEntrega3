@@ -1,8 +1,6 @@
 package vistas;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -17,11 +15,11 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
+@SuppressWarnings("serial")
 public class MenuVista extends JFrame implements Vista {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2999836563834513296L;
 	public class MoveListener implements MouseListener, MouseMotionListener {
 	        
 	        private Point pressedPoint;
@@ -91,11 +89,11 @@ public class MenuVista extends JFrame implements Vista {
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
 	
-	private RedPanel redPanel;
-	private GreenPanel greenPanel;
-	private BluePanel bluePanel;
+	private LateralPanel lateralPanel;
+	private ContentPanel contentPanel;
+	private WindowBarPanel windowBar;
 	
-	private List<GreenPanel> listGreenPanel;
+	private List<ContentPanel> listGreenPanel;
 	
 	private JLayeredPane mainPane;
 	
@@ -108,7 +106,7 @@ public class MenuVista extends JFrame implements Vista {
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(new Color(0xE4E0E1));
 		
-		// 'Look and Feel' Settings
+		// Configuración 'Look and Feel'
 		UIManager.put("Button.disabledText", new ColorUIResource(new Color(0x5e8da8)));
 		
 		// LayoutManager
@@ -121,20 +119,20 @@ public class MenuVista extends JFrame implements Vista {
 		mainPane.setBackground(new Color(0xE4E0E1));
 		mainPane.setOpaque(false);
 		
-		this.redPanel = new RedPanel();
-		GreenPanel greenPanel1 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), null);
-		GreenPanel greenPanel2 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel3 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel4 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		GreenPanel greenPanel5 = new GreenPanel(new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		this.lateralPanel = new LateralPanel();
+		ContentPanel contentPanel1 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), null);
+		ContentPanel contentPanel2 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		ContentPanel contentPanel3 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		ContentPanel contentPanel4 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
+		ContentPanel contentPanel5 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
 
-		redPanel.newButton("Mis Activos", greenPanel1);
-		redPanel.newButton("Visualizar Cryptos", greenPanel2);
-		redPanel.newButton("Comprar Crypto", greenPanel3);
-		redPanel.newButton("Swap Crypto", greenPanel4);
-		redPanel.newButton("Mis transacciones", greenPanel5);
+		lateralPanel.newButton("Mis Activos", contentPanel1);
+		lateralPanel.newButton("Visualizar Cryptos", contentPanel2);
+		lateralPanel.newButton("Comprar Crypto", contentPanel3);
+		lateralPanel.newButton("Swap Crypto", contentPanel4);
+		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
-		this.bluePanel = new BluePanel(this, new Color(0x493628), _WIDTH, 40);
+		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
 		
 		ImageIcon icon = new ImageIcon("image.jpg");
 //		Image image = icon.getImage();
@@ -142,40 +140,47 @@ public class MenuVista extends JFrame implements Vista {
 //		greenPanel5.addLabel("Demostración 1", icon);
 		
 		icon = new ImageIcon("0.gif");
-		greenPanel2.addLabel("Demostración 2", icon);
+		contentPanel2.addLabel("Demostración 2", icon);
 		
 		icon = new ImageIcon("1.gif");
-		greenPanel3.addLabel("Demostración 3", icon);
+		contentPanel3.addLabel("Demostración 3", icon);
 		
 		// Add window dragging when grabbing BluePanel
 		MoveListener listener = new MoveListener(this);
-		bluePanel.addMouseListener(listener);
-		bluePanel.addMouseMotionListener(listener);
+		windowBar.addMouseListener(listener);
+		windowBar.addMouseMotionListener(listener);
 		
 		// Setup layers
-		this.mainPane.add(redPanel, JLayeredPane.POPUP_LAYER);
-		this.mainPane.add(bluePanel, JLayeredPane.DRAG_LAYER);
-		this.mainPane.add(greenPanel1, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(greenPanel2, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(greenPanel3, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(greenPanel4, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(greenPanel5, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
+		this.mainPane.add(windowBar, JLayeredPane.DRAG_LAYER);
+		this.mainPane.add(contentPanel1, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(contentPanel2, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(contentPanel3, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(contentPanel4, JLayeredPane.DEFAULT_LAYER);
+		this.mainPane.add(contentPanel5, JLayeredPane.DEFAULT_LAYER);
 		
 		// Add MainPane
 		this.add(mainPane);
 		
-		// Default Panel
-		greenPanel = greenPanel1;
-		greenPanel.enablePanel();
+		// Set Default Panel
+		if (lateralPanel.getButtons().size() > 0) {
+			contentPanel = lateralPanel.getButtons().get(0).getPanel();
+			lateralPanel.getButtons().get(0).selectButton();
+			contentPanel.enablePanel();
+		}
 		
 		this.setVisible(true);
 	}
 	
-	private class RedPanel extends JPanel {
+	private class LateralPanel extends JPanel {
 		private static final long serialVersionUID = 332812813329689766L;
-		LinkedList<RedButton> buttons = new LinkedList<RedButton>();
+		private LinkedList<RedButton> buttons = new LinkedList<RedButton>();
 		
-		public RedPanel() {
+		public LinkedList<RedButton> getButtons() {
+			return buttons;
+		}
+
+		public LateralPanel() {
 			this.setBackground(new Color(0xD6C0B3));
 			this.setBounds(0, 40, 180, _HEIGHT - 40);
 			this.setLayout(null);
@@ -183,7 +188,7 @@ public class MenuVista extends JFrame implements Vista {
 			this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
 		};
 		
-		public void newButton(String msg, GreenPanel panel) {
+		public void newButton(String msg, ContentPanel panel) {
 			RedButton button = new RedButton(panel);
 			// Asigno el mensaje al Botón.
 			button.setText(msg);
@@ -196,20 +201,13 @@ public class MenuVista extends JFrame implements Vista {
 		}
 		public void resetButtons() {
 			for (RedButton button : buttons) {
-				button.setEnabled(true);
-				button.setBorder(null);
-				button.setSelected(false);
-				button.getPanel().setEnabled(false);
-				button.getPanel().setVisible(false);
-				greenPanel = button.getPanel();
-				
-				button.boxColor = button.defaultColor;
+				button.resetButton();
 			}
 		}
 	
 		private class RedButton extends JButton {
 			private static final long serialVersionUID = 228929574725506575L;
-			GreenPanel panelAsignado;
+			ContentPanel panelAsignado;
 			
 			boolean selected 	= false;
 			
@@ -222,12 +220,15 @@ public class MenuVista extends JFrame implements Vista {
 			public boolean isSelected() {
 				return selected;
 			}
-
 			public void setSelected(boolean selected) {
 				this.selected = selected;
 			}
 
-			RedButton(GreenPanel panel) {
+			public ContentPanel getPanel() {
+				return this.panelAsignado;
+			}
+					
+			RedButton(ContentPanel panel) {
 				this.panelAsignado = panel;
 				
 				/*
@@ -248,11 +249,10 @@ public class MenuVista extends JFrame implements Vista {
 				// ActionListener
 				this.addActionListener(e -> {
 					resetButtons();
+					this.selectButton();
 					
-					this.setEnabled(false);
-					this.setSelected(true);
-					this.boxColor = this.shadowColor;
-					this.getPanel().setVisible(true);
+					
+					
 				});
 				// MouseListener
 				this.addMouseListener(new MouseListener() {
@@ -268,12 +268,10 @@ public class MenuVista extends JFrame implements Vista {
 							RedButton.this.boxColor = RedButton.this.defaultColor;
 						}
 					}
-
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						// TODO Auto-generated method stub
 					}
-
 					@Override
 					public void mousePressed(MouseEvent e) {
 						// TODO Auto-generated method stub
@@ -284,17 +282,34 @@ public class MenuVista extends JFrame implements Vista {
 						// TODO Auto-generated method stub	
 					}
 				});
-			
 			}
+			
+			public void selectButton() {
+				// Button
+				this.setEnabled(false);
+				this.setSelected(true);
+				this.boxColor = this.shadowColor;
+				
+				// Panel
+				contentPanel = this.getPanel();
+				contentPanel.setVisible(true);				
+			}			
+			public void resetButton() {
+				// Button
+				this.setEnabled(true);
+				this.setSelected(false);
+				this.boxColor = this.defaultColor;
+				
+				// Panel
+				this.getPanel().setEnabled(false);
+				this.getPanel().setVisible(false);
+							
+			}
+			
 			@Override
 			public void repaint() {
 				super.repaint();
 			}
-			
-			public GreenPanel getPanel() {
-				return this.panelAsignado;
-			}
-			
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent (g);
@@ -330,70 +345,8 @@ public class MenuVista extends JFrame implements Vista {
 			}
 		}
 	}
-	private class GreenPanel extends JPanel {
-		private static final long serialVersionUID = -6824823559208147547L;
-
-		private JPanel header, leftBorder;
-		private JLabel title;
-		
-		public GreenPanel(Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
-			this.setBackground(backgroundColor);
-			this.setOpaque(true);
-			
-			this.setBounds(180, 40, _WIDTH, _HEIGHT - 40);
-			this.setLayout(layoutManager);
-			
-			this.leftBorder = new JPanel();
-			this.leftBorder.setBounds(0, 0, 12, _HEIGHT - 40);
-			this.leftBorder.setBackground(backgroundColor);
-			this.leftBorder.setOpaque(true);
-			this.add(leftBorder);
-			
-			this.header = new JPanel();
-			this.header.setBounds(0, 0, _WIDTH - this.leftBorder.getWidth(), 40);
-			this.header.setBackground(headerColor);
-			this.header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0x493628)));
-			this.header.setLayout(null);
-			this.add(header);
-			
-			this.disablePanel();
-		}
-		
-		public void disablePanel() {
-			this.setEnabled(false);
-			this.setVisible(false);
-		}
-		
-		public void enablePanel() {
-			this.setEnabled(true);
-			this.setVisible(true);
-		}
-		
-		public void addLabel(String msg, ImageIcon image) {
-			JLabel label = new JLabel();
-			label.setText(msg);
-			label.setIcon(image);
-//			label.setVerticalTextPosition(JLabel.TOP);
-//			label.setHorizontalTextPosition(JLabel.CENTER);
-//			label.setVerticalAlignment(JLabel.TOP);
-//			label.setHorizontalAlignment(JLabel.LEFT);
-			
-			label.setVisible(true);
-			this.add(label);
-		}
-		
-		public void setTitle(String title) {
-			this.title = new JLabel(title);
-			this.title.setFont(new Font("Nimbus Roman", Font.BOLD, 25));
-			this.title.setBounds(25, 10, 1000, 40);
-			this.header.add(this.title);
-		}
-		
-		public JLabel getTitle() {
-			return this.title;
-		}
-	}
-
+	
+	
 	@Override
 	public List<JLabel> devolverEtiquetas() {
 		// TODO Auto-generated method stub

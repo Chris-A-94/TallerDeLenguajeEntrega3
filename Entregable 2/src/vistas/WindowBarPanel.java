@@ -11,15 +11,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-public class BluePanel extends JPanel {
+@SuppressWarnings("serial")
+public class WindowBarPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6995007480578444605L;	
 	private JButton exitButton;
 	private Vista parent;
 
-	BluePanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT) {
+	WindowBarPanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT) {
 		class MouseBehaviour implements MouseListener {
 
 			public MouseBehaviour() {
