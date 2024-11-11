@@ -3,10 +3,8 @@ package vistas;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -2,6 +2,7 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.LayoutManager;
 
 import javax.swing.BorderFactory;
@@ -61,9 +62,11 @@ public class ContentPanel extends JPanel {
 	}
 	
 	public void setTitle(String title) {
+		Font font = new Font("Nimbus Roman", Font.BOLD, 25);
+		
 		this.title = new JLabel(title);
-		this.title.setFont(new Font("Nimbus Roman", Font.BOLD, 25));
-		this.title.setBounds(25, 10, 1000, 40);
+		this.title.setFont(font);
+		this.title.setBounds(40, 0, 1000, 40);
 		this.header.add(this.title);
 	}
 	
