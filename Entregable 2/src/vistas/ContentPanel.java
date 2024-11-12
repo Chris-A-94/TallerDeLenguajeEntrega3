@@ -2,8 +2,11 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.LayoutManager;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -62,11 +65,18 @@ public class ContentPanel extends JPanel {
 	}
 	
 	public void setTitle(String title) {
-		Font font = new Font("Nimbus Roman", Font.BOLD, 25);
+		Font font;
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(25.0f);
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			font = null;
+			e.printStackTrace();
+		}
 		
 		this.title = new JLabel(title);
 		this.title.setFont(font);
-		this.title.setBounds(40, 0, 1000, 40);
+		this.title.setBounds(40, 5, 1000, 40);
 		this.header.add(this.title);
 	}
 	
