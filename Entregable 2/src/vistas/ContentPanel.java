@@ -69,14 +69,17 @@ public class ContentPanel extends JPanel {
 		try {
 			font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(25.0f);
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			font = null;
 			e.printStackTrace();
 		}
 		
+		// Cálculo de la posición del texto
+		FontMetrics metrics = getFontMetrics(font);
+		int dY = ((header.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+		
 		this.title = new JLabel(title);
 		this.title.setFont(font);
-		this.title.setBounds(40, 5, 1000, 40);
+		this.title.setBounds(20, dY - 10, metrics.stringWidth(title), metrics.getHeight());
 		this.header.add(this.title);
 	}
 	

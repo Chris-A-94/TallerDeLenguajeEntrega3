@@ -156,7 +156,7 @@ public class WindowBarPanel extends JPanel {
 		exitButton.setBorder(null);
 		
 		exitButton.setIcon(new ImageIcon("IconExitButton.png"));
-		exitButton.setBounds(WIDTH - 40, 10, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
+		exitButton.setBounds(WIDTH - 40, 0, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
 		exitButton.setBackground(backgroundColor);
 		
 		exitButton.addMouseListener(new MouseBehaviour());
