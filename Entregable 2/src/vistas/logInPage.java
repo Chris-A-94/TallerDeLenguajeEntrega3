@@ -311,6 +311,8 @@ public class logInPage extends JSplitPane {
 			return null;
 		}
 		
+		
+		
 		/*de stackOverflow
 		
 		private static class RoundedBorder implements Border {
@@ -421,4 +423,13 @@ public class logInPage extends JSplitPane {
 		return misBotones;
 	}
 	
+	public List<JTextComponent> devolverData()
+	{
+		List<JTextComponent> data = ((panelDerecho) this.rightPanel).devolverCamposTexto();
+		return data;
+	}
+	public void callExit()
+	{
+		this.botonSalir.doClick();
+	}
 }
