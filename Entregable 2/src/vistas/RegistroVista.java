@@ -202,5 +202,10 @@ public class RegistroVista extends JFrame implements vista{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public JButton callExit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

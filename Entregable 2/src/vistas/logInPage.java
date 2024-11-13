@@ -46,7 +46,7 @@ public class logInPage extends JSplitPane {
         this.setDividerSize(3);
         this.inicializarFrame();
         this.setDividerLocation(0.6);
-        ControladorTextField conTf = new ControladorTextField((vista) rightPanel);	
+        ControladorTextField conTf = new ControladorTextField((vista) rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
 	}
 	
 	
@@ -298,6 +298,12 @@ public class logInPage extends JSplitPane {
 
 		@Override
 		public List<JButton> devolverBotones() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public JButton callExit() {
 			// TODO Auto-generated method stub
 			return null;
 		}

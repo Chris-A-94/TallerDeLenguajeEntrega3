@@ -14,7 +14,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
 @SuppressWarnings("serial")
-public class MenuVista extends JFrame implements Vista {
+public class MenuVista extends JFrame implements vista {
 	
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;

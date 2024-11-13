@@ -89,9 +89,9 @@ public class WindowBarPanel extends JPanel {
         } 
     }
 	private JButton exitButton;
-	private Vista parent;
+	private vista parent;
 
-	WindowBarPanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT) {
+	WindowBarPanel(vista parent, Color backgroundColor, int WIDTH, int HEIGHT) {
 		class MouseBehaviour implements MouseListener {
 
 			public MouseBehaviour() {
