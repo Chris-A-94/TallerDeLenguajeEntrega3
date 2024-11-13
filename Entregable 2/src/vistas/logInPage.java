@@ -67,13 +67,13 @@ public class logInPage extends JSplitPane {
 		
 		this.ventana = new JFrame("Login Page");
 		this.ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.ventana.setSize(800, 400);      
+		this.ventana.setSize(1000, 400);      
 		this.ventana.add(mainPanel);    
 		this.ventana.setLocationRelativeTo(null); 
 		this.ventana.setUndecorated(true);	        
 		this.ventana.setResizable(false);
 		this.ventana.setBackground(new Color(0, 0, 0, 0));
-		this.ventana.setShape(new RoundRectangle2D.Double(0, 0, 800, 400, 25, 25));
+		this.ventana.setShape(new RoundRectangle2D.Double(0, 0, 1000, 400, 25, 25));
 		this.ventana.getContentPane().setBackground(new Color(0xE4E0E1));
 		this.ventana.setVisible(true);
 		
@@ -332,7 +332,7 @@ public class logInPage extends JSplitPane {
 	
 	//Clase panel izquierdo
 	private class panelIzquierdo extends JPanel{
-		private String imageName = "Imagenes/bitcoinPic.png";
+		private String imageName = "Imagenes/fondo1.png";
 		private Image imagen;
 		
 		public panelIzquierdo()
@@ -373,32 +373,32 @@ public class logInPage extends JSplitPane {
 		        int panelHeight = getHeight();
 
 		        // Escala la imagen al tamaño del panel
-		        Image scaledImage = imagen.getScaledInstance(panelWidth, panelHeight, Image.SCALE_SMOOTH);
+		        Image scaledImage = imagen.getScaledInstance(1275 / 2, 720 / 2, Image.SCALE_SMOOTH);
 
 		        // Dibuja la imagen escalada
 		        g.drawImage(scaledImage, 0, 0, this);
 
 		        // Dibuja el texto
 		        
-		        String text = "Billetera Tutuca";		      
-		        g.setFont(new Font("Tahoma", Font.BOLD,30));
-		        g.setColor(Color.black);
-		        Graphics2D graphics2D = (Graphics2D) g;		      
-		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
-		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON); 
-		        graphics2D.drawString(text, 120, 30); // Dibuja el texto centrado
+//		        String text = "Billetera Tutuca";		      
+//		        g.setFont(new Font("Tahoma", Font.BOLD,30));
+//		        g.setColor(Color.black);
+//		        Graphics2D graphics2D = (Graphics2D) g;		      
+//		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+//		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+//		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON); 
+//		        graphics2D.drawString(text, 120, 30); // Dibuja el texto centrado
 		        
-		        String text1 = "Compra y venta de cripto segura y confiable";		      
-		        g.setFont(new Font("Tahoma", Font.BOLD,13));		 
-		        g.setColor(Color.BLACK);
-		        graphics2D = (Graphics2D) g;		      
-		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
-		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		        graphics2D.drawString(text1, 80, 350); // Dibuja el texto centrado
+//		        String text1 = "Compra y venta de cripto segura y confiable";		      
+//		        g.setFont(new Font("Tahoma", Font.BOLD,13));		 
+//		        g.setColor(Color.BLACK);
+//		        graphics2D = (Graphics2D) g;		      
+//		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+//		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+//		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+//		        graphics2D.drawString(text1, 80, 350); // Dibuja el texto centrado
 		    } else {
 		        System.err.println("La imagen no se ha cargado."); // Mensaje de depuración
 		    }
