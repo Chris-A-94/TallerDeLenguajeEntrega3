@@ -298,8 +298,11 @@ public class logInPage extends JSplitPane {
 
 		@Override
 		public List<JButton> devolverBotones() {
-			// TODO Auto-generated method stub
-			return null;
+			List<JButton> misBotones = new LinkedList<JButton>();
+			misBotones.add(this.signin);
+			misBotones.add(this.login);
+			misBotones.add(this.forgotPass);
+			return misBotones;
 		}
 
 		@Override
@@ -409,6 +412,13 @@ public class logInPage extends JSplitPane {
 		        System.err.println("La imagen no se ha cargado."); // Mensaje de depuración
 		    }
 		}
+	}
+	
+	public List<JButton> devolverBotones()
+	{
+		List<JButton> misBotones = ((panelDerecho) this.rightPanel).devolverBotones();
+		misBotones.add(this.botonSalir);
+		return misBotones;
 	}
 	
 }

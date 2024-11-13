@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import controladores.ControladorTextField;
 import controladores.RegistroControlador;
-
+import controladores.logInController;
 import vistas.logInPage;
 
 import vistas.MenuVista;
@@ -315,6 +315,8 @@ public class Programa {
 		//inicio
 		//login
 		logInPage test = new logInPage();
+		logInController trying = new logInController(test);
+	//	MenuVista testo = new MenuVista();
 		
 		//sign Up
 	/*	RegistroVista registroVista = new RegistroVista();
