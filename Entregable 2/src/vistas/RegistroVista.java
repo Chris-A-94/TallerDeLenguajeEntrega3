@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-public class RegistroVista extends JFrame implements vista{
+public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;
 	private JLabel labelTit	=	new JLabel("Sign Up",SwingConstants.CENTER);
 	private JLabel jlName 	= 	new JLabel("Nombre");

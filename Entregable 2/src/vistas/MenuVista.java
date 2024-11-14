@@ -7,14 +7,12 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.*;
-
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
 @SuppressWarnings("serial")
-public class MenuVista extends JFrame implements vista {
+public class MenuVista extends JFrame implements Vista {
 	
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
@@ -60,7 +58,7 @@ public class MenuVista extends JFrame implements vista {
 		lateralPanel.newButton("Swap Crypto", contentPanel4);
 		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
-		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
+		//this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
