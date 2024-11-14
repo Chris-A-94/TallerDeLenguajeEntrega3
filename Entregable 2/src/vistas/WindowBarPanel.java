@@ -88,12 +88,11 @@ public class WindowBarPanel extends JPanel {
             }
         } 
     }
+
 	private JButton exitButton;
 	private Vista parent;
 
-	WindowBarPanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT,boolean exit) {
-		
-		
+	WindowBarPanel(Vista parent, Color backgroundColor, int WIDTH, int HEIGHT, boolean includeExitButton) {
 		this.parent = parent;
 		
 		// Add window dragging when grabbing BluePanel
@@ -106,7 +105,50 @@ public class WindowBarPanel extends JPanel {
 		this.setBounds(0, 0, WIDTH, HEIGHT);
 		
 		this.setLayout(null);
-		if (exit) {
+		if (includeExitButton) {
+			class MouseBehaviour implements MouseListener {
+				public MouseBehaviour() {
+					newColor = backgroundColor;
+					defaultColor = (Color) UIManager.get("Button.select");
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					switchBackgroundColor();
+					exitButton.setIcon(new ImageIcon("IconExitButtonPress.png"));
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					restoreBackgroundColor();
+					exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					switchBackgroundColor();
+					exitButton.setIcon(new ImageIcon("IconExitButtonHover.png"));
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					restoreBackgroundColor();
+					exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+				}
+
+				Color defaultColor, newColor;
+				private void switchBackgroundColor() {
+					UIManager.put("Button.select", newColor);
+				}
+				private void restoreBackgroundColor() {
+					UIManager.put("Button.select", defaultColor);
+				}
+			}
+			
 			exitButton = new JButton();
 			exitButton.setFocusable(false);
 			exitButton.setBorder(null);
@@ -115,10 +157,11 @@ public class WindowBarPanel extends JPanel {
 			exitButton.setBounds(WIDTH - 40, 0, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
 			exitButton.setBackground(backgroundColor);
 			
+			exitButton.addMouseListener(new MouseBehaviour());
 			this.add(exitButton);
 		}
-		
-	}	
+	}
+	
 	public JButton getExitButton() {
 		return this.exitButton;
 	};

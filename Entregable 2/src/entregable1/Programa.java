@@ -311,20 +311,13 @@ public class Programa {
 		// Esto se soluciona forzando la escala en 1
 		System.setProperty("sun.java2d.uiScale", "1");
 		
-
-		//inicio
-		//login
-		//logInPage test = new logInPage();
-		//logInController trying = new logInController(test);
-		MenuVista testo = new MenuVista();
+		// Menu
+		MenuVista menuVista = new MenuVista();
 		
-		//sign Up
+		// Registro
 		RegistroVista registroVista = new RegistroVista();
+		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
 		
-//		RegistroVista registroVista = new RegistroVista();
-//		RegistroControlador registroControlador = new RegistroControlador(registroVista);
-		
-	//	MenuVista menuVista = new MenuVista();
 		/*
 		final int _EXIT = 9;
 
