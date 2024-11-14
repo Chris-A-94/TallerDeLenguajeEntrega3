@@ -20,7 +20,7 @@ import controladores.ControladorTextField;
 import controladores.ExitButton;
 import vistas.MenuVista.MoveListener;
 
-public class RegistroVista extends JFrame implements vista{
+public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;
 	private JLabel labelTit	=	new JLabel("Sign Up",SwingConstants.CENTER);
 	private JLabel jlName 	= 	new JLabel("Nombre");
@@ -292,7 +292,7 @@ public class RegistroVista extends JFrame implements vista{
             Date timestamp = new Date();
 
             //One move action per 60ms to avoid frame glitching
-            if(Math.abs(timestamp.getTime() - lastTimeStamp.getTime()) > 20){ 
+            if(Math.abs(timestamp.getTime() - lastTimeStamp.getTime()) > 1){ 
                 if((xDiff>0 || yDiff>0)||(xDiff<0 || yDiff<0)) {
                     frameBounds.x += xDiff;
                     frameBounds.y += yDiff;

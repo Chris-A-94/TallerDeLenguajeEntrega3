@@ -141,8 +141,7 @@ public class MenuVista extends JFrame {
 		redPanel.newButton("Comprar Crypto", greenPanel3);
 		redPanel.newButton("Swap Crypto", greenPanel4);
 		redPanel.newButton("Mis transacciones", greenPanel5);
-
-		
+		 		
 		// Add Components
 		this.add(redPanel);
 		this.add(bluePanel);
@@ -282,6 +281,5 @@ public class MenuVista extends JFrame {
 			label.setBounds(25, 10, 1000, 25);
 			this.header.add(label);
 		}
-	}
-	
+	}	
 }

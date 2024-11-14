@@ -320,25 +320,22 @@ public class Programa {
 
 
 		
-
+		System.setProperty("sun.java2d.uiScale", "1");
+		
 		//inicio
 		
 		//login
-		//logInPage test = new logInPage();
+		logInPage test = new logInPage();
 		
 		//sign Up
 		
 		
-		//RegistroVista registroVista = new RegistroVista();
-		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
-	    //ControladorTextField conTf = new ControladorTextField(registroVista);
-		
+
 		//menu
 
 		// Nota: En pantallas con alto DPI la UI se rompe.
 		// Esto se soluciona forzando la escala en 1	
 		
-		System.setProperty("sun.java2d.uiScale", "1");
 		
 		RegistroVista registroVista = new RegistroVista();
 		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
@@ -351,8 +348,6 @@ public class Programa {
 			ms.playSound("src/Imagenes/Portal.wav",(float) -20.0);
 				
 		}
-		
-		/*
 		final int _EXIT = 9;
 
 

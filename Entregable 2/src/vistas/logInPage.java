@@ -1,13 +1,17 @@
 package vistas;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.text.JTextComponent;
 
 import controladores.ControladorTextField;
+import controladores.ExitButton;
 import controladores.RegistroControlador;
 
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -16,10 +20,16 @@ import java.util.List;
 import javax.imageio.*;
 
 public class logInPage extends JSplitPane {
-
+	
+	//constantes
+	Color camposTextColor = new Color(0xD6C0B3), textColor = new Color(0xAB886D);
+	//instancia
 	private JPanel leftPanel;
 	private JPanel rightPanel;
 	BasicSplitPaneDivider divider;
+	private JButton botonSalir;
+	private JFrame ventana;
+	private JPanel mainPanel;
 	
 	public logInPage()
 	{
@@ -27,33 +37,68 @@ public class logInPage extends JSplitPane {
 		BasicSplitPaneUI ui = (BasicSplitPaneUI)this.getUI();
 		divider = ui.getDivider();
 		leftPanel = new panelIzquierdo(); //cada lado es su clase privada propia
-		rightPanel = new panelDerecho();		
+		rightPanel = new panelDerecho();	
+		this.setBorder(null);
 		this.setLeftComponent(leftPanel);
-		this.setRightComponent(rightPanel);
-		this.setDividerLocation(0.5); 
+		this.setRightComponent(rightPanel);	
+		this.setExit();
         this.setResizeWeight(0.5);
-        this.setEnabled(true);            
+        this.setEnabled(false);       
+        this.setDividerSize(3);
         this.inicializarFrame();
-        
-        ControladorTextField conTf = new ControladorTextField((vista) rightPanel);
-	
+        this.setDividerLocation(0.6);
+        ControladorTextField conTf = new ControladorTextField((Vista) rightPanel);	
 	}
+	
+	
 	
 	private void inicializarFrame()
 	{
-		JFrame ventana = new JFrame("Login Page");
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setSize(800, 400);      
-        
-        ventana.add(this);
-        ventana.setResizable(false);
-        ventana.setUndecorated(true);
 		
-        ventana.setVisible(true);
+		mainPanel = new JPanel(new BorderLayout());		
+		mainPanel.setBackground(Color.LIGHT_GRAY);
+		
+		JPanel titleBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		titleBar.add(this.botonSalir);
+		titleBar.setBorder(null);
+		titleBar.setBackground(new Color(0xE4E0E1));
+		mainPanel.add(titleBar, BorderLayout.NORTH);
+		mainPanel.add(this, BorderLayout.CENTER);
+		mainPanel.setBackground(new Color(0xE4E0E1));
+		
+		this.ventana = new JFrame("Login Page");
+		this.ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.ventana.setSize(800, 400);      
+		this.ventana.add(mainPanel);    
+		this.ventana.setLocationRelativeTo(null); 
+		this.ventana.setUndecorated(true);	        
+		this.ventana.setResizable(false);
+		this.ventana.setBackground(new Color(0, 0, 0, 0));
+		this.ventana.setShape(new RoundRectangle2D.Double(0, 0, 800, 400, 25, 25));
+		this.ventana.getContentPane().setBackground(new Color(0xE4E0E1));
+		this.ventana.setVisible(true);
+		
 	}	
 	
+	private void setExit()
+	{
+		//seteo el boton
+		this.botonSalir  = new JButton("X");		
+		this.botonSalir.setBounds(rightPanel.getWidth()-40, 10, 30, 30);
+		this.botonSalir.setBorder(null);
+		this.botonSalir.setBackground(null);
+		this.botonSalir.setFont(new Font("Arial", Font.BOLD,20));
+		this.botonSalir.setFocusPainted(false);
+		this.botonSalir.setForeground(new Color(0xAB886D));
+		//ROTURA DE MVC, ARREGLAR LUEGO
+		this.botonSalir.addActionListener(e -> ventana.dispose());	
+		
+		
+		this.rightPanel.add(botonSalir);
+	}
+		
 	//Clase panel derecho
-	private class panelDerecho extends JPanel implements vista{
+	private class panelDerecho extends JPanel implements Vista{
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
@@ -62,13 +107,16 @@ public class logInPage extends JSplitPane {
 		private Image emblema;
 		private JLabel welcomeMessage;	
 		private Font agusFont;
+		private Color botColor;
 		
 		public panelDerecho()
 		{
 			//a llenar
 			this.setLayout(new GridBagLayout()); 
-			this.agusFont = new Font("Tahoma",Font.PLAIN,12);
+			this.agusFont = new Font("Tahoma",Font.PLAIN,14);
 			this.setPreferredSize(new Dimension(400, 400));
+			this.setBackground(new Color(0xE4E0E1));
+			botColor = new Color(0xAB886D);
 			setMessage();
 			setForms();
 			setButtons();
@@ -77,7 +125,7 @@ public class logInPage extends JSplitPane {
 		
 		private void setEmblema()
 		{
-			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaIntro.png");	
+			URL imgURL = this.getClass().getClassLoader().getResource("Imagenes/tutucaBowl.png");	
 			
 			if(imgURL == null)
 			{
@@ -132,24 +180,26 @@ public class logInPage extends JSplitPane {
 			//inicializacion
 			this.nEmail = new JLabel("Email: ");
 			this.nPasword = new JLabel("Password: ");
-			this.Email = new JTextField("example@mail.com");
-			this.Password = new JTextField("     Contraseña     ");
+			this.Email = new JTextField("   example@mail.com");
+			this.Password = new JTextField("   Contraseña");
 			
 			//personalizacion
 			this.Email.setFont(this.agusFont);
 			this.Email.setBorder(null);
-			this.Email.setFont(new Font("Tahoma",Font.PLAIN,12));
+			this.Email.setFont(this.agusFont);
 			this.Email.setForeground(new Color(0xAB886D));
 			this.Email.setBackground(new Color(0xD6C0B3));
+			this.Email.setPreferredSize(new Dimension(150, 20));
 			
 			this.Password.setFont(this.agusFont);
 			this.Password.setBorder(null);
 			this.Password.setFont(new Font("Tahoma",Font.PLAIN,12));
 			this.Password.setForeground(new Color(0xAB886D));
 			this.Password.setBackground(new Color(0xD6C0B3));
+			this.Password.setPreferredSize(new Dimension(150, 20));
 			
-			this.nEmail.setFont(this.agusFont);
-			this.nPasword.setFont(this.agusFont);
+			this.nEmail.setFont(new Font("Tahoma",Font.BOLD,12));
+			this.nPasword.setFont(new Font("Tahoma",Font.BOLD,12));
 			
 			
 			//posicionamiento
@@ -160,14 +210,17 @@ public class logInPage extends JSplitPane {
 			
 			posnEmail.gridy = 2;
 			posnEmail.gridx = 0;
+			posnEmail.insets = new Insets(10,10,0,0);
 			posEmail.gridy = 2;
 			posEmail.gridx = 1;
+			posEmail.insets = new Insets(10,10,0,0);
 			
 			posnPassword.gridy = 3;
 			posnPassword.gridx = 0;
+			posnPassword.insets = new Insets(10,10,0,0);
 			posPassword.gridy = 3;
 			posPassword.gridx = 1;
-			
+			posPassword.insets = new Insets(10,10,0,0);
 			//agregado al JPanel
 			this.add(nEmail,posnEmail);
 			this.add(Email,posEmail);
@@ -182,17 +235,39 @@ public class logInPage extends JSplitPane {
 			signin = new JButton("Sign in");
 			forgotPass = new JButton("Olvido su contraseña?");
 			
+			//personalizacion de los botones
+			this.login.setPreferredSize(new Dimension(75, 25));
+			this.login.setBorder(null);
+			this.login.setBackground(botColor);
+			this.login.setFont(new Font("Tahoma",Font.BOLD,14));
+			this.login.setFocusPainted(false);
+			
+			this.signin.setPreferredSize(new Dimension(75, 25));
+			this.signin.setBorder(null);
+			
+			this.signin.setFont(new Font("Tahoma",Font.BOLD,14));
+			this.signin.setFocusPainted(false);
+			//this.signin.setBorder(new RoundedBorder(15)); para hacerlo redondeado, pero el color se rompe
+			//this.signin.setContentAreaFilled(false);
+			this.signin.setBackground(botColor);
+			
+			this.forgotPass.setPreferredSize(new Dimension(200, 25));
+			this.forgotPass.setBorder(null);
+			this.forgotPass.setBackground(botColor);
+			this.forgotPass.setFont(new Font("Tahoma",Font.BOLD,14));
+			this.forgotPass.setFocusPainted(false);
+			
 			GridBagConstraints posLog = new GridBagConstraints();
 			posLog.gridy = 5;
 			posLog.gridx = 0;
 			posLog.anchor = GridBagConstraints.SOUTH;
-			posLog.insets = new Insets(10, 5, 10, 5);
+			posLog.insets = new Insets(10, 35, 0, 0); //top left bottom right
 			
 			GridBagConstraints posSign = new GridBagConstraints();
 			posSign.gridy = 5;
 			posSign.gridx = 1;
 			posSign.anchor = GridBagConstraints.SOUTH;
-			posSign.insets = new Insets(10, 5, 10, 5);
+			posSign.insets = new Insets(10, 0, 0, 0);
 			
 			GridBagConstraints posForgot = new GridBagConstraints();
 			posForgot.gridy = 6;
@@ -228,20 +303,49 @@ public class logInPage extends JSplitPane {
 			return null;
 		}
 
+
+		@Override
+		public void close() {
+				//algo, manejate chris.
+		}
+
 		@Override
 		public JButton getExit() {
 			return null;
 		}
+	}
+		
+		/*de stackOverflow
+		
+		private static class RoundedBorder implements Border {
 
-		@Override
-		public void close() {
-			//algo, manejate chris.
-		}
+		    private int radius;
+
+
+		    RoundedBorder(int radius) {
+		        this.radius = radius;
+		    }
+
+
+		    public Insets getBorderInsets(Component c) {
+		        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+		    }
+
+
+		    public boolean isBorderOpaque() {
+		        return true;
+		    }
+
+
+		    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+		        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+		    }
+		}*/
 	}
 	
 	//Clase panel izquierdo
-	private class panelIzquierdo extends JPanel{
-		private String imageName = "Imagenes/warning.png";
+	class panelIzquierdo extends JPanel{
+		private String imageName = "Imagenes/bitcoinPic.png";
 		private Image imagen;
 		
 		public panelIzquierdo()
@@ -288,16 +392,29 @@ public class logInPage extends JSplitPane {
 		        g.drawImage(scaledImage, 0, 0, this);
 
 		        // Dibuja el texto
-		        FontMetrics metrics = g.getFontMetrics(g.getFont());
-		        String text = "Maneje sus finanzas de la mejor manera";
-		        int textWidth = metrics.stringWidth(text);
-		        int textX = (panelWidth - textWidth) / 2; // Centra el texto horizontalmente
-		        g.setColor(Color.red);
-		        g.drawString(text, textX, 30); // Dibuja el texto centrado		        
+		        
+		        String text = "Billetera Tutuca";		      
+		        g.setFont(new Font("Tahoma", Font.BOLD,30));
+		        g.setColor(Color.black);
+		        Graphics2D graphics2D = (Graphics2D) g;		      
+		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON); 
+		        graphics2D.drawString(text, 120, 30); // Dibuja el texto centrado
+		        
+		        String text1 = "Compra y venta de cripto segura y confiable";		      
+		        g.setFont(new Font("Tahoma", Font.BOLD,13));		 
+		        g.setColor(Color.BLACK);
+		        graphics2D = (Graphics2D) g;		      
+		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
+		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		        graphics2D.drawString(text1, 80, 350); // Dibuja el texto centrado
 		    } else {
 		        System.err.println("La imagen no se ha cargado."); // Mensaje de depuración
 		    }
 		}
 	}
 	
-}

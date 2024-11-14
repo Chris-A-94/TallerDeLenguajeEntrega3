@@ -10,12 +10,15 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.text.JTextComponent;
-import vistas.vista;
+
+import modelos.modeloUsuarios;
+import vistas.Vista;
 
 public class ControladorTextField{
-	private vista vista;
+	private Vista vista;
+	private modeloUsuarios modelUser;
 	private List<JTextComponent> campos; 
-	public ControladorTextField(vista vista) {
+	public ControladorTextField(Vista vista) {
 		this.vista = vista;
 		for (JTextComponent tc : vista.devolverCamposTexto()) {
 			tc.addFocusListener(new FocusControlTexts(tc));
@@ -50,7 +53,7 @@ public class ControladorTextField{
 				tf.setText(firstValue);
 				tf.setForeground(new Color(0xAB886D));
 			if ((firstValue.equals("buenas@gmail.com"))) {
-				System.out.println("HOLA");
+				System.out.println("Hola");
 				JButton warning = new JButton();
 				ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/warning.png"));
 				Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
