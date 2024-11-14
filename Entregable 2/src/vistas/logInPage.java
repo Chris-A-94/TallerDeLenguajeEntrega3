@@ -41,12 +41,12 @@ public class logInPage extends JSplitPane {
 		this.setLeftComponent(leftPanel);
 		this.setRightComponent(rightPanel);	
 		this.setExit();
-        this.setResizeWeight(0.5);
-        this.setEnabled(false);       
-        this.setDividerSize(3);
-        this.inicializarFrame();
-        this.setDividerLocation(0.6);
-        ControladorTextField conTf = new ControladorTextField((Vista) rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
+		this.setResizeWeight(0.5);
+		this.setEnabled(false);       
+		this.setDividerSize(3);
+		this.inicializarFrame();
+		this.setDividerLocation(0.6);
+		ControladorTextField conTf = new ControladorTextField((Vista) rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
 	}
 	
 	
@@ -120,6 +120,7 @@ public class logInPage extends JSplitPane {
 			setForms();
 			setButtons();
 			setEmblema();
+			
 		}
 		
 		private void setEmblema()

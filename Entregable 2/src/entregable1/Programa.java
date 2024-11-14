@@ -316,7 +316,7 @@ public class Programa {
 		//login
 		logInPage test = new logInPage();
 		logInController trying = new logInController(test);
-	//	MenuVista testo = new MenuVista();
+		MenuVista testo = new MenuVista();
 		
 		//sign Up
 	/*	RegistroVista registroVista = new RegistroVista();

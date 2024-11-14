@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-import decoradores.exitButton;
+import decoradores.ExitButton;
 
 public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;
@@ -118,7 +118,6 @@ public class RegistroVista extends JFrame implements Vista{
 		
 		
 		//CONFIGURACIÓN DE BOTONES
-		
 		botonSalir.setBounds(dimX-cons, 10, 30, 30);
 		botonSalir.setBorder(null);
 		botonSalir.setBackground(null);
@@ -134,7 +133,7 @@ public class RegistroVista extends JFrame implements Vista{
 		
 		
 		//AGREGRO AL JFRAME
-		exitButton eb = new exitButton(this);
+		ExitButton eb = new ExitButton(this);
 		this.add(this.labelTit);
 		this.add(this.textFieldName);
 		this.add(this.textFieldSur);
@@ -147,7 +146,6 @@ public class RegistroVista extends JFrame implements Vista{
 		this.add(botonSalir);
 		this.add(botonAceptar);
 		this.add(wbp);
-		//
 		this.setVisible(true);
 		
 	}

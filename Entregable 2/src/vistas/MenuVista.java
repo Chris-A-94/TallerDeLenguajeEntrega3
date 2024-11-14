@@ -58,7 +58,7 @@ public class MenuVista extends JFrame implements Vista {
 		lateralPanel.newButton("Swap Crypto", contentPanel4);
 		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
-		//this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
+		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40,true);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
@@ -293,7 +293,7 @@ public class MenuVista extends JFrame implements Vista {
 
 	@Override
 	public JButton getExit() {
-		// TODO Auto-generated method stub
+		this.windowBar.getExitButton();
 		return null;
 	}
 }

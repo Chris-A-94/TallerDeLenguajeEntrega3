@@ -8,10 +8,10 @@ import javax.swing.JButton;
 
 import vistas.Vista;
 
-public class exitButton {
+public class ExitButton {
 	private Vista vista;
 	private JButton salida;
-	public exitButton(Vista vista) {
+	public ExitButton(Vista vista) {
 		this.vista = vista;
 		salida = this.vista.getExit();
 		salida.addMouseListener(new MouseControlExit());
@@ -25,7 +25,7 @@ public class exitButton {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			vista.callExit();
+			
 		}
 
 		@Override
