@@ -49,10 +49,10 @@ public class logInController {
 				botones.get(0).addActionListener(new ActionListener() {
 				    @Override
 				    public void actionPerformed(ActionEvent e) {
+				    	frontEnd.callExit();
 				    	RegistroVista registroVista = new RegistroVista();
 						RegistroControlador registroControlador = new RegistroControlador(registroVista);
-					    ControladorTextField conTf = new ControladorTextField(registroVista);
-					    frontEnd.callExit();
+					    ControladorTextField conTf = new ControladorTextField(registroVista);					    
 				    };		
 			});
 		//boton Log In
