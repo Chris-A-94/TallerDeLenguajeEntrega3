@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
+import decoradores.ExitButton;
+
 @SuppressWarnings("serial")
 public class MenuVista extends JFrame implements Vista {
 	
@@ -59,6 +61,7 @@ public class MenuVista extends JFrame implements Vista {
 		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
 		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40,true);
+		ExitButton exitButton = new ExitButton(this);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
@@ -293,7 +296,6 @@ public class MenuVista extends JFrame implements Vista {
 
 	@Override
 	public JButton getExit() {
-		this.windowBar.getExitButton();
-		return null;
+		return this.windowBar.getExitButton();
 	}
 }
