@@ -314,14 +314,12 @@ public class Programa {
 
 		//inicio
 		//login
-		logInPage test = new logInPage();
-		logInController trying = new logInController(test);
+		//logInPage test = new logInPage();
+		//logInController trying = new logInController(test);
 		MenuVista testo = new MenuVista();
 		
 		//sign Up
-	/*	RegistroVista registroVista = new RegistroVista();
-		RegistroControlador registroControlador = new RegistroControlador(registroVista);
-	    ControladorTextField conTf = new ControladorTextField(registroVista);*/
+		RegistroVista registroVista = new RegistroVista();
 		
 //		RegistroVista registroVista = new RegistroVista();
 //		RegistroControlador registroControlador = new RegistroControlador(registroVista);

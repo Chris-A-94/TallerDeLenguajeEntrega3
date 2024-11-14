@@ -3,12 +3,14 @@ package vistas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
+import controladores.ControladorTextField;
 import decoradores.ExitButton;
 
 public class RegistroVista extends JFrame implements Vista{
@@ -43,10 +45,15 @@ public class RegistroVista extends JFrame implements Vista{
 		this.setResizable(false);
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(fondoFrame);
+		ControladorTextField ct = new ControladorTextField(this);
+				
 		//CONSTANTES
 		int dimX = this.getWidth();
 		int dimY = this.getHeight();
 		int cons=40;
+		// LayoutManager	
+		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
+				
 		//MOVER VENTANA (CODIGOD E FRAN)
 		WindowBarPanel wbp = new WindowBarPanel(this,fondoFrame,dimX,dimY,false);		
 		//CONFIGURACIÓN DE IMÁGENES
