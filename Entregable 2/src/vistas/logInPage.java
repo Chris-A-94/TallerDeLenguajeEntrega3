@@ -306,7 +306,15 @@ public class logInPage extends JSplitPane {
 		}
 
 		@Override
-		public JButton callExit() {
+		public void callExit() {
+			// TODO Auto-generated method stub
+
+		}
+
+		
+
+		@Override
+		public JButton getExit() {
 			// TODO Auto-generated method stub
 			return null;
 		}

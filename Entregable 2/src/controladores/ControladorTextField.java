@@ -58,7 +58,6 @@ public class ControladorTextField{
 				warning.setFont(new Font("Arial", Font.BOLD,20));
 				warning.setBorderPainted(false);
 				warning.setContentAreaFilled(false);
-
 				warning.setIcon(icon);
 				//vista.add(warning);
 			}	

@@ -285,8 +285,15 @@ public class MenuVista extends JFrame implements Vista {
 	}
 
 	@Override
-	public JButton callExit() {
+	public void callExit() {
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
+
+	
+
+	@Override
+	public JButton getExit() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

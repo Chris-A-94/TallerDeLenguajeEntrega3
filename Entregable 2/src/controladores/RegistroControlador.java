@@ -21,12 +21,6 @@ public class RegistroControlador {
 	private RegistroVista vista;
 	public RegistroControlador(RegistroVista vista) {
 		this.vista = vista;
-		for (JTextComponent tf : vista.devolverCampos()) {
-
-			//tf.addMouseListener(new MouseControlTexts(tf));
-			//tf.addFocusListener(new FocusControlTexts(tf));
-		}
-		this.vista.getBotonSalir().addMouseListener(new MouseControlExit());
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
 		
 	}
@@ -109,37 +103,8 @@ public class RegistroControlador {
 	/*
 	 * Controlador del botón de salida.
 	 */
-	class MouseControlExit implements MouseListener{
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			vista.dispose();
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			vista.dispose();
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			vista.getBotonSalir().setBackground(new Color(0x94847b));
-			vista.getBotonSalir().setForeground(new Color(0xf5ded0));
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			vista.getBotonSalir().setBackground(new Color(0xE4E0E1));
-			vista.getBotonSalir().setForeground(new Color(0xAB886D));
-		}
 
 	}
 
 	
-}
+
