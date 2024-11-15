@@ -10,6 +10,9 @@ import vistas.Vista;
 
 public class ExitButton {
 	public static void asignarComportamiento(Vista vista) {
+		asignarComportamiento(vista, vista.getExit().getBackground());
+	}
+	public static void asignarComportamiento(Vista vista, Color bgColor) {
 		Color defaultColorBG;
 		Color defaultColorFG;
 		
@@ -29,7 +32,7 @@ public class ExitButton {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				vista.getExit().setBackground(defaultColorBG);
+				vista.getExit().setBackground(bgColor);
 				vista.getExit().setForeground(defaultColorFG);
 			}
 			@Override
@@ -41,4 +44,5 @@ public class ExitButton {
 		
 		botonSalida.addMouseListener(new MouseControlExit());
 	}
+
 }
