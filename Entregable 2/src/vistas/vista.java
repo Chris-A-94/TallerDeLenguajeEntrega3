@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
 public interface vista {
-	public List<JLabel> devolverEtiquetas();
-	public List<JTextComponent> devolverCamposTexto();
-	public List<JButton> devolverBotones();
-	public JButton callExit();
+    public List<JLabel> devolverEtiquetas();
+    public List<JTextComponent> devolverCamposTexto();
+    public List<JButton> devolverBotones();
+    public JButton callExit();
 }
