@@ -41,12 +41,12 @@ public class logInPage extends JSplitPane {
 		this.setLeftComponent(leftPanel);
 		this.setRightComponent(rightPanel);	
 		this.setExit();
-        this.setResizeWeight(0.5);
-        this.setEnabled(false);       
-        this.setDividerSize(3);
-        this.inicializarFrame();
-        this.setDividerLocation(0.6);
-        ControladorTextField conTf = new ControladorTextField((vista) rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
+		this.setResizeWeight(0.5);
+		this.setEnabled(false);       
+		this.setDividerSize(3);
+		this.inicializarFrame();
+		this.setDividerLocation(0.6);
+		//ControladorTextField conTf = new ControladorTextField( rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
 	}
 	
 	
@@ -97,7 +97,7 @@ public class logInPage extends JSplitPane {
 	}
 		
 	//Clase panel derecho
-	private class panelDerecho extends JPanel implements vista{
+	private class panelDerecho extends JPanel {
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
@@ -120,6 +120,7 @@ public class logInPage extends JSplitPane {
 			setForms();
 			setButtons();
 			setEmblema();
+			
 		}
 		
 		private void setEmblema()
@@ -282,13 +283,11 @@ public class logInPage extends JSplitPane {
 				
 		}
 
-		@Override
 		public List<JLabel> devolverEtiquetas() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		@Override
 		public List<JTextComponent> devolverCamposTexto() {
 			List<JTextComponent> campos = new LinkedList<JTextComponent>();
 			campos.add(Email);
@@ -296,7 +295,6 @@ public class logInPage extends JSplitPane {
 			return campos;
 		}
 
-		@Override
 		public List<JButton> devolverBotones() {
 			List<JButton> misBotones = new LinkedList<JButton>();
 			misBotones.add(this.signin);
@@ -305,8 +303,14 @@ public class logInPage extends JSplitPane {
 			return misBotones;
 		}
 
-		@Override
-		public JButton callExit() {
+		public void callExit() {
+			// TODO Auto-generated method stub
+
+		}
+
+		
+
+		public JButton getExit() {
 			// TODO Auto-generated method stub
 			return null;
 		}

@@ -2,13 +2,18 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-public class RegistroVista extends JFrame implements vista{
+import controladores.ControladorTextField;
+import decoradores.ExitButton;
+
+public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;
 	private JLabel labelTit	=	new JLabel("Sign Up",SwingConstants.CENTER);
 	private JLabel jlName 	= 	new JLabel("Nombre");
@@ -27,7 +32,10 @@ public class RegistroVista extends JFrame implements vista{
 
 	
 	public RegistroVista() {
-		
+		//COLORES
+		Color fondoFrame  		= new Color(0xE4E0E1);
+		Color camposTextColor 	= new Color(0xD6C0B3);
+		Color textColor 		= new Color(0xAB886D);
 		//CONFIGURACION DEL JFRAME
 		this.setTitle("Sign in"); //Titulo del frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -36,13 +44,18 @@ public class RegistroVista extends JFrame implements vista{
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setUndecorated(true);
-		this.getContentPane().setBackground(new Color(0xE4E0E1));
+		this.getContentPane().setBackground(fondoFrame);
+		ControladorTextField ct = new ControladorTextField(this);
+				
 		//CONSTANTES
 		int dimX = this.getWidth();
 		int dimY = this.getHeight();
-		Color camposTextColor = new Color(0xD6C0B3);
-		Color textColor = new Color(0xAB886D);
 		int cons=40;
+		// LayoutManager	
+		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
+				
+		//MOVER VENTANA (CODIGOD E FRAN)
+		WindowBarPanel wbp = new WindowBarPanel(this,fondoFrame,dimX,dimY,false);		
 		//CONFIGURACIÓN DE IMÁGENES
 		
 		
@@ -118,7 +131,7 @@ public class RegistroVista extends JFrame implements vista{
 		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(textColor);
-		
+	
 		botonAceptar.setBounds(posIniX,posIniY+4*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
 		botonAceptar.setBackground(new Color(0xAB886D));
@@ -127,6 +140,7 @@ public class RegistroVista extends JFrame implements vista{
 		
 		
 		//AGREGRO AL JFRAME
+		ExitButton.asignarComportamiento(this);
 		this.add(this.labelTit);
 		this.add(this.textFieldName);
 		this.add(this.textFieldSur);
@@ -138,7 +152,7 @@ public class RegistroVista extends JFrame implements vista{
 		this.add(this.jlPass);
 		this.add(botonSalir);
 		this.add(botonAceptar);
-		//
+		this.add(wbp);
 		this.setVisible(true);
 		
 	}
@@ -203,9 +217,14 @@ public class RegistroVista extends JFrame implements vista{
 		return null;
 	}
 	@Override
-	public JButton callExit() {
-		// TODO Auto-generated method stub
-		return null;
+	public void callExit() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+	}
+	@Override
+	public JButton getExit() {
+		
+		return botonSalir;
 	}
 	
 }

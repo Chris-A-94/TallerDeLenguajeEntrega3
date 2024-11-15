@@ -1,20 +1,20 @@
 package vistas;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.*;
-
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
 
+import decoradores.ExitButton;
+
 @SuppressWarnings("serial")
-public class MenuVista extends JFrame implements vista {
+public class MenuVista extends JFrame implements Vista {
 	
 	private int _WIDTH 	= 1270,
 				_HEIGHT = 720;
@@ -60,7 +60,8 @@ public class MenuVista extends JFrame implements vista {
 		lateralPanel.newButton("Swap Crypto", contentPanel4);
 		lateralPanel.newButton("Mis transacciones", contentPanel5);
 		
-		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40);
+		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40, true);
+		ExitButton.asignarComportamiento(this);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
@@ -176,7 +177,7 @@ public class MenuVista extends JFrame implements vista {
 					
 				});
 				// MouseListener
-				this.addMouseListener(new MouseListener() {
+				this.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						if (!RedButton.this.isSelected()) {
@@ -190,17 +191,8 @@ public class MenuVista extends JFrame implements vista {
 						}
 					}
 					@Override
-					public void mouseClicked(MouseEvent e) {
-						// TODO Auto-generated method stub
-					}
-					@Override
 					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
 						RedButton.this.boxColor = RedButton.this.shadowColor;
-					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub	
 					}
 				});
 			}
@@ -287,8 +279,12 @@ public class MenuVista extends JFrame implements vista {
 	}
 
 	@Override
-	public JButton callExit() {
+	public void callExit() {
 		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		return null;
+	}
+	
+	@Override
+	public JButton getExit() {
+		return this.windowBar.getExitButton();
 	}
 }

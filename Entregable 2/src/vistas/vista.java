@@ -5,9 +5,11 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
 
-public interface vista {
+public interface Vista {
     public List<JLabel> devolverEtiquetas();
     public List<JTextComponent> devolverCamposTexto();
     public List<JButton> devolverBotones();
-    public JButton callExit();
+    public void callExit();
+    public JButton getExit();
+	
 }

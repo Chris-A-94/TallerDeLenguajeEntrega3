@@ -10,12 +10,12 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.text.JTextComponent;
-import vistas.vista;
+import vistas.Vista;
 
 public class ControladorTextField{
-	private vista vista;
+	private Vista vista;
 	private List<JTextComponent> campos; 
-	public ControladorTextField(vista vista) {
+	public ControladorTextField(Vista vista) {
 		this.vista = vista;
 		for (JTextComponent tc : vista.devolverCamposTexto()) {
 			tc.addFocusListener(new FocusControlTexts(tc));
@@ -58,7 +58,6 @@ public class ControladorTextField{
 				warning.setFont(new Font("Arial", Font.BOLD,20));
 				warning.setBorderPainted(false);
 				warning.setContentAreaFilled(false);
-
 				warning.setIcon(icon);
 				//vista.add(warning);
 			}	
