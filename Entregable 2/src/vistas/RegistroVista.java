@@ -140,7 +140,7 @@ public class RegistroVista extends JFrame implements Vista{
 		
 		
 		//AGREGRO AL JFRAME
-		ExitButton eb = new ExitButton(this);
+		ExitButton.asignarComportamiento(this);
 		this.add(this.labelTit);
 		this.add(this.textFieldName);
 		this.add(this.textFieldSur);
