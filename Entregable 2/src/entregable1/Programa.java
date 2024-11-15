@@ -313,7 +313,7 @@ public class Programa {
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log);
 		// Menu
-	//	MenuVista menuVista = new MenuVista();
+//		MenuVista menuVista = new MenuVista();
 		
 		// Registro
 		//RegistroVista registroVista = new RegistroVista();

@@ -82,14 +82,31 @@ public class MenuVista extends JFrame implements Vista {
 			contentPanel.enablePanel();
 		}
 		
-		this.agregarPanel("Tutucas.", new JPanel(null));
+		//this.agregarPanel("Tutucas.", new JPanel(null));
 		
 		this.setVisible(true);
+		
+		/*
+		 *  ¡¡¡TEMPORAL!!!
+		 */
+		JPanel newPanel = new JPanel(null);
+		JLabel label = new JLabel("Demo");
+		
+		ImageIcon image = new ImageIcon("1.gif");
+		label.setIcon(image);
+		
+		label.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
+		newPanel.add(label);
+		
+		this.agregarPanel("Temporal", newPanel);
 	}
 	
 	public void agregarPanel(String title, JPanel panel) {
-		ContentPanel newPanel = new ContentPanel(this, new Color(0xFF0000), new Color(0xE4E0E1), null);
+		ContentPanel newPanel = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), null);
 		newPanel.setTitle(title);
+		
+		newPanel.add(panel);
+		
 		this.lateralPanel.newButton(title, newPanel);
 		this.mainPane.add(newPanel);
 	}

@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.FontMetrics;
@@ -15,30 +16,58 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class ContentPanel extends JPanel {
-	private JPanel header, leftBorder;
+	private JPanel header, leftBorder, content;
 	private JLabel title;
 	
 	public ContentPanel(MenuVista parent, Color backgroundColor, Color headerColor, LayoutManager layoutManager) {
 		this.setBackground(backgroundColor);
 		this.setOpaque(true);
 		
-		this.setBounds(180, 40, parent.getWidth(), parent.getHeight() - 40);
+		this.setBounds(180, 40, parent.getWidth() - 180, parent.getHeight() - 40);
 		this.setLayout(layoutManager);
 		
 		this.leftBorder = new JPanel();
 		this.leftBorder.setBounds(0, 0, 12, parent.getWidth() - 40);
 		this.leftBorder.setBackground(backgroundColor);
 		this.leftBorder.setOpaque(true);
-		this.add(leftBorder);
+		this.add((Component) leftBorder);
 		
 		this.header = new JPanel();
 		this.header.setBounds(0, 0, parent.getWidth() - this.leftBorder.getWidth(), 40);
 		this.header.setBackground(headerColor);
 		this.header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0x493628)));
 		this.header.setLayout(null);
-		this.add(header);
+		this.add((Component) header);
+		
+		this.content = new JPanel();
+		this.content.setBounds(12, 40, this.getWidth() - 12, this.getHeight() - 40);
+		this.content.setBackground(backgroundColor);
+		this.content.setLayout(null);
+		this.add((Component) content);
 		
 		this.disablePanel();
+	}
+	public int getContentX() {
+		return this.content.getWidth();
+	}
+	public int getContentY() {
+		return this.content.getHeight();
+	}
+	public int getContentWidth() {
+		return this.content.getWidth();
+	}
+	public int getContentHeight() {
+		return this.content.getHeight();
+	}
+	
+	public Component add(JPanel panel) {
+		panel.setBounds(0, 0, this.getContentWidth(), this.getContentHeight());
+		panel.setBackground(content.getBackground());
+		
+		
+		this.content.add((Component) panel);
+		
+		return panel;
 	}
 	
 	public void disablePanel() {
@@ -55,10 +84,6 @@ public class ContentPanel extends JPanel {
 		JLabel label = new JLabel();
 		label.setText(msg);
 		label.setIcon(image);
-//		label.setVerticalTextPosition(JLabel.TOP);
-//		label.setHorizontalTextPosition(JLabel.CENTER);
-//		label.setVerticalAlignment(JLabel.TOP);
-//		label.setHorizontalAlignment(JLabel.LEFT);
 		
 		label.setVisible(true);
 		this.add(label);
