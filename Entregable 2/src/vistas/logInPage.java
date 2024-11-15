@@ -8,6 +8,7 @@ import javax.swing.text.JTextComponent;
 
 import controladores.ControladorTextField;
 import controladores.RegistroControlador;
+import decoradores.ExitButton;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import javax.imageio.*;
 
-public class logInPage extends JSplitPane {
+public class logInPage extends JSplitPane implements Vista{
 	
 	//constantes
 	Color camposTextColor = new Color(0xD6C0B3), textColor = new Color(0xAB886D);
@@ -28,7 +29,7 @@ public class logInPage extends JSplitPane {
 	BasicSplitPaneDivider divider;
 	private JButton botonSalir;
 	private JFrame ventana;
-	private JPanel mainPanel;
+	private JPanel mainPanel;	
 	
 	public logInPage()
 	{
@@ -45,6 +46,7 @@ public class logInPage extends JSplitPane {
 		this.setEnabled(false);       
 		this.setDividerSize(3);
 		this.inicializarFrame();
+		ExitButton.asignarComportamiento(this);
 		this.setDividerLocation(0.6);
 		//ControladorTextField conTf = new ControladorTextField( rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
 	}
@@ -75,6 +77,7 @@ public class logInPage extends JSplitPane {
 		this.ventana.setBackground(new Color(0, 0, 0, 0));
 		this.ventana.setShape(new RoundRectangle2D.Double(0, 0, 1000, 400, 25, 25));
 		this.ventana.getContentPane().setBackground(new Color(0xE4E0E1));
+			
 		this.ventana.setVisible(true);
 		
 	}	
@@ -435,5 +438,28 @@ public class logInPage extends JSplitPane {
 	public void callExit()
 	{
 		this.botonSalir.doClick();
+	}
+
+
+
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public JButton getExit() {
+		return this.botonSalir;
 	}
 }
