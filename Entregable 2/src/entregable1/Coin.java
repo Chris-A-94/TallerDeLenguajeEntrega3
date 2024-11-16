@@ -11,6 +11,11 @@ public class Coin implements Comparable<Coin>{
 	private String sigla;
 	private Double precio;
 	private Double stock = 0.0;
+	
+	private String url_thumb;
+	private String url_small;
+	private String url_large;
+	
 	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio) {
 
 		this.nombre = nombre;
@@ -19,6 +24,20 @@ public class Coin implements Comparable<Coin>{
 		this.tipo = tipo;
 		this.generarStock();
 	}
+	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio, String url_thumb, String url_small, String url_large) {
+
+		this.nombre = nombre;
+		this.sigla = sigla;
+		this.precio = precio;
+		this.tipo = tipo;
+		
+		this.setUrl_thumb(url_thumb);
+		this.setUrl_small(url_small);
+		this.setUrl_large(url_large);
+		
+		this.generarStock();
+	}
+	
 	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio,Double stock) {
 		this.nombre = nombre;
 		this.sigla = sigla;
@@ -26,7 +45,7 @@ public class Coin implements Comparable<Coin>{
 		this.tipo = tipo;
 		this.stock = stock;
 	}
-
+	
 	
 	public TipoMoneda getTipo() {
 		return tipo;
@@ -84,5 +103,23 @@ public class Coin implements Comparable<Coin>{
 	@Override
 	public int compareTo(Coin c) { //COMPARA MONEDAS POR PRECIO...
 		return (int) (c.getPrecio()-this.getPrecio());
+	}
+	public String getUrl_thumb() {
+		return url_thumb;
+	}
+	public void setUrl_thumb(String url_thumb) {
+		this.url_thumb = url_thumb;
+	}
+	public String getUrl_small() {
+		return url_small;
+	}
+	public void setUrl_small(String url_small) {
+		this.url_small = url_small;
+	}
+	public String getUrl_large() {
+		return url_large;
+	}
+	public void setUrl_large(String url_large) {
+		this.url_large = url_large;
 	}
 }

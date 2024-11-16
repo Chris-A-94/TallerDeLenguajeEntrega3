@@ -48,7 +48,12 @@ public class CoinGeckoAPI {
 		Coin moneda = new Coin(object.getString("name"),
 				object.getString("symbol"),
 				TipoMoneda.CRIPTOMONEDA,
-				object.getJSONObject("market_data").getJSONObject("current_price").getDouble("usd"));
+				object.getJSONObject("market_data").getJSONObject("current_price").getDouble("usd"),
+				object.getJSONObject("image").getString("thumb"),
+				object.getJSONObject("image").getString("small"),
+				object.getJSONObject("image").getString("large"));
+		
+		System.out.println(moneda.toString());
 		
 		return moneda;
 	}
