@@ -309,7 +309,7 @@ public class Programa {
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log);
 		// Menu
-		PrototipoControlador proto = new PrototipoControlador();
+		PrototipoControlador prototipo = new PrototipoControlador();
 		
 		// Registro
 		//RegistroVista registroVista = new RegistroVista();
