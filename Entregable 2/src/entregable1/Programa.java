@@ -5,6 +5,7 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 
 import controladores.ControladorTextField;
+import controladores.PrototipoControlador;
 import controladores.RegistroControlador;
 import controladores.logInController;
 import vistas.logInPage;
@@ -307,6 +308,8 @@ public class Programa {
 	
 	public static void main(String[] args) {
 
+		PrototipoControlador proto = new PrototipoControlador();
+		
 		// Nota: En pantallas con alto DPI la UI se rompe.
 		// Esto se soluciona forzando la escala en 1
 		System.setProperty("sun.java2d.uiScale", "1");

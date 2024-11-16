@@ -48,57 +48,26 @@ public class MenuVista extends JFrame implements Vista {
 		mainPane.setOpaque(false);
 		
 		this.lateralPanel = new LateralPanel();
-		ContentPanel contentPanel1 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), null);
-		ContentPanel contentPanel2 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		ContentPanel contentPanel3 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		ContentPanel contentPanel4 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-		ContentPanel contentPanel5 = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), new BorderLayout());
-
-		lateralPanel.newButton("Mis Activos", contentPanel1);
-		lateralPanel.newButton("Visualizar Cryptos", contentPanel2);
-		lateralPanel.newButton("Comprar Crypto", contentPanel3);
-		lateralPanel.newButton("Swap Crypto", contentPanel4);
-		lateralPanel.newButton("Mis transacciones", contentPanel5);
-		
 		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40, true);
 		ExitButton.asignarComportamiento(this);
 		
 		// Setup layers
 		this.mainPane.add(lateralPanel, JLayeredPane.POPUP_LAYER);
 		this.mainPane.add(windowBar, JLayeredPane.DRAG_LAYER);
-		this.mainPane.add(contentPanel1, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(contentPanel2, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(contentPanel3, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(contentPanel4, JLayeredPane.DEFAULT_LAYER);
-		this.mainPane.add(contentPanel5, JLayeredPane.DEFAULT_LAYER);
 		
 		// Add MainPane
 		this.add(mainPane);
 		
 		// Set Default Panel
+		this.agregarPanel("Inicio", new JPanel(null));
+		
 		if (lateralPanel.getButtons().size() > 0) {
 			contentPanel = lateralPanel.getButtons().get(0).getPanel();
 			lateralPanel.getButtons().get(0).selectButton();
 			contentPanel.enablePanel();
 		}
 		
-		//this.agregarPanel("Tutucas.", new JPanel(null));
-		
 		this.setVisible(true);
-		
-		/*
-		 *  ¡¡¡TEMPORAL!!!
-		 */
-		JPanel newPanel = new JPanel(null);
-		JLabel label = new JLabel("Demo");
-		
-		ImageIcon image = new ImageIcon("1.gif");
-		label.setIcon(image);
-		
-		label.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
-		newPanel.add(label);
-		
-		this.agregarPanel("Temporal", newPanel);
 	}
 	
 	public void agregarPanel(String title, JPanel panel) {
@@ -133,10 +102,12 @@ public class MenuVista extends JFrame implements Vista {
 			button.setText(msg);
 			// Asigno el título
 			panel.setTitle(msg);
-			
 			// Agregar al Panel
 			this.add(button);
 			buttons.add(button);
+			
+			// Cuando se agrega un nuevo botón se requiere repintar el panel de nuevo.
+			this.repaint();
 		}
 		public void resetButtons() {
 			for (RedButton button : buttons) {
@@ -189,8 +160,6 @@ public class MenuVista extends JFrame implements Vista {
 				this.addActionListener(e -> {
 					resetButtons();
 					this.selectButton();
-					
-					
 					
 				});
 				// MouseListener
