@@ -53,8 +53,6 @@ public class CoinGeckoAPI {
 				object.getJSONObject("image").getString("small"),
 				object.getJSONObject("image").getString("large"));
 		
-		System.out.println(moneda.toString());
-		
 		return moneda;
 	}
 	

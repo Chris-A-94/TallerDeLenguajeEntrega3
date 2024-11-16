@@ -3,7 +3,7 @@ package main;
 import java.util.Scanner;
 
 import entregable1.*;
-
+import modelos.CoinGeckoAPI;
 import controladores.PrototipoControlador;
 import controladores.logInController;
 import vistas.logInPage;
@@ -306,10 +306,18 @@ public class Programa {
 		// Esto se soluciona forzando la escala en 1
 		System.setProperty("sun.java2d.uiScale", "1");
 		
-		logInPage log = new logInPage();
-		logInController logs = new logInController(log);
-		// Menu
-		PrototipoControlador prototipo = new PrototipoControlador();
+		List<String> listaMonedas = new LinkedList<String>();
+		listaMonedas.add("bitcoin");
+		listaMonedas.add("ethereum");
+		listaMonedas.add("maga");
+		List<Coin> monedas = CoinGeckoAPI.getInitialData(listaMonedas);
+		
+//		logInPage log = new logInPage();
+//		logInController logs = new logInController(log);
+//		// Menu
+		PrototipoControlador prototipo = new PrototipoControlador(monedas);
+		
+		
 		
 		// Registro
 		//RegistroVista registroVista = new RegistroVista();
