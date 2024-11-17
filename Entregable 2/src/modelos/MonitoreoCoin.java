@@ -113,8 +113,8 @@ public class MonitoreoCoin {
 		listaIDMonedas.addAll(monedas);
 	}
 	
-// 	Nota: Adaptar el código
-//
+// 	Nota: Adaptar el código, van a ser necesarios en un futuro...
+//	
 //	public List<Double> getPrices()
 //	{
 //		try {

@@ -311,6 +311,7 @@ public class Programa {
 		listaMonedas.add("ethereum");
 		listaMonedas.add("bitcoin");
 		listaMonedas.add("dogecoin");
+		listaMonedas.add("apu-s-club");
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		
 		try {
