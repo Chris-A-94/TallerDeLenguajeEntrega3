@@ -3,11 +3,12 @@ package main;
 import java.util.Scanner;
 
 import entregable1.*;
-import modelos.CoinGeckoAPI;
+import modelos.MonitoreoCoin;
 import controladores.PrototipoControlador;
 import controladores.logInController;
 import vistas.logInPage;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -307,15 +308,21 @@ public class Programa {
 		System.setProperty("sun.java2d.uiScale", "1");
 		
 		List<String> listaMonedas = new LinkedList<String>();
-		listaMonedas.add("bitcoin");
 		listaMonedas.add("ethereum");
-		listaMonedas.add("maga");
-		List<Coin> monedas = CoinGeckoAPI.getInitialData(listaMonedas);
+		listaMonedas.add("bitcoin");
+		listaMonedas.add("dogecoin");
+		MonitoreoCoin.setListaIDMonedas(listaMonedas);
+		
+		try {
+			MonitoreoCoin.updateMonedas();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 //		logInPage log = new logInPage();
 //		logInController logs = new logInController(log);
 //		// Menu
-		PrototipoControlador prototipo = new PrototipoControlador(monedas);
+		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
 		
 		
 		
