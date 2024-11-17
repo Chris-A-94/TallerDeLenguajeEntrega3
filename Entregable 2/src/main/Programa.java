@@ -307,23 +307,26 @@ public class Programa {
 		// Esto se soluciona forzando la escala en 1
 		System.setProperty("sun.java2d.uiScale", "1");
 		
-		List<String> listaMonedas = new LinkedList<String>();
-		listaMonedas.add("ethereum");
-		listaMonedas.add("bitcoin");
-		listaMonedas.add("dogecoin");
-		listaMonedas.add("apu-s-club");
-		MonitoreoCoin.setListaIDMonedas(listaMonedas);
+		Sistema sistema = new Sistema();
 		
-		try {
-			MonitoreoCoin.updateMonedas();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		List<String> listaMonedas = new LinkedList<String>();
+//		listaMonedas.add("ethereum");
+//		listaMonedas.add("bitcoin");
+//		listaMonedas.add("dogecoin");
+//		listaMonedas.add("apu-s-club");
+//		MonitoreoCoin.setListaIDMonedas(listaMonedas);
+		
+//		try {
+//			MonitoreoCoin.updateMonedas();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 //		logInPage log = new logInPage();
 //		logInController logs = new logInController(log);
 //		// Menu
-		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
+//		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
+		PrototipoControlador prototipo = new PrototipoControlador(sistema.getMonedas());
 		
 		
 		
@@ -339,7 +342,6 @@ public class Programa {
 		
 		//Esto es un login para un usuario administrador.
 		String dniTemp;
-        Sistema sistema = new Sistema();
         
         System.out.println("[LISTA USUARIOS]");
         sistema.listarUsuarios();
