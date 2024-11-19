@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import daos.UsuarioDAO;
+import decoradores.ControladorTextField;
 import entregable1.Usuario;
 import vistas.MenuVista;
 import vistas.RegistroVista;
@@ -51,7 +52,7 @@ public class logInController {
 				    public void actionPerformed(ActionEvent e) {
 				    	frontEnd.callExit();
 				    	RegistroVista registroVista = new RegistroVista();
-						RegistroControlador registroControlador = new RegistroControlador(registroVista);
+						//RegistroControlador registroControlador = new RegistroControlador(registroVista);
 					    ControladorTextField conTf = new ControladorTextField(registroVista);					    
 				    };		
 			});

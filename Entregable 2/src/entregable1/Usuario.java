@@ -15,8 +15,8 @@ public class Usuario implements Comparable<Usuario> {
 	private AltaBaja historialBajas;
 	private String DNI;
 	private String email;
-	
-	public Usuario(String DNI,String nombre, String apellido, String pais, String email) {
+	private String contraseña;
+	public Usuario(String DNI,String nombre, String apellido, String pais, String email, String contraseña) {
 		super();
 		
 		this.nombre = nombre;
@@ -26,6 +26,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.habilitado = true;
 		this.email = email;
 		this.billetera = new Billetera(DNI);
+		this.contraseña = contraseña;
 	}
 	
 
@@ -100,6 +101,16 @@ public class Usuario implements Comparable<Usuario> {
 		
 		
 		return aux;
+	}
+
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 	
 }

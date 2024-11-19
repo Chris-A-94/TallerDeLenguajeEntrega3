@@ -24,26 +24,26 @@ public class ContentPanel extends JPanel {
 		this.setOpaque(true);
 		
 		this.setBounds(180, 40, parent.getWidth() - 180, parent.getHeight() - 40);
-		this.setLayout(layoutManager);
+		this.setLayout(null);
 		
 		this.leftBorder = new JPanel();
 		this.leftBorder.setBounds(0, 0, 12, parent.getWidth() - 40);
 		this.leftBorder.setBackground(backgroundColor);
 		this.leftBorder.setOpaque(true);
-		this.add((Component) leftBorder);
+		super.add(leftBorder);
 		
 		this.header = new JPanel();
 		this.header.setBounds(0, 0, parent.getWidth() - this.leftBorder.getWidth(), 40);
 		this.header.setBackground(headerColor);
 		this.header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(0x493628)));
 		this.header.setLayout(null);
-		this.add((Component) header);
+		super.add(header);
 		
 		this.content = new JPanel();
 		this.content.setBounds(12, 40, this.getWidth() - 12, this.getHeight() - 40);
 		this.content.setBackground(backgroundColor);
-		this.content.setLayout(null);
-		this.add((Component) content);
+		this.content.setLayout(layoutManager);
+		super.add(content);
 		
 		this.disablePanel();
 	}
@@ -60,12 +60,13 @@ public class ContentPanel extends JPanel {
 		return this.content.getHeight();
 	}
 	
-	public Component add(JPanel panel) {
-		panel.setBounds(0, 0, this.getContentWidth(), this.getContentHeight());
+	@Override
+	public Component add(Component panel) {
+		//panel.setBounds(0, 0, this.getContentWidth(), this.getContentHeight());
 		panel.setBackground(content.getBackground());
 		
 		
-		this.content.add((Component) panel);
+		this.content.add(panel);
 		
 		return panel;
 	}

@@ -19,7 +19,8 @@ import vistas.RegistroVista;
 
 public class RegistroControlador {
 	private RegistroVista vista;
-	public RegistroControlador(RegistroVista vista) {
+	private Usuario modelo;
+	public RegistroControlador(RegistroVista vista,Usuario user) {
 		this.vista = vista;
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
 		
@@ -28,8 +29,10 @@ public class RegistroControlador {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			List<JTextComponent> listaTexto = vista.devolverCampos();
-			
+			if (vista.confirmarContraseña())
+			{
+				vista.errorContraseña();
+			}
 		}
 
 		@Override

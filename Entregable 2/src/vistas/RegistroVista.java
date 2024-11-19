@@ -8,9 +8,10 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
-import controladores.ControladorTextField;
+import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 
 public class RegistroVista extends JFrame implements Vista{
@@ -20,11 +21,13 @@ public class RegistroVista extends JFrame implements Vista{
 	private JLabel jlSur	= 	new JLabel("Apellido");
 	private JLabel jlMail  	= 	new JLabel("Email");
 	private JLabel jlPass 	= 	new JLabel("Contraseña");
+	private JLabel jlCon 	= 	new JLabel("Confirmar Contraseña");
 	
-	private JTextField textFieldName =	new JTextField("Joaquín Victor");
-	private JTextField textFieldSur  =	new JTextField("Gonzales");
-	private JTextField textFieldMail =	new JTextField("buenas@gmail.com");
-	private JPasswordField passField =	new JPasswordField("Password");
+	private JTextField textFieldName 	=	new JTextField("Joaquín Victor");
+	private JTextField textFieldSur  	=	new JTextField("Gonzales");
+	private JTextField textFieldMail 	=	new JTextField("buenas@gmail.com");
+	private JPasswordField passField 	=	new JPasswordField("Password");
+	private JPasswordField passConfirm 	= 	new JPasswordField("Password");
 	
 	private JButton botonAceptar = new JButton("Aceptar");
 	private JButton botonSalir 	 = new JButton("X");
@@ -36,10 +39,14 @@ public class RegistroVista extends JFrame implements Vista{
 		Color fondoFrame  		= new Color(0xE4E0E1);
 		Color camposTextColor 	= new Color(0xD6C0B3);
 		Color textColor 		= new Color(0xAB886D);
+		//CONSTANTES
+		int dimX = 300;
+		int dimY = 400;
+		int cons=40;
 		//CONFIGURACION DEL JFRAME
 		this.setTitle("Sign in"); //Titulo del frame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		this.setSize(300,350); //Tamaño del frame
+		this.setSize(dimX,dimY); //Tamaño del frame
 		this.setLocationRelativeTo(null); 
 		this.setLayout(null);
 		this.setResizable(false);
@@ -47,10 +54,7 @@ public class RegistroVista extends JFrame implements Vista{
 		this.getContentPane().setBackground(fondoFrame);
 		ControladorTextField ct = new ControladorTextField(this);
 				
-		//CONSTANTES
-		int dimX = this.getWidth();
-		int dimY = this.getHeight();
-		int cons=40;
+		
 		// LayoutManager	
 		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
 				
@@ -71,21 +75,18 @@ public class RegistroVista extends JFrame implements Vista{
 		
 		//nombre
 		jlName.setBounds(posIniX,posIniY,100,20);
-		textFieldName.setFont(new Font("Tahoma",Font.PLAIN,12));
 		
 		//apellido
 		jlSur.setBounds(posIniX,posIniY+cons,100,20);
-		textFieldName.setFont(new Font("Tahoma",Font.PLAIN,12));
 		
 		//Mail
 		jlMail.setBounds(posIniX,posIniY+cons*2,100,20);
-		textFieldName.setFont(new Font("Tahoma",Font.PLAIN,12));
 		
 		//Contraseña
 		jlPass.setBounds(posIniX,posIniY+cons*3,100,20);
-		textFieldName.setFont(new Font("Tahoma",Font.PLAIN,12));
-				
 		
+		//Confirmar
+		jlCon.setBounds(posIniX,posIniY+cons*4,200,20);
 		
 		//CONFIGURACIÓN DE LOS CAMPOS DE TEXTO
 		int boxHeight=20;
@@ -122,7 +123,13 @@ public class RegistroVista extends JFrame implements Vista{
 		passField.setBorder(null);
 		passField.setFont(new Font("Tahoma",Font.PLAIN,12));
 		passField.setForeground(textColor);
-		
+		//Confirmar
+		passConfirm.setEchoChar('*');
+		passConfirm.setBounds(posIniX,posIniY+4*cons,boxWidth,boxHeight);
+		passConfirm.setBackground(camposTextColor);
+		passConfirm.setBorder(null);
+		passConfirm.setFont(new Font("Tahoma",Font.PLAIN,12));
+		passConfirm.setForeground(textColor);		
 		
 		//CONFIGURACIÓN DE BOTONES
 		botonSalir.setBounds(dimX-cons, 10, 30, 30);
@@ -132,7 +139,7 @@ public class RegistroVista extends JFrame implements Vista{
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(textColor);
 	
-		botonAceptar.setBounds(posIniX,posIniY+4*cons, boxWidth, boxHeight+10);
+		botonAceptar.setBounds(posIniX,posIniY+5*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
 		botonAceptar.setBackground(new Color(0xAB886D));
 		botonAceptar.setFont(new Font("Arial", Font.PLAIN,20));
@@ -146,14 +153,17 @@ public class RegistroVista extends JFrame implements Vista{
 		this.add(this.textFieldSur);
 		this.add(this.textFieldMail);
 		this.add(this.passField);
+		this.add(this.passConfirm);
 		this.add(this.jlSur);
 		this.add(this.jlName);
 		this.add(this.jlMail);
 		this.add(this.jlPass);
+		this.add(this.jlCon);
 		this.add(botonSalir);
 		this.add(botonAceptar);
 		this.add(wbp);
 		this.setVisible(true);
+
 		
 	}
 	public JLabel getlabelTit() {
@@ -177,7 +187,7 @@ public class RegistroVista extends JFrame implements Vista{
 	public JButton getBotonAtras() {
 		return botonAtras;
 	}
-
+	
 
 	
 	public List<JTextComponent> devolverCampos(){
@@ -186,6 +196,7 @@ public class RegistroVista extends JFrame implements Vista{
 		listaCampos.add(textFieldSur);
 		listaCampos.add(textFieldMail);
 		listaCampos.add(passField);
+		listaCampos.add(passConfirm);
 		return listaCampos;
 	}
 	public JButton getBotonSalir() {
@@ -198,6 +209,7 @@ public class RegistroVista extends JFrame implements Vista{
 		etiquetas.add(jlMail);
 		etiquetas.add(jlPass);
 		etiquetas.add(jlSur);
+		etiquetas.add(jlCon);
 		
 		return etiquetas;
 	}
@@ -208,7 +220,7 @@ public class RegistroVista extends JFrame implements Vista{
 		campos.add(textFieldMail);
 		campos.add(textFieldName);
 		campos.add(textFieldSur);
-		
+		campos.add(passConfirm);
 		return campos;
 	}
 	@Override
@@ -225,6 +237,17 @@ public class RegistroVista extends JFrame implements Vista{
 	public JButton getExit() {
 		
 		return botonSalir;
+	}
+
+	public boolean confirmarContraseña() {
+		if (passField.getText().equals(passConfirm.getText()))
+			return true;
+		else
+			return false;
+	}
+	public void errorContraseña() {
+
+		this.passConfirm.setBorder(new LineBorder(Color.RED,2));
 	}
 	
 }

@@ -6,8 +6,8 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.text.JTextComponent;
 
-import controladores.ControladorTextField;
 import controladores.RegistroControlador;
+import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 
 import java.awt.*;
