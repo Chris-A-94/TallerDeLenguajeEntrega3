@@ -4,15 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
+import controladores.RegistroControlador;
 import decoradores.ControladorTextField;
 import decoradores.ExitButton;
+import entregable1.Usuario;
 
 public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;
@@ -21,18 +22,21 @@ public class RegistroVista extends JFrame implements Vista{
 	private JLabel jlSur	= 	new JLabel("Apellido");
 	private JLabel jlMail  	= 	new JLabel("Email");
 	private JLabel jlPass 	= 	new JLabel("Contraseña");
-	private JLabel jlCon 	= 	new JLabel("Confirmar Contraseña");
+	private JLabel jlCon 	= 	new JLabel("Confirmar");
+	private JLabel jlDNI 	= 	new JLabel("DNI");
 	
 	private JTextField textFieldName 	=	new JTextField("Joaquín Victor");
 	private JTextField textFieldSur  	=	new JTextField("Gonzales");
 	private JTextField textFieldMail 	=	new JTextField("buenas@gmail.com");
 	private JPasswordField passField 	=	new JPasswordField("Password");
 	private JPasswordField passConfirm 	= 	new JPasswordField("Password");
+	private JTextField textFieldDNI		=	new JTextField("43912162");
 	
 	private JButton botonAceptar = new JButton("Aceptar");
 	private JButton botonSalir 	 = new JButton("X");
 	private JButton botonAtras 	 = new JButton("Atrás");
 
+	private JCheckBox terminos 	= new JCheckBox("Acepto los términos y condiciones");
 	
 	public RegistroVista() {
 		//COLORES
@@ -40,8 +44,8 @@ public class RegistroVista extends JFrame implements Vista{
 		Color camposTextColor 	= new Color(0xD6C0B3);
 		Color textColor 		= new Color(0xAB886D);
 		//CONSTANTES
-		int dimX = 300;
-		int dimY = 400;
+		int dimX = 330;
+		int dimY = 500;
 		int cons=40;
 		//CONFIGURACION DEL JFRAME
 		this.setTitle("Sign in"); //Titulo del frame
@@ -53,7 +57,7 @@ public class RegistroVista extends JFrame implements Vista{
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(fondoFrame);
 		ControladorTextField ct = new ControladorTextField(this);
-				
+		RegistroControlador rc = new RegistroControlador(this);
 		
 		// LayoutManager	
 		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
@@ -69,7 +73,7 @@ public class RegistroVista extends JFrame implements Vista{
 		
 		//titulo
 		labelTit.setSize(150, 50);
-		labelTit.setLocation(dimX/2-75,posIniY-55);
+		labelTit.setLocation(dimX/2-75,posIniY-75);
 		labelTit.setFont(new Font("Tahoma", Font.BOLD,30));
 		labelTit.setForeground(new Color(0x291e17));
 		
@@ -88,9 +92,12 @@ public class RegistroVista extends JFrame implements Vista{
 		//Confirmar
 		jlCon.setBounds(posIniX,posIniY+cons*4,200,20);
 		
+		//DNI
+		jlDNI.setBounds(posIniX,posIniY+cons*5,200,20);
+		
 		//CONFIGURACIÓN DE LOS CAMPOS DE TEXTO
 		int boxHeight=20;
-		int boxWidth=130;
+		int boxWidth=140;
 		posIniY = dimY/4 + 20;
 		posIniX = dimX/2 - boxWidth/2;
 		
@@ -130,6 +137,15 @@ public class RegistroVista extends JFrame implements Vista{
 		passConfirm.setBorder(null);
 		passConfirm.setFont(new Font("Tahoma",Font.PLAIN,12));
 		passConfirm.setForeground(textColor);		
+		//DNI
+		textFieldDNI.setBounds(posIniX,posIniY+5*cons,boxWidth,boxHeight);
+		textFieldDNI.setBackground(camposTextColor);
+		textFieldDNI.setBorder(null);
+		textFieldDNI.setFont(new Font("Tahoma",Font.PLAIN,12));
+		textFieldDNI.setForeground(textColor);
+		//Terminos y condiciones
+		terminos.setBounds(posIniX-43,posIniY+6*cons,boxWidth+86,boxHeight);
+		terminos.setBackground(camposTextColor);
 		
 		//CONFIGURACIÓN DE BOTONES
 		botonSalir.setBounds(dimX-cons, 10, 30, 30);
@@ -139,7 +155,7 @@ public class RegistroVista extends JFrame implements Vista{
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(textColor);
 	
-		botonAceptar.setBounds(posIniX,posIniY+5*cons, boxWidth, boxHeight+10);
+		botonAceptar.setBounds(posIniX,posIniY+7*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
 		botonAceptar.setBackground(new Color(0xAB886D));
 		botonAceptar.setFont(new Font("Arial", Font.PLAIN,20));
@@ -154,14 +170,18 @@ public class RegistroVista extends JFrame implements Vista{
 		this.add(this.textFieldMail);
 		this.add(this.passField);
 		this.add(this.passConfirm);
+		this.add(this.textFieldDNI);
 		this.add(this.jlSur);
 		this.add(this.jlName);
 		this.add(this.jlMail);
 		this.add(this.jlPass);
 		this.add(this.jlCon);
+		this.add(this.jlDNI);
 		this.add(botonSalir);
 		this.add(botonAceptar);
+		this.add(terminos);
 		this.add(wbp);
+		
 		this.setVisible(true);
 
 		
@@ -195,8 +215,10 @@ public class RegistroVista extends JFrame implements Vista{
 		listaCampos.add(textFieldName);
 		listaCampos.add(textFieldSur);
 		listaCampos.add(textFieldMail);
+		listaCampos.add(textFieldDNI);
 		listaCampos.add(passField);
 		listaCampos.add(passConfirm);
+		
 		return listaCampos;
 	}
 	public JButton getBotonSalir() {
@@ -210,7 +232,7 @@ public class RegistroVista extends JFrame implements Vista{
 		etiquetas.add(jlPass);
 		etiquetas.add(jlSur);
 		etiquetas.add(jlCon);
-		
+		etiquetas.add(jlDNI);
 		return etiquetas;
 	}
 	@Override
@@ -220,6 +242,7 @@ public class RegistroVista extends JFrame implements Vista{
 		campos.add(textFieldMail);
 		campos.add(textFieldName);
 		campos.add(textFieldSur);
+		campos.add(textFieldDNI);
 		campos.add(passConfirm);
 		return campos;
 	}
@@ -239,15 +262,33 @@ public class RegistroVista extends JFrame implements Vista{
 		return botonSalir;
 	}
 
+	
 	public boolean confirmarContraseña() {
 		if (passField.getText().equals(passConfirm.getText()))
 			return true;
 		else
 			return false;
 	}
-	public void errorContraseña() {
+	public void errorMail() {
+		this.textFieldMail.setBorder(new LineBorder(Color.RED,2));
+		
+	}
 
+	public void errorContraseña() {
 		this.passConfirm.setBorder(new LineBorder(Color.RED,2));
+	
+	}
+	@Override
+	public void repaint() {
+		passConfirm.setBorder(null);
+		textFieldMail.setBorder(null);
+	}
+	public String getMail() {
+		return this.getTextFieldMail().getText();
+	}
+	public Usuario crearUsuario() {
+		Usuario aux = new Usuario(textFieldDNI.getText(), textFieldName.getText(), textFieldSur.getText(), "Argentina" , textFieldMail.getText(), passField.getText());
+		return aux;
 	}
 	
 }

@@ -27,7 +27,7 @@ public class ActivosDAO implements DaoInterface<Saldo>{
 		               "CANTIDAD DOUBLE," +
 		               "TIPO TEXT NOT NULL," +
 		               "USER_ID TEXT NOT NULL," +
-		               "FOREIGN KEY (USER_ID) REFERENCES USUARIOS(DNI)" +
+		               "FOREIGN KEY (USER_ID) REFERENCES USUARIOS(EMAIL)" +
 		               ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,

@@ -21,7 +21,7 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
                     "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "TEXTO TEXT NOT NULL," +
                     "USER_ID TEXT NOT NULL," +
-                    "FOREIGN KEY ('USER_ID') REFERENCES 'USUARIOS' ('DNI')" +
+                    "FOREIGN KEY ('USER_ID') REFERENCES 'USUARIOS' ('EMAIL	')" +
                     ");";
 			Statement pstmt = con.createStatement();
 			pstmt.execute(query);

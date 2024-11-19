@@ -20,8 +20,6 @@ public class ControladorTextField{
 		for (JTextComponent tc : vista.devolverCamposTexto()) {
 			tc.addFocusListener(new FocusControlTexts(tc));
 		}
-		
-	
 	}
 	class FocusControlTexts implements FocusListener{
 		private JTextComponent tf;
@@ -49,18 +47,6 @@ public class ControladorTextField{
 			if (tf.getText().equals("")) {
 				tf.setText(firstValue);
 				tf.setForeground(new Color(0xAB886D));
-			if ((firstValue.equals("buenas@gmail.com"))) {
-				System.out.println("HOLA");
-				JButton warning = new JButton();
-				ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/warning.png"));
-				Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-				warning.setIcon(new ImageIcon(img));
-				warning.setFont(new Font("Arial", Font.BOLD,20));
-				warning.setBorderPainted(false);
-				warning.setContentAreaFilled(false);
-				warning.setIcon(icon);
-				//vista.add(warning);
-			}	
 			}
 		}
 		

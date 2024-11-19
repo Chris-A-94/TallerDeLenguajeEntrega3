@@ -12,27 +12,93 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
+import daos.UsuarioDAO;
 import entregable1.Usuario;
+import modelos.MonitoreoCoin;
+import vistas.MenuVista;
 import vistas.RegistroVista;
 
 public class RegistroControlador {
 	private RegistroVista vista;
-	private Usuario modelo;
-	public RegistroControlador(RegistroVista vista,Usuario user) {
+	private UsuarioDAO userDAO = new UsuarioDAO();
+	private Usuario user;
+	public RegistroControlador(RegistroVista vista) {
 		this.vista = vista;
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
 		
 	}
+	private boolean verificarCampos() {
+		if ((this.validarMail(vista.getMail()) == 0) && validarContraseña())
+			return true;
+		else
+		{
+			
+	       return false;
+		}
+			
+	}
+	private boolean validarContraseña() {
+		if (!vista.confirmarContraseña()) {
+			vista.errorContraseña();
+			return false;
+		}
+		else
+		{
+			vista.repaint();
+			return true;
+		}
+			
+	}
+	private int validarMail(String mail) {
+		if (!mail.contains("@")) 
+		{
+			System.out.println("Error: Mail inválido");
+			vista.errorMail();
+			return 1;
+		}
+		else
+		{
+			String[] tokens = mail.split("@");
+			if (!(tokens[1].equals("gmail.com") || tokens[1].equals("hotmail.com") || tokens[1].equals("yahoo.com"))) {
+				System.out.println("Error: Mail inválido");
+				vista.errorMail();
+				return 2;
+			}
+			
+			vista.repaint();
+			return 0;
+		}
+			
+	}
+	
+	
 	class MouseControlAceptar implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (vista.confirmarContraseña())
-			{
-				vista.errorContraseña();
+			if (verificarCampos()) {
+				user = vista.crearUsuario();
+				System.out.println(user.toString());
+				
+				if (userDAO.guardar(user)) {
+					System.out.println("SE GUARDO");
+					vista.dispose();
+					MenuVista mv = new MenuVista();
+				}
+				else
+				{
+					vista.errorMail();
+					
+				}
 			}
+			
+			
 		}
 
 		@Override
@@ -87,17 +153,8 @@ public class RegistroControlador {
 				tf.setText(firstValue);
 				tf.setForeground(new Color(0xAB886D));
 			if ((firstValue.equals("buenas@gmail.com"))) {
-				System.out.println("HOLA");
-				JButton warning = new JButton();
-				ImageIcon icon = new ImageIcon(getClass().getResource("/Imagenes/warning.png"));
-				Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-				warning.setIcon(new ImageIcon(img));
-				warning.setFont(new Font("Arial", Font.BOLD,20));
-				warning.setBorderPainted(false);
-				warning.setContentAreaFilled(false);
-
-				warning.setIcon(icon);
-				vista.add(warning);
+				vista.errorMail();
+				
 			}	
 			}
 		}
@@ -106,7 +163,7 @@ public class RegistroControlador {
 	/*
 	 * Controlador del botón de salida.
 	 */
-
+	
 	}
 
 	

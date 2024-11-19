@@ -48,7 +48,7 @@ public class logInPage extends JSplitPane implements Vista{
 		this.inicializarFrame();
 		ExitButton.asignarComportamiento(this);
 		this.setDividerLocation(0.6);
-		//ControladorTextField conTf = new ControladorTextField( rightPanel);	//setea el funcionamiento visual de los botones solo con existir 
+		//ControladorTextField conTf = new ControladorTextField(this);	//setea el funcionamiento visual de los botones solo con existir 
 	}
 	
 	
@@ -100,7 +100,7 @@ public class logInPage extends JSplitPane implements Vista{
 	}
 		
 	//Clase panel derecho
-	private class panelDerecho extends JPanel {
+	private class panelDerecho extends JPanel implements Vista {
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
@@ -123,6 +123,7 @@ public class logInPage extends JSplitPane implements Vista{
 			setForms();
 			setButtons();
 			setEmblema();
+			ControladorTextField conTf = new ControladorTextField(this);	
 			
 		}
 		
@@ -452,7 +453,6 @@ public class logInPage extends JSplitPane implements Vista{
 
 	@Override
 	public List<JTextComponent> devolverCamposTexto() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

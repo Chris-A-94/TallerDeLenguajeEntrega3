@@ -15,8 +15,8 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	public UsuarioDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
-		this.guardar(new Usuario("0","admin","admin", "Argentina", "indefinido","admin")); //se agrega por defecto un usuario administrador
-		this.guardar(new Usuario("1","chimichurri","admin", "Argentina/Buenos_Aires/Agrogué", "admin@mail.com","admin")); //se agrega por defecto un usuario administrador
+		//this.guardar(new Usuario("0","admin","admin", "Argentina", "indefinido","admin")); //se agrega por defecto un usuario administrador
+		//this.guardar(new Usuario("1","chimichurri","admin", "Argentina/Buenos_Aires/Agrogué", "admin@mail.com","admin")); //se agrega por defecto un usuario administrador
 	}
 
 	@Override
@@ -24,12 +24,12 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		try {
 			//Se crea una tabla si no existe ya en el archivo...
 			String query = "CREATE TABLE IF NOT EXISTS USUARIOS (" +
-                    "DNI TEXT PRIMARY KEY," +
+                    "DNI TEXT NOT NULL," +
                     "NOMBRE TEXT NOT NULL," +
                     "APELLIDO TEXT NOT NULL," +
                     "PAIS TEXT NOT NULL," +
                     "HABILITADO BOOLEAN NOT NULL," +
-                    "EMAIL TEXT NOT NULL,"+
+                    "EMAIL TEXT PRIMARY KEY,"+
                     "CONTRASEÑA TEXT NOT NULL"+
                     ");";
 			/*
@@ -52,14 +52,14 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public boolean modificar(Usuario user) {
 		try {
-			String query = ("UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, PAIS = ?, HABILITADO = ?, EMAIL = ?, CONTRASEÑA = ? WHERE DNI = '"+user.getDNI()+"';");
+			String query = ("UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, PAIS = ?, HABILITADO = ?, DNI = ?, CONTRASEÑA = ? WHERE MAIL = '"+user.getEmail()+"';");
 			PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		  pstmt.setString(2,user.getNombre());
 		  pstmt.setString(3,user.getApellido());  
 		  pstmt.setString(4,user.getPais());
 		  pstmt.setBoolean(5,user.isHabilitado());
-		  pstmt.setString(6,user.getEmail());
+		  pstmt.setString(6,user.getDNI());
 		  pstmt.setString(7,user.getContraseña());
 		  pstmt.executeUpdate();
 		  pstmt.close();
@@ -74,7 +74,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public boolean guardar(Usuario user) {
 		try {
-		    String query = "INSERT OR REPLACE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL, CONTRASEÑA) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL, CONTRASEÑA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,user.getDNI());
@@ -90,7 +90,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		} catch (SQLException e) {
 			switch (e.getErrorCode()) {
 			case 19:
-			    	System.out.println("ERROR: el DNI ya se encuentra en la base de datos");
+			    	System.out.println("ERROR: el MAIL ya se encuentra en la base de datos");
 			    	break;
 			default:
 			    System.out.println(e.getMessage());
@@ -127,11 +127,11 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	}
 
 	@Override
-	public void remover(String dni) {
+	public void remover(String mail) {
 
 		try {
 			
-			String query = ("DELETE FROM USUARIOS WHERE DNI = '"+dni+"';");
+			String query = ("DELETE FROM USUARIOS WHERE EMAIL = '"+ mail +"';");
 			Statement pstmt = con.createStatement();
 			pstmt.execute(query);
 			pstmt.close();

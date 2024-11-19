@@ -324,16 +324,14 @@ public class Programa {
 		
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log);
+		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
 //		PrototipoControlador prototipo = new PrototipoControlador(sistema.getMonedas());
 		
 		
 		
-		// Registro
-		//RegistroVista registroVista = new RegistroVista();
-		//RegistroControlador registroControlador = new RegistroControlador(registroVista);
-		
+
 		/*
 		final int _EXIT = 9;
 
