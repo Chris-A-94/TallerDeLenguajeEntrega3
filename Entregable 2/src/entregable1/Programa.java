@@ -308,7 +308,7 @@ public class Programa {
 	
 	public static void main(String[] args) {
 
-		PrototipoControlador proto = new PrototipoControlador();
+//		PrototipoControlador proto = new PrototipoControlador();
 		
 		// Nota: En pantallas con alto DPI la UI se rompe.
 		// Esto se soluciona forzando la escala en 1
