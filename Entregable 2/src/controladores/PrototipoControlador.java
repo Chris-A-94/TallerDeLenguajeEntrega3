@@ -64,8 +64,8 @@ public class PrototipoControlador {
         
         // adding it to JScrollPane
         JScrollPane sp = new JScrollPane(j);
-        sp.setBounds(30, 40, 500, 300);
+        sp.setBounds(0, 0, 500, 300);
         
-		myMenu.agregarPanel("Monedas", sp);
+		myMenu.agregarPanel("Tiki tiki", sp);
 	}
 }
