@@ -15,8 +15,8 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	public UsuarioDAO() {
 		con = MyConnection.getCon();
 		this.crearTabla();
-		this.guardar(new Usuario("0","admin","admin", "Argentina", "indefinido")); //se agrega por defecto un usuario administrador
-		this.guardar(new Usuario("1","chimichurri","admin", "Argentina/Buenos_Aires/Agrogué", "admin@mail.com")); //se agrega por defecto un usuario administrador
+		this.guardar(new Usuario("0","admin","admin", "Argentina", "indefinido","admin")); //se agrega por defecto un usuario administrador
+		this.guardar(new Usuario("1","chimichurri","admin", "Argentina/Buenos_Aires/Agrogué", "admin@mail.com","admin")); //se agrega por defecto un usuario administrador
 	}
 
 	@Override
@@ -29,7 +29,8 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
                     "APELLIDO TEXT NOT NULL," +
                     "PAIS TEXT NOT NULL," +
                     "HABILITADO BOOLEAN NOT NULL," +
-                    "EMAIL TEXT NOT NULL"+
+                    "EMAIL TEXT NOT NULL,"+
+                    "CONTRASEÑA TEXT NOT NULL"+
                     ");";
 			/*
 			 * Después agregaremos los demás parámetros a la base de datos,
@@ -51,7 +52,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public boolean modificar(Usuario user) {
 		try {
-			String query = ("UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, PAIS = ?, HABILITADO = ?, EMAIL = ? WHERE DNI = '"+user.getDNI()+"';");
+			String query = ("UPDATE USUARIOS SET NOMBRE = ?, APELLIDO = ?, PAIS = ?, HABILITADO = ?, EMAIL = ?, CONTRASEÑA = ? WHERE DNI = '"+user.getDNI()+"';");
 			PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		  pstmt.setString(2,user.getNombre());
@@ -59,6 +60,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		  pstmt.setString(4,user.getPais());
 		  pstmt.setBoolean(5,user.isHabilitado());
 		  pstmt.setString(6,user.getEmail());
+		  pstmt.setString(7,user.getContraseña());
 		  pstmt.executeUpdate();
 		  pstmt.close();
 		  return true;
@@ -72,7 +74,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	@Override
 	public boolean guardar(Usuario user) {
 		try {
-		    String query = "INSERT OR REPLACE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)";
+		    String query = "INSERT OR REPLACE INTO USUARIOS (DNI, NOMBRE, APELLIDO, PAIS, HABILITADO, EMAIL, CONTRASEÑA) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		    PreparedStatement pstmt = con.prepareStatement(query);
 		    
 		    pstmt.setString(1,user.getDNI());
@@ -81,6 +83,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		    pstmt.setString(4,user.getPais());
 		    pstmt.setBoolean(5,user.isHabilitado());
 		    pstmt.setString(6,user.getEmail());
+		    pstmt.setString(7,user.getContraseña());
 		    pstmt.executeUpdate();
 		    pstmt.close();
 		    return true;
@@ -110,7 +113,7 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 			// Si entra al while obtuvo al menos una fila
 			while (resul.next()){
 			//Suponemos a todos los usuarios habilitados...
-			auxUser = new Usuario(resul.getString("DNI"),resul.getString("NOMBRE"),resul.getString("APELLIDO"),resul.getString("PAIS"),resul.getString("EMAIL"));
+			auxUser = new Usuario(resul.getString("DNI"),resul.getString("NOMBRE"),resul.getString("APELLIDO"),resul.getString("PAIS"),resul.getString("EMAIL"),resul.getString("CONTRASEÑA"));
 			if (auxUser != null)
 				usuarios.add(auxUser);
 		}

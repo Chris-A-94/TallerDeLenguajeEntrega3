@@ -322,11 +322,11 @@ public class Programa {
 //			e.printStackTrace();
 //		}
 		
-//		logInPage log = new logInPage();
-//		logInController logs = new logInController(log);
+		logInPage log = new logInPage();
+		logInController logs = new logInController(log);
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema.getMonedas());
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema.getMonedas());
 		
 		
 		
