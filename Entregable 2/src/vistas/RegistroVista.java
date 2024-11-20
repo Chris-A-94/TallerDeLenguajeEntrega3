@@ -290,5 +290,12 @@ public class RegistroVista extends JFrame implements Vista{
 		Usuario aux = new Usuario(textFieldDNI.getText(), textFieldName.getText(), textFieldSur.getText(), "Argentina" , textFieldMail.getText(), passField.getText());
 		return aux;
 	}
+	public boolean termsAcepted() {
+		if (this.terminos.isSelected())
+			return true;
+		else
+			return false;
+	}
+	
 	
 }
