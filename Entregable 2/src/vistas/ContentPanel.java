@@ -62,9 +62,7 @@ public class ContentPanel extends JPanel {
 	
 	@Override
 	public Component add(Component panel) {
-		//panel.setBounds(0, 0, this.getContentWidth(), this.getContentHeight());
-		panel.setBackground(content.getBackground());
-		
+		System.out.println("Panel instanciado: " + panel.getBounds().toString());
 		
 		this.content.add(panel);
 		

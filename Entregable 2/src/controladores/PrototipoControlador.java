@@ -66,6 +66,21 @@ public class PrototipoControlador {
         JScrollPane sp = new JScrollPane(j);
         sp.setBounds(30, 40, 500, 300);
         
+        
+        /*
+         * 2° Panel de Prueba, esta vez implementado un layout.
+         * 
+         */
 		myMenu.agregarPanel("Monedas", sp);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.red);
+		panel.setBounds(0, 0, 100, 100);;
+		
+		JLabel label = new JLabel("?)))))");
+		panel.add(label);
+		
+		myMenu.agregarPanel("Prueba", panel);
+		
 	}
 }

@@ -70,6 +70,16 @@ public class MenuVista extends JFrame implements Vista {
 		this.setVisible(true);
 	}
 	
+	public void agregarPanel(String title, JPanel componente) {
+		ContentPanel newPanel = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), componente.getLayout());
+		
+		newPanel.setTitle(title);
+		newPanel.add(componente);
+		
+		this.lateralPanel.newButton(title, newPanel);
+		this.mainPane.add(newPanel);
+	}
+	
 	public void agregarPanel(String title, JComponent componente) {
 		ContentPanel newPanel = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), null);
 		
