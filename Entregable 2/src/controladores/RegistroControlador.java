@@ -34,7 +34,7 @@ public class RegistroControlador {
 		
 	}
 	private boolean verificarCampos() {
-		if ((this.validarMail(vista.getMail()) == 0) && validarContraseña())
+		if ((this.validarMail(vista.getMail()) == 0) && vista.termsAcepted() && validarContraseña() && allField())
 			return true;
 		else
 		{
@@ -76,7 +76,18 @@ public class RegistroControlador {
 		}
 			
 	}
-	
+	public boolean allField() {
+		boolean aux = true;
+		for (JTextComponent tc : vista.devolverCamposTexto()) {
+			if (tc.getForeground().equals(new Color(0xAB886D))) {
+				aux = false;
+				tc.setBorder(new LineBorder(Color.RED,2));
+			}
+			else
+				tc.setBorder(null);
+		}
+		return aux;
+	}
 	
 	class MouseControlAceptar implements MouseListener{
 
@@ -160,6 +171,7 @@ public class RegistroControlador {
 		}
 		
 	}
+	
 	/*
 	 * Controlador del botón de salida.
 	 */
