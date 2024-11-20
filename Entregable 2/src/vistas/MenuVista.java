@@ -73,6 +73,8 @@ public class MenuVista extends JFrame implements Vista {
 	public void agregarPanel(String title, JComponent componente) {
 		ContentPanel newPanel = new ContentPanel(this, new Color(0xE4E0E1), new Color(0xE4E0E1), null);
 		
+		componente.setBounds(10, 10, componente.getWidth(), componente.getHeight());
+		
 		newPanel.setTitle(title);
 		newPanel.add(componente);
 		
