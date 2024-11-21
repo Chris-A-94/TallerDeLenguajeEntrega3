@@ -1,29 +1,12 @@
 package controladores;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.TableColumnModel;
-
 import entregable1.Coin;
 import entregable1.Sistema;
 import entregable1.Usuario;
@@ -74,8 +57,24 @@ public class PrototipoControlador {
       	TransaccionControlador tc = new TransaccionControlador(user.getBilletera().getTransacciones());
         // adding it to JScrollPane
         JScrollPane sp = new JScrollPane(j);
-        sp.setBounds(0, 0, 500, 300);
-		myMenu.agregarPanel("Monedas", sp);
 		myMenu.agregarPanel("Transacciones", tc.getPanel());
+        sp.setBounds(30, 40, 500, 300);
+        
+        
+        /*
+         * 2° Panel de Prueba, esta vez implementado un layout.
+         * 
+         */
+		myMenu.agregarPanel("Monedas", sp);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.red);
+		panel.setBounds(0, 0, 100, 100);;
+		
+		JLabel label = new JLabel("?)))))");
+		panel.add(label);
+		
+		myMenu.agregarPanel("Prueba", panel);
+		
 	}
 }

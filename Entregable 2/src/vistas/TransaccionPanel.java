@@ -23,7 +23,7 @@ public class TransaccionPanel extends JPanel {
 
 	public TransaccionPanel() {
 		//this.setBounds(100, 100, 100, 100);	 
-		this.setLayout(new GridLayout(10,10));
+		this.setLayout(new GridLayout(10,5));
 	}
 	
 	public void agregarTransaccion(String t) {
