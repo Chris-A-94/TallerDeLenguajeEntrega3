@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.sql.*;
 
 import entregable1.Transaccion;
+import entregable1.TransaccionSwap;
 
 public class TransaccionDAO implements DaoInterface<Transaccion> {
 	private Connection con = null;
@@ -65,26 +66,30 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 	@Override
 	public List<Transaccion> devolverTabla() {
 		List<Transaccion> list = new LinkedList<Transaccion>();
-		
-//		try {
-//			Statement sent = con.createStatement();	
-//			ResultSet resul = sent.executeQuery("SELECT * FROM TRANSACCION");
-//			
-//			while (resul.next() == true) {
-//				list.add(new String(resul.getString("TEXTO")));
-//			}
-//			
-//			resul.close();
-//			sent.close();
-//		} catch (SQLException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
+	/*	
+		try {
+			Statement sent = con.createStatement();	
+			ResultSet resul = sent.executeQuery("SELECT * FROM TRANSACCION");
+			
+			while (resul.next() == true) {
+				if (resul.getString("TEXTO").equals("COMPRA"))
+					//list.add(new TransaccionSwap());
+			}
+			
+			resul.close();
+			sent.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
 // 	Dado que en la base de datos solo se almacena una descripción limitada, 
 //	no es posible obtener los datos suficientes para instanciar una Transacción.
 		
+
+*/
 		return list;
 	}
+	
 	
 	@Override
 	public void remover(String s) {

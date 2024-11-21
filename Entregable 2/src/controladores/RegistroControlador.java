@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
 import daos.UsuarioDAO;
+import entregable1.Sistema;
 import entregable1.Usuario;
 import modelos.MonitoreoCoin;
 import vistas.MenuVista;
@@ -28,10 +29,11 @@ public class RegistroControlador {
 	private RegistroVista vista;
 	private UsuarioDAO userDAO = new UsuarioDAO();
 	private Usuario user;
-	public RegistroControlador(RegistroVista vista) {
-		this.vista = vista;
+	private Sistema sistema;
+	public RegistroControlador(Sistema sistema) {
+		this.vista = new RegistroVista();
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
-		
+		this.sistema = sistema;
 	}
 	private boolean verificarCampos() {
 		if ((this.validarMail(vista.getMail()) == 0) && vista.termsAcepted() && validarContraseña() && allField())
@@ -100,7 +102,7 @@ public class RegistroControlador {
 				if (userDAO.guardar(user)) {
 					System.out.println("SE GUARDO");
 					vista.dispose();
-					MenuVista mv = new MenuVista();
+					PrototipoControlador pc = new PrototipoControlador(sistema,user);
 				}
 				else
 				{

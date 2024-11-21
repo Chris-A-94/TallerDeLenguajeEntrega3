@@ -13,6 +13,7 @@ public class Sistema {
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
 	private List<Saldo> saldosUsuarios;
+	private List<Transaccion> transacciones;
 	//private MonitoreoCoin APIcoins;
 	private CoinDAO cDao;
 	private UsuarioDAO uDao;
@@ -64,6 +65,8 @@ public class Sistema {
 		
 		//INICIALIZAR tDAO
 		tDao = new TransaccionDAO();
+		this.transacciones = new LinkedList<Transaccion>();
+		this.transacciones.addAll(tDao.devolverTabla());
 	}
 	public void guardarMonedaDB(Coin moneda) {
 		this.cDao.guardar(moneda);
@@ -264,12 +267,17 @@ public class Sistema {
 			i++;
 		}
 	}
-	public Usuario getUsuario(String DNI) { //Busca un usuario en la base mediante su DNI.
+	public Usuario getUsuario(String Email) { //Busca un usuario en la base mediante su DNI.
 		for (Usuario u : usuarios) {
-			if (u.getDNI().equals(DNI)) {
+			if (u.getEmail().equals(Email)) {
 				for (Saldo s: this.saldosUsuarios) {
 					if (s.getUser_id() == u.getDNI())
 						u.getBilletera().agregarSaldo(s);
+				}
+				for (Transaccion t: this.transacciones) {
+					System.out.print(t.toString());
+					if (t.getUserID() == u.getEmail())
+						u.getBilletera().agregarTransaccion(t);
 				}
 				return u;
 			}	

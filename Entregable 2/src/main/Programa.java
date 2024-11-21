@@ -309,6 +309,7 @@ public class Programa {
 		
 		Sistema sistema = new Sistema();
 		
+        
 //		List<String> listaMonedas = new LinkedList<String>();
 //		listaMonedas.add("ethereum");
 //		listaMonedas.add("bitcoin");
@@ -323,11 +324,11 @@ public class Programa {
 //		}
 		
 		logInPage log = new logInPage();
-		logInController logs = new logInController(log);
+		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-//		PrototipoControlador prototipo = new PrototipoControlador(sistema.getMonedas());
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema);
 		
 		
 		
@@ -346,7 +347,6 @@ public class Programa {
         System.out.print("----------------------------\n"
         		+ "Ingrese el DNI del usuario que va a usar\n:> ");
         dniTemp = in.next();
-        Usuario temp = sistema.getUsuario(dniTemp);
         while (temp == null)
         {
         	System.out.print("El DNI no existe, ingrese otro\n:> ");

@@ -57,7 +57,6 @@ public class RegistroVista extends JFrame implements Vista{
 		this.setUndecorated(true);
 		this.getContentPane().setBackground(fondoFrame);
 		ControladorTextField ct = new ControladorTextField(this);
-		RegistroControlador rc = new RegistroControlador(this);
 		
 		// LayoutManager	
 		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
@@ -65,7 +64,6 @@ public class RegistroVista extends JFrame implements Vista{
 		//MOVER VENTANA (CODIGOD E FRAN)
 		WindowBarPanel wbp = new WindowBarPanel(this,fondoFrame,dimX,dimY,false);		
 		//CONFIGURACIÓN DE IMÁGENES
-		
 		
 		//CONFIGURACIÓN DE LAS ETIQUETAS
 		int posIniY = dimY/4;

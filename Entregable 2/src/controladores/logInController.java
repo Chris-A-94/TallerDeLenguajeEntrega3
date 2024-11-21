@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import daos.UsuarioDAO;
 import decoradores.ControladorTextField;
+import entregable1.Sistema;
 import entregable1.Usuario;
 import vistas.MenuVista;
 import vistas.RegistroVista;
@@ -22,14 +23,15 @@ public class logInController {
 	private List<Usuario> usuarios;
 	private String Email;
 	private String Password;
-	
-	public logInController(logInPage login)
+	private Sistema sistema;
+	public logInController(logInPage login,Sistema sistema)
 	{
 		this.frontEnd = login;
 		users = new UsuarioDAO();
 		usuarios = users.devolverTabla(); //no me gusta esto, deberia haber un metodo "buscarUser" en el Dao
 		this.actualizarData();
 		this.agregarListeners();
+		this.sistema = sistema;
 	}
 	
 	private boolean userExist(String email)
@@ -51,9 +53,9 @@ public class logInController {
 				    @Override
 				    public void actionPerformed(ActionEvent e) {
 				    	frontEnd.callExit();
-				    	RegistroVista registroVista = new RegistroVista();
-						//RegistroControlador registroControlador = new RegistroControlador(registroVista);
-					    ControladorTextField conTf = new ControladorTextField(registroVista);					    
+				    	//RegistroVista registroVista = new RegistroVista();
+						RegistroControlador registroControlador = new RegistroControlador(sistema);
+					    					    
 				    };		
 			});
 		//boton Log In
@@ -90,7 +92,7 @@ public class logInController {
 		else
 		{
 			this.frontEnd.callExit();
-			MenuVista menuVista = new MenuVista();
+			PrototipoControlador pc = new PrototipoControlador(sistema,sistema.getUsuario(Email));
 		}
 	}
 }

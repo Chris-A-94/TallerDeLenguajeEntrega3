@@ -22,6 +22,27 @@ public class Billetera {
 	private String CVU;
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
+	public List<Transaccion> getTransacciones() {
+		return Transacciones;
+	}
+
+
+
+	public List<DeFi> getDefis() {
+		return defis;
+	}
+
+
+
+	public Tarjeta getTarjeta() {
+		return tarjeta;
+	}
+
+
+
+	public String getUserID() {
+		return userID;
+	}
 	private List<Saldo> arregloSaldo;
 	private List<DeFi> defis;
 	private Tarjeta tarjeta;
@@ -521,7 +542,9 @@ public class Billetera {
 		
 		return saldosString;
 	}
-	
+	public void agregarTransaccion(Transaccion t) {
+		this.Transacciones.add(t);
+	}
 	public List<Saldo> getArregloSaldo() {
 		return this.arregloSaldo;
 	}

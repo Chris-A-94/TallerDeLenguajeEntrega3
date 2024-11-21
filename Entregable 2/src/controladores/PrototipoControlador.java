@@ -25,7 +25,9 @@ import javax.swing.JTextArea;
 import javax.swing.table.TableColumnModel;
 
 import entregable1.Coin;
-import vistas.MenuVista;
+import entregable1.Sistema;
+import entregable1.Usuario;
+import vistas.*;
 
 /*
  * Posible nombre: GestionMenuControlador
@@ -33,13 +35,14 @@ import vistas.MenuVista;
 public class PrototipoControlador {
 	private MenuVista myMenu;
 	
-	public PrototipoControlador(List<Coin> monedas) {
+	public PrototipoControlador(Sistema sistema,Usuario user) {
 		myMenu = new MenuVista();
 		
 		/*
 		 *  ¡¡¡TEMPORAL!!!
 		 */
 		// Data to be displayed in the JTable
+		List<Coin> monedas = sistema.getMonedas();
         String[][] data = new String[monedas.size()][4];
         
         for (int i = 0; i < monedas.size(); i++) {
@@ -54,18 +57,25 @@ public class PrototipoControlador {
         String[] columnNames = {"Sigla", "Nombre", "Precio", "Stock"};
  
         // Initializing the JTable
-        JTable j = new JTable(data, columnNames);
+        @SuppressWarnings("serial")
+		JTable j = new JTable(data, columnNames) {
+        	@Override
+        	public boolean isCellEditable(int row, int column) {
+        		return false;
+        	}
+        };
         TableColumnModel columnModel = j.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(40);
         columnModel.getColumn(1).setPreferredWidth(100);
         columnModel.getColumn(2).setPreferredWidth(150);
         columnModel.getColumn(3).setPreferredWidth(150);
         j.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        
+        //Paneles agustín
+      	TransaccionControlador tc = new TransaccionControlador(user.getBilletera().getTransacciones());
         // adding it to JScrollPane
         JScrollPane sp = new JScrollPane(j);
         sp.setBounds(0, 0, 500, 300);
-        
-		myMenu.agregarPanel("Tiki tiki", sp);
+		myMenu.agregarPanel("Monedas", sp);
+		myMenu.agregarPanel("Transacciones", tc.getPanel());
 	}
 }
