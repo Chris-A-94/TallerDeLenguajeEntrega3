@@ -60,12 +60,12 @@ public class PrototipoControlador {
 		myMenu.agregarPanel("Transacciones", tc.getPanel());
         sp.setBounds(30, 40, 500, 300);
         
+        myMenu.agregarPanel("Monedas", sp);
         
         /*
          * 2° Panel de Prueba, esta vez implementado un layout.
          * 
          */
-		myMenu.agregarPanel("Monedas", sp);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.red);
@@ -76,5 +76,13 @@ public class PrototipoControlador {
 		
 		myMenu.agregarPanel("Prueba", panel);
 		
+		/*
+		 * 3° Panel
+		 */
+		PanelMonedasVista panelMonedas = new PanelMonedasVista();
+		PanelMonedasControlador
 	}
+	
+	
+	
 }
