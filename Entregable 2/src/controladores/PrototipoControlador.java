@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import entregable1.Coin;
 import entregable1.Sistema;
+import entregable1.TipoMoneda;
 import entregable1.Usuario;
 import vistas.*;
 
@@ -79,8 +80,17 @@ public class PrototipoControlador {
 		/*
 		 * 3° Panel
 		 */
+		//System.out.println(sistema.getMonedas().get(0).toString());
 		PanelMonedasVista panelMonedas = new PanelMonedasVista();
-		PanelMonedasControlador
+		
+		for (Coin c : sistema.getMonedas()) {
+			System.out.println(c.getPrecio());
+			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))
+				panelMonedas.agregarMoneda(new TarjetaVista(c));
+		}
+		
+		
+		myMenu.agregarPanel("Monedas 2 (mejor)",panelMonedas);
 	}
 	
 	
