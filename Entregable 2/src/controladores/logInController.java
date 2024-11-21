@@ -91,8 +91,13 @@ public class logInController {
 		}
 		else
 		{
-			this.frontEnd.callExit();
-			PrototipoControlador pc = new PrototipoControlador(sistema,sistema.getUsuario(Email));
+			if (sistema.getUsuario(Email).getContraseña().equals(Password))
+			{
+				this.frontEnd.callExit();
+				PrototipoControlador pc = new PrototipoControlador(sistema,sistema.getUsuario(Email));
+			}
+			else
+				System.out.println("Contraseña Incorrecta");
 		}
 	}
 }

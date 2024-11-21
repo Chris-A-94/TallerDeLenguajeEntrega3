@@ -40,7 +40,7 @@ public class ContentPanel extends JPanel {
 		super.add(header);
 		
 		this.content = new JPanel();
-		this.content.setBounds(12, 40, this.getWidth() - 12, this.getHeight() - 40);
+		this.content.setBounds(12, 40, this.getWidth() - 20, this.getHeight() - 40);
 		this.content.setBackground(backgroundColor);
 		this.content.setLayout(layoutManager);
 		super.add(content);

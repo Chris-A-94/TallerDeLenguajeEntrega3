@@ -1,12 +1,8 @@
 package vistas;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicBorders.ButtonBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.text.JTextComponent;
-
-import controladores.RegistroControlador;
 import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 
@@ -21,6 +17,10 @@ import javax.imageio.*;
 
 public class logInPage extends JSplitPane implements Vista{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//constantes
 	Color camposTextColor = new Color(0xD6C0B3), textColor = new Color(0xAB886D);
 	//instancia
@@ -101,11 +101,17 @@ public class logInPage extends JSplitPane implements Vista{
 		
 	//Clase panel derecho
 	private class panelDerecho extends JPanel implements Vista {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private JButton login;
 		private JButton signin;
 		private JButton forgotPass;
 		private JLabel nEmail,nPasword;
-		private JTextField Email, Password;
+		private JTextField Email;
+		private JPasswordField Password;
+		
 		private Image emblema;
 		private JLabel welcomeMessage;	
 		private Font agusFont;
@@ -184,8 +190,8 @@ public class logInPage extends JSplitPane implements Vista{
 			//inicializacion
 			this.nEmail = new JLabel("Email: ");
 			this.nPasword = new JLabel("Password: ");
-			this.Email = new JTextField("   example@mail.com");
-			this.Password = new JTextField("   Contraseña");
+			this.Email = new JTextField("example@mail.com");
+			this.Password = new JPasswordField("Contraseña");
 			
 			//personalizacion
 			this.Email.setFont(this.agusFont);
@@ -201,6 +207,7 @@ public class logInPage extends JSplitPane implements Vista{
 			this.Password.setForeground(new Color(0xAB886D));
 			this.Password.setBackground(new Color(0xD6C0B3));
 			this.Password.setPreferredSize(new Dimension(150, 20));
+			this.Password.setEchoChar('*');
 			
 			this.nEmail.setFont(new Font("Tahoma",Font.BOLD,12));
 			this.nPasword.setFont(new Font("Tahoma",Font.BOLD,12));
@@ -351,6 +358,10 @@ public class logInPage extends JSplitPane implements Vista{
 	
 	//Clase panel izquierdo
 	private class panelIzquierdo extends JPanel{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private String imageName = "Imagenes/fondo1.png";
 		private Image imagen;
 		
