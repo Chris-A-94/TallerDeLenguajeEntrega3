@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import entregable1.Coin;
 
@@ -22,7 +23,7 @@ public class TarjetaVista extends JPanel {
 	private JLabel title;
 	private JLabel precio;
 	
-	private JTextField textContent;
+	private JTextArea textContent;
 	
 	public TarjetaVista(Coin moneda) {
 		if (moneda == null) {
@@ -37,12 +38,16 @@ public class TarjetaVista extends JPanel {
 		title = new JLabel();
 		title.setText(moneda.getNombre());
 		title.setBackground(null);
+		title.setFont(new Font("Arial", Font.BOLD, 40));
+		title.setHorizontalAlignment(title.CENTER);
 		this.add(title);
 		//Precio
-		precio = new JLabel();
-		precio.setText(moneda.getPrecio().toString());
-		precio.setBackground(Color.RED);
-		this.add(precio);
+		textContent = new JTextArea();
+		textContent.setText("despresio: " + moneda.getPrecio().toString() + " nose: 123");
+		textContent.setBackground(null);
+		textContent.setFont(new Font("Arial", Font.PLAIN, 20));
+		textContent.setBackground(Color.PINK);
+		this.add(textContent);
 		
 		// Cargar imagen de una URL
 		

@@ -6,12 +6,16 @@ import entregable1.*;
 import modelos.MonitoreoCoin;
 import controladores.PrototipoControlador;
 import controladores.logInController;
+import daos.CoinDAO;
 import vistas.logInPage;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 public class Programa {
 	private static Coin crearCripto(String sigla, Sistema sistema) {
 		Coin return_coin = null;
@@ -308,30 +312,27 @@ public class Programa {
 		System.setProperty("sun.java2d.uiScale", "1");
 		
 		Sistema sistema = new Sistema();
-		
         
-//		List<String> listaMonedas = new LinkedList<String>();
-//		listaMonedas.add("ethereum");
-//		listaMonedas.add("bitcoin");
-//		listaMonedas.add("dogecoin");
-//		listaMonedas.add("apu-s-club");
-//		MonitoreoCoin.setListaIDMonedas(listaMonedas);
+		List<String> listaMonedas = new LinkedList<String>();
+		listaMonedas.add("ethereum");
+		listaMonedas.add("bitcoin");
+		listaMonedas.add("dogecoin");
+		listaMonedas.add("apu-s-club");
+		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		
-//		try {
-//			MonitoreoCoin.updateMonedas();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			MonitoreoCoin.updateMonedas();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-//		PrototipoControlador prototipo = new PrototipoControlador(sistema);
-		
-		
-		
+		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("123@gmail.com"), MonitoreoCoin.getListaMonedas());
 
 		/*
 		final int _EXIT = 9;
