@@ -53,9 +53,8 @@ public class logInController {
 				    @Override
 				    public void actionPerformed(ActionEvent e) {
 				    	frontEnd.callExit();
-				    	//RegistroVista registroVista = new RegistroVista();
-						RegistroControlador registroControlador = new RegistroControlador(sistema);
-					    					    
+				    	RegistroControlador registroControlador = new RegistroControlador(sistema);
+						
 				    };		
 			});
 		//boton Log In

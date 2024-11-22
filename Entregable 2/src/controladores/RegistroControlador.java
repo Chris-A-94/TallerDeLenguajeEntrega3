@@ -24,6 +24,7 @@ import entregable1.Usuario;
 import modelos.MonitoreoCoin;
 import vistas.MenuVista;
 import vistas.RegistroVista;
+import vistas.logInPage;
 
 public class RegistroControlador {
 	private RegistroVista vista;
@@ -33,8 +34,10 @@ public class RegistroControlador {
 	public RegistroControlador(Sistema sistema) {
 		this.vista = new RegistroVista();
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
+		this.vista.devolverAtras().addMouseListener(new MouseControlBack());
 		this.sistema = sistema;
 	}
+	
 	private boolean verificarCampos() {
 		if ((this.validarMail(vista.getMail()) == 0) && vista.termsAcepted() && validarContraseña() && allField())
 			return true;
@@ -139,46 +142,44 @@ public class RegistroControlador {
 		}
 		
 	}
-	class FocusControlTexts implements FocusListener{
-		private JTextComponent tf;
-		private String firstValue;
-		public FocusControlTexts(JTextComponent tf) {
-			this.tf = tf;
-			firstValue = tf.getText();
-		}
-		
-		@Override
-		public void focusGained(FocusEvent e) {
-			Color color = tf.getForeground();
-			tf.setBackground(new Color(0xf5ded0));
-			if (color.equals(new Color(0xAB886D))) {	
-				this.tf.setText(null);
-				this.tf.setForeground(new Color(0x291e17));
-			}
+	class MouseControlBack implements MouseListener{
+		public MouseControlBack() {
 			
-			return;
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			vista.dispose();
+			logInPage lip = new logInPage();
+			logInController lic = new logInController(lip,sistema);
 		}
 
 		@Override
-		public void focusLost(FocusEvent e) {
-			tf.setBackground(new Color(0xD6C0B3));
-			if (tf.getText().equals("")) {
-				tf.setText(firstValue);
-				tf.setForeground(new Color(0xAB886D));
-			if ((firstValue.equals("buenas@gmail.com"))) {
-				vista.errorMail();
-				
-			}	
-			}
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 		
-	}
-	
-	/*
-	 * Controlador del botón de salida.
-	 */
 	
 	}
+}
 
 	
 

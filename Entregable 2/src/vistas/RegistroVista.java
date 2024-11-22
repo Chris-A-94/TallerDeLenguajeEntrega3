@@ -8,9 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.text.JTextComponent;
-
-import controladores.RegistroControlador;
 import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 import entregable1.Usuario;
@@ -34,8 +33,7 @@ public class RegistroVista extends JFrame implements Vista{
 	
 	private JButton botonAceptar = new JButton("Aceptar");
 	private JButton botonSalir 	 = new JButton("X");
-	private JButton botonAtras 	 = new JButton("Atrás");
-
+	private BasicArrowButton prevPageButton = new BasicArrowButton(BasicArrowButton.WEST);
 	private JCheckBox terminos 	= new JCheckBox("Acepto los términos y condiciones");
 	
 	public RegistroVista() {
@@ -59,8 +57,7 @@ public class RegistroVista extends JFrame implements Vista{
 		ControladorTextField ct = new ControladorTextField(this);
 		
 		// LayoutManager	
-		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));
-				
+		this.setShape(new RoundRectangle2D.Double(0, 0, dimX, dimY, 25, 25));	
 		//MOVER VENTANA (CODIGOD E FRAN)
 		WindowBarPanel wbp = new WindowBarPanel(this,fondoFrame,dimX,dimY,false);		
 		//CONFIGURACIÓN DE IMÁGENES
@@ -152,7 +149,12 @@ public class RegistroVista extends JFrame implements Vista{
 		botonSalir.setFont(new Font("Arial", Font.BOLD,20));
 		botonSalir.setFocusPainted(false);
 		botonSalir.setForeground(textColor);
-	
+		
+		prevPageButton.setBounds(10, 10, 30, 30);
+		prevPageButton.setBorder(null);
+		prevPageButton.setBackground(null);
+		prevPageButton.setForeground(textColor);
+		
 		botonAceptar.setBounds(posIniX,posIniY+7*cons, boxWidth, boxHeight+10);
 		botonAceptar.setBorder(null);
 		botonAceptar.setBackground(new Color(0xAB886D));
@@ -177,6 +179,7 @@ public class RegistroVista extends JFrame implements Vista{
 		this.add(this.jlDNI);
 		this.add(botonSalir);
 		this.add(botonAceptar);
+		this.add(prevPageButton);
 		this.add(terminos);
 		this.add(wbp);
 		
@@ -202,10 +205,6 @@ public class RegistroVista extends JFrame implements Vista{
 	public JButton getBotonAceptar() {
 		return botonAceptar;
 	}
-	public JButton getBotonAtras() {
-		return botonAtras;
-	}
-	
 
 	
 	public List<JTextComponent> devolverCampos(){
@@ -258,6 +257,9 @@ public class RegistroVista extends JFrame implements Vista{
 	public JButton getExit() {
 		
 		return botonSalir;
+	}
+	public BasicArrowButton devolverAtras() {
+		return this.prevPageButton;
 	}
 
 	

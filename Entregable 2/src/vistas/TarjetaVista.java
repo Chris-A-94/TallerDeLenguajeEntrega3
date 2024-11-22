@@ -8,13 +8,16 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 import entregable1.Coin;
 
@@ -32,26 +35,37 @@ public class TarjetaVista extends JPanel {
 			
 			return;
 		}
-		
+		//colores
+		Color fondoContenido = new Color(0xD6C0B3);
+		Color colorTitulo 	 = new Color(0x493628);
+		Color textColor 		= new Color(0xD6C0B3);
 		//Config JPanel
-		this.setLayout(new GridLayout(5,1));
+		this.setLayout(new GridLayout(3,1));
+		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
+		
 		// Título
 		title = new JLabel();
-		title.setText(moneda.getNombre());
-		title.setBackground(null);
-
+		title.setText(" "+moneda.getNombre()+" ");
+		title.setOpaque(true);
+		title.setBackground(colorTitulo);
+		title.setForeground(textColor);
 		title.setFont(new Font("Arial", Font.BOLD, 40));
 		title.setHorizontalAlignment(title.CENTER);
 		this.add(title);
 		//Precio
 		textContent = new JTextArea();
-		textContent.setText(" precio: " + moneda.getPrecio().toString() + "\n stock: " + moneda.getStock());
+		DecimalFormat numberFormat = new DecimalFormat("#.00");
+		textContent.setText("Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\nStock: " + numberFormat.format(moneda.getStock()).toString());
 		textContent.setBackground(null);
 		textContent.setFont(new Font("Arial", Font.PLAIN, 20));
-		textContent.setBackground(Color.PINK);
+		textContent.setBackground(fondoContenido);
 		this.add(textContent);
 		//Comprar
 		comprar = new JButton("COMPRAR");
+		comprar.setBackground(new Color(0xAB886D));
+		comprar.setFont(new Font("Arial", Font.PLAIN,20));
+		comprar.setFocusPainted(false);
+		
 		this.add(comprar);
 		// Cargar imagen de una URL
 		
