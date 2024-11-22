@@ -13,6 +13,7 @@ public class Sistema {
 	public void setMonedas(List<Coin> monedas) {
 		this.monedas = monedas;
 	}
+	
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
 	private List<Saldo> saldosUsuarios;

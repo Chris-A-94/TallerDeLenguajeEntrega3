@@ -20,10 +20,6 @@ public class PrototipoControlador {
 	private MenuVista myMenu;
 	
 	public PrototipoControlador(Sistema sistema, Usuario user) {
-		this(sistema, user, sistema.getMonedas());
-	}
-	
-	public PrototipoControlador(Sistema sistema, Usuario user, List<Coin> listaMonedas) {
 		myMenu = new MenuVista();
 		
 		/*
@@ -87,7 +83,7 @@ public class PrototipoControlador {
 		//System.out.println(sistema.getMonedas().get(0).toString());
 		PanelMonedasVista panelMonedas = new PanelMonedasVista();
 		
-		for (Coin c : listaMonedas) {
+		for (Coin c : sistema.getMonedas()) {
 			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))
 				panelMonedas.agregarMoneda(new TarjetaVista(c));
 		}
