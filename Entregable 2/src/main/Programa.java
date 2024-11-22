@@ -326,13 +326,15 @@ public class Programa {
 			e.printStackTrace();
 		}
 		
+		sistema.setMonedas(MonitoreoCoin.getListaMonedas());
+		
 		
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("123@gmail.com"), MonitoreoCoin.getListaMonedas());
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("123@gmail.com"));
 
 		/*
 		final int _EXIT = 9;

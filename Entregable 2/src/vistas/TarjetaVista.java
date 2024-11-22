@@ -43,7 +43,7 @@ public class TarjetaVista extends JPanel {
 		this.add(title);
 		//Precio
 		textContent = new JTextArea();
-		textContent.setText("despresio: " + moneda.getPrecio().toString() + " nose: 123");
+		textContent.setText(" precio: " + moneda.getPrecio().toString() + "\n stock: " + moneda.getStock());
 		textContent.setBackground(null);
 		textContent.setFont(new Font("Arial", Font.PLAIN, 20));
 		textContent.setBackground(Color.PINK);
