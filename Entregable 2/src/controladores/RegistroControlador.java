@@ -1,29 +1,15 @@
 package controladores;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.List;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
 import daos.UsuarioDAO;
 import entregable1.Sistema;
 import entregable1.Usuario;
-import modelos.MonitoreoCoin;
-import vistas.MenuVista;
 import vistas.RegistroVista;
 import vistas.logInPage;
 
@@ -106,6 +92,7 @@ public class RegistroControlador {
 				if (userDAO.guardar(user)) {
 					System.out.println("SE GUARDO");
 					vista.dispose();
+					@SuppressWarnings("unused")
 					PrototipoControlador pc = new PrototipoControlador(sistema,user);
 				}
 				else
@@ -127,6 +114,7 @@ public class RegistroControlador {
 		public void mouseClicked(MouseEvent e) {
 			vista.dispose();
 			logInPage lip = new logInPage();
+			@SuppressWarnings("unused")
 			logInController lic = new logInController(lip,sistema);
 		}
 	

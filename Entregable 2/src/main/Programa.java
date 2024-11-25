@@ -330,12 +330,12 @@ public class Programa {
 		sistema.setMonedas(MonitoreoCoin.getListaMonedas());
 	
 		
-		logInPage log = new logInPage();
-		logInController logs = new logInController(log,sistema);
+//		logInPage log = new logInPage();
+//		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
+		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
 
 		/*
 		final int _EXIT = 9;
