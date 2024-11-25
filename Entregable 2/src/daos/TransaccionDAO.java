@@ -95,4 +95,24 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 	public void remover(String s) {
 		// No fue implementado.
 	}
+	
+	public List<String> devolverTablaString(){
+		List<String> list = new LinkedList<String>();
+		
+			try {
+				Statement sent = con.createStatement();	
+				ResultSet resul = sent.executeQuery("SELECT * FROM TRANSACCION");
+				
+				while (resul.next() == true) {
+					list.add(resul.getString("TEXTO"));
+				}
+				
+				resul.close();
+				sent.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		return list;
+	}
 }

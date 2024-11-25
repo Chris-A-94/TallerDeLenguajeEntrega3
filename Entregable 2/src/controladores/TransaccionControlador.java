@@ -14,7 +14,6 @@ public class TransaccionControlador {
 	public TransaccionControlador(List<Transaccion> listTrans) {
 		tp = new TransaccionPanel();
 		this.listTrans = listTrans;
-		System.out.println("SADADSD");
 		for (Transaccion t : listTrans) {
 			
 			tp.agregarTransaccion(t.toString());
