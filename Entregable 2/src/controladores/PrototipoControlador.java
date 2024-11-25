@@ -92,9 +92,7 @@ public class PrototipoControlador {
 				tarjetaVistaControladorCompra aux2 = new tarjetaVistaControladorCompra(aux,this.user);
 				panelMonedas.agregarMoneda(aux);
 			}
-				
 		}
-		
 		
 		myMenu.agregarPanel("Monedas 2 (mejor)",panelMonedas);
 	}

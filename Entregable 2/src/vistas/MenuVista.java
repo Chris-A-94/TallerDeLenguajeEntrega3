@@ -255,8 +255,7 @@ public class MenuVista extends JFrame implements Vista {
 				g2.drawString(this.getText(), dX, dY);
 			}
 		}
-	}
-	
+	}	
 	
 	@Override
 	public List<JLabel> devolverEtiquetas() {

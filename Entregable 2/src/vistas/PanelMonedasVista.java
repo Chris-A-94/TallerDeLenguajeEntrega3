@@ -15,7 +15,7 @@ public class PanelMonedasVista extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public PanelMonedasVista() {
-		this.setPreferredSize(new Dimension(1000,400));
+		this.setPreferredSize(new Dimension(1000,4000));
         this.setLayout(new FlowLayout(3,40,40));
         this.setBackground(null);
 	}

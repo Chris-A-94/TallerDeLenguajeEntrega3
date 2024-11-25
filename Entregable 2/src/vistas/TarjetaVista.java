@@ -50,11 +50,13 @@ public class TarjetaVista extends JPanel {
 		this.add(title);
 		//Precio
 		textContent = new JTextArea();
-		DecimalFormat numberFormat = new DecimalFormat("#.00");
-		textContent.setText("Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\nStock: " + numberFormat.format(moneda.getStock()).toString());
+		DecimalFormat numberFormat = new DecimalFormat("#.000000");
+		textContent.setText(" Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\n Stock: " + numberFormat.format(moneda.getStock()).toString());
 		textContent.setBackground(null);
-		textContent.setFont(new Font("Arial", Font.PLAIN, 20));
+		textContent.setFont(new Font("Times New Roman", Font.ITALIC, 25));
 		textContent.setBackground(fondoContenido);
+		textContent.setEditable(false);
+		textContent.setHighlighter(null);
 		this.add(textContent);
 		//Comprar
 		comprar = new JButton("COMPRAR");

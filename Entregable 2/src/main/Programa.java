@@ -318,7 +318,7 @@ public class Programa {
 		listaMonedas.add("bitcoin");
 		listaMonedas.add("dogecoin");
 		listaMonedas.add("apu-s-club");
-/*
+
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		
 		try {
@@ -328,7 +328,7 @@ public class Programa {
 		}
 		
 		sistema.setMonedas(MonitoreoCoin.getListaMonedas());
-*/	
+	
 		
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log,sistema);
