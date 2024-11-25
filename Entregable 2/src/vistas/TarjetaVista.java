@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import entregable1.Coin;
 
@@ -24,8 +25,8 @@ public class TarjetaVista extends JPanel {
 	
 	private JLabel title;
 	private JButton comprar;
+	private JButton swapear;
 	private JTextArea textContent;
-	
 	public TarjetaVista(Coin moneda) {
 		if (moneda == null) {
 			
@@ -37,7 +38,7 @@ public class TarjetaVista extends JPanel {
 		Color textColor 		= new Color(0xD6C0B3);
 		//Config JPanel
 		// LayoutManager	
-		this.setLayout(new GridLayout(3,1));
+		this.setLayout(new GridLayout(4,1));
 		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
 		// Título
 		title = new JLabel();
@@ -46,7 +47,7 @@ public class TarjetaVista extends JPanel {
 		title.setBackground(colorTitulo);
 		title.setForeground(textColor);
 		title.setFont(new Font("Arial", Font.BOLD, 40));
-		title.setHorizontalAlignment(title.CENTER);
+		title.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(title);
 		//Precio
 		textContent = new JTextArea();
@@ -61,8 +62,14 @@ public class TarjetaVista extends JPanel {
 		comprar.setBackground(new Color(0xAB886D));
 		comprar.setFont(new Font("Arial", Font.PLAIN,20));
 		comprar.setFocusPainted(false);
-			
+		//Swap	
+		swapear = new JButton("SWAP");
+		swapear.setBackground(new Color(0xAB886D));
+		swapear.setFont(new Font("Arial", Font.PLAIN,20));
+		swapear.setFocusPainted(false);
+
 		this.add(comprar);
+		this.add(swapear);
 		// Cargar imagen de una URL
 		
 		URL url;
