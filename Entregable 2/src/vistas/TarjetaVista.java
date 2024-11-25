@@ -92,4 +92,9 @@ public class TarjetaVista extends JPanel {
 		title.setIcon(imageIcon);	
 		
 	}
+	
+	public JButton getBotonComprar()
+	{
+		return this.comprar;
+	}
 }
