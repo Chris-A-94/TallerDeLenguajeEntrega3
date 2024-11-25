@@ -258,8 +258,6 @@ public class logInPage extends JSplitPane implements Vista{
 			
 			this.signin.setFont(new Font("Tahoma",Font.BOLD,14));
 			this.signin.setFocusPainted(false);
-			//this.signin.setBorder(new RoundedBorder(15)); para hacerlo redondeado, pero el color se rompe
-			//this.signin.setContentAreaFilled(false);
 			this.signin.setBackground(botColor);
 			
 			this.forgotPass.setPreferredSize(new Dimension(200, 25));

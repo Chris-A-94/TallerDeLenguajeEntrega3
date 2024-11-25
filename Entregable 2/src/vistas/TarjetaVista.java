@@ -1,6 +1,5 @@
 package vistas;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -17,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.Border;
 
 import entregable1.Coin;
 
@@ -40,9 +38,9 @@ public class TarjetaVista extends JPanel {
 		Color colorTitulo 	 = new Color(0x493628);
 		Color textColor 		= new Color(0xD6C0B3);
 		//Config JPanel
+		// LayoutManager	
 		this.setLayout(new GridLayout(3,1));
 		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
-		
 		// Título
 		title = new JLabel();
 		title.setText(" "+moneda.getNombre()+" ");
@@ -65,7 +63,7 @@ public class TarjetaVista extends JPanel {
 		comprar.setBackground(new Color(0xAB886D));
 		comprar.setFont(new Font("Arial", Font.PLAIN,20));
 		comprar.setFocusPainted(false);
-		
+			
 		this.add(comprar);
 		// Cargar imagen de una URL
 		
@@ -92,4 +90,5 @@ public class TarjetaVista extends JPanel {
 		title.setIcon(imageIcon);	
 		
 	}
+
 }
