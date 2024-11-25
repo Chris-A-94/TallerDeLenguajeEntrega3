@@ -22,6 +22,12 @@ public class Billetera {
 	private String CVU;
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
+	
+	public void nuevaCompra()
+	{
+		System.out.println("Dolares: "+this.arregloSaldo);
+	}
+	
 	public List<Transaccion> getTransacciones() {
 		return Transacciones;
 	}
