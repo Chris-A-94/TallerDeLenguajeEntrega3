@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
-public class WindowBarPanel extends JPanel {
+class WindowBarPanel extends JPanel {
 	public class MoveListener implements MouseListener, MouseMotionListener {
         
         private Point pressedPoint;

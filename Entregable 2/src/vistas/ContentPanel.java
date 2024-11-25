@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class ContentPanel extends JPanel {
+class ContentPanel extends JPanel {
 	private JPanel header, leftBorder, content;
 	private JLabel title;
 	
