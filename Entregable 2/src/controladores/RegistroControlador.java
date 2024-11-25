@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -94,7 +95,7 @@ public class RegistroControlador {
 		return aux;
 	}
 	
-	class MouseControlAceptar implements MouseListener{
+	private class MouseControlAceptar extends MouseAdapter{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -113,36 +114,12 @@ public class RegistroControlador {
 					
 				}
 			}
-			
-			
+						
 		}
 
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
 		
 	}
-	class MouseControlBack implements MouseListener{
+	private class MouseControlBack extends MouseAdapter{
 		public MouseControlBack() {
 			
 		}
@@ -152,31 +129,6 @@ public class RegistroControlador {
 			logInPage lip = new logInPage();
 			logInController lic = new logInController(lip,sistema);
 		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
 	
 	}
 }

@@ -18,9 +18,11 @@ import vistas.*;
  */
 public class PrototipoControlador {
 	private MenuVista myMenu;
+	private Usuario user;
 	
 	public PrototipoControlador(Sistema sistema, Usuario user) {
 		myMenu = new MenuVista();
+		this.user = user;
 		
 		/*
 		 *  ¡¡¡TEMPORAL!!!
@@ -85,7 +87,12 @@ public class PrototipoControlador {
 		
 		for (Coin c : sistema.getMonedas()) {
 			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))
-				panelMonedas.agregarMoneda(new TarjetaVista(c));
+			{
+				TarjetaVista aux = new TarjetaVista(c);
+				tarjetaVistaControladorCompra aux2 = new tarjetaVistaControladorCompra(aux,this.user);
+				panelMonedas.agregarMoneda(aux);
+			}
+				
 		}
 		
 		

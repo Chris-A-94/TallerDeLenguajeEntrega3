@@ -103,6 +103,7 @@ public class logInController {
 		if(!this.userExist(this.Email))
 		{
 			System.err.println("User inexistente");
+			this.frontEnd.errorUsuario();
 		}
 		else
 		{
@@ -112,7 +113,13 @@ public class logInController {
 				PrototipoControlador pc = new PrototipoControlador(sistema,sistema.getUsuario(Email));
 			}
 			else
+			{
+				this.frontEnd.errorPassword();
 				System.out.println("Contraseña Incorrecta");
+			}
+			
 		}
 	}
+	
+	
 }
