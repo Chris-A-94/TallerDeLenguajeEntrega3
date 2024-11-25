@@ -23,11 +23,9 @@ import entregable1.Coin;
 
 @SuppressWarnings("serial")
 public class TarjetaVista extends JPanel {
-	Coin moneda;
 	
 	private JLabel title;
 	private JButton comprar;
-	
 	private JTextArea textContent;
 	
 	public TarjetaVista(Coin moneda) {

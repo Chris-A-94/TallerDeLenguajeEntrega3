@@ -1,5 +1,6 @@
 package vistas;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.swing.text.JTextComponent;
@@ -122,6 +123,7 @@ public class logInPage extends JSplitPane implements Vista{
 		
 		public panelDerecho()
 		{
+			
 			//a llenar
 			this.setLayout(new GridBagLayout()); 
 			this.agusFont = new Font("Tahoma",Font.PLAIN,14);
@@ -488,5 +490,11 @@ public class logInPage extends JSplitPane implements Vista{
 	@Override
 	public JButton getExit() {
 		return this.botonSalir;
+	}
+	public void errorUsuario() {
+		this.rightPanel.Email.setBorder(new LineBorder(Color.RED,2));
+	}
+	public void errorPassword() {
+		this.rightPanel.Password.setBorder(new LineBorder(Color.RED,2));
 	}
 }
