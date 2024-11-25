@@ -2,11 +2,15 @@ package controladores;
 
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.text.JTextComponent;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import daos.UsuarioDAO;
 import decoradores.ControladorTextField;
@@ -62,16 +66,28 @@ public class logInController {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	actionLogIn();
-		    };		
-	});
+		    };
+		});
 		//boton olvide password
-				botones.get(2).addActionListener(new ActionListener() {
-				    @Override
-				    public void actionPerformed(ActionEvent e) {
-				        System.out.println("Pos que mal, porque esto capaz no lo implemento");
-				    };		
-			});
-
+		botones.get(2).addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        System.out.println("Pos que mal, porque esto capaz no lo implemento");
+		    };		
+		});
+		
+		// Acción 'ENTER'
+		Action action = new AbstractAction()
+		{
+		    @Override
+		    public void actionPerformed(ActionEvent e)
+		    {
+		        actionLogIn();
+		    }
+		};
+		
+		this.frontEnd.getEmailField().addActionListener(action);
+		this.frontEnd.getPasswordField().addActionListener(action);
 	}
 	
 	private void actualizarData()

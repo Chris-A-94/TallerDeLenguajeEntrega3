@@ -7,6 +7,9 @@ import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.net.URL;
@@ -24,8 +27,8 @@ public class logInPage extends JSplitPane implements Vista{
 	//constantes
 	Color camposTextColor = new Color(0xD6C0B3), textColor = new Color(0xAB886D);
 	//instancia
-	private JPanel leftPanel;
-	private JPanel rightPanel;
+	private panelIzquierdo leftPanel;
+	private panelDerecho rightPanel;
 	BasicSplitPaneDivider divider;
 	private JButton botonSalir;
 	private JFrame ventana;
@@ -324,6 +327,12 @@ public class logInPage extends JSplitPane implements Vista{
 			return null;
 		}
 		
+		public JTextField getEmailField() {
+			return this.Email;
+		}
+		public JPasswordField getPasswordField() {
+			return this.Password;
+		}
 		
 		
 		/*de stackOverflow
@@ -463,6 +472,13 @@ public class logInPage extends JSplitPane implements Vista{
 	@Override
 	public List<JTextComponent> devolverCamposTexto() {
 		return null;
+	}
+	
+	public JTextField getEmailField() {
+		return this.rightPanel.getEmailField();
+	}
+	public JTextField getPasswordField() {
+		return this.rightPanel.getPasswordField();
 	}
 
 
