@@ -43,7 +43,7 @@ public class GenerarActivos extends JFrame{
 		List<String> monedas = new LinkedList<String>();
 		for(Coin moneda: nombres.devolverTabla())
 		{
-			monedas.add(moneda.getNombre());
+			monedas.add(moneda.getSigla());
 		}
 		monedas.add("Todo");
 		this.opciones = new JComboBox<>(monedas.toArray(new String[0]));
