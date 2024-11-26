@@ -92,6 +92,11 @@ public class MenuVista extends JFrame implements Vista {
 		this.mainPane.add(newPanel);
 	}
 	
+	public JButton getGenerador()
+	{
+		return this.lateralPanel.generador;
+	}
+	
 	private class LateralPanel extends JPanel {
 		private static final long serialVersionUID = 332812813329689766L;
 		private LinkedList<RedButton> buttons = new LinkedList<RedButton>();
@@ -110,9 +115,9 @@ public class MenuVista extends JFrame implements Vista {
 			this.generador.setBackground(Color.GREEN);
 			this.generador.setBorder(null);
 			this.generador.setText("$$$+");
-			this.setFocusable(false);
+			this.setFocusable(false);			
 			this.add(generador);
-		};
+		};		
 		
 		public void newButton(String msg, ContentPanel panel) {
 			RedButton button = new RedButton(panel);

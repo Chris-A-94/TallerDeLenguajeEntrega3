@@ -312,7 +312,7 @@ public class Programa {
 		System.setProperty("sun.java2d.uiScale", "1");
 		
 		Sistema sistema = new Sistema();
-        
+		/*  
 		List<String> listaMonedas = new LinkedList<String>();
 		listaMonedas.add("ethereum");
 		listaMonedas.add("bitcoin");
@@ -327,15 +327,15 @@ public class Programa {
 			e.printStackTrace();
 		}
 		
-		sistema.setMonedas(MonitoreoCoin.getListaMonedas());
+		sistema.setMonedas(MonitoreoCoin.getListaMonedas());*/
 	
 		
-//		logInPage log = new logInPage();
-//		logInController logs = new logInController(log,sistema);
+		logInPage log = new logInPage();
+		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
 
 		/*
 		final int _EXIT = 9;

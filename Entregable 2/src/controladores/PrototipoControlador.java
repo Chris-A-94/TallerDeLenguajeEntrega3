@@ -22,6 +22,7 @@ public class PrototipoControlador {
 	
 	public PrototipoControlador(Sistema sistema, Usuario user) {
 		myMenu = new MenuVista();
+		GenActivosControl activos = new GenActivosControl(myMenu.getGenerador(),user);
 		this.user = user;
 		
 		/*
