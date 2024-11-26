@@ -125,6 +125,36 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 		}
 
 	}
+	
+	//Toma por DNI, pero si hay mas de un DNI devuelve el primero que encuentra
+	public Usuario getUsuario(String DNI)
+	{
+		Usuario auxUser = null;
+		try 
+		{
+			//Statement sent = con.createStatement();
+			PreparedStatement sent = con.prepareStatement("SELECT * FROM USUARIOS WHERE DNI = ?");
+			sent.setString(1,DNI);
+			ResultSet resul = sent.executeQuery();	
+			
+			if (resul.next()) {
+	            auxUser = new Usuario(
+	                resul.getString("DNI"),
+	                resul.getString("NOMBRE"),
+	                resul.getString("APELLIDO"),
+	                resul.getString("PAIS"),
+	                resul.getString("EMAIL"),
+	                resul.getString("CONTRASEÑA")
+	            );
+	        }
+	        sent.close();			
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e.getMessage());			
+		}
+		return auxUser;
+	}
 
 	@Override
 	public void remover(String mail) {

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import daos.UsuarioDAO;
 import entregable1.Usuario;
 
 public class GenActivosControl {
@@ -25,7 +26,9 @@ public class GenActivosControl {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ola");				
+				UsuarioDAO myUser = new UsuarioDAO();
+				Usuario userMem = myUser.getUsuario(user.getDNI());
+				System.out.println("ola "+userMem.getEmail());				
 			}
 			
 		});
