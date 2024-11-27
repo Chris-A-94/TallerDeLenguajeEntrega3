@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import entregable1.Coin;
 import entregable1.Saldo;
@@ -46,6 +49,8 @@ public class MisActivosVista extends JPanel {
 		for (Saldo s : user.getBilletera().getArregloSaldo()) {
 			this.agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
 		}
+		
+		inicializarTimer();
 	}
 	
 	private void agregarActivo(Coin c, Saldo s) {
@@ -53,6 +58,27 @@ public class MisActivosVista extends JPanel {
 		
 		listaActivos.add(activo);
 		this.add(activo);
+	}
+	
+	private void inicializarTimer() {
+			final Timer timer = new Timer(5000, null);
+			
+			ActionListener al=new ActionListener() {
+			    public void actionPerformed(ActionEvent ae) {
+			    	System.out.println("Actualizar");
+			        if (listaActivos.equals(null)) {
+			        	timer.stop();
+			        }
+			        else
+			        	for (Activo a : listaActivos) {
+			        		a.actualizarSaldo();
+			        	}
+			    }
+			};
+			
+			timer.addActionListener(al);
+			
+			timer.start();
 	}
 	
 	private class Activo extends JButton {
@@ -69,6 +95,19 @@ public class MisActivosVista extends JPanel {
 		private Coin moneda;
 		private Saldo saldo;
 		
+		public Coin getMoneda() {
+			return moneda;
+		}
+		public void setMoneda(Coin moneda) {
+			this.moneda = moneda;
+		}
+		public Saldo getSaldo() {
+			return saldo;
+		}
+		public void setSaldo(Saldo saldo) {
+			this.saldo = saldo;
+		}
+		
 		public Activo(Coin c, Saldo s) {
 			super();
 			
@@ -80,7 +119,7 @@ public class MisActivosVista extends JPanel {
 			text = String.format("        %s %s : %f US$", c.getNombre(), c.getSigla(), s.getCantMonedas() * c.getPrecio());
 			
 			this.setFont(new Font("Nimbus Roman", Font.PLAIN, 20));
-			this.setText(text);
+//			this.setText(text);
 			
 			this.boxColor = this.defaultColor;
 			
@@ -117,6 +156,15 @@ public class MisActivosVista extends JPanel {
 			this.add(label);
 		}
 		
+		private void actualizarSaldo() {
+			text = String.format("        %s %s : %f US$", moneda.getNombre(), moneda.getSigla(), saldo.getCantMonedas() * moneda.getPrecio());
+			this.repaint();
+		}
+		
+		@Override
+		public void repaint() {
+			super.repaint();
+		}
 		
 		@Override
 		public void paintComponent(Graphics g) {
@@ -149,7 +197,7 @@ public class MisActivosVista extends JPanel {
 			
 			g2.setFont(font);
 			g2.setPaint(new Color(0x3d3d3d));
-			g2.drawString(this.getText(), 10, dY);
+			g2.drawString(text, 10, dY);
 		}
 	}
 }
