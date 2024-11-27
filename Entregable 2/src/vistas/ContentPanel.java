@@ -48,10 +48,10 @@ class ContentPanel extends JPanel {
 		this.disablePanel();
 	}
 	public int getContentX() {
-		return this.content.getWidth();
+		return this.content.getX();
 	}
 	public int getContentY() {
-		return this.content.getHeight();
+		return this.content.getY();
 	}
 	public int getContentWidth() {
 		return this.content.getWidth();

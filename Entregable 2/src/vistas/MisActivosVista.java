@@ -32,8 +32,14 @@ import entregable1.Usuario;
 public class MisActivosVista extends JPanel {
 	private List<Activo> listaActivos;
 	
+	private Sistema sistema;
+	private Usuario user;
+	
 	public MisActivosVista(int width, Sistema sistema, Usuario user) {
 		super();
+		
+		this.sistema = sistema;
+		this.user = user;
 		
 		// LayoutManager
 		this.setLayout(null);
@@ -49,15 +55,20 @@ public class MisActivosVista extends JPanel {
 		for (Saldo s : user.getBilletera().getArregloSaldo()) {
 			this.agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
 		}
-		
 		inicializarTimer();
 	}
 	
 	private void agregarActivo(Coin c, Saldo s) {
+		// Instanciar nuevo 'Botón'
 		Activo activo = new Activo(c, s);
 		
+		// Agregar al panel y a la lista
 		listaActivos.add(activo);
 		this.add(activo);
+		
+		// Actualiza cambios dinámicos
+		this.validate();
+		this.repaint();
 	}
 	
 	private void inicializarTimer() {
@@ -65,14 +76,26 @@ public class MisActivosVista extends JPanel {
 			
 			ActionListener al=new ActionListener() {
 			    public void actionPerformed(ActionEvent ae) {
-			    	System.out.println("Actualizar");
 			        if (listaActivos.equals(null)) {
 			        	timer.stop();
 			        }
-			        else
+			        else {
+			        	// Actualizar los activos ya presentes
 			        	for (Activo a : listaActivos) {
 			        		a.actualizarSaldo();
 			        	}
+			        	// Agregar nuevos activos
+			        	for (Saldo s : user.getBilletera().getArregloSaldo()) {
+			        		int i;
+			        		for (i = 0; i < listaActivos.size(); i++) {
+			        			if (listaActivos.get(i).getSaldo().equals(s))
+			        				break;
+			        		}
+			        		if (i == listaActivos.size()) {
+			        			agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
+			        		}
+			        	}
+			        }
 			    }
 			};
 			
