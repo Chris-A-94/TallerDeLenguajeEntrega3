@@ -3,13 +3,21 @@ package vistas;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
+
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.Animator.Direction;
+import org.jdesktop.animation.timing.Animator.RepeatBehavior;
+import org.jdesktop.animation.timing.TimingTarget;
 
 import decoradores.ExitButton;
 
@@ -68,6 +76,35 @@ public class MenuVista extends JFrame implements Vista {
 		}
 		
 		this.setVisible(true);
+		
+		/*
+		 * Nuevo:
+		 */
+		
+		TransitionPanel transitionPanel = new TransitionPanel();
+		transitionPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				transitionPanel.show();
+				lateralPanel.show();
+			}
+		});
+		
+		this.mainPane.add(transitionPanel, JLayeredPane.POPUP_LAYER);
+		
+		JButton button = new JButton();
+		button.setText("????");
+		button.setBounds(140, 40, 50, 25);
+		
+		button.addActionListener(e -> {
+			transitionPanel.show();
+			lateralPanel.show();
+		});
+		
+		this.mainPane.add(button, JLayeredPane.DRAG_LAYER);
+		
+		transitionPanel.show();
+		lateralPanel.show();
 	}
 	
 	public void agregarPanel(String title, JPanel componente) {
@@ -92,20 +129,129 @@ public class MenuVista extends JFrame implements Vista {
 		this.mainPane.add(newPanel);
 	}
 	
+	public int getPreferredContentWidth() {
+		return this.contentPanel.getContentWidth();
+	}
+	
 	public JButton getGenerador()
 	{
 		return this.lateralPanel.generador;
 	}
 	
-	private class LateralPanel extends JPanel {
+	private class TransitionPanel extends JPanel implements TimingTarget {
+		int maxAlphaValue = 40;
+		int alpha = maxAlphaValue;
+		Animator animator;
+		int animationDuration = 150;
+		
+		boolean status = true;
+		
+		MouseListener ma;
+		
+		public TransitionPanel() {
+			animator = new Animator(animationDuration, 1, RepeatBehavior.REVERSE, this);
+			animator.setResolution(5);
+			
+			animator.setDeceleration(1.0f);
+			
+			this.setBounds(0, 0, 10000, 1000);
+			this.setOpaque(false);
+		}
+		
+		@Override
+		public void addMouseListener(MouseListener ml) {
+			super.addMouseListener(ml);
+			ma = ml;
+		}
+		
+		public void show() {
+			if (!animator.isRunning()) {
+				reverseAnimator();
+				animator.start();
+			}
+		}
+		
+		public void reverseAnimator() {
+			if (status == false) {
+				animator.setStartFraction(0.0f);
+				animator.setStartDirection(Direction.FORWARD);
+				status = true;
+			} else {
+				animator.setStartFraction(1.0f);
+				animator.setStartDirection(Direction.BACKWARD);
+				status = false;
+			}
+		}
+		
+		@Override
+		public void repaint() {
+			super.repaint();
+		}
+		
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent (g);
+			Graphics2D g2 = (Graphics2D)g;
+			
+			// Render Hints
+			{
+				g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+	            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+	            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+	            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+			}
+            
+			// Dibujar la caja de fondo
+			Color c=new Color(46, 28, 77, alpha);
+			g2.setPaint(c);  
+			g2.fillRect(0, 0, 10000, 10000);
+		}
+
+		@Override
+		public void begin() {
+			if (status==true) {
+				this.addMouseListener(ma);
+			}
+		}
+
+		@Override
+		public void end() {
+			if (status==false) {
+				this.removeMouseListener(ma);
+			}
+		}
+
+		@Override
+		public void repeat() {
+		}
+
+		@Override
+		public void timingEvent(float arg0) {
+			alpha = (int) (maxAlphaValue*arg0);
+			TransitionPanel.this.repaint();
+		}
+	}
+	
+	private class LateralPanel extends JPanel implements TimingTarget {
 		private static final long serialVersionUID = 332812813329689766L;
 		private LinkedList<RedButton> buttons = new LinkedList<RedButton>();
 		private JButton generador = new JButton();
-		public LinkedList<RedButton> getButtons() {
-			return buttons;
-		}
+		
+		Animator animator;
+		int animationDuration = 150;
+		
+		boolean status = true;
 
 		public LateralPanel() {
+			animator = new Animator(animationDuration, 1, RepeatBehavior.REVERSE, this);
+			animator.setResolution(0);
+			
+			animator.setDeceleration(1.0f);
+			
 			this.setBackground(new Color(0xD6C0B3));
 			this.setBounds(0, 40, 180, _HEIGHT - 40);
 			this.setLayout(null);
@@ -135,6 +281,27 @@ public class MenuVista extends JFrame implements Vista {
 		public void resetButtons() {
 			for (RedButton button : buttons) {
 				button.resetButton();
+			}
+		}
+		
+		public void show() {
+			if (!animator.isRunning()) {
+				reverseAnimator();
+				animator.start();
+				
+				this.setEnabled(!this.isEnabled());
+			}
+		}
+		
+		public void reverseAnimator() {
+			if (status == false) {
+				animator.setStartFraction(0.0f);
+				animator.setStartDirection(Direction.FORWARD);
+				status = true;
+			} else {
+				animator.setStartFraction(1.0f);
+				animator.setStartDirection(Direction.BACKWARD);
+				status = false;
 			}
 		}
 	
@@ -265,6 +432,33 @@ public class MenuVista extends JFrame implements Vista {
 				g2.setPaint(new Color(0x3d3d3d));
 				g2.drawString(this.getText(), dX, dY);
 			}
+		}
+
+		@Override
+		public void begin() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void end() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void repeat() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void timingEvent(float arg0) {
+			this.setBounds((int) (arg0*175)-175, this.getY(), this.getWidth(), this.getHeight());
+		}
+		
+		public LinkedList<RedButton> getButtons() {
+			return buttons;
 		}
 	}	
 	

@@ -334,7 +334,7 @@ public class Programa {
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("mujica88@gmail.com"));
 
 		/*
 		final int _EXIT = 9;

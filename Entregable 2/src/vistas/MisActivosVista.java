@@ -135,7 +135,7 @@ public class MisActivosVista extends JPanel {
 			super();
 			
 			this.saldo = s;
-			this.setBounds(0, 42*MisActivosVista.this.listaActivos.size() + 15, MisActivosVista.this.getWidth() / 2, 40);
+			this.setBounds(0, 42*MisActivosVista.this.listaActivos.size() + 15, MisActivosVista.this.getWidth(), 40);
 			
 			this.moneda = c;
 			
