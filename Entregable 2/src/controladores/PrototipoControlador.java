@@ -96,6 +96,19 @@ public class PrototipoControlador {
 		}
 		
 		myMenu.agregarPanel("Monedas 2 (mejor)",panelMonedas);
+		
+		/*
+		 * 4° Panel: Mis Activos
+		 */
+		// Hard-coded
+		user.getBilletera().agregarMoneda(sistema.getMonedas().get(0), 100.0);
+		user.getBilletera().agregarMoneda(sistema.getMonedas().get(1), 100.0);
+		user.getBilletera().agregarMoneda(sistema.getMonedas().get(2), 100.0);
+		user.getBilletera().agregarMoneda(sistema.getMonedas().get(3), 100.0);
+		//
+		MisActivosVista misActivos = new MisActivosVista(myMenu.getPreferredContentWidth(), sistema, user);
+		
+		myMenu.agregarPanel("Mis Activos", misActivos);
 	}
 	
 	
