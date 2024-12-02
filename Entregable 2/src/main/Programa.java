@@ -328,7 +328,6 @@ public class Programa {
 		List<Coin> list = MonitoreoCoin.getListaMonedas();
 		list.addAll(sistema.getMonedas());
 		sistema.setMonedas(list);
-		
 		logInPage log = new logInPage();
 		logInController logs = new logInController(log,sistema);
 		

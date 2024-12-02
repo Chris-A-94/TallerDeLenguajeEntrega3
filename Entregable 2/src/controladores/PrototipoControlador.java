@@ -59,26 +59,15 @@ public class PrototipoControlador {
         j.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //Paneles agustín
       	TransaccionControlador tc = new TransaccionControlador(user.getBilletera().getTransacciones());
-        // adding it to JScrollPane
-        JScrollPane sp = new JScrollPane(j);
-		myMenu.agregarPanel("Transacciones", tc.getPanel());
-        sp.setBounds(30, 40, 500, 300);
+        myMenu.agregarPanel("Transacciones", tc.getPanel());
         
-        myMenu.agregarPanel("Monedas", sp);
         
         /*
          * 2° Panel de Prueba, esta vez implementado un layout.
          * 
          */
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.red);
-		panel.setBounds(0, 0, 100, 100);;
 		
-		JLabel label = new JLabel("?)))))");
-		panel.add(label);
-		
-		myMenu.agregarPanel("Prueba", panel);
 		
 		/*
 		 * 3° Panel
@@ -95,17 +84,13 @@ public class PrototipoControlador {
 			}
 		}
 		
-		myMenu.agregarPanel("Monedas 2 (mejor)",panelMonedas);
+		myMenu.agregarPanel("Monedas",panelMonedas);
 		
 		/*
 		 * 4° Panel: Mis Activos
+			no
 		 */
-		// Hard-coded
-		user.getBilletera().agregarMoneda(sistema.getMonedas().get(0), 100.0);
-		user.getBilletera().agregarMoneda(sistema.getMonedas().get(1), 100.0);
-		user.getBilletera().agregarMoneda(sistema.getMonedas().get(2), 100.0);
-		user.getBilletera().agregarMoneda(sistema.getMonedas().get(3), 100.0);
-		//
+		
 		MisActivosVista misActivos = new MisActivosVista(myMenu.getPreferredContentWidth(), sistema, user);
 		
 		myMenu.agregarPanel("Mis Activos", misActivos);

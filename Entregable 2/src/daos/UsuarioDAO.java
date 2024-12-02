@@ -127,14 +127,14 @@ public class UsuarioDAO implements DaoInterface<Usuario>{
 	}
 	
 	//Toma por DNI, pero si hay mas de un DNI devuelve el primero que encuentra
-	public Usuario getUsuario(String DNI)
+	public Usuario getUsuario(String Email)
 	{
 		Usuario auxUser = null;
 		try 
 		{
 			//Statement sent = con.createStatement();
-			PreparedStatement sent = con.prepareStatement("SELECT * FROM USUARIOS WHERE DNI = ?");
-			sent.setString(1,DNI);
+			PreparedStatement sent = con.prepareStatement("SELECT * FROM USUARIOS WHERE EMAIL = ?");
+			sent.setString(1,Email);
 			ResultSet resul = sent.executeQuery();	
 			
 			if (resul.next()) {
