@@ -27,7 +27,9 @@ public class TarjetaVista extends JPanel {
 	private JButton comprar;
 	private JButton swapear;
 	private JTextArea textContent;
-	public TarjetaVista(Coin moneda) {
+	private Coin moneda;
+	public TarjetaVista(Coin c) {
+		this.moneda = c;
 		if (moneda == null) {
 			
 			return;
@@ -101,5 +103,15 @@ public class TarjetaVista extends JPanel {
 	public JButton getBotonComprar()
 	{
 		return this.comprar;
+	}
+	
+	public JTextArea getTextContent()
+	{
+		return this.textContent;
+	}
+	
+	public Coin getMoneda()
+	{
+		return this.moneda;
 	}
 }
