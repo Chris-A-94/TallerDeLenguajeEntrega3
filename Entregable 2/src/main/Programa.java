@@ -317,6 +317,9 @@ public class Programa {
 		listaMonedas.add("bitcoin");
 		listaMonedas.add("dogecoin");
 		listaMonedas.add("apu-s-club");
+		//estas de abajo no andan, find out why
+		/*listaMonedas.add("usdc");
+		listaMonedas.add("usdt");*/
 
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		
@@ -329,12 +332,12 @@ public class Programa {
 		list.addAll(sistema.getMonedas());
 		sistema.setMonedas(list);
 		
-//		logInPage log = new logInPage();
-	//	logInController logs = new logInController(log,sistema);
+		logInPage log = new logInPage();
+		logInController logs = new logInController(log,sistema);
 		
 //		// Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("1@gmail.com"));
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("1@gmail.com"));
 
 		/*
 		final int _EXIT = 9;

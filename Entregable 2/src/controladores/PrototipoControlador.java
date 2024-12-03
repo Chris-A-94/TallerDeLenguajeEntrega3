@@ -82,6 +82,7 @@ public class PrototipoControlador {
 		for (Coin c : sistema.getMonedas()) {
 			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))
 			{
+				System.out.println("Moneda: "+c.getNombre());
 				TarjetaVista aux = new TarjetaVista(c);
 				tarjetaVistaControladorCompra aux2 = new tarjetaVistaControladorCompra(aux,this.user);
 				panelMonedas.agregarMoneda(aux);

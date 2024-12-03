@@ -47,7 +47,12 @@ public class Sistema {
 		cDao = new CoinDAO(); //se crea la tabla monedas con algunas monedas predefinidas.
 		
 		if (monedas.isEmpty()) {
-			monedas.addAll(cDao.devolverTabla());
+			List<Coin> monedasFiat = new LinkedList<Coin>();
+			for(Coin moneda: cDao.devolverTabla())
+			{
+				if(moneda.getTipo().equals("FIAT"))
+					this.monedas.add(moneda);
+			}
 			// traer todos los datos a una linked list
 		}
 		
@@ -71,6 +76,9 @@ public class Sistema {
 	}
 	public void setMonedas(List<Coin> monedas) {
 		this.monedas = monedas;
+		CoinDAO monedasDB = new CoinDAO();
+		for(Coin C: monedasDB.devolverTabla())
+			this.guardarMonedaDB(C);
 	}
 	
 	public void guardarMonedaDB(Coin moneda) {
