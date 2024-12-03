@@ -43,11 +43,11 @@ public class MonitoreoCoin {
 			
 			// GET
 			String identifier = String.format(apiURL, c_str);
-			
-			HttpRequest request = HttpRequest.newBuilder()
+			//APIKey cambiada el 3/12 Key anterior: CG-i5sa7aWM1m6mbdLbPPKHvBWq
+			HttpRequest request = HttpRequest.newBuilder()  
 				    .uri(URI.create(identifier))
 				    .header("accept", "application/json")
-				    .header("x-cg-demo-api-key", "CG-i5sa7aWM1m6mbdLbPPKHvBWq")
+				    .header("x-cg-demo-api-key", "CG-wqRNzUCU4erPp2ahwamhe1f7")
 				    .method("GET", HttpRequest.BodyPublishers.noBody())
 				    .build();
 			HttpResponse<String> response;
@@ -110,7 +110,16 @@ public class MonitoreoCoin {
 	}
 	
 	public static void setListaIDMonedas(List<String> monedas) {
-		listaIDMonedas.addAll(monedas);
+		listaIDMonedas.addAll(monedas); 
+	}	
+	public static Coin getParticularCoin(String Nombre)
+	{
+		for(Coin auxCoin: listaMonedas)
+		{
+			if(Nombre.equals(auxCoin.getNombre()))
+				return auxCoin;
+		}
+		return null;
 	}
 	
 // 	Nota: Adaptar el código, van a ser necesarios en un futuro...

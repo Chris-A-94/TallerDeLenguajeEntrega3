@@ -1,12 +1,19 @@
 package entregable1;
 import daos.*;
+import modelos.MonitoreoCoin;
+
+import java.io.IOException;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Sistema {
 	private List<Coin> monedas;
@@ -73,6 +80,7 @@ public class Sistema {
 		tDao = new TransaccionDAO();
 		this.transacciones = new LinkedList<Transaccion>();
 		this.transacciones.addAll(tDao.devolverTabla());
+		this.actualizarPrecioMonedas();
 	}
 	public void setMonedas(List<Coin> monedas) {
 		this.monedas = monedas;
@@ -336,6 +344,41 @@ public class Sistema {
 					user.getBilletera().agregarSaldo(s);
 				}
 			}
+	}
+	
+	private void actualizarPrecioMonedas()
+	{
+		Timer repetidor = new Timer();
+		TimerTask tarea = new TareaTimer();
+		repetidor.schedule(tarea, 20000, 135000);	//con llamadas cada 270 la api deberia durar un mes. Ajustar dependiendo la situacion	
+	}
+	
+	private class TareaTimer extends TimerTask
+	{
+
+		@Override
+		public void run() {			
+			System.out.println("Actualizando precios");
+			try {
+				MonitoreoCoin.updateMonedas();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Problemas conectando con la API. Precios desactualizados.");
+			}
+			for(Coin monedaGuardada: monedas)
+			{
+				Coin aux = MonitoreoCoin.getParticularCoin(monedaGuardada.getNombre());
+				if(aux == null)
+				{
+					System.out.println("Problema conectando con la web. \n"+monedaGuardada.getNombre()+" puede estar desactualizada");
+					continue;
+				}
+				monedaGuardada.setPrecio(aux.getPrecio()); //actualiza moneda en sistema
+				cDao.modificar(aux); //actualiza moneda en DB
+			}
+			
+		}
+		
 	}
 	
 }
