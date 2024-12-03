@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
+
+import daos.CoinDAO;
 import entregable1.Coin;
 import entregable1.Sistema;
 import entregable1.TipoMoneda;
@@ -74,6 +76,8 @@ public class PrototipoControlador {
 		 */
 		//System.out.println(sistema.getMonedas().get(0).toString());
 		PanelMonedasVista panelMonedas = new PanelMonedasVista();
+		
+		CoinDAO cd = new CoinDAO();
 		
 		for (Coin c : sistema.getMonedas()) {
 			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))

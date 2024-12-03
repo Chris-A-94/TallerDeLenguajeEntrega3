@@ -10,9 +10,6 @@ import java.util.Scanner;
 
 public class Sistema {
 	private List<Coin> monedas;
-	public void setMonedas(List<Coin> monedas) {
-		this.monedas = monedas;
-	}
 	
 	private List<BlockChain> blockChain;
 	private List<Usuario> usuarios;
@@ -72,6 +69,10 @@ public class Sistema {
 		this.transacciones = new LinkedList<Transaccion>();
 		this.transacciones.addAll(tDao.devolverTabla());
 	}
+	public void setMonedas(List<Coin> monedas) {
+		this.monedas = monedas;
+	}
+	
 	public void guardarMonedaDB(Coin moneda) {
 		this.cDao.guardar(moneda);
 	}
