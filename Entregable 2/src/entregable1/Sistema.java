@@ -54,7 +54,6 @@ public class Sistema {
 		cDao = new CoinDAO(); //se crea la tabla monedas con algunas monedas predefinidas.
 		
 		if (monedas.isEmpty()) {
-			List<Coin> monedasFiat = new LinkedList<Coin>();
 			for(Coin moneda: cDao.devolverTabla())
 			{
 				if(moneda.getTipo().equals("FIAT"))
@@ -83,7 +82,7 @@ public class Sistema {
 		this.actualizarPrecioMonedas();
 	}
 	public void setMonedas(List<Coin> monedas) {
-		this.monedas = monedas;
+		this.monedas.addAll(monedas);
 		CoinDAO monedasDB = new CoinDAO();
 		for(Coin C: monedasDB.devolverTabla())
 			this.guardarMonedaDB(C);
@@ -351,6 +350,7 @@ public class Sistema {
 		Timer repetidor = new Timer();
 		TimerTask tarea = new TareaTimer();
 		repetidor.schedule(tarea, 20000, 135000);	//con llamadas cada 270 la api deberia durar un mes. Ajustar dependiendo la situacion	
+		
 	}
 	
 	private class TareaTimer extends TimerTask
@@ -366,7 +366,7 @@ public class Sistema {
 				System.out.println("Sistema::Problemas conectando con la API. Precios desactualizados.");
 			}
 			for(Coin monedaGuardada: monedas)
-			{
+			{				
 				Coin aux = MonitoreoCoin.getParticularCoin(monedaGuardada.getNombre());
 				if(aux == null)
 				{
@@ -374,7 +374,7 @@ public class Sistema {
 					continue;
 				}
 				monedaGuardada.setPrecio(aux.getPrecio()); //actualiza moneda en sistema
-				cDao.modificar(aux); //actualiza moneda en DB
+				cDao.modificar(aux); //actualiza moneda en DB				
 			}
 			
 		}
