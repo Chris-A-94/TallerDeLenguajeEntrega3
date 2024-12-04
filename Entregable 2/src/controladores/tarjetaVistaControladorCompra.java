@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import vistas.PanelCompra;
 import vistas.TarjetaVista;
 
 public class tarjetaVistaControladorCompra {
@@ -34,6 +35,7 @@ public class tarjetaVistaControladorCompra {
 		comprar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
+		    	PanelCompra myCompra = new PanelCompra();
 		    	user.getBilletera().nuevaCompra();
 		    };
 		});
