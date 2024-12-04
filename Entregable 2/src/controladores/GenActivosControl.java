@@ -64,15 +64,47 @@ public class GenActivosControl {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				cargarSaldo(opciones,valor);
-				abrirPanel.dispose();
+				if(checkValue(valor))
+				{
+					cargarSaldo(opciones,valor);
+					abrirPanel.dispose();
+				}
+				else
+					JOptionPane.showMessageDialog(null,"Escriba unicamente numeros, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
 			}
 		});		
 	}
 	
+	private boolean checkValue(JTextField valor)
+	{
+		String auxText = valor.getText();
+		boolean usable = false;
+		int pointCounter = 0;
+		int pointPlace = -1;
+		for(int i = 0; i < auxText.length(); i++)
+		{
+			if(auxText.charAt(i) == '.')
+			{
+				pointCounter++;
+				pointPlace = i;
+			}			
+		}
+		if(pointCounter > 1)
+			return usable;
+		
+		for(int i = 0; i < auxText.length(); i++)
+		{
+			if(i == pointPlace)
+				continue;
+			if(!Character.isDigit(auxText.charAt(i)))
+				return usable;
+		}
+		usable = true;
+		return usable;
+	}
+	
 	private void cargarSaldo(JComboBox<String> opciones,JTextField valor)
 	{
-		//JOptionPane.showMessageDialog(null, "Se cargo "+valor.getText()+" de "+opciones.getSelectedItem().toString(), "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
 		double saldoNuevo = Double.parseDouble(valor.getText());		
 		//hay que agregar checker par que siempre metan numeros
 		List<Saldo> arregloSaldo = this.user.getBilletera().getArregloSaldo();
