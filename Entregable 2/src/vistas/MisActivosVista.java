@@ -26,6 +26,7 @@ import javax.swing.Timer;
 import entregable1.Coin;
 import entregable1.Saldo;
 import entregable1.Sistema;
+import entregable1.TipoMoneda;
 import entregable1.Usuario;
 
 @SuppressWarnings("serial")
@@ -72,7 +73,8 @@ public class MisActivosVista extends JPanel {
 	}
 	
 	private void inicializarTimer() {
-			final Timer timer = new Timer(5000, null);
+			final Timer timer = new Timer(500, null);
+			// Se actualiza cada 500 milisegundos.
 			
 			ActionListener al=new ActionListener() {
 			    public void actionPerformed(ActionEvent ae) {
