@@ -112,6 +112,7 @@ public class MisActivosVista extends JPanel {
 		final Color shadowColor	 = new Color(0xCAB0A3);
 		Color boxColor;
 		
+		private String formatText = "        %s %s %f : %f US$";
 		private String text;
 		
 		private JLabel label;
@@ -141,7 +142,7 @@ public class MisActivosVista extends JPanel {
 			
 			this.moneda = c;
 			
-			text = String.format("        %s %s : %f US$", c.getNombre(), c.getSigla(), s.getCantMonedas() * c.getPrecio());
+			text = String.format(formatText, c.getNombre(), c.getSigla().toUpperCase(), s.getCantMonedas(), s.getCantMonedas() * c.getPrecio());
 			
 			this.setFont(new Font("Nimbus Roman", Font.PLAIN, 20));
 //			this.setText(text);
@@ -151,6 +152,12 @@ public class MisActivosVista extends JPanel {
 			this.setFocusable(false);
 			this.setBorder(null);
 			this.setContentAreaFilled(false);
+			
+			label = new JLabel();
+			label.setText(" " + String.valueOf(MisActivosVista.this.listaActivos.size() + 1) + ".");
+			label.setHorizontalTextPosition(JLabel.LEFT);
+			
+			this.add(label);
 			
 			URL url;
 			try {
@@ -172,17 +179,11 @@ public class MisActivosVista extends JPanel {
 			}
 			ImageIcon imageIcon = new ImageIcon(image);
 			
-			label = new JLabel();
 			label.setIcon(imageIcon);
-	
-			label.setText(" " + String.valueOf(MisActivosVista.this.listaActivos.size() + 1) + ".");
-			label.setHorizontalTextPosition(JLabel.LEFT);
-			
-			this.add(label);
 		}
 		
 		private void actualizarSaldo() {
-			text = String.format("        %s %s : %f US$", moneda.getNombre(), moneda.getSigla(), saldo.getCantMonedas() * moneda.getPrecio());
+			text = String.format(formatText, moneda.getNombre(), moneda.getSigla().toUpperCase(), saldo.getCantMonedas(), saldo.getCantMonedas() * moneda.getPrecio());
 			this.repaint();
 		}
 		
