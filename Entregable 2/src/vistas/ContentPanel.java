@@ -23,7 +23,7 @@ class ContentPanel extends JPanel {
 		this.setBackground(backgroundColor);
 		this.setOpaque(true);
 		
-		this.setBounds(5, 40, parent.getWidth() - 5, parent.getHeight() - 40);
+		this.setBounds(5, parent.getBarPanelHeight(), parent.getWidth() - 5, parent.getHeight() - parent.getBarPanelHeight());
 		this.setLayout(null);
 		
 		this.leftBorder = new JPanel();

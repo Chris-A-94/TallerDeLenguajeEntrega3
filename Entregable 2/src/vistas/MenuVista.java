@@ -8,7 +8,6 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -24,8 +23,10 @@ import decoradores.ExitButton;
 @SuppressWarnings("serial")
 public class MenuVista extends JFrame implements Vista {
 	
-	private int _WIDTH 	= 1270,
-				_HEIGHT = 720;
+	private int _WIDTH 	= 1366,
+				_HEIGHT = 768;
+	
+	private int _BARPANEL_HEIGHT = 25;
 	
 	private LateralPanel lateralPanel;
 	private ContentPanel contentPanel;
@@ -56,7 +57,7 @@ public class MenuVista extends JFrame implements Vista {
 		mainPane.setOpaque(false);
 		
 		this.lateralPanel = new LateralPanel();
-		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, 40, true);
+		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, _BARPANEL_HEIGHT, true);
 		ExitButton.asignarComportamiento(this);
 		
 		// Setup layers
@@ -80,7 +81,6 @@ public class MenuVista extends JFrame implements Vista {
 		/*
 		 * Nuevo:
 		 */
-		
 		TransitionPanel transitionPanel = new TransitionPanel();
 		transitionPanel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -253,7 +253,7 @@ public class MenuVista extends JFrame implements Vista {
 			animator.setDeceleration(1.0f);
 			
 			this.setBackground(new Color(0xD6C0B3));
-			this.setBounds(0, 40, 180, _HEIGHT - 40);
+			this.setBounds(0, _BARPANEL_HEIGHT, 180, _HEIGHT - _BARPANEL_HEIGHT);
 			this.setLayout(null);
 			this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
 			//Botón generador
@@ -461,6 +461,10 @@ public class MenuVista extends JFrame implements Vista {
 			return buttons;
 		}
 	}	
+	
+	public int getBarPanelHeight() {
+		return this._BARPANEL_HEIGHT;
+	}
 	
 	@Override
 	public List<JLabel> devolverEtiquetas() {
