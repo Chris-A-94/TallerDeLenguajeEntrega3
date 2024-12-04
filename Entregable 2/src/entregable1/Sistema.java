@@ -358,19 +358,19 @@ public class Sistema {
 
 		@Override
 		public void run() {			
-			System.out.println("Actualizando precios");
+			System.out.println("Sistema::Actualizando precios");
 			try {
 				MonitoreoCoin.updateMonedas();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				System.out.println("Problemas conectando con la API. Precios desactualizados.");
+				System.out.println("Sistema::Problemas conectando con la API. Precios desactualizados.");
 			}
 			for(Coin monedaGuardada: monedas)
 			{
 				Coin aux = MonitoreoCoin.getParticularCoin(monedaGuardada.getNombre());
 				if(aux == null)
 				{
-					System.out.println("Problema conectando con la web. \n"+monedaGuardada.getNombre()+" puede estar desactualizada");
+					System.out.println("Sistema::Problema conectando con la web. \n"+monedaGuardada.getNombre()+" puede estar desactualizada");
 					continue;
 				}
 				monedaGuardada.setPrecio(aux.getPrecio()); //actualiza moneda en sistema
