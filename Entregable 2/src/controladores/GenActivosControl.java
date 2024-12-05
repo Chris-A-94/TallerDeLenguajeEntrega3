@@ -23,7 +23,7 @@ public class GenActivosControl {
 	
 	private JButton generar;	
 	private Usuario user;
-	GenerarActivos abrirPanel;
+	private GenerarActivos abrirPanel;
 	
 	public GenActivosControl(JButton generar,Usuario user)
 	{

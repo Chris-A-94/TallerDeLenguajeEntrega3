@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import daos.CoinDAO;
 import entregable1.Coin;
 
 public class PanelCompra extends JFrame{
@@ -22,6 +23,34 @@ public class PanelCompra extends JFrame{
 	private JButton cancelar;
 	private JTextField valor;	
 	
+	public JLabel getCantidadYPrecio() {
+		return cantidadYPrecio;
+	}
+
+	public void setCantidadYPrecio(JLabel cantidadYPrecio) {
+		this.cantidadYPrecio = cantidadYPrecio;
+	}
+
+	public JPanel getElPanel() {
+		return elPanel;
+	}
+
+	public JComboBox<String> getMonedasFiat() {
+		return monedasFiat;
+	}
+
+	public JButton getComprar() {
+		return comprar;
+	}
+
+	public JButton getCancelar() {
+		return cancelar;
+	}
+
+	public JTextField getValor() {
+		return valor;
+	}
+
 	public PanelCompra()
 	{
 		this.setTitle("Comprar Criptomonedas");
@@ -43,8 +72,12 @@ public class PanelCompra extends JFrame{
 		this.cancelar = new JButton("Cancelar");
 		this.valor = new JTextField();
 		List<String> monedas = new LinkedList<String>();
-		monedas.add("USD");
-		monedas.add("ARS");		
+		CoinDAO coinsDB = new CoinDAO();
+		for(Coin aux: coinsDB.devolverTabla())
+		{
+			if(aux.getTipo().equals("FIAT"))
+				monedas.add(aux.getNombre());
+		}			
 		this.monedasFiat = new JComboBox<>(monedas.toArray(new String[0]));
 		JLabel mensaje1 = new JLabel("Ingrese cantidad de monedas deseadas: ");
 		JLabel mensaje2 = new JLabel("Elija dinero a utilizar: ");
