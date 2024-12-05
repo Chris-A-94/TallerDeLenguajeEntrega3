@@ -21,13 +21,14 @@ public class PanelCompraControlador {
 	{
 		this.panelVista = panelVista;
 		this.criptoSeleccionada = criptoSeleccionada;
-		this.wallet = wallet;
-		this.visualizarSaldo("USD");
+		this.wallet = wallet;		
+		this.visualizarSaldo(this.panelVista.getMonedasFiat().getSelectedItem().toString());
 		this.setListeners();
 	}
 	
 	private void setListeners()
 	{
+		//listener para boton CANCELAR
 		this.panelVista.getCancelar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -35,6 +36,15 @@ public class PanelCompraControlador {
 				panelVista.dispose();
 			}
 		});
+		//listener para Label visualizador de Saldo
+		this.panelVista.getMonedasFiat().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				visualizarSaldo(panelVista.getMonedasFiat().getSelectedItem().toString());
+			}
+		});
+		
 	}
 	//no puedo llamarlo sin saber que esta seleccionado 
 	//ahora mismo esta para ver si funciona nomas, solo actualiza USD
@@ -53,8 +63,8 @@ public class PanelCompraControlador {
 				this.currentSaldo = fiat;
 		}
 		
-		saldo.setText("Valor "+this.criptoSeleccionada.getNombre()+":"+precioMoneda+""
-				+ " Saldo actual: "+this.currentSaldo.getCantMonedas()+""+this.currentSaldo.getSigla());
+		saldo.setText("Valor "+this.criptoSeleccionada.getNombre()+":"+precioMoneda+""+this.currentSaldo.getSigla()+
+				 " Saldo actual: "+this.currentSaldo.getCantMonedas()+""+this.currentSaldo.getSigla());
 	}
 
 }

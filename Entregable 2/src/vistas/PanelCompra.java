@@ -76,7 +76,7 @@ public class PanelCompra extends JFrame{
 		for(Coin aux: coinsDB.devolverTabla())
 		{
 			if(aux.getTipo().equals("FIAT"))
-				monedas.add(aux.getNombre());
+				monedas.add(aux.getSigla());
 		}			
 		this.monedasFiat = new JComboBox<>(monedas.toArray(new String[0]));
 		JLabel mensaje1 = new JLabel("Ingrese cantidad de monedas deseadas: ");

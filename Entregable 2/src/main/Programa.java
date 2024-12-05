@@ -329,7 +329,7 @@ public class Programa {
 			e.printStackTrace();
 		}
 		List<Coin> list = MonitoreoCoin.getListaMonedas();
-		list.addAll(sistema.getMonedas());
+		list.addAll(sistema.getMonedas());		
 		sistema.setMonedas(list);
 		
 		logInPage log = new logInPage();

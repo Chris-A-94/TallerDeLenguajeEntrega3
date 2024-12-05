@@ -82,9 +82,8 @@ public class Sistema {
 		this.actualizarPrecioMonedas();
 	}
 	public void setMonedas(List<Coin> monedas) {
-		this.monedas.addAll(monedas);
-		CoinDAO monedasDB = new CoinDAO();
-		for(Coin C: monedasDB.devolverTabla())
+		this.monedas.addAll(monedas);		
+		for(Coin C: this.monedas)
 			this.guardarMonedaDB(C);
 	}
 	
@@ -366,7 +365,9 @@ public class Sistema {
 				System.out.println("Sistema::Problemas conectando con la API. Precios desactualizados.");
 			}
 			for(Coin monedaGuardada: monedas)
-			{				
+			{			
+				if(monedaGuardada.getTipo().equals("FIAT"))
+					continue;
 				Coin aux = MonitoreoCoin.getParticularCoin(monedaGuardada.getNombre());
 				if(aux == null)
 				{
