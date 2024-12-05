@@ -43,6 +43,6 @@ public class TransaccionCompra extends Transaccion {
 	
 	@Override
 	public String toString() {
-		return super.toString() + this.getTipo().toString() + " " + this.getCant() + " " + this.getSiglaMoneda() + " " + " : " + this.getMonto() + " " + this.getSiglaFiat();
+		return this.getCant() + "-" + this.getSiglaMoneda() + "-" + this.getMonto() + "-" + this.getSiglaFiat();
 	}
 }

@@ -322,7 +322,6 @@ public class Programa {
 		listaMonedas.add("usdt");*/
 
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
-		
 		try {
 			MonitoreoCoin.updateMonedas();
 		} catch (IOException e) {

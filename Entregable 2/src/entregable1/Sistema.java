@@ -288,21 +288,38 @@ public class Sistema {
 		}
 	}
 	public Usuario getUsuario(String Email) { //Busca un usuario en la base mediante su DNI.
+		System.out.println(transacciones.toString());
 		for (Usuario u : usuarios) {
 			if (u.getEmail().equals(Email)) {
 				for (Saldo s: this.saldosUsuarios) {
-					if (s.getUser_id() == u.getDNI())
+					if (s.getUser_id().equals(u.getDNI()))
 						u.getBilletera().agregarSaldo(s);
 				}
 				for (Transaccion t: this.transacciones) {
-					System.out.print(t.toString());
-					if (t.getUserID() == u.getEmail())
+					if (t.getUserID().equals(u.getEmail()))
+					{
+						System.out.println("MATCH");
 						u.getBilletera().agregarTransaccion(t);
+						
+					}
+				
 				}
 				return u;
 			}	
 		}
+		
 		return null;
+	}
+	public boolean searchPass(String Email,String pass) { //Busca un usuario en la base mediante su DNI.
+		for (Usuario u : usuarios) {
+			if (u.getEmail().equals(Email)) {
+				if (u.getContraseña().equals(pass))
+					return true;
+				
+			}	
+		}
+		
+		return false;
 	}
 	public void generarStock() {
 		boolean aux=false;

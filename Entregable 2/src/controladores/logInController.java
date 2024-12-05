@@ -107,7 +107,7 @@ public class logInController {
 		}
 		else
 		{
-			if (sistema.getUsuario(Email).getContraseña().equals(Password))
+			if (sistema.searchPass(Email,Password))
 			{
 				this.frontEnd.callExit();
 				PrototipoControlador pc = new PrototipoControlador(sistema,sistema.getUsuario(Email));
