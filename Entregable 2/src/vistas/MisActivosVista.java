@@ -46,7 +46,7 @@ public class MisActivosVista extends JPanel {
 		this.setLayout(null);
 		
 		// Atributos
-		this.setBounds(0, 0, width, 1200);
+		this.setBounds(20, 0, width - 20, 1200);
 		
 		this.setBackground(new Color(0xE4E0E1));
 		

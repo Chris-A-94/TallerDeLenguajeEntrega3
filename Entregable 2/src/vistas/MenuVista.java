@@ -92,17 +92,13 @@ public class MenuVista extends JFrame implements Vista {
 		
 		this.mainPane.add(transitionPanel, JLayeredPane.POPUP_LAYER);
 		
-		JButton button = new JButton();
-		button.setText("????");
-		button.setBounds(140, 40, 50, 25);
-		
-		button.addActionListener(e -> {
+		// Agregar comportamiento del botón
+		lateralPanel.getInteractButton().addActionListener(e -> {
 			transitionPanel.show();
 			lateralPanel.show();
 		});
 		
-		this.mainPane.add(button, JLayeredPane.DRAG_LAYER);
-		
+		// Inicializar estado
 		transitionPanel.show();
 		lateralPanel.show();
 	}
@@ -239,11 +235,22 @@ public class MenuVista extends JFrame implements Vista {
 		}
 	}
 	
-	private class LateralPanel extends JPanel implements TimingTarget {
+	private class LateralPanel extends JLayeredPane implements TimingTarget {
 		private static final long serialVersionUID = 332812813329689766L;
 		private LinkedList<RedButton> buttons = new LinkedList<RedButton>();
-		private JButton generador = new JButton();
 		
+		private JPanel buttonsPanel;
+		
+		private JButton generador = new JButton();
+		private JButton interactButton;
+		
+		private final int _INTERACTBUTTON_WIDTH = 30;
+		private final int _LATERALPANEL_WIDTH = 180;
+		
+		public JButton getInteractButton() {
+			return interactButton;
+		}
+
 		Animator animator;
 		int animationDuration = 150;
 		
@@ -255,17 +262,34 @@ public class MenuVista extends JFrame implements Vista {
 			
 			animator.setDeceleration(1.0f);
 			
+			// this: Atributos
 			this.setBackground(new Color(0xD6C0B3));
-			this.setBounds(0, _BARPANEL_HEIGHT, 180, _HEIGHT - _BARPANEL_HEIGHT);
+			this.setBounds(0, _BARPANEL_HEIGHT, _LATERALPANEL_WIDTH + _INTERACTBUTTON_WIDTH, _HEIGHT - _BARPANEL_HEIGHT);
 			this.setLayout(null);
-			this.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
+			
+			// buttonsPanel: Instanciar
+			buttonsPanel = new JPanel();
+			// buttonsPanel: Atributos
+			buttonsPanel.setBackground(new Color(0xD6C0B3));
+			buttonsPanel.setBounds(0, 0, _LATERALPANEL_WIDTH, _HEIGHT - _BARPANEL_HEIGHT);
+			buttonsPanel.setLayout(null);
+			buttonsPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
+			this.add(buttonsPanel);
+			
 			//Botón generador
 			this.generador.setBounds(20, this.getHeight()-40, 60, 30);
 			this.generador.setBackground(Color.GREEN);
 			this.generador.setBorder(null);
 			this.generador.setText("$$$+");
 			this.setFocusable(false);			
-			this.add(generador);
+			this.add(generador, JLayeredPane.POPUP_LAYER);
+			
+			//Botón interacción
+			interactButton = new JButton();
+			interactButton.setText("????");
+			interactButton.setBounds(buttonsPanel.getWidth(), 50, _INTERACTBUTTON_WIDTH, _INTERACTBUTTON_WIDTH);
+			
+			this.add(interactButton, JLayeredPane.POPUP_LAYER);
 		};		
 		
 		public void newButton(String msg, ContentPanel panel) {
@@ -275,7 +299,7 @@ public class MenuVista extends JFrame implements Vista {
 			// Asigno el título
 			panel.setTitle(msg);
 			// Agregar al Panel
-			this.add(button);
+			buttonsPanel.add(button);
 			buttons.add(button);
 			
 			// Cuando se agrega un nuevo botón se requiere repintar el panel de nuevo.
