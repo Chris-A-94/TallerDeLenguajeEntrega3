@@ -7,19 +7,13 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 public class PanelMonedasVista extends JPanel{
-
-	/**
-	 * 
-	 */
-	
 	private static final long serialVersionUID = 1L;
 
-	public PanelMonedasVista() {
-		this.setPreferredSize(new Dimension(1000,4000));
-        this.setLayout(new FlowLayout(3,40,40));
+	public PanelMonedasVista(int width, int height) {
+		this.setPreferredSize(new Dimension(width, height));
+        this.setLayout(new FlowLayout(3,20,20));
         this.setBackground(null);
 	}
-	
 	
 	public void agregarMoneda(JPanel aux) {
 		this.add(aux);
