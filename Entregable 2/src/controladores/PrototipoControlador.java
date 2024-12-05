@@ -61,7 +61,7 @@ public class PrototipoControlador {
         j.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //Paneles agustín
       	TransaccionControlador tc = new TransaccionControlador(user.getBilletera().getTransacciones());
-        myMenu.agregarPanel("Transacciones", tc.getPanel());
+        myMenu.agregarPanel("Mi historial", tc.getPanel());
         
         
         /*
@@ -72,33 +72,22 @@ public class PrototipoControlador {
 		
 		
 		/*
-		 * 3° Panel
+		 * 3° Panel: Criptomonedas
 		 */
-		//System.out.println(sistema.getMonedas().get(0).toString());
-		PanelMonedasVista panelMonedas = new PanelMonedasVista();
-		
-		CoinDAO cd = new CoinDAO();
-		
-		for (Coin c : sistema.getMonedas()) {
-			if (c.getTipo().equals(TipoMoneda.CRIPTOMONEDA))
-			{
-				System.out.println("Moneda: "+c.getNombre());
-				TarjetaVista aux = new TarjetaVista(c);
-				tarjetaVistaControladorCompra aux2 = new tarjetaVistaControladorCompra(aux,this.user);
-				panelMonedas.agregarMoneda(aux);
-			}
-		}
-		
-		myMenu.agregarPanel("Monedas",panelMonedas);
+        // Instanciar PanelMonedasControlador
+		PanelMonedasControlador controladorPanelMonedas = new PanelMonedasControlador(sistema.getMonedas(), myMenu.getPreferredContentWidth(), myMenu.getPreferredContentHeight());
+		// Asignar comportamiento a las tarjetas
+		controladorPanelMonedas.getListaTarjetas().forEach(t -> {
+			new TarjetaVistaControladorCompra(t, this.user);
+		});
+		// Agregar panel
+		myMenu.agregarPanel("Criptomonedas",controladorPanelMonedas.getPanelMonedas());
 		
 		/*
 		 * 4° Panel: Mis Activos
-			no
 		 */
-		
-		MisActivosVista misActivos = new MisActivosVista(myMenu.getPreferredContentWidth(), sistema, user);
-		
-		myMenu.agregarPanel("Mis Activos", misActivos);
+		MisActivosControlador misActivos = new MisActivosControlador(myMenu.getPreferredContentWidth(), sistema, user);
+		myMenu.agregarPanel("Mis Activos", misActivos.getMisActivosVista());
 	}
 	
 	

@@ -25,10 +25,7 @@ public class Billetera {
 	
 	public void nuevaCompra()
 	{
-		for(Saldo elSaldo: this.arregloSaldo)
-		{
-			System.out.println(""+elSaldo.getId()+": "+elSaldo.getCantMonedas());
-		}
+		
 	}
 	
 	public List<Transaccion> getTransacciones() {

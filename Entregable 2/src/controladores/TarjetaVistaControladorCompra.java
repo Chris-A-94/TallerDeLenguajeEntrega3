@@ -8,18 +8,17 @@ import entregable1.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import vistas.TarjetaVista;
 
-public class tarjetaVistaControladorCompra {
+public class TarjetaVistaControladorCompra {
 	
 	private TarjetaVista panelMoneda;
 	private Usuario user;
 	
-	public tarjetaVistaControladorCompra(TarjetaVista panelMoneda, Usuario user)
+	public TarjetaVistaControladorCompra(TarjetaVista panelMoneda, Usuario user)
 	{
 		this.panelMoneda = panelMoneda;
 		this.user = user;

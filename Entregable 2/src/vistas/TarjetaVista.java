@@ -24,58 +24,60 @@ import entregable1.Coin;
 public class TarjetaVista extends JPanel {
 	
 	private JLabel title;
-	private JButton comprar;
-	private JButton swapear;
+	private JButton botonCompra;
+	private JButton botonSwap;
 	private JTextArea textContent;
 	private Coin moneda;
 	public TarjetaVista(Coin c) {
-		this.moneda = c;
-		if (moneda == null) {
-			
+		if (c == null) {
 			return;
 		}
-		//colores
+		this.moneda = c;
+		
+		// Colores
 		Color fondoContenido = new Color(0xD6C0B3);
 		Color colorTitulo 	 = new Color(0x493628);
 		Color textColor 		= new Color(0xD6C0B3);
-		//Config JPanel
 		// LayoutManager	
 		this.setLayout(new GridLayout(4,1));
 		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
+		
+		
 		// Título
 		title = new JLabel();
 		title.setText(" "+moneda.getNombre()+" ");
 		title.setOpaque(true);
 		title.setBackground(colorTitulo);
 		title.setForeground(textColor);
-		title.setFont(new Font("Arial", Font.BOLD, 40));
+		title.setFont(new Font("Arial", Font.BOLD, 30));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(title);
-		//Precio
+		// Contenido
 		textContent = new JTextArea();
 		DecimalFormat numberFormat = new DecimalFormat("#.000000");
 		textContent.setText(" Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\n Stock: " + numberFormat.format(moneda.getStock()).toString());
 		textContent.setBackground(null);
-		textContent.setFont(new Font("Times New Roman", Font.ITALIC, 25));
+		textContent.setFont(new Font("Times New Roman", Font.ITALIC, 17));
 		textContent.setBackground(fondoContenido);
 		textContent.setEditable(false);
 		textContent.setHighlighter(null);
 		this.add(textContent);
-		//Comprar
-		comprar = new JButton("COMPRAR");
-		comprar.setBackground(new Color(0xAB886D));
-		comprar.setFont(new Font("Arial", Font.PLAIN,20));
-		comprar.setFocusPainted(false);
-		//Swap	
-		swapear = new JButton("SWAP");
-		swapear.setBackground(new Color(0xAB886D));
-		swapear.setFont(new Font("Arial", Font.PLAIN,20));
-		swapear.setFocusPainted(false);
-
-		this.add(comprar);
-		this.add(swapear);
-		// Cargar imagen de una URL
 		
+		// Botones
+		// Comprar
+		botonCompra = new JButton("COMPRAR");
+		botonCompra.setBackground(new Color(0xAB886D));
+		botonCompra.setFont(new Font("Arial", Font.PLAIN,17));
+		botonCompra.setFocusPainted(false);
+		// Swap	
+		botonSwap = new JButton("SWAP");
+		botonSwap.setBackground(new Color(0xAB886D));
+		botonSwap.setFont(new Font("Arial", Font.PLAIN,17));
+		botonSwap.setFocusPainted(false);
+		this.add(botonCompra);
+		this.add(botonSwap);
+		
+		// Cargar imagen de una URL
 		URL url;
 		try {
 			if (moneda.getUrl_small()== null)
@@ -102,7 +104,7 @@ public class TarjetaVista extends JPanel {
 	
 	public JButton getBotonComprar()
 	{
-		return this.comprar;
+		return this.botonCompra;
 	}
 	
 	public JTextArea getTextContent()

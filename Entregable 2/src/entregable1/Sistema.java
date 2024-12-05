@@ -370,7 +370,8 @@ public class Sistema {
 				Coin aux = MonitoreoCoin.getParticularCoin(monedaGuardada.getNombre());
 				if(aux == null)
 				{
-					System.out.println("Sistema::Problema conectando con la web. \n"+monedaGuardada.getNombre()+" puede estar desactualizada");
+					System.out.println("Sistema::Problema conectando con la web. \n"
+							+ "Sistema::["+monedaGuardada.getNombre()+"] puede estar desactualizada");
 					continue;
 				}
 				monedaGuardada.setPrecio(aux.getPrecio()); //actualiza moneda en sistema

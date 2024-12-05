@@ -132,6 +132,9 @@ public class MenuVista extends JFrame implements Vista {
 	public int getPreferredContentWidth() {
 		return this.contentPanel.getContentWidth();
 	}
+	public int getPreferredContentHeight() {
+		return this.contentPanel.getContentHeight();
+	}
 	
 	public JButton getGenerador()
 	{
