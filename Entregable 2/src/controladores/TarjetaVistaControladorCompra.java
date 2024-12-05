@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import vistas.PanelCompra;
 import vistas.TarjetaVista;
 
 public class TarjetaVistaControladorCompra {
@@ -33,7 +34,10 @@ public class TarjetaVistaControladorCompra {
 		comprar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	user.getBilletera().nuevaCompra();
+		    	//agregar aca error si se entra sin saldos FIAT
+		    	PanelCompra myCompra = new PanelCompra();
+		    	PanelCompraControlador compraControl = new PanelCompraControlador(myCompra,panelMoneda.getMoneda(),user.getBilletera());
+		    	
 		    };
 		});
 	}
