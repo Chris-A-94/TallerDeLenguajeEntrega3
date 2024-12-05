@@ -34,16 +34,9 @@ public class TarjetaVistaControladorCompra {
 		comprar.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-<<<<<<< Updated upstream
 		    	//agregar aca error si se entra sin saldos FIAT
 		    	PanelCompra myCompra = new PanelCompra();
 		    	PanelCompraControlador compraControl = new PanelCompraControlador(myCompra,panelMoneda.getMoneda(),user.getBilletera());
-		    	
-=======
-		    	user.getBilletera().nuevaCompra();
-		    	
-		    	System.out.println("Click");
->>>>>>> Stashed changes
 		    };
 		});
 	}
