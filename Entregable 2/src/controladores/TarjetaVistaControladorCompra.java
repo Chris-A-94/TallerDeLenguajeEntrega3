@@ -37,7 +37,7 @@ public class TarjetaVistaControladorCompra {
 		    	//agregar aca error si se entra sin saldos FIAT
 		    	PanelCompra myCompra = new PanelCompra();
 		    	PanelCompraControlador compraControl = new PanelCompraControlador(myCompra,panelMoneda.getMoneda(),user.getBilletera());
-		    	user.getBilletera().nuevaCompra();
+		    	
 		    };
 		});
 	}

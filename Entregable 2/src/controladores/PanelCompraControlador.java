@@ -45,6 +45,23 @@ public class PanelCompraControlador {
 			}
 		});
 		
+		//listener para COMPRAR
+		this.panelVista.getComprar().addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						if(checkValue(panelVista.getValor()))
+						{
+							wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada);
+							panelVista.dispose();
+						}
+						else
+							JOptionPane.showMessageDialog(null,"Escriba unicamente numeros, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
+					
+					}
+				});
+		
 	}
 	//no puedo llamarlo sin saber que esta seleccionado 
 	//ahora mismo esta para ver si funciona nomas, solo actualiza USD
@@ -65,6 +82,34 @@ public class PanelCompraControlador {
 		
 		saldo.setText("Valor "+this.criptoSeleccionada.getNombre()+":"+precioMoneda+""+this.currentSaldo.getSigla()+
 				 " Saldo actual: "+this.currentSaldo.getCantMonedas()+""+this.currentSaldo.getSigla());
+	}
+	
+	private boolean checkValue(JTextField valor)
+	{
+		String auxText = valor.getText();
+		boolean usable = false;
+		int pointCounter = 0;
+		int pointPlace = -1;
+		for(int i = 0; i < auxText.length(); i++)
+		{
+			if(auxText.charAt(i) == '.')
+			{
+				pointCounter++;
+				pointPlace = i;
+			}			
+		}
+		if(pointCounter > 1)
+			return usable;
+		
+		for(int i = 0; i < auxText.length(); i++)
+		{
+			if(i == pointPlace)
+				continue;
+			if(!Character.isDigit(auxText.charAt(i)))
+				return usable;
+		}
+		usable = true;
+		return usable;
 	}
 
 }
