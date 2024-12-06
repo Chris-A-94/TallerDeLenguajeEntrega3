@@ -82,7 +82,7 @@ public class VistaSwap extends JFrame {
 		
 		targetCantidad = new JLabel(" 0.0");
 		targetCantidad.setHorizontalAlignment(JLabel.LEFT);
-		targetCantidad.setPreferredSize(new Dimension(200, 25));
+		targetCantidad.setPreferredSize(new Dimension(150, 25));
 		
 		target.add(targetCantidad);
 		
@@ -93,7 +93,7 @@ public class VistaSwap extends JFrame {
 		selecCantidad = new JPanel(new GridLayout(1, 1));
 		
 		cantidad = new HintTextField(" Cantidad");
-		cantidad.setPreferredSize(new Dimension(150, 10));
+		cantidad.setPreferredSize(new Dimension(200, 10));
 		
 		selecCantidad.add(cantidad);
 	
