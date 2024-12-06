@@ -45,4 +45,7 @@ public class TransaccionCompra extends Transaccion {
 	public String toString() {
 		return this.getCant() + "-" + this.getSiglaMoneda() + "-" + this.getMonto() + "-" + this.getSiglaFiat();
 	}
+	public String description() {
+		return (this.getFecha().toString() + ": Se adquirieron " + this.getSiglaMoneda()+" "+this.getMonto() + ". Costo: "+ this.getSiglaFiat()+" "+this.getCant());
+	}
 }

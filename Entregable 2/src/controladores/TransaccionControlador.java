@@ -15,7 +15,7 @@ public class TransaccionControlador {
 		tp = new TransaccionPanel();
 		this.listTrans = listTrans;
 		for (Transaccion t : listTrans) {
-			tp.agregarTransaccion(t.toString());
+			tp.agregarTransaccion(t.description());
 		}
 	}
 	public JPanel getPanel() {

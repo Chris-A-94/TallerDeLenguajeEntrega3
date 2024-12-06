@@ -35,4 +35,5 @@ public abstract class Transaccion {
 	{
 		return new String("(" + this.fecha.toString() + ") ");
 	}
+	public abstract String description();
 }

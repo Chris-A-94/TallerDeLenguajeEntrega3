@@ -22,10 +22,8 @@ public class TransaccionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public TransaccionPanel() {
-		//this.setBounds(100, 100, 100, 100);	 
+		this.setBounds(100, 100, 100, 100);	 
 		this.setLayout(new GridLayout(3,3));
-		JLabel aux = new JLabel("AAAAAAA");
-		this.add(aux);
 	}
 	
 	public void agregarTransaccion(String t) {
