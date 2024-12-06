@@ -21,9 +21,9 @@ public class PanelCompraControlador {
 	{
 		this.panelVista = panelVista;
 		this.criptoSeleccionada = criptoSeleccionada;
-		this.wallet = wallet;		
-		this.visualizarSaldo(this.panelVista.getMonedasFiat().getSelectedItem().toString());
+		this.wallet = wallet;	
 		this.setListeners();
+		this.visualizarSaldo(this.panelVista.getMonedasFiat().getSelectedItem().toString());		
 	}
 	
 	private void setListeners()
@@ -53,11 +53,11 @@ public class PanelCompraControlador {
 					{
 						if(checkValue(panelVista.getValor()))
 						{
-							wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada);
+							wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada,panelVista.getMonedasFiat().getSelectedItem().toString());
 							panelVista.dispose();
 						}
 						else
-							JOptionPane.showMessageDialog(null,"Escriba unicamente numeros, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null,"Escriba unicamente numeros positivos, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
 					
 					}
 				});
@@ -108,6 +108,10 @@ public class PanelCompraControlador {
 			if(!Character.isDigit(auxText.charAt(i)))
 				return usable;
 		}
+		
+		if(Double.parseDouble(auxText) < 0)
+			return usable;
+		
 		usable = true;
 		return usable;
 	}

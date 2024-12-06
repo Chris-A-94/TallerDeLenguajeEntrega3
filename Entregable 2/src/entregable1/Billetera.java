@@ -27,12 +27,66 @@ public class Billetera {
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
 	
-	public void nuevaCompra(JTextField valor, Coin moneda)
+	public void nuevaCompra(JTextField valor, Coin moneda,String siglaFiat)
 	{
-		double parsedValue = Double.parseDouble(valor.getText());
+		//te quedaste en mandar sistema.getmonedas al panelcompracontrolador para enviarlo aca
+		double saldoAGastar = Double.parseDouble(valor.getText()); //valor a restar del Saldo
+		double monedaAObtener = 0.0; //valor a sumar al Saldo cripto y restar del Stock cripto
 		
-		JOptionPane.showMessageDialog(null,"Se ha cargado "+parsedValue+" en "+moneda.getNombre()
-				,"Compra Realizada", JOptionPane.INFORMATION_MESSAGE);
+		Saldo aUsar = null;
+		Saldo monedaACargar = null;		
+		for(Saldo s: this.arregloSaldo)
+		{
+			if(siglaFiat.equalsIgnoreCase(s.getSigla()))
+				aUsar = s;
+			if(moneda.getSigla().equalsIgnoreCase(s.getSigla()))
+				monedaACargar = s;				
+							
+		}
+				
+		CoinDAO monedaAux = new CoinDAO();
+		double precioSaldo = monedaAux.getCoin(siglaFiat).getPrecio(); //1 si es dolar, 1000 si es peso
+		//divido el valor ingresado por el precio del saldo para tenerlo en USD, y luego por el precio de la moneda para saber el N° de monedas
+		monedaAObtener = (saldoAGastar  / precioSaldo )/ moneda.getPrecio();
+		
+		double comision = monedaAObtener * 0.03;
+		double total = monedaAObtener - comision;
+		Object[] enEspaniol = {"Sí", "No"};
+		
+		int respuesta = JOptionPane.showOptionDialog (null,"¿Desea cargar "+monedaAObtener+moneda.getSigla()+"?\n"
+				+"Se descontara un 3% de comision. Total Compra: "+total,"Confirmar Operacion",JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null,enEspaniol,enEspaniol[0]);
+		
+		if (respuesta == 0) 
+		{			
+			monedaAObtener = total;
+			if(monedaACargar == null)
+			{
+				monedaACargar = new Saldo(this.userID,moneda.getTipo(),moneda.getSigla(),monedaAObtener);
+				this.arregloSaldo.add(monedaACargar);
+			}
+				
+			else
+				monedaACargar.setCantMonedas(monedaACargar.getCantMonedas() + monedaAObtener);
+			aUsar.setCantMonedas(aUsar.getCantMonedas() - saldoAGastar);
+			//modifico stock en db y array
+			moneda.setStock(moneda.getStock() - monedaAObtener);
+			CoinDAO actualizarDB = new CoinDAO();
+			actualizarDB.modificar(moneda);
+			//creo transaccion
+			
+			String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
+			String mes = java.time.ZonedDateTime.now().getMonth().toString();
+			String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
+			TransaccionDAO guardarTransaccion = new TransaccionDAO();
+			guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,moneda.getSigla(),siglaFiat,saldoAGastar,monedaAObtener));
+			
+        } 
+		else if (respuesta == JOptionPane.NO_OPTION) 
+            return;
+		
+		JOptionPane.showMessageDialog(null,"Se ha cargado "+monedaAObtener+" en "+moneda.getNombre()
+				,"Operacion Exitosa!", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public List<Transaccion> getTransacciones() {
