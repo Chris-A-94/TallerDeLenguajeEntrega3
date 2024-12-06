@@ -3,6 +3,10 @@ package entregable1;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import daos.CoinDAO;
 
 import daos.TransaccionDAO;
@@ -23,9 +27,12 @@ public class Billetera {
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
 	
-	public void nuevaCompra()
+	public void nuevaCompra(JTextField valor, Coin moneda)
 	{
+		double parsedValue = Double.parseDouble(valor.getText());
 		
+		JOptionPane.showMessageDialog(null,"Se ha cargado "+parsedValue+" en "+moneda.getNombre()
+				,"Compra Realizada", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public List<Transaccion> getTransacciones() {
