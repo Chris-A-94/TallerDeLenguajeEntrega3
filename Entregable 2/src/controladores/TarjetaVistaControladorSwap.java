@@ -45,7 +45,13 @@ public class TarjetaVistaControladorSwap {
 		// Verificación
 		if (strCantidad.isEmpty())
 			strCantidad = "0";
-		Double cantidad = Double.valueOf(strCantidad);
+		Double cantidad;
+		try {
+			 cantidad = Double.valueOf(strCantidad);
+		} catch (NumberFormatException e) {
+			cantidad = 0.0;
+		}
+		
 		// Verificación
 		if (cantidad == null)
 			cantidad = 0.0;
