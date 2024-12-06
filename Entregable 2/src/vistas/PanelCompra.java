@@ -70,15 +70,8 @@ public class PanelCompra extends JFrame{
 	{
 		this.comprar = new JButton("Comprar");
 		this.cancelar = new JButton("Cancelar");
-		this.valor = new JTextField();
-		List<String> monedas = new LinkedList<String>();
-		CoinDAO coinsDB = new CoinDAO();
-		for(Coin aux: coinsDB.devolverTabla())
-		{
-			if(aux.getTipo().equals("FIAT"))
-				monedas.add(aux.getSigla());
-		}			
-		this.monedasFiat = new JComboBox<>(monedas.toArray(new String[0]));
+		this.valor = new JTextField();		
+		this.monedasFiat = new JComboBox<>();
 		JLabel mensaje1 = new JLabel("Ingrese cantidad de monedas deseadas: ");
 		JLabel mensaje2 = new JLabel("Elija dinero a utilizar: ");
 		this.cantidadYPrecio = new JLabel(""); //llenado por el controlador

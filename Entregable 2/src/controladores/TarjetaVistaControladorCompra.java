@@ -1,8 +1,10 @@
 package controladores;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import entregable1.Coin;
+import entregable1.Saldo;
 import entregable1.Usuario;
 
 import java.awt.event.ActionEvent;
@@ -36,6 +38,17 @@ public class TarjetaVistaControladorCompra {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	//agregar aca error si se entra sin saldos FIAT
+		    	boolean saldoFiat = false;
+		    	for(Saldo s: user.getBilletera().getArregloSaldo())
+		    	{
+		    		if(s.getTipo().equals("FIAT"))
+		    			saldoFiat = true;
+		    	}
+		    	if(!saldoFiat)
+		    	{
+		    		JOptionPane.showMessageDialog(null,"Genere USD o ARS antes de comprar criptomonedas." ,"No se encontro activo FIAT", JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
 		    	PanelCompra myCompra = new PanelCompra();
 		    	PanelCompraControlador compraControl = new PanelCompraControlador(myCompra,panelMoneda.getMoneda(),user.getBilletera());
 		    	

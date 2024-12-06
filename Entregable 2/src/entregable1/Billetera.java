@@ -7,6 +7,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import daos.ActivosDAO;
 import daos.CoinDAO;
 
 import daos.TransaccionDAO;
@@ -60,14 +61,20 @@ public class Billetera {
 		if (respuesta == 0) 
 		{			
 			monedaAObtener = total;
+			ActivosDAO saldoDB = new ActivosDAO();
 			if(monedaACargar == null)
 			{
 				monedaACargar = new Saldo(this.userID,moneda.getTipo(),moneda.getSigla(),monedaAObtener);
 				this.arregloSaldo.add(monedaACargar);
+				saldoDB.guardar(monedaACargar);
 			}
 				
 			else
+			{
 				monedaACargar.setCantMonedas(monedaACargar.getCantMonedas() + monedaAObtener);
+				saldoDB.modificar(monedaACargar);
+			}
+				
 			aUsar.setCantMonedas(aUsar.getCantMonedas() - saldoAGastar);
 			//modifico stock en db y array
 			moneda.setStock(moneda.getStock() - monedaAObtener);
