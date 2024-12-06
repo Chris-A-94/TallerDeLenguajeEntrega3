@@ -134,6 +134,34 @@ public class CoinDAO implements DaoInterface<Coin>{
 		
 	}
 	
+	public Coin getCoin(String Sigla)
+	{
+		Coin auxCoin = null;
+		try 
+		{
+			//Statement sent = con.createStatement();
+			PreparedStatement sent = con.prepareStatement("SELECT * FROM COIN WHERE SIGLA = ?");
+			sent.setString(1,Sigla);
+			ResultSet resul = sent.executeQuery();	
+			
+			if (resul.next()) {
+				auxCoin = new Coin(
+	            		resul.getString("NOMBRE"),
+	            		resul.getString("SIGLA"),
+	            		TipoMoneda.fromString(resul.getString("TIPO")),
+	            		resul.getDouble("PRECIO_DOLAR"),
+	            		resul.getDouble("STOCK")
+	            );
+	        }
+	        sent.close();			
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e.getMessage());			
+		}
+		return auxCoin;
+	}
+	
 	
 
 	
