@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,14 +18,14 @@ public class TransaccionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JPanel contenedor; 
     private JScrollPane scrollPane;
-
+    private JButton refresh = new JButton("Refresh");
     public TransaccionPanel() {
     	//COLORES
     	Color fondoFrame  		= new Color(0xE4E0E1);
 		Color camposTextColor 	= new Color(0xD6C0B3);
 		Color textColor 		= new Color(0xAB886D);
     	//Panel principal
-    	this.setBounds(60, 10, 900, 400);
+    	this.setBounds(60, 10, 1100, 400);
         this.setLayout(null);
         this.setBackground(fondoFrame);
         
@@ -36,7 +37,7 @@ public class TransaccionPanel extends JPanel {
         
         scrollPane = new JScrollPane(contenedor);
         scrollPane.setBounds(20, 20, 850, 350);
-     // Personalizar barras
+        // Personalizar barras
         scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(12, 0));
         scrollPane.getVerticalScrollBar().setBackground(fondoFrame );
         scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
@@ -46,6 +47,14 @@ public class TransaccionPanel extends JPanel {
                 this.trackColor = new Color(0xD6C0B3);
             }
         });
+        //botón refresh
+        refresh.setBounds(900,20, 100, 30);
+        refresh.setBorder(null);
+        refresh.setBackground(new Color(0xAB886D));
+        refresh.setFont(new Font("Arial", Font.PLAIN,20));
+        refresh.setFocusPainted(false);
+        
+        this.add(refresh);
         this.add(scrollPane);
     }
 
@@ -60,6 +69,9 @@ public class TransaccionPanel extends JPanel {
         contenedor.add(aux);
         contenedor.revalidate(); 
         contenedor.repaint();    
+    }
+    public JButton getRefresh() {
+    	return refresh;
     }
 }
 

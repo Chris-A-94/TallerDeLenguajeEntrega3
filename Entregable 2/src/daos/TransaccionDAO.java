@@ -82,7 +82,11 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 				if (resul.getString("TIPO").equals("COMPRA"))
 				{
 					
-					list.add(new TransaccionCompra(fecha[0],fecha[1],fecha[2],resul.getString("USER_ID"), rawData[1], rawData[3], Double.valueOf(rawData[2]),Double.valueOf(rawData[0])));
+					list.add(new TransaccionCompra(fecha[0],fecha[1],fecha[2],resul.getString("USER_ID"), rawData[1], rawData[3], Double.valueOf(rawData[0]),Double.valueOf(rawData[2])));
+				}
+				else
+				{
+					list.add(new TransaccionSwap(fecha[0],fecha[1],fecha[2],resul.getString("USER_ID"),rawData[3], Double.valueOf(rawData[2]), rawData[1], Double.valueOf(rawData[0])));
 				}
 			}
 			

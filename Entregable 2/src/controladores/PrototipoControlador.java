@@ -33,8 +33,5 @@ public class PrototipoControlador {
 		 */
 		MisActivosControlador misActivos = new MisActivosControlador(myMenu.getPreferredContentWidth(), sistema, user);
 		myMenu.agregarPanel("Mis Activos", misActivos.getMisActivosVista());
-	}
-	
-	
-	
+	}	
 }
