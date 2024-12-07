@@ -39,7 +39,22 @@ public class TarjetaVistaControladorSwap {
 		});
 	}
 	
-	public static void actualizarVistaSwap(List<Coin> listaMonedas, VistaSwap swapFrame) {
+	public static void actualizarVistaSwap(List<Coin> listaMonedas, VistaSwap swapFrame) {	
+		// Busco la cantidad
+		Double cantidad = obtenerCantidad(swapFrame);
+		
+		// Busco la moneda seleccionada
+		String strMoneda = obtenerSeleccion(swapFrame);
+		
+		// Busco la moneda
+		Coin moneda = buscarMoneda(listaMonedas, strMoneda);
+		// Verificación
+		if (moneda == null)
+			return;
+		
+		swapFrame.actualizarConversion(cantidad * (moneda.getPrecio() / swapFrame.getTargetCoin().getPrecio()));
+	}
+	public static double obtenerCantidad(VistaSwap swapFrame) {
 		// Obtengo la cantidad a convertir
 		String strCantidad = swapFrame.getCantidad().getText();
 		// Verificación
@@ -52,24 +67,18 @@ public class TarjetaVistaControladorSwap {
 			cantidad = 0.0;
 		}
 		
-		// Verificación
-		if (cantidad == null)
-			cantidad = 0.0;
-		
+		return cantidad;
+	}
+	
+	public static String obtenerSeleccion(VistaSwap swapFrame) {
 		// Obtengo la selección de la moneda
 		String strMoneda = (String) swapFrame.getListMonedas().getSelectedItem();
 		// Verificación
 		if (strMoneda == null)
-			return;
+			return "undefined";
 		strMoneda = strMoneda.split(" ")[0];
 		
-		// Busco la moneda
-		Coin moneda = buscarMoneda(listaMonedas, strMoneda);
-		// Verificación
-		if (moneda == null)
-			return;
-		
-		swapFrame.actualizarConversion(cantidad * (moneda.getPrecio() / swapFrame.getTargetCoin().getPrecio()));
+		return strMoneda;
 	}
 	
 	public static Coin buscarMoneda(List<Coin> listaMonedas, String sigla) {

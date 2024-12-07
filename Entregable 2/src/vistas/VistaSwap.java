@@ -51,6 +51,9 @@ public class VistaSwap extends JFrame {
 		this.setLayout(borderLayout);
 		this.setSize(500, 500);
 		
+		this.setAlwaysOnTop(true);
+		this.setLocationRelativeTo(null);
+		
 		// label
 		label = new JLabel();
 		label.setText("SWAP");

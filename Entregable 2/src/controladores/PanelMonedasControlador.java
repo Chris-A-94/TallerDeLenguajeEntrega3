@@ -8,10 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 import entregable1.Coin;
 import entregable1.TipoMoneda;
 import entregable1.Usuario;
+import modelos.SwapException;
 import vistas.PanelMonedasVista;
 import vistas.TarjetaVista;
 import vistas.VistaSwap;
@@ -95,8 +97,17 @@ public class PanelMonedasControlador {
 		swapFrame.getConfirmar().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO:
-				// LLAMAR OPERACIÓN SWAP
+				Coin seleccion = TarjetaVistaControladorSwap.buscarMoneda(listaMonedas, TarjetaVistaControladorSwap.obtenerSeleccion(swapFrame));
+				Coin target = swapFrame.getTargetCoin();
+				Double cantidad = TarjetaVistaControladorSwap.obtenerCantidad(swapFrame);
+				
+				try {
+					user.getBilletera().swap(listaMonedas, target, seleccion, cantidad);
+					JOptionPane.showMessageDialog(swapFrame, "ta bien", "SWAP", JOptionPane.INFORMATION_MESSAGE);
+					swapFrame.setVisible(false);
+				} catch (SwapException e1) {
+					JOptionPane.showMessageDialog(swapFrame, e1.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		
