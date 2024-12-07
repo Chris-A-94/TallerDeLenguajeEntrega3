@@ -87,7 +87,7 @@ public class Billetera {
 			//creo transaccion
 			
 			String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
-			String mes = java.time.ZonedDateTime.now().getMonth().toString();
+			String mes = String.valueOf(java.time.ZonedDateTime.now().getMonth().getValue());
 			String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
 			TransaccionDAO guardarTransaccion = new TransaccionDAO();
 			guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,moneda.getSigla(),siglaFiat,monedaAObtener,saldoAGastar));
