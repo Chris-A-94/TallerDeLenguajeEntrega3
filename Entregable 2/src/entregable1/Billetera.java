@@ -11,6 +11,7 @@ import daos.ActivosDAO;
 import daos.CoinDAO;
 
 import daos.TransaccionDAO;
+import modelos.CompraExcepcion;
 import modelos.SwapException;
 
 
@@ -32,8 +33,10 @@ public class Billetera {
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
 	
-	public void nuevaCompra(JTextField valor, Coin moneda,String siglaFiat)
+	public void nuevaCompra(JTextField valor, Coin moneda,String siglaFiat) throws CompraExcepcion
 	{
+		if(Math.abs(moneda.getStock() - 0.0) < 1e-12)
+			throw new CompraExcepcion("No hay stock en la moneda "+moneda.getNombre(),false);
 		//te quedaste en mandar sistema.getmonedas al panelcompracontrolador para enviarlo aca
 		double saldoAGastar = Double.parseDouble(valor.getText()); //valor a restar del Saldo
 		double monedaAObtener = 0.0; //valor a sumar al Saldo cripto y restar del Stock cripto
@@ -52,7 +55,10 @@ public class Billetera {
 		CoinDAO monedaAux = new CoinDAO();
 		double precioSaldo = monedaAux.getCoin(siglaFiat).getPrecio(); //1 si es dolar, 1000 si es peso
 		//divido el valor ingresado por el precio del saldo para tenerlo en USD, y luego por el precio de la moneda para saber el N° de monedas
-		monedaAObtener = (saldoAGastar  / precioSaldo )/ moneda.getPrecio();
+		monedaAObtener = (saldoAGastar  * precioSaldo )/ moneda.getPrecio();
+		
+		if(monedaAObtener > moneda.getStock())
+			throw new CompraExcepcion("Compra superior al stock en sistema",true);
 		
 		double comision = monedaAObtener * 0.03;
 		double total = monedaAObtener - comision;

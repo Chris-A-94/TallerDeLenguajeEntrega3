@@ -79,7 +79,7 @@ public class Coin implements Comparable<Coin>{
 	}
 	public boolean generarStock()
 	{
-		if (this.stock != 0)
+		/*if (this.stock != 0)
 		{
 			Scanner in = new Scanner(System.in);
 			String resp;
@@ -88,7 +88,7 @@ public class Coin implements Comparable<Coin>{
 			if (!resp.equals("y"))
 				return false;
 			
-		}
+		}*/
 		Random stock = new Random();
 		Double minimo = 10000.0;
 		Double maximo = 90000.0;

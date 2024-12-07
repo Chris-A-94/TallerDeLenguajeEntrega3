@@ -14,6 +14,7 @@ import javax.swing.event.DocumentListener;
 import entregable1.Billetera;
 import entregable1.Coin;
 import entregable1.Saldo;
+import modelos.CompraExcepcion;
 import vistas.PanelCompra;
 import daos.CoinDAO;
 
@@ -132,7 +133,40 @@ public class PanelCompraControlador {
 							{								
 								return;
 							}
-							wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada,fiatSeleccionado);
+							try {
+								//LLAMADO A COMPRA
+								wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada,fiatSeleccionado);
+							} catch (CompraExcepcion e1) {
+								if(!e1.hayStock())
+								{
+									JOptionPane.showMessageDialog(null,"No hay stock de "+criptoSeleccionada.getNombre()+" por favor espere." ,"No Stock", JOptionPane.ERROR_MESSAGE);
+									criptoSeleccionada.generarStock();
+									JOptionPane.showMessageDialog(null,"Intente nuevamente." ,"Stock Generado", JOptionPane.ERROR_MESSAGE);
+								}
+								else
+								{
+									Object[] enEspaniol = {"Sí", "No"};
+									int reintentar = JOptionPane.showOptionDialog (null,"Esta intentando comprar un monto muy alto. ¿Desea comprar el maximo posible en su lugar?","Monto Invalido",JOptionPane.YES_NO_OPTION,
+											JOptionPane.QUESTION_MESSAGE, null,enEspaniol,enEspaniol[0]);
+									if(reintentar == 0)
+									{
+										JTextField auxText = new JTextField();
+										Double valorAux = criptoSeleccionada.getStock() * criptoSeleccionada.getPrecio();
+										CoinDAO fiatAux = new CoinDAO();
+										if(!fiatSeleccionado.equalsIgnoreCase("usd"))
+											valorAux /= fiatAux.getCoin(fiatSeleccionado).getPrecio();
+										auxText.setText(valorAux.toString());
+										try {
+											wallet.nuevaCompra(auxText, criptoSeleccionada, fiatSeleccionado);
+										} catch (CompraExcepcion e2) {
+											//Aca no deberia nunca entrar al Catch
+											e2.printStackTrace();
+										}
+									}
+									else
+										return;
+								}
+							}
 							panelVista.dispose();
 							cargarOpciones(); 
 						}
