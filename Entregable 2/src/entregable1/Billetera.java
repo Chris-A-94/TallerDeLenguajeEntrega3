@@ -90,8 +90,8 @@ public class Billetera {
 			String mes = java.time.ZonedDateTime.now().getMonth().toString();
 			String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
 			TransaccionDAO guardarTransaccion = new TransaccionDAO();
-			guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,moneda.getSigla(),siglaFiat,saldoAGastar,monedaAObtener));
-			
+			guardarTransaccion.guardar(new TransaccionCompra(dia,mes,year,this.userID,moneda.getSigla(),siglaFiat,monedaAObtener,saldoAGastar));
+			this.agregarTransaccion(new TransaccionCompra(dia,mes,year,this.userID,moneda.getSigla(),siglaFiat,monedaAObtener,saldoAGastar));
         } 
 		else if (respuesta == JOptionPane.NO_OPTION) 
             return;
@@ -479,6 +479,7 @@ public class Billetera {
 	}
 	public void agregarTransaccion(Transaccion t) {
 		this.Transacciones.add(t);
+		
 	}
 	public List<Saldo> getArregloSaldo() {
 		return this.arregloSaldo;

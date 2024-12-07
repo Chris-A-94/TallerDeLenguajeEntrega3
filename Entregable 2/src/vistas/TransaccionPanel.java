@@ -1,10 +1,14 @@
 package vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,20 +29,19 @@ public class TransaccionPanel extends JPanel {
 		Color camposTextColor 	= new Color(0xD6C0B3);
 		Color textColor 		= new Color(0xAB886D);
     	//Panel principal
-    	this.setBounds(60, 10, 1100, 400);
+    	this.setBounds(60, 10, 1300, 400);
         this.setLayout(null);
         this.setBackground(fondoFrame);
         
         
         contenedor = new JPanel();
-        contenedor.setLayout(new GridLayout(0, 1, 5, 5)); 
-        contenedor.setPreferredSize(new Dimension(750, 350));
-        contenedor.setBackground(fondoFrame);
-        
+        contenedor.setLayout((LayoutManager) new BoxLayout(contenedor, BoxLayout.Y_AXIS));
+        contenedor.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 5));
+        contenedor.setBackground(new Color(0xD6C0B3));
         scrollPane = new JScrollPane(contenedor);
-        scrollPane.setBounds(20, 20, 850, 350);
+        scrollPane.setBounds(20, 20, 900, 350);
         // Personalizar barras
-        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(12, 0));
+        
         scrollPane.getVerticalScrollBar().setBackground(fondoFrame );
         scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
@@ -48,7 +51,7 @@ public class TransaccionPanel extends JPanel {
             }
         });
         //botón refresh
-        refresh.setBounds(900,20, 100, 30);
+        refresh.setBounds(1000,20, 100, 30);
         refresh.setBorder(null);
         refresh.setBackground(new Color(0xAB886D));
         refresh.setFont(new Font("Arial", Font.PLAIN,20));
@@ -59,19 +62,21 @@ public class TransaccionPanel extends JPanel {
     }
 
     public void agregarTransaccion(String t) {
-        JLabel aux = new JLabel(t);
-        aux.setOpaque(true);
-		aux.setBackground(new Color(0xD6C0B3));
+        JLabel aux = new JLabel("* "+t);
+        aux.setOpaque(false);
+		
 		aux.setForeground(new Color(0x291e17));
-		aux.setFont(new Font("Arial", Font.BOLD, 30));
+		aux.setFont(new Font("Arial", Font.BOLD,20));
 		aux.setHorizontalAlignment(SwingConstants.CENTER);
-        aux.setFont(new Font("Arial", Font.PLAIN, 14));
         contenedor.add(aux);
-        contenedor.revalidate(); 
-        contenedor.repaint();    
+          
+
     }
     public JButton getRefresh() {
     	return refresh;
+    }
+    public void eraseLabels() {
+    	contenedor.removeAll();
     }
 }
 

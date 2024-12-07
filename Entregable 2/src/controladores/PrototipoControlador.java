@@ -17,7 +17,7 @@ public class PrototipoControlador {
 		this.user = user;
 		
         //Paneles agustín
-      	TransaccionControlador tc = new TransaccionControlador(user.getBilletera().getTransacciones());
+      	TransaccionControlador tc = new TransaccionControlador(user.getBilletera());
         myMenu.agregarPanel("Mi historial", tc.getPanel());
 		
 		/*

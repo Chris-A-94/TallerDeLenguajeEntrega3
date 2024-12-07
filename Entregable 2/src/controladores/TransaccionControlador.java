@@ -6,18 +6,17 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import daos.TransaccionDAO;
+import entregable1.Billetera;
 import entregable1.Transaccion;
 import vistas.TransaccionPanel;
-import vistas.logInPage;
 
 public class TransaccionControlador {
 	//vista
 	private TransaccionPanel tp;
 	private List<Transaccion> listTrans;
-	public TransaccionControlador(List<Transaccion> listTrans) {
+	public TransaccionControlador(Billetera wallet) {
+		this.listTrans = wallet.getTransacciones();
 		tp = new TransaccionPanel();
-		this.listTrans = listTrans;
 		for (Transaccion t : listTrans) {
 			tp.agregarTransaccion(t.description());
 		}
@@ -31,7 +30,11 @@ public class TransaccionControlador {
 		}
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			System.out.println("Refresh");
+			tp.eraseLabels();
+			
+			for(int i = listTrans.size()-1;i>=0;i--) {
+				tp.agregarTransaccion(listTrans.get(i).description());
+			}
 		}
 	}
 }
