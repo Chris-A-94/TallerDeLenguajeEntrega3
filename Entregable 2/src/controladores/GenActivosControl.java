@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import daos.ActivosDAO;
 import daos.CoinDAO;
 import daos.UsuarioDAO;
 import entregable1.Coin;
@@ -65,12 +66,12 @@ public class GenActivosControl {
 			public void actionPerformed(ActionEvent e)
 			{
 				if(checkValue(valor))
-				{
-					cargarSaldo(opciones,valor);
+				{					
+					cargarSaldo(opciones.getSelectedItem().toString(),valor);
 					abrirPanel.dispose();
 				}
 				else
-					JOptionPane.showMessageDialog(null,"Escriba unicamente numeros, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,"Escriba unicamente numeros positivos, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
 			}
 		});		
 	}
@@ -99,11 +100,13 @@ public class GenActivosControl {
 			if(!Character.isDigit(auxText.charAt(i)))
 				return usable;
 		}
+		if(Double.parseDouble(auxText) < 0)
+			return usable;
 		usable = true;
 		return usable;
 	}
 	
-	private void cargarSaldo(JComboBox<String> opciones,JTextField valor)
+	private void cargarSaldo(String eleccion,JTextField valor)
 	{
 		double saldoNuevo = Double.parseDouble(valor.getText());		
 		//hay que agregar checker par que siempre metan numeros
@@ -114,23 +117,24 @@ public class GenActivosControl {
 			System.err.println("Arreglo saldo vacio");
 			return;
 		}
-		if(opciones.getSelectedItem().toString().equals("Todo"))
+		if(eleccion.equals("Todo"))
 		{		
 			//solo agrega a monedas pre-existentes en la billetera
-			for(Saldo mySaldo: arregloSaldo)
-			{
-				mySaldo.setCantMonedas(mySaldo.getCantMonedas() + saldoNuevo);				
-			}
-			JOptionPane.showMessageDialog(null, "Se cargo "+valor.getText()+" a todas sus monedas.", "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+			CoinDAO aux = new CoinDAO();
+			List<Coin> allCoins = aux.devolverTabla();
+			for(Coin moneda: allCoins)
+				cargarSaldo(moneda.getSigla(),valor);			
 		}
 		else
 		{
+			ActivosDAO databaseActivos = new ActivosDAO();
 			boolean encontro = false;
 			for(Saldo mySaldo: arregloSaldo)
 			{
-				if(mySaldo.getSigla().equals(opciones.getSelectedItem().toString()))
+				if(mySaldo.getSigla().equals(eleccion))
 				{
 					mySaldo.setCantMonedas(mySaldo.getCantMonedas() + saldoNuevo);
+					databaseActivos.modificar(mySaldo);
 					encontro = true;
 				}				
 			}
@@ -140,14 +144,15 @@ public class GenActivosControl {
 				TipoMoneda myTipo = null;
 				for(Coin moneda: nombres.devolverTabla())
 				{
-					if(moneda.getSigla().equals(opciones.getSelectedItem().toString()))
+					if(moneda.getSigla().equals(eleccion))
 						myTipo = moneda.getTipo();
 				}
-				Saldo nuevoSaldo = new Saldo(user.getDNI(),myTipo,opciones.getSelectedItem().toString()
+				Saldo nuevoSaldo = new Saldo(user.getDNI(),myTipo,eleccion
 						,saldoNuevo);
 				arregloSaldo.add(nuevoSaldo);
+				databaseActivos.guardar(nuevoSaldo);
 			}
-			JOptionPane.showMessageDialog(null, "Se cargo "+valor.getText()+" de "+opciones.getSelectedItem().toString(), "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Se cargo "+valor.getText()+" de "+eleccion, "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		
