@@ -1,11 +1,15 @@
 package controladores;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JPanel;
 
+import daos.TransaccionDAO;
 import entregable1.Transaccion;
 import vistas.TransaccionPanel;
+import vistas.logInPage;
 
 public class TransaccionControlador {
 	//vista
@@ -17,8 +21,17 @@ public class TransaccionControlador {
 		for (Transaccion t : listTrans) {
 			tp.agregarTransaccion(t.description());
 		}
+		tp.getRefresh().addMouseListener(new MouseControlRefresh());
 	}
 	public JPanel getPanel() {
 		return tp;
+	}
+	private class MouseControlRefresh extends MouseAdapter{
+		public MouseControlRefresh() {	
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			System.out.println("Refresh");
+		}
 	}
 }

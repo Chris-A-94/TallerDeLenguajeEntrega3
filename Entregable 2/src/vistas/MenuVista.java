@@ -57,7 +57,7 @@ public class MenuVista extends JFrame implements Vista {
 		mainPane.setOpaque(false);
 		
 		this.lateralPanel = new LateralPanel();
-		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, _BARPANEL_HEIGHT, true);
+		this.windowBar = new WindowBarPanel(this, new Color(0x493628), _WIDTH, _BARPANEL_HEIGHT+10, true);
 		ExitButton.asignarComportamiento(this);
 		
 		// Setup layers
@@ -286,7 +286,10 @@ public class MenuVista extends JFrame implements Vista {
 			
 			//Botón interacción
 			interactButton = new JButton();
-			interactButton.setText("????");
+			interactButton.setBackground(null);
+			interactButton.setFocusable(false);
+			interactButton.setBorder(null);
+			interactButton.setText(">");
 			interactButton.setBounds(buttonsPanel.getWidth(), 50, _INTERACTBUTTON_WIDTH, _INTERACTBUTTON_WIDTH);
 			
 			this.add(interactButton, JLayeredPane.POPUP_LAYER);

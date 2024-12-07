@@ -108,6 +108,8 @@ public class GenActivosControl {
 	
 	private void cargarSaldo(String eleccion,JTextField valor)
 	{
+		if (valor.getText().equals(""))
+			return;
 		double saldoNuevo = Double.parseDouble(valor.getText());		
 		//hay que agregar checker par que siempre metan numeros
 		List<Saldo> arregloSaldo = this.user.getBilletera().getArregloSaldo();

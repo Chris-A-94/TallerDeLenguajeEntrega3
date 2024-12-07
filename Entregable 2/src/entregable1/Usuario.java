@@ -25,7 +25,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.pais = pais;
 		this.habilitado = true;
 		this.email = email;
-		this.billetera = new Billetera(DNI);
+		this.billetera = new Billetera(email);
 		this.contraseña = contraseña;
 	}
 	

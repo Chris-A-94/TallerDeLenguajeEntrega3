@@ -22,7 +22,10 @@ public class Billetera {
 	 *  ¿Qué sucede si se agrega una nueva moneda a la base de datos?
 	 *  respuesta: nada.
 	 */
-	
+	private List<Saldo> arregloSaldo;
+	private List<DeFi> defis;
+	private Tarjeta tarjeta;
+	private String userID;
 	private Double balance;
 	private String divisa;
 	private String CVU;
@@ -118,10 +121,7 @@ public class Billetera {
 	public String getUserID() {
 		return userID;
 	}
-	private List<Saldo> arregloSaldo;
-	private List<DeFi> defis;
-	private Tarjeta tarjeta;
-	private String userID;
+	
 	public Billetera(String userID)
 	{
 		this.balance = 0.0;
