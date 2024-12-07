@@ -107,6 +107,11 @@ public class TarjetaVista extends JPanel {
 		return this.botonCompra;
 	}
 	
+	public JButton getBotonSwap()
+	{
+		return this.botonSwap;
+	}
+	
 	public JTextArea getTextContent()
 	{
 		return this.textContent;
