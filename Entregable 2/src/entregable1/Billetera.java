@@ -12,6 +12,7 @@ import daos.CoinDAO;
 
 import daos.TransaccionDAO;
 import modelos.CompraExcepcion;
+import modelos.SaldoExcepcion;
 import modelos.SwapException;
 
 
@@ -226,7 +227,43 @@ public class Billetera {
 //		System.out.println("Su nuevo saldo de "+saldoSwap.getSigla()+" es de: "+saldoSwap.getCantMonedas());
 	}
 
-	
+	public void cargarActivos(String eleccion, double saldoNuevo) throws SaldoExcepcion
+	{
+		if(this.arregloSaldo == null)
+			throw new SaldoExcepcion("Billetera::CargarActivos:: el arreglo saldo no esta inicializado");
+		
+		
+		ActivosDAO databaseActivos = new ActivosDAO();
+		boolean encontro = false;
+		for(Saldo mySaldo: this.arregloSaldo)
+		{
+			if(mySaldo.getSigla().equals(eleccion))
+			{
+				mySaldo.setCantMonedas(mySaldo.getCantMonedas() + saldoNuevo);
+				databaseActivos.modificar(mySaldo);
+				encontro = true;
+			}				
+		}
+		if(!encontro)
+		{
+			CoinDAO nombres = new CoinDAO();
+			TipoMoneda myTipo = null;
+			for(Coin moneda: nombres.devolverTabla())
+			{
+				if(moneda.getSigla().equals(eleccion))
+				{
+					myTipo = moneda.getTipo();					
+				}
+					
+			}
+			Saldo nuevoSaldo = new Saldo(this.getUserID(),myTipo,eleccion
+					,saldoNuevo);
+			arregloSaldo.add(nuevoSaldo);
+			databaseActivos.guardar(nuevoSaldo);
+		}
+		JOptionPane.showMessageDialog(null, "Se cargo "+saldoNuevo+" de "+eleccion, "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+		
+	}
 		
 
 	

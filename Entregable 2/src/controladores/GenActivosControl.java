@@ -18,6 +18,7 @@ import entregable1.Coin;
 import entregable1.Saldo;
 import entregable1.TipoMoneda;
 import entregable1.Usuario;
+import modelos.SaldoExcepcion;
 import vistas.GenerarActivos;
 
 public class GenActivosControl {
@@ -111,53 +112,36 @@ public class GenActivosControl {
 		if (valor.getText().equals(""))
 			return;
 		double saldoNuevo = Double.parseDouble(valor.getText());		
-		//hay que agregar checker par que siempre metan numeros
-		List<Saldo> arregloSaldo = this.user.getBilletera().getArregloSaldo();
-		//rotura de encapsulamiento
-		if(arregloSaldo == null)
-		{
-			System.err.println("Arreglo saldo vacio");
-			return;
-		}
 		if(eleccion.equals("Todo"))
 		{		
 			//solo agrega a monedas pre-existentes en la billetera
 			CoinDAO aux = new CoinDAO();
 			List<Coin> allCoins = aux.devolverTabla();
 			for(Coin moneda: allCoins)
-				cargarSaldo(moneda.getSigla(),valor);			
-		}
+			{
+				try {
+					user.getBilletera().cargarActivos(moneda.getSigla(), saldoNuevo);
+				} catch (SaldoExcepcion e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,""+e.getDebugMsg(),"Error Critico",JOptionPane.ERROR_MESSAGE);
+				}	
+			}
+						
+		}		
 		else
 		{
-			ActivosDAO databaseActivos = new ActivosDAO();
-			boolean encontro = false;
-			for(Saldo mySaldo: arregloSaldo)
-			{
-				if(mySaldo.getSigla().equals(eleccion))
-				{
-					mySaldo.setCantMonedas(mySaldo.getCantMonedas() + saldoNuevo);
-					databaseActivos.modificar(mySaldo);
-					encontro = true;
-				}				
-			}
-			if(!encontro)
-			{
-				CoinDAO nombres = new CoinDAO();
-				TipoMoneda myTipo = null;
-				for(Coin moneda: nombres.devolverTabla())
-				{
-					if(moneda.getSigla().equals(eleccion))
-						myTipo = moneda.getTipo();
-				}
-				Saldo nuevoSaldo = new Saldo(user.getDNI(),myTipo,eleccion
-						,saldoNuevo);
-				arregloSaldo.add(nuevoSaldo);
-				databaseActivos.guardar(nuevoSaldo);
-			}
-			JOptionPane.showMessageDialog(null, "Se cargo "+valor.getText()+" de "+eleccion, "Carga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+			try {
+				user.getBilletera().cargarActivos(eleccion, saldoNuevo);
+			} catch (SaldoExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null,""+e.getDebugMsg(),"Error Critico",JOptionPane.ERROR_MESSAGE);
+			}	
 		}
-		
+			
 		
 	}	
+	
 
 }
