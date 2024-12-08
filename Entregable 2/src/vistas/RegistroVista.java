@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
@@ -35,6 +36,7 @@ public class RegistroVista extends JFrame implements Vista{
 	private JButton botonSalir 	 = new JButton("X");
 	private BasicArrowButton prevPageButton = new BasicArrowButton(BasicArrowButton.WEST);
 	private JCheckBox terminos 	= new JCheckBox("Acepto los términos y condiciones");
+	private JButton verMas = new JButton("...");
 	
 	public RegistroVista() {
 		//COLORES
@@ -161,6 +163,12 @@ public class RegistroVista extends JFrame implements Vista{
 		botonAceptar.setFont(new Font("Arial", Font.PLAIN,20));
 		botonAceptar.setFocusPainted(false);
 		
+		verMas.setBounds(dimX-40,posIniY+6*cons,20, boxHeight);
+		verMas.setBorder(null);
+		verMas.setBackground(new Color(0xAB886D));
+		verMas.setFont(new Font("Arial", Font.PLAIN,10));
+		verMas.setFocusPainted(false);
+		
 		
 		//AGREGRO AL JFRAME
 		ExitButton.asignarComportamiento(this);
@@ -181,6 +189,7 @@ public class RegistroVista extends JFrame implements Vista{
 		this.add(botonAceptar);
 		this.add(prevPageButton);
 		this.add(terminos);
+		this.add(verMas);
 		this.add(wbp);
 		
 		this.setVisible(true);
@@ -261,7 +270,9 @@ public class RegistroVista extends JFrame implements Vista{
 	public BasicArrowButton devolverAtras() {
 		return this.prevPageButton;
 	}
-
+	public JButton termsButton() {
+		return this.verMas;
+	}
 	
 	public boolean confirmarContraseña() {
 		if (passField.getText().equals(passConfirm.getText()))
@@ -296,6 +307,26 @@ public class RegistroVista extends JFrame implements Vista{
 		else
 			return false;
 	}
+	public void launchTerms(String text) {
+	    JTextArea terminos = new JTextArea(20, 50); 
+	    terminos.setText(text);
+	    terminos.setLineWrap(true); 
+	    terminos.setWrapStyleWord(true); 
+	    terminos.setEditable(false);
+	   
+	
+	   
+	    JScrollPane sp = new JScrollPane(terminos);
+	
+	    JFrame frameTerms = new JFrame("Términos y Condiciones");
+	    frameTerms.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    frameTerms.setSize(600, 400);
+	    frameTerms.setLocationRelativeTo(null);
+	    frameTerms.add(sp); 
+
+	    frameTerms.setVisible(true);
+}
+	
 	
 	
 }

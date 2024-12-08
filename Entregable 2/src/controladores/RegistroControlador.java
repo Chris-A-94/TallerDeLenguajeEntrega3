@@ -3,6 +3,9 @@ package controladores;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
@@ -22,6 +25,7 @@ public class RegistroControlador {
 		this.vista = new RegistroVista();
 		this.vista.getBotonAceptar().addMouseListener(new MouseControlAceptar());
 		this.vista.devolverAtras().addMouseListener(new MouseControlBack());
+		this.vista.termsButton().addMouseListener(new ButtonTermsControl());
 		this.sistema = sistema;
 	}
 	
@@ -105,6 +109,39 @@ public class RegistroControlador {
 		}
 
 		
+	}
+	private class ButtonTermsControl extends MouseAdapter{
+		public ButtonTermsControl() {
+			
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Reader reader = null;
+			String text = "";
+			int data;
+			try {
+				reader = new FileReader("src/Imagenes/terminos");
+				data = reader.read();
+			while(data != -1){
+				char dataChar = (char) data;
+				text = text.concat(String.valueOf(dataChar));
+				data = reader.read();
+			}
+			} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			} finally {
+			if (reader!=null)
+				try {
+					reader.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			vista.launchTerms(text);
+
+		}
 	}
 	private class MouseControlBack extends MouseAdapter{
 		public MouseControlBack() {
