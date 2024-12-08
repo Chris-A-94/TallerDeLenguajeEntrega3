@@ -93,7 +93,7 @@ public class MenuVista extends JFrame implements Vista {
 		this.mainPane.add(transitionPanel, JLayeredPane.POPUP_LAYER);
 		
 		// Agregar comportamiento del botón
-		lateralPanel.getInteractButton().addActionListener(e -> {
+		lateralPanel.getInteractButton().addActionListener(e -> {			
 			transitionPanel.show();
 			lateralPanel.show();
 		});
@@ -149,11 +149,11 @@ public class MenuVista extends JFrame implements Vista {
 		
 		public TransitionPanel() {
 			animator = new Animator(animationDuration, 1, RepeatBehavior.REVERSE, this);
-			animator.setResolution(5);
+			animator.setResolution(1);
 			
 			animator.setDeceleration(1.0f);
 			
-			this.setBounds(0, 0, 10000, 1000);
+			this.setBounds(0, 0, _WIDTH, _HEIGHT);
 			this.setOpaque(false);
 		}
 		
@@ -285,8 +285,43 @@ public class MenuVista extends JFrame implements Vista {
 			this.add(generador, JLayeredPane.POPUP_LAYER);
 			
 			//Botón interacción
-			interactButton = new JButton();
+			interactButton = new JButton() {
+				@Override
+				public void paintComponent(Graphics g) {
+					super.paintComponent (g);
+					Graphics2D g2 = (Graphics2D)g;
+					
+					// Render Hints
+					{
+						g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			            g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+			            g2.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+			            g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+			            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			            g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+					}
+		            
+					// Dibujar la caja de fondo
+					g2.setPaint(new Color(0x493628));  
+					g2.fill(new RoundRectangle2D.Double(-10, 0, _INTERACTBUTTON_WIDTH + 10, _INTERACTBUTTON_WIDTH, 10, 10));
+					
+					// Dibujar el texto
+					Font font = this.getFont();
+					
+					// Cálculo de la posición del texto
+					FontMetrics metrics = getFontMetrics(font);
+					int dX = (this.getWidth() - metrics.stringWidth(this.getText())) / 2;
+					int dY = ((this.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
+					
+					g2.setFont(font);
+					g2.setPaint(new Color(0xE4E0E1));
+					g2.drawString(this.getText(), dX, dY);
+				}
+			};
 			interactButton.setBackground(null);
+			interactButton.setOpaque(false);
 			interactButton.setFocusable(false);
 			interactButton.setBorder(null);
 			interactButton.setText(">");
@@ -317,6 +352,7 @@ public class MenuVista extends JFrame implements Vista {
 		public void show() {
 			if (!animator.isRunning()) {
 				reverseAnimator();
+				reverseButton();
 				animator.start();
 				
 				this.setEnabled(!this.isEnabled());
@@ -333,6 +369,13 @@ public class MenuVista extends JFrame implements Vista {
 				animator.setStartDirection(Direction.BACKWARD);
 				status = false;
 			}
+		}
+		
+		public void reverseButton() {
+			if (lateralPanel.getInteractButton().getText().equals(">"))
+				lateralPanel.getInteractButton().setText("<");
+			else
+				lateralPanel.getInteractButton().setText(">");
 		}
 	
 		private class RedButton extends JButton {
