@@ -318,8 +318,8 @@ public class Programa {
 		listaMonedas.add("dogecoin");
 		listaMonedas.add("apu-s-club");
 		//estas de abajo no andan, find out why
-		/*listaMonedas.add("usdc");
-		listaMonedas.add("usdt");*/
+		listaMonedas.add("usd-coin");
+		listaMonedas.add("tether");
 
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		try {
