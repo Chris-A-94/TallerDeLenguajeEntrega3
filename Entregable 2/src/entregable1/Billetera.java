@@ -138,10 +138,20 @@ public class Billetera {
 		this.defis = new LinkedList<DeFi>();
 		tarjeta = null;
 		arregloSaldo = new LinkedList<Saldo>();
+		this.cargarArregloSaldo();
 		this.userID = userID;
 	}
 	
-	
+		
+	private void cargarArregloSaldo()
+	{
+		ActivosDAO misActivos = new ActivosDAO();
+		for(Saldo userSaldo: misActivos.devolverTabla())
+		{
+			if(userSaldo.getUser_id().equals(this.userID))
+				this.arregloSaldo.add(userSaldo);
+		}
+	}
 	
 	private Saldo buscarSaldo(String sigla) {
 		for (Saldo s : this.arregloSaldo) {
