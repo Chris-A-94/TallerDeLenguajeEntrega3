@@ -291,7 +291,7 @@ public class Sistema {
 		for (Usuario u : usuarios) {
 			if (u.getEmail().equals(Email)) {
 				for (Saldo s: this.saldosUsuarios) {
-					if (s.getUser_id().equals(u.getDNI()))
+					if (s.getUser_id().equals(u.getEmail()))
 						u.getBilletera().agregarSaldo(s);
 				}
 				for (Transaccion t: this.transacciones) {
