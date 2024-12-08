@@ -99,15 +99,24 @@ public class PanelCompraControlador {
 				{
 					String fiatSeleccionado = panelVista.getMonedasFiat().getSelectedItem().toString();
 					Saldo aux = null;
+					CoinDAO auxCoinFiat = new CoinDAO();
+					Coin fiatCoin = auxCoinFiat.getCoin(fiatSeleccionado);
 					for(Saldo s: wallet.getArregloSaldo())
 					{
 						if(s.getSigla().equals(fiatSeleccionado))
 							aux = s;
 					}
-					if(aux.getCantMonedas() < Double.parseDouble(panelVista.getValor().getText()))
+					
+					double valorEnCuadro = Double.parseDouble(panelVista.getValor().getText());
+					//if(aux.getCantMonedas() < Double.parseDouble(panelVista.getValor().getText()))
+					if(aux.getCantMonedas() <valorEnCuadro)	
 					{
 						panelVista.getValor().setBorder(new LineBorder(Color.RED, 2));						
 					}
+					
+					double valorEquivalente = (valorEnCuadro * fiatCoin.getPrecio()) / criptoSeleccionada.getPrecio();
+					
+					panelVista.getprecioActualizable().setText("Valor Equivalente: "+valorEquivalente+criptoSeleccionada.getNombre());
 				}
 				else
 					panelVista.getValor().setBorder(new LineBorder(Color.RED, 2));
@@ -177,8 +186,7 @@ public class PanelCompraControlador {
 				});
 		
 	}
-	//no puedo llamarlo sin saber que esta seleccionado 
-	//ahora mismo esta para ver si funciona nomas, solo actualiza USD
+	
 	private void visualizarSaldo(String fiatSigla)
 	{
 		JLabel saldo = panelVista.getCantidadYPrecio();		

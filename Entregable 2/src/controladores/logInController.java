@@ -23,16 +23,14 @@ import vistas.logInPage;
 public class logInController {
 	
 	private logInPage frontEnd;
-	private UsuarioDAO users;
-	private List<Usuario> usuarios;
+	private UsuarioDAO users;	
 	private String Email;
 	private String Password;
 	private Sistema sistema;
 	public logInController(logInPage login,Sistema sistema)
 	{
 		this.frontEnd = login;
-		users = new UsuarioDAO();
-		usuarios = users.devolverTabla(); //no me gusta esto, deberia haber un metodo "buscarUser" en el Dao
+		users = new UsuarioDAO();		
 		this.actualizarData();
 		this.agregarListeners();
 		this.sistema = sistema;
@@ -41,11 +39,9 @@ public class logInController {
 	private boolean userExist(String email)
 	{
 		boolean existe = false;
-		for(Usuario user: this.usuarios)
-		{
-			if(user.getEmail().equals(email))
-				existe = true;
-		}
+		Usuario user = users.getUsuario(email);
+		if(user != null)
+			existe = true;		
 		return existe;
 	}
 	
