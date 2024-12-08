@@ -62,14 +62,13 @@ public class TransaccionPanel extends JPanel {
     }
 
     public void agregarTransaccion(String t) {
-        JLabel aux = new JLabel("* "+t);
+        JLabel aux = new JLabel(t);
         aux.setOpaque(false);
 		
 		aux.setForeground(new Color(0x291e17));
 		aux.setFont(new Font("Arial", Font.BOLD,20));
 		aux.setHorizontalAlignment(SwingConstants.CENTER);
         contenedor.add(aux);
-          
 
     }
     public JButton getRefresh() {

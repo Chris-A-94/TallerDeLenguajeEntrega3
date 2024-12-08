@@ -35,6 +35,7 @@ public class MisActivosVista extends JPanel {
 	
 	private Sistema sistema;
 	private Usuario user;
+	private JButton exportar = new JButton("Exportar...");
 	
 	public MisActivosVista(int width, Sistema sistema, Usuario user) {
 		super();
@@ -46,8 +47,7 @@ public class MisActivosVista extends JPanel {
 		this.setLayout(null);
 		
 		// Atributos
-		this.setBounds(20, 0, width - 20, 1200);
-		
+		this.setBounds(20, 0, width - 20, 1200);		
 		this.setBackground(new Color(0xE4E0E1));
 		
 		// Instanciar Lista de 'Activo'
@@ -56,9 +56,19 @@ public class MisActivosVista extends JPanel {
 		for (Saldo s : user.getBilletera().getArregloSaldo()) {
 			this.agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
 		}
+		//Boton exportar
+		exportar.setBounds(this.getWidth()-110,this.getHeight()/2+10, 100, 30);
+		exportar.setBorder(null);
+		exportar.setBackground(new Color(0xAB886D));
+		exportar.setFont(new Font("Arial", Font.PLAIN,20));
+		exportar.setFocusPainted(false);
+		
+		this.add(exportar);
 		inicializarTimer();
 	}
-	
+	public JButton devolverExportar() {
+		return this.exportar;
+	}
 	private void agregarActivo(Coin c, Saldo s) {
 		// Instanciar nuevo 'Botón'
 		Activo activo = new Activo(c, s);
