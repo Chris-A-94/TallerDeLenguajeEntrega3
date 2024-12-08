@@ -53,6 +53,7 @@ public class MisActivosVista extends JPanel {
 		// Instanciar Lista de 'Activo'
 		listaActivos = new LinkedList<Activo>();
 		// Agregar Saldos
+		
 		for (Saldo s : user.getBilletera().getArregloSaldo()) {
 			this.agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
 		}

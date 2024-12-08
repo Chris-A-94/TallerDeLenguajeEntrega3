@@ -19,6 +19,7 @@ public class PanelCompra extends JFrame{
 	private JPanel elPanel;
 	private JComboBox<String> monedasFiat;
 	private JLabel cantidadYPrecio;
+	private JLabel precioActualizable;
 	private JButton comprar;
 	private JButton cancelar;
 	private JTextField valor;	
@@ -50,6 +51,11 @@ public class PanelCompra extends JFrame{
 	public JTextField getValor() {
 		return valor;
 	}
+	
+	public JLabel getprecioActualizable()
+	{
+		return this.precioActualizable;
+	}
 
 	public PanelCompra()
 	{
@@ -75,12 +81,14 @@ public class PanelCompra extends JFrame{
 		JLabel mensaje1 = new JLabel("Ingrese cantidad de monedas deseadas: ");
 		JLabel mensaje2 = new JLabel("Elija dinero a utilizar: ");
 		this.cantidadYPrecio = new JLabel(""); //llenado por el controlador
+		this.precioActualizable = new JLabel("");//llenado por el controlador
 		
 		this.elPanel.add(mensaje1);
 		this.elPanel.add(valor);
 		this.elPanel.add(mensaje2);
 		this.elPanel.add(monedasFiat);
 		this.elPanel.add(cantidadYPrecio);
+		this.elPanel.add(precioActualizable);
 		this.elPanel.add(comprar);
 		this.elPanel.add(cancelar);
 		
