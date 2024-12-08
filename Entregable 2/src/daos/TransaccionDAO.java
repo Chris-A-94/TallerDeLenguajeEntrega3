@@ -54,15 +54,15 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 	}
 	@Override
 	public boolean guardar(Transaccion t) {
-			try {
-			    String query = "INSERT INTO TRANSACCION (FECHA, TIPO, USER_ID,DESCRIPCION) VALUES (?, ?, ?,?)";
-			    PreparedStatement pstmt = con.prepareStatement(query);			    
-			    pstmt.setString(1, t.getFecha());
-			    pstmt.setString(2, t.getTipo().toString());
-			    pstmt.setString(3, t.getUserID());
-			    pstmt.setString(4, t.toString());
-			    pstmt.executeUpdate();
-			    pstmt.close();
+		try {
+			  String query = "INSERT INTO TRANSACCION (FECHA, TIPO, USER_ID,DESCRIPCION) VALUES (?, ?, ?,?)";
+			  PreparedStatement pstmt = con.prepareStatement(query);			    
+			  pstmt.setString(1, t.getFecha());
+			  pstmt.setString(2, t.getTipo().toString());
+			  pstmt.setString(3, t.getUserID());
+			  pstmt.setString(4, t.toString());
+			  pstmt.executeUpdate();
+			  pstmt.close();
 			  return true;
 			} catch (SQLException e) {
 				    System.out.println(e.getMessage());
@@ -78,10 +78,9 @@ public class TransaccionDAO implements DaoInterface<Transaccion> {
 			
 			while (resul.next() == true) {
 				String[] fecha = resul.getString("FECHA").split("/");
-				String[] rawData = resul.getString("DESCRIPCION").split("-");
+				String[] rawData = resul.getString("DESCRIPCION").split(";");
 				if (resul.getString("TIPO").equals("COMPRA"))
 				{
-					
 					list.add(new TransaccionCompra(fecha[0],fecha[1],fecha[2],resul.getString("USER_ID"), rawData[1], rawData[3], Double.valueOf(rawData[0]),Double.valueOf(rawData[2])));
 				}
 				else
