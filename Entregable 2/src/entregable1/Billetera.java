@@ -2,8 +2,8 @@ package entregable1;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -34,7 +34,7 @@ public class Billetera {
 	private String clavePublica;
 	private List<Transaccion> Transacciones;
 	
-	public void nuevaCompra(JTextField valor, Coin moneda,String siglaFiat) throws CompraExcepcion
+	public void nuevaCompra(JFrame parent, JTextField valor, Coin moneda,String siglaFiat) throws CompraExcepcion
 	{
 		if(Math.abs(moneda.getStock() - 0.0) < 1e-12)
 			throw new CompraExcepcion("No hay stock en la moneda "+moneda.getNombre(),false);
@@ -65,7 +65,7 @@ public class Billetera {
 		double total = monedaAObtener - comision;
 		Object[] enEspaniol = {"Sí", "No"};
 		
-		int respuesta = JOptionPane.showOptionDialog (null,"¿Desea cargar "+monedaAObtener+moneda.getSigla()+"?\n"
+		int respuesta = JOptionPane.showOptionDialog (parent,"¿Desea cargar "+monedaAObtener+moneda.getSigla()+"?\n"
 				+"Se descontara un 3% de comision. Total Compra: "+total,"Confirmar Operacion",JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null,enEspaniol,enEspaniol[0]);
 		
@@ -103,7 +103,7 @@ public class Billetera {
 		else if (respuesta == JOptionPane.NO_OPTION) 
             return;
 		
-		JOptionPane.showMessageDialog(null,"Se ha cargado "+monedaAObtener+" en "+moneda.getNombre()
+		JOptionPane.showMessageDialog(parent,"Se ha cargado "+monedaAObtener+" en "+moneda.getNombre()
 				,"Operacion Exitosa!", JOptionPane.INFORMATION_MESSAGE);
 	}
 	

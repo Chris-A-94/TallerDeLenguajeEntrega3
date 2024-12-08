@@ -8,9 +8,6 @@ import decoradores.ControladorTextField;
 import decoradores.ExitButton;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.net.URL;

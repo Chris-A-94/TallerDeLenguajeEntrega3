@@ -63,6 +63,8 @@ public class TarjetaVistaControladorSwap {
 		Double cantidad;
 		try {
 			 cantidad = Double.valueOf(strCantidad);
+			 if (cantidad < 0.0)
+				 cantidad = 0.0;
 		} catch (NumberFormatException e) {
 			cantidad = 0.0;
 		}

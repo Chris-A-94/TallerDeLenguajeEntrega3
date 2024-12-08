@@ -1,11 +1,15 @@
 package vistas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class MenuVista extends JFrame implements Vista {
 				_HEIGHT = 768;
 	
 	private int _BARPANEL_HEIGHT = 25;
+	
+	private String _LOGO_TEXT = "Bolainas";
 	
 	private LateralPanel lateralPanel;
 	private ContentPanel contentPanel;
@@ -68,7 +74,16 @@ public class MenuVista extends JFrame implements Vista {
 		this.add(mainPane);
 		
 		// Set Default Panel
-		this.agregarPanel("Inicio", new JPanel(null));
+		JPanel inicio = new JPanel();
+		inicio.setOpaque(false);
+		inicio.setBackground(null);
+		
+		JLabel imageLabel0 = new JLabel();
+		imageLabel0.setIcon(new ImageIcon("src/Imagenes/wallpaper0.png"));
+		
+		inicio.add(imageLabel0);
+		
+		this.agregarPanel("Inicio", inicio);
 		
 		if (lateralPanel.getButtons().size() > 0) {
 			contentPanel = lateralPanel.getButtons().get(0).getPanel();
@@ -92,15 +107,17 @@ public class MenuVista extends JFrame implements Vista {
 		
 		this.mainPane.add(transitionPanel, JLayeredPane.POPUP_LAYER);
 		
+		System.out.printf("MenuVista::PreferredWidth: %d; PreferredHeight: %d\n", this.getPreferredContentWidth(), this.getPreferredContentHeight());
+		
 		// Agregar comportamiento del botón
 		lateralPanel.getInteractButton().addActionListener(e -> {			
 			transitionPanel.show();
 			lateralPanel.show();
 		});
 		
-		// Inicializar estado
-		transitionPanel.show();
-		lateralPanel.show();
+//		// Inicializar estado
+//		transitionPanel.show();
+//		lateralPanel.show();
 	}
 	
 	public void agregarPanel(String title, JPanel componente) {
@@ -240,9 +257,12 @@ public class MenuVista extends JFrame implements Vista {
 		private LinkedList<RedButton> buttons = new LinkedList<RedButton>();
 		
 		private JPanel buttonsPanel;
+		private JPanel logoPanel;
 		
 		private JButton generador = new JButton();
 		private JButton interactButton;
+		
+		private ImageIcon logo;
 		
 		private final int _INTERACTBUTTON_WIDTH = 30;
 		private final int _LATERALPANEL_WIDTH = 180;
@@ -275,6 +295,37 @@ public class MenuVista extends JFrame implements Vista {
 			buttonsPanel.setLayout(null);
 			buttonsPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, new Color(0x493628)));
 			this.add(buttonsPanel);
+			
+			// Logo
+			logo = new ImageIcon("Logo.png");
+			Image tempImagen = logo.getImage();
+			tempImagen = tempImagen.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
+			logo = new ImageIcon(tempImagen);
+			
+			int logoWidth = logo.getIconWidth() + 100;
+			int logoHeight = logo.getIconHeight() + 40;
+			
+			logoPanel = new JPanel();
+			logoPanel.setBounds((_LATERALPANEL_WIDTH / 2) - (logoWidth / 2), 15, logoWidth, logoHeight + 5);
+			logoPanel.setOpaque(false);
+			logoPanel.setBackground(null);
+			
+			JLabel temp = new JLabel(_LOGO_TEXT);
+			Font font;
+			try {
+				font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(25.0f);
+			} catch (FontFormatException | IOException e) {
+				font = null;
+				e.printStackTrace();
+			}
+			temp.setFont(font);
+			temp.setVerticalTextPosition(JLabel.BOTTOM);
+			temp.setHorizontalTextPosition(JLabel.CENTER);
+			temp.setIcon(logo);
+			logoPanel.add(temp);
+			
+			this.add(logoPanel, JLayeredPane.POPUP_LAYER);
+			
 			
 			//Botón generador
 			this.generador.setBounds(20, this.getHeight()-40, 60, 30);
@@ -324,11 +375,11 @@ public class MenuVista extends JFrame implements Vista {
 			interactButton.setOpaque(false);
 			interactButton.setFocusable(false);
 			interactButton.setBorder(null);
-			interactButton.setText(">");
+			interactButton.setText("<");
 			interactButton.setBounds(buttonsPanel.getWidth(), 50, _INTERACTBUTTON_WIDTH, _INTERACTBUTTON_WIDTH);
 			
 			this.add(interactButton, JLayeredPane.POPUP_LAYER);
-		};		
+		};
 		
 		public void newButton(String msg, ContentPanel panel) {
 			RedButton button = new RedButton(panel);
@@ -336,6 +387,10 @@ public class MenuVista extends JFrame implements Vista {
 			button.setText(msg);
 			// Asigno el título
 			panel.setTitle(msg);
+			
+			// Posicionamiento
+			button.setBounds(0, 140 + 40*buttons.size(), 180, 40);
+			
 			// Agregar al Panel
 			buttonsPanel.add(button);
 			buttons.add(button);
@@ -408,16 +463,20 @@ public class MenuVista extends JFrame implements Vista {
 				 * Atributos
 				 */
 				
-				// Posicionamiento
-				this.setBounds(0, 80 + 40*buttons.size(), 180, 40);
-				
 				this.setFocusable(false);
 				this.setBorder(null);
 				this.setContentAreaFilled(false);
 				
 				// Estética
 				this.boxColor = this.defaultColor;
-				this.setFont(new Font("Nimbus Roman", Font.PLAIN, 20));
+				Font font;
+				try {
+					font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(20.0f);
+				} catch (FontFormatException | IOException e) {
+					font = null;
+					e.printStackTrace();
+				}
+				this.setFont(font);
 				
 				// ActionListener
 				this.addActionListener(e -> {

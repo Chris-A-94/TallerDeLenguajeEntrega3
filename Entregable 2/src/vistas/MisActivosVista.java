@@ -26,7 +26,6 @@ import javax.swing.Timer;
 import entregable1.Coin;
 import entregable1.Saldo;
 import entregable1.Sistema;
-import entregable1.TipoMoneda;
 import entregable1.Usuario;
 
 @SuppressWarnings("serial")
@@ -36,6 +35,8 @@ public class MisActivosVista extends JPanel {
 	private Sistema sistema;
 	private Usuario user;
 	private JButton exportar = new JButton("Exportar...");
+	
+	private JLabel emptyLabel;
 	
 	public MisActivosVista(int width, Sistema sistema, Usuario user) {
 		super();
@@ -65,6 +66,22 @@ public class MisActivosVista extends JPanel {
 		exportar.setFocusPainted(false);
 		
 		this.add(exportar);
+		
+		
+		// emptyLabel
+		emptyLabel = new JLabel("Tu billetera está vacía.");
+		ImageIcon imageIcon = new ImageIcon("1.gif");
+		Image image = imageIcon.getImage();
+		imageIcon = new ImageIcon(image.getScaledInstance(5*50, 4*50, 0));
+		
+		emptyLabel.setIcon(imageIcon);
+		emptyLabel.setBounds((width - imageIcon.getIconWidth()) / 2, 10, imageIcon.getIconWidth(), imageIcon.getIconHeight() + 50);
+		emptyLabel.setHorizontalTextPosition(JLabel.CENTER);
+		emptyLabel.setVerticalTextPosition(JLabel.BOTTOM);
+		
+		this.add(emptyLabel);
+		
+		
 		inicializarTimer();
 	}
 	public JButton devolverExportar() {
@@ -92,7 +109,9 @@ public class MisActivosVista extends JPanel {
 			        if (listaActivos.equals(null)) {
 			        	timer.stop();
 			        }
-			        else {
+			        else if (!listaActivos.isEmpty()){
+			        	emptyLabel.setVisible(false);
+			        	
 			        	// Actualizar los activos ya presentes
 			        	for (Activo a : listaActivos) {
 			        		a.actualizarSaldo();

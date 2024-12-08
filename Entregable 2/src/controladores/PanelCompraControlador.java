@@ -144,18 +144,18 @@ public class PanelCompraControlador {
 							}
 							try {
 								//LLAMADO A COMPRA
-								wallet.nuevaCompra(panelVista.getValor(),criptoSeleccionada,fiatSeleccionado);
+								wallet.nuevaCompra(panelVista, panelVista.getValor(),criptoSeleccionada,fiatSeleccionado);
 							} catch (CompraExcepcion e1) {
 								if(!e1.hayStock())
 								{
-									JOptionPane.showMessageDialog(null,"No hay stock de "+criptoSeleccionada.getNombre()+" por favor espere." ,"No Stock", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(panelVista,"No hay stock de "+criptoSeleccionada.getNombre()+" por favor espere." ,"No Stock", JOptionPane.ERROR_MESSAGE);
 									criptoSeleccionada.generarStock();
-									JOptionPane.showMessageDialog(null,"Intente nuevamente." ,"Stock Generado", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(panelVista,"Intente nuevamente." ,"Stock Generado", JOptionPane.ERROR_MESSAGE);
 								}
 								else
 								{
 									Object[] enEspaniol = {"Sí", "No"};
-									int reintentar = JOptionPane.showOptionDialog (null,"Esta intentando comprar un monto muy alto. ¿Desea comprar el maximo posible en su lugar?","Monto Invalido",JOptionPane.YES_NO_OPTION,
+									int reintentar = JOptionPane.showOptionDialog (panelVista,"Esta intentando comprar un monto muy alto. ¿Desea comprar el maximo posible en su lugar?","Monto Invalido",JOptionPane.YES_NO_OPTION,
 											JOptionPane.QUESTION_MESSAGE, null,enEspaniol,enEspaniol[0]);
 									if(reintentar == 0)
 									{
@@ -166,7 +166,7 @@ public class PanelCompraControlador {
 											valorAux /= fiatAux.getCoin(fiatSeleccionado).getPrecio();
 										auxText.setText(valorAux.toString());
 										try {
-											wallet.nuevaCompra(auxText, criptoSeleccionada, fiatSeleccionado);
+											wallet.nuevaCompra(panelVista, auxText, criptoSeleccionada, fiatSeleccionado);
 										} catch (CompraExcepcion e2) {
 											//Aca no deberia nunca entrar al Catch
 											e2.printStackTrace();
@@ -180,7 +180,7 @@ public class PanelCompraControlador {
 							cargarOpciones(); 
 						}
 						else
-							JOptionPane.showMessageDialog(null,"Escriba unicamente numeros positivos, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(panelVista,"Escriba unicamente numeros positivos, utilizando el punto como divisior decimal." ,"Numero Invalido", JOptionPane.ERROR_MESSAGE);
 					
 					}
 				});

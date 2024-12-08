@@ -1,8 +1,9 @@
 package vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,6 +29,10 @@ public class TarjetaVista extends JPanel {
 	private JButton botonSwap;
 	private JTextArea textContent;
 	private Coin moneda;
+	
+	private JPanel botones;
+	
+	private String text = " Precio: %.6f US$\n Stock: %.6f\n Price Var.24hs: %.6f\n Percentage Var.24hs: %.6f";
 	public TarjetaVista(Coin c) {
 		if (c == null) {
 			return;
@@ -39,7 +44,7 @@ public class TarjetaVista extends JPanel {
 		Color colorTitulo 	 = new Color(0x493628);
 		Color textColor 		= new Color(0xD6C0B3);
 		// LayoutManager	
-		this.setLayout(new GridLayout(4,1));
+		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
 		
 		
@@ -51,31 +56,38 @@ public class TarjetaVista extends JPanel {
 		title.setForeground(textColor);
 		title.setFont(new Font("Arial", Font.BOLD, 30));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		this.add(title);
+		this.add(title, BorderLayout.NORTH);
 		// Contenido
 		textContent = new JTextArea();
 		DecimalFormat numberFormat = new DecimalFormat("#.000000");
-		textContent.setText(" Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\n Stock: " + numberFormat.format(moneda.getStock()).toString());
+		textContent.setText(String.format(text, moneda.getPrecio(), moneda.getStock(), moneda.getPriceChange(), moneda.getPercentageVariation()));
 		textContent.setBackground(null);
 		textContent.setFont(new Font("Times New Roman", Font.ITALIC, 17));
 		textContent.setBackground(fondoContenido);
 		textContent.setEditable(false);
 		textContent.setHighlighter(null);
-		this.add(textContent);
+		this.add(textContent, BorderLayout.CENTER);
 		
 		// Botones
+		botones = new JPanel();
+		
 		// Comprar
-		botonCompra = new JButton("COMPRAR");
+		botonCompra = new JButton("Comprar");
 		botonCompra.setBackground(new Color(0xAB886D));
-		botonCompra.setFont(new Font("Arial", Font.PLAIN,17));
+		botonCompra.setFont(new Font("Arial", Font.PLAIN,20));
 		botonCompra.setFocusPainted(false);
 		// Swap	
-		botonSwap = new JButton("SWAP");
+		botonSwap = new JButton("Swap");
 		botonSwap.setBackground(new Color(0xAB886D));
-		botonSwap.setFont(new Font("Arial", Font.PLAIN,17));
+		botonSwap.setFont(new Font("Arial", Font.PLAIN,20));
 		botonSwap.setFocusPainted(false);
-		this.add(botonCompra);
-		this.add(botonSwap);
+		botones.add(botonCompra);
+		botones.add(botonSwap);
+		
+		botones.setPreferredSize(new Dimension(this.getWidth(), 50));
+		botones.setBackground(textContent.getBackground());
+		
+		this.add(botones, BorderLayout.SOUTH);
 		
 		// Cargar imagen de una URL
 		URL url;
@@ -98,8 +110,13 @@ public class TarjetaVista extends JPanel {
 		}
 		ImageIcon imageIcon = new ImageIcon(image);
 		
-		title.setIcon(imageIcon);	
-		
+		title.setIcon(imageIcon);
+	}
+	
+	public void actualizar() {
+		textContent.setText(String.format(text, moneda.getPrecio(), moneda.getStock(), moneda.getPriceChange(), moneda.getPercentageVariation()));
+		this.repaint();
+		this.validate();
 	}
 	
 	public JButton getBotonComprar()

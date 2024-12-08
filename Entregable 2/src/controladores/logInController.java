@@ -9,15 +9,9 @@ import javax.swing.text.JTextComponent;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.LinkedList;
 import daos.UsuarioDAO;
-import decoradores.ControladorTextField;
 import entregable1.Sistema;
 import entregable1.Usuario;
-import vistas.MenuVista;
-import vistas.RegistroVista;
 import vistas.logInPage;
 
 public class logInController {

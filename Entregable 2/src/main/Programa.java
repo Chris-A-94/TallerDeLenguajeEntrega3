@@ -1,21 +1,14 @@
 package main;
 
-import java.util.Scanner;
-
 import entregable1.*;
 import modelos.MonitoreoCoin;
-import controladores.PrototipoControlador;
-import controladores.logInController;
-import daos.CoinDAO;
 import vistas.logInPage;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+
+import controladores.logInController;
 public class Programa {
 		
 	public static void main(String[] args) {
@@ -41,12 +34,12 @@ public class Programa {
 		List<Coin> list = MonitoreoCoin.getListaMonedas();
 		list.addAll(sistema.getMonedas());		
 		sistema.setMonedas(list);		
-//		logInPage log = new logInPage();
-//		logInController logs = new logInController(log,sistema);
+		logInPage log = new logInPage();
+		logInController logs = new logInController(log,sistema);
 		
 //Menu
 //		PrototipoControlador prototipo = new PrototipoControlador(MonitoreoCoin.getListaMonedas());
-		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("Chris@gmail.com"));
+//		PrototipoControlador prototipo = new PrototipoControlador(sistema, sistema.getUsuario("Chris@gmail.com"));
 
 		
 	}	

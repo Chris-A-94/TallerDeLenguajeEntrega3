@@ -28,7 +28,6 @@ public class TarjetaVistaControladorCompra {
 		this.user = user;
 		
 		this.addListener();
-		this.actualizarData();
 	}
 	
 	private void addListener()
@@ -54,24 +53,4 @@ public class TarjetaVistaControladorCompra {
 		    };
 		});
 	}
-	private void actualizarData()
-	{
-		Timer repetidor = new Timer();
-		TimerTask tarea = new TareaTimer();
-		repetidor.schedule(tarea, 0, 1000);
-		
-	}
-	
-	private class TareaTimer extends TimerTask
-	{
-
-		@Override
-		public void run() {			
-			DecimalFormat numberFormat = new DecimalFormat("#.000000");
-			Coin moneda = panelMoneda.getMoneda();
-			panelMoneda.getTextContent().setText(" Precio: " + numberFormat.format(moneda.getPrecio()).toString() + "\n Stock: " + numberFormat.format(moneda.getStock()).toString());
-		}
-		
-	}
-
 }

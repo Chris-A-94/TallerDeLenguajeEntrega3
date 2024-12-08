@@ -56,7 +56,7 @@ public class VistaSwap extends JFrame {
 		
 		// label
 		label = new JLabel();
-		label.setText("SWAP");
+		label.setText("- Swap");
 		label.setHorizontalAlignment(JLabel.CENTER);
 		
 		this.add(label, BorderLayout.NORTH);
@@ -104,14 +104,18 @@ public class VistaSwap extends JFrame {
 		
 		
 		// monedas
-		selecMonedas = new JPanel(new GridLayout(2, 1));
+		selecMonedas = new JPanel(new BorderLayout());
 		
 		listMonedas = new JComboBox();
 		listMonedas.setPreferredSize(new Dimension(150, 20));
 		
-		this.selecMonedas.add(new JLabel("Intercambiar"));
-		this.selecMonedas.add(listMonedas);
+		JPanel offsetPanel = new JPanel();
+		offsetPanel.setPreferredSize(new Dimension(10, 10));
 		
+		this.selecMonedas.add(offsetPanel, BorderLayout.NORTH);
+		this.selecMonedas.add(new JLabel("   Intercambiar"), BorderLayout.NORTH);
+		this.selecMonedas.add(listMonedas, BorderLayout.CENTER);
+		this.selecMonedas.add(offsetPanel, BorderLayout.WEST);
 		
 		this.add(selecMonedas, BorderLayout.WEST);
 		
@@ -130,8 +134,10 @@ public class VistaSwap extends JFrame {
 		
 		// Agregar las opciones
 		listSaldos.forEach(s -> {
+			String text = "%s : %.5f";
+			
 			if (s.getTipo().equals(TipoMoneda.CRIPTOMONEDA) && !(s.getSigla().equalsIgnoreCase(targetCoin.getSigla())))
-				listOpt.add(s.getSigla().toUpperCase() + " : " + s.getCantMonedas());
+				listOpt.add(String.format(text, s.getSigla().toUpperCase(), s.getCantMonedas()));
 		});
 		
 		// Asignar un nuevo modelo

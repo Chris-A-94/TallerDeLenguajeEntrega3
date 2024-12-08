@@ -86,6 +86,9 @@ public class MonitoreoCoin {
 				object.getJSONObject("image").getString("thumb"),
 				object.getJSONObject("image").getString("small"),
 				object.getJSONObject("image").getString("large"));
+
+		moneda.setPercentageVariation(object.getJSONObject("market_data").getDouble("price_change_percentage_24h"));
+		moneda.setPriceChange(object.getJSONObject("market_data").getDouble("price_change_24h"));
 		
 		return moneda;
 	}

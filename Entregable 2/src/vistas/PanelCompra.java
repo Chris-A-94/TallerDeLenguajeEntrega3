@@ -72,7 +72,8 @@ public class PanelCompra extends JFrame{
 	{
 		this.setTitle("Comprar Criptomonedas");
 		this.setSize(400, 300);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
 		this.elPanel = new JPanel();

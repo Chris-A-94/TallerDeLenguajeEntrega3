@@ -16,6 +16,9 @@ public class Coin implements Comparable<Coin>{
 	private String url_small;
 	private String url_large;
 	
+	private Double priceChange;
+	private Double percentageVariation;
+	
 	public Coin(String nombre, String sigla, TipoMoneda tipo,Double precio) {
 
 		this.nombre = nombre;
@@ -77,6 +80,19 @@ public class Coin implements Comparable<Coin>{
 	public void setStock(Double stock) {
 		this.stock = stock;
 	}
+	public Double getPriceChange() {
+		return priceChange;
+	}
+	public void setPriceChange(Double priceChange) {
+		this.priceChange = priceChange;
+	}
+	public Double getPercentageVariation() {
+		return percentageVariation;
+	}
+	public void setPercentageVariation(Double percentageVariation) {
+		this.percentageVariation = percentageVariation;
+	}
+	
 	public boolean generarStock()
 	{
 		/*if (this.stock != 0)
