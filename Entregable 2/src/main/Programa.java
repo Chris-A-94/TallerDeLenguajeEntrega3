@@ -24,6 +24,9 @@ public class Programa {
 		listaMonedas.add("apu-s-club");		
 		listaMonedas.add("usd-coin");
 		listaMonedas.add("tether");
+		listaMonedas.add("ripple");
+		listaMonedas.add("solana");
+		listaMonedas.add("cardano");
 
 		MonitoreoCoin.setListaIDMonedas(listaMonedas);
 		try {
