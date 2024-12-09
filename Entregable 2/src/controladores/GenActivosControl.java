@@ -81,6 +81,8 @@ public class GenActivosControl {
 	{
 		String auxText = valor.getText();
 		boolean usable = false;
+		if(auxText.equals(""))
+			return usable;		
 		int pointCounter = 0;
 		int pointPlace = -1;
 		for(int i = 0; i < auxText.length(); i++)

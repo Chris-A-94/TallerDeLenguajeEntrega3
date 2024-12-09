@@ -3,6 +3,7 @@ package vistas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -17,27 +18,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import modelos.Coin;
 import modelos.Saldo;
 import modelos.TipoMoneda;
 
 public class VistaSwap extends JFrame {
-	JLabel label,
+	private JLabel label,
 		targetLabel,
 		targetCantidad;
 	
-	HintTextField cantidad;
+	private HintTextField cantidad;
 
-	JComboBox listMonedas;
+	private JComboBox listMonedas;
 
-	JPanel botones,
+	private JPanel botones,
 		selecMonedas,
 		selecCantidad,
 		target;
-	JButton confirmar, cancelar;
+	private JButton confirmar, cancelar;
 	
-	Coin targetCoin;
+	private Coin targetCoin;
 
 	public VistaSwap() {
 		// atributos
@@ -63,6 +65,7 @@ public class VistaSwap extends JFrame {
 		
 		// botones
 		botones = new JPanel();
+		botones.setBackground(new Color(0xDAD6D7));
 		this.add(botones, BorderLayout.SOUTH);
 		
 		// confirmar
@@ -74,9 +77,17 @@ public class VistaSwap extends JFrame {
 		cancelar.setText("Cancelar");
 		botones.add(cancelar);
 		
+		//configColorBoton Nueva
+		this.confirmar.setBackground(new Color(0xAB886D));
+		this.confirmar.setFont(new Font("Tahoma",Font.BOLD,14));		
+		this.confirmar.setFocusPainted(false);
+		this.cancelar.setBackground(new Color(0xAB886D));
+		this.cancelar.setFont(new Font("Tahoma",Font.BOLD,14));		
+		this.cancelar.setFocusPainted(false);
 		
 		// target
 		target = new JPanel(new GridLayout(2,1));
+		target.setBackground(new Color(0xDAD6D7));
 		
 		targetLabel = new JLabel("undefined");
 		targetLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -97,6 +108,7 @@ public class VistaSwap extends JFrame {
 		
 		cantidad = new HintTextField(" Cantidad");
 		cantidad.setPreferredSize(new Dimension(200, 10));
+		this.cantidad.setBackground(new Color(0xD6C0B3));
 		
 		selecCantidad.add(cantidad);
 	
@@ -105,22 +117,25 @@ public class VistaSwap extends JFrame {
 		
 		// monedas
 		selecMonedas = new JPanel(new BorderLayout());
+		selecMonedas.setBackground(new Color(0xDAD6D7));
 		
 		listMonedas = new JComboBox();
 		listMonedas.setPreferredSize(new Dimension(150, 20));
 		
 		JPanel offsetPanel = new JPanel();
 		offsetPanel.setPreferredSize(new Dimension(10, 10));
+		offsetPanel.setBackground(new Color(0xDAD6D7));
 		
-		this.selecMonedas.add(offsetPanel, BorderLayout.NORTH);
-		this.selecMonedas.add(new JLabel("   Intercambiar"), BorderLayout.NORTH);
+		this.selecMonedas.add(offsetPanel, BorderLayout.NORTH);		
+		this.selecMonedas.add(new JLabel("   Intercambiar"), BorderLayout.NORTH); 
 		this.selecMonedas.add(listMonedas, BorderLayout.CENTER);
 		this.selecMonedas.add(offsetPanel, BorderLayout.WEST);
 		
 		this.add(selecMonedas, BorderLayout.WEST);
-		
+		this.getContentPane().setBackground(new Color(0xDAD6D7));
 		this.pack();
-		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));
+		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));		
+		
 		
 		this.setVisible(false);
 	}
@@ -235,4 +250,6 @@ public class VistaSwap extends JFrame {
 		    return showingHint ? "" : super.getText();
 		  }
 		}
+
+	
 }

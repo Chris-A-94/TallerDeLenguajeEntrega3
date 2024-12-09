@@ -364,7 +364,7 @@ public class Sistema {
 	{
 		Timer repetidor = new Timer();
 		TimerTask tarea = new TareaTimer();
-		repetidor.schedule(tarea, 20000, 135000);	//con llamadas cada 270 la api deberia durar un mes. Ajustar dependiendo la situacion	
+		repetidor.schedule(tarea, 20000, 270000);	//con llamadas cada 270 la api deberia durar un mes. Ajustar dependiendo la situacion	
 		
 	}
 	

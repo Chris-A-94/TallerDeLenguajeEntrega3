@@ -19,11 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import daos.CoinDAO;
 import modelos.Coin;
 
-public class PanelCompra extends JFrame{
+public class PanelCompra extends JFrame implements Vista{
 	
 	private JPanel elPanel;
 	private JComboBox<String> monedasFiat;
@@ -33,7 +34,6 @@ public class PanelCompra extends JFrame{
 	private JButton cancelar;
 	private JTextField valor;	
 	
-	private JPanel panelExteriorCircular;
 	
 	public JLabel getCantidadYPrecio() {
 		return cantidadYPrecio;
@@ -82,8 +82,9 @@ public class PanelCompra extends JFrame{
 		this.add(this.elPanel);	
 		this.getContentPane().setBackground(new Color(0xE4E0E1));
 		this.pack();
-		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));
-	//	this.getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 30, 30));	
+		WindowBarPanel wbp = new WindowBarPanel(this,new Color(0xE4E0E1),0,0,false);
+		this.add(wbp);
 		this.setVisible(true);
 
 	}
@@ -113,6 +114,7 @@ public class PanelCompra extends JFrame{
 		//opciones
 		this.monedasFiat.setMaximumSize(new Dimension(300,20));
 		this.monedasFiat.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.monedasFiat.setBackground(new Color(0xD6C0B3));
 		
 		//centro todo		
 	    cantidadYPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -140,12 +142,14 @@ public class PanelCompra extends JFrame{
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
 		botones.setMaximumSize(new Dimension(300,60));
 		botones.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botones.setBackground(new Color(0xDAD6D7));
+		botones.setOpaque(true);
 		botones.add(Box.createHorizontalGlue());
 		botones.add(comprar);
 		botones.add(Box.createRigidArea(new Dimension(5, 0)));
 		botones.add(cancelar);
-		botones.add(Box.createHorizontalGlue());
-		botones.setBackground(new Color(0xDAD6D7));
+		botones.add(Box.createHorizontalGlue());		
+		
 		
 		Component space = Box.createVerticalStrut(1);
 		
@@ -167,6 +171,36 @@ public class PanelCompra extends JFrame{
 		this.elPanel.add(space);
 		this.elPanel.setPreferredSize(new Dimension(300,200));	
 		this.elPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JButton> devolverBotones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void callExit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JButton getExit() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

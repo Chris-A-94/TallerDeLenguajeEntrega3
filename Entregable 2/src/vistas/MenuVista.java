@@ -328,10 +328,10 @@ public class MenuVista extends JFrame implements Vista {
 			
 			
 			//Botón generador
-			this.generador.setBounds(20, this.getHeight()-40, 60, 30);
+			this.generador.setBounds(20, this.getHeight()-80, 120, 30);
 			this.generador.setBackground(Color.GREEN);
 			this.generador.setBorder(null);
-			this.generador.setText("$$$+");
+			this.generador.setText("$Generar Activos$");
 			this.setFocusable(false);			
 			this.add(generador, JLayeredPane.POPUP_LAYER);
 			
