@@ -107,8 +107,7 @@ public class PanelCompraControlador {
 							aux = s;
 					}
 					
-					double valorEnCuadro = Double.parseDouble(panelVista.getValor().getText());
-					//if(aux.getCantMonedas() < Double.parseDouble(panelVista.getValor().getText()))
+					double valorEnCuadro = Double.parseDouble(panelVista.getValor().getText());					
 					if(aux.getCantMonedas() < valorEnCuadro)	
 					{
 						panelVista.getValor().setBorder(new LineBorder(Color.RED, 2));						
@@ -235,9 +234,10 @@ public class PanelCompraControlador {
 				continue;
 			if(!Character.isDigit(auxText.charAt(i)))
 				return usable;
-		}
+		}		
+	
 		
-		if(Double.parseDouble(auxText) < 0)
+		if(Double.parseDouble(auxText) < 1e-12)
 			return usable;
 		
 		usable = true;

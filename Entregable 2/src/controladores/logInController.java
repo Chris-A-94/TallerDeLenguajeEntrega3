@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.text.JTextComponent;
 
 import java.awt.event.ActionEvent;
@@ -62,7 +63,16 @@ public class logInController {
 		botones.get(2).addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        System.out.println("Pos que mal, porque esto capaz no lo implemento");
+		    	actualizarData();
+		        if(!userExist(Email))
+		        	JOptionPane.showMessageDialog(frontEnd,"El mail ingresado no corresponde a ningun usuario"
+					,"Usuario Inexistente", JOptionPane.INFORMATION_MESSAGE);
+		        else
+		        {
+		        	String password = users.getUsuario(Email).getContraseña();
+		        	JOptionPane.showMessageDialog(frontEnd,"Su contraseña es "+password
+							,"Recupero Seguro", JOptionPane.INFORMATION_MESSAGE);
+		        }
 		    };		
 		});
 		

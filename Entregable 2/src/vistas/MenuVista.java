@@ -32,7 +32,7 @@ public class MenuVista extends JFrame implements Vista {
 	
 	private int _BARPANEL_HEIGHT = 25;
 	
-	private String _LOGO_TEXT = "Bolainas";
+	private String _LOGO_TEXT = "Tutuca Wallet";
 	
 	private LateralPanel lateralPanel;
 	private ContentPanel contentPanel;

@@ -48,8 +48,7 @@ public class logInPage extends JSplitPane implements Vista{
 		this.setDividerSize(3);
 		this.inicializarFrame();
 		ExitButton.asignarComportamiento(this);
-		this.setDividerLocation(0.6);
-		//ControladorTextField conTf = new ControladorTextField(this);	//setea el funcionamiento visual de los botones solo con existir 
+		this.setDividerLocation(0.6);		 
 	}
 	
 	
@@ -331,35 +330,9 @@ public class logInPage extends JSplitPane implements Vista{
 		}
 		public JPasswordField getPasswordField() {
 			return this.Password;
-		}
+		}		
 		
 		
-		/*de stackOverflow
-		
-		private static class RoundedBorder implements Border {
-
-		    private int radius;
-
-
-		    RoundedBorder(int radius) {
-		        this.radius = radius;
-		    }
-
-
-		    public Insets getBorderInsets(Component c) {
-		        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-		    }
-
-
-		    public boolean isBorderOpaque() {
-		        return true;
-		    }
-
-
-		    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-		        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
-		    }
-		}*/
 	}
 	
 	//Clase panel izquierdo
@@ -413,28 +386,7 @@ public class logInPage extends JSplitPane implements Vista{
 
 		        // Dibuja la imagen escalada
 		        g.drawImage(scaledImage, 0, 0, this);
-
-		        // Dibuja el texto
-		        
-//		        String text = "Billetera Tutuca";		      
-//		        g.setFont(new Font("Tahoma", Font.BOLD,30));
-//		        g.setColor(Color.black);
-//		        Graphics2D graphics2D = (Graphics2D) g;		      
-//		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
-//		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-//		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON); 
-//		        graphics2D.drawString(text, 120, 30); // Dibuja el texto centrado
-		        
-//		        String text1 = "Compra y venta de cripto segura y confiable";		      
-//		        g.setFont(new Font("Tahoma", Font.BOLD,13));		 
-//		        g.setColor(Color.BLACK);
-//		        graphics2D = (Graphics2D) g;		      
-//		        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//		                RenderingHints.VALUE_ANTIALIAS_ON); 		       
-//		        graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-//		                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-//		        graphics2D.drawString(text1, 80, 350); // Dibuja el texto centrado
+		       
 		    } else {
 		        System.err.println("La imagen no se ha cargado."); // Mensaje de depuración
 		    }
