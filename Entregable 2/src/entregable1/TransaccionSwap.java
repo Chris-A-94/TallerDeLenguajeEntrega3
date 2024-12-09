@@ -15,11 +15,13 @@ public class TransaccionSwap extends Transaccion {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	@Override
 	public String toString() {
-		return super.toString() + cantFrom + " " + siglaFrom + " convertido a " + cantTo + " " + siglaTo;
+		return	cantFrom + ";" + siglaFrom + ";" + cantTo + ";" + siglaTo;
+	
 	}
 	public String description() {
-		return (this.getFecha().toString() + ": Se adquirieron " + this.siglaTo+" "+this.cantTo+ ". Costo: "+ this.siglaFrom+" "+this.cantFrom);
+		return (this.getFecha().toString() + ": Saldo final en " + this.siglaTo.toUpperCase()+" "+this.cantTo+ ". Saldo final en "+ this.siglaFrom.toUpperCase()+" "+this.cantFrom);
 	}
 }
