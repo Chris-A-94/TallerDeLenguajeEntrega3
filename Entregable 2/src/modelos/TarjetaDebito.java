@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  *  Extension de clase Tarjeta. Conecta con una cryptomoneda para definir el saldo maximo, y traduce terminos a saldo en fiat.

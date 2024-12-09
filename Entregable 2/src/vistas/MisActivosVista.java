@@ -23,10 +23,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import entregable1.Coin;
-import entregable1.Saldo;
-import entregable1.Sistema;
-import entregable1.Usuario;
+import modelos.Coin;
+import modelos.Saldo;
+import modelos.Sistema;
+import modelos.Usuario;
 
 @SuppressWarnings("serial")
 public class MisActivosVista extends JPanel {

@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  * CLASE NO IMPLEMENTADA.

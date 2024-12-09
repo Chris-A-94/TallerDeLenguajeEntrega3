@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 import java.util.Random;
 import java.util.Scanner;
 

@@ -11,12 +11,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import entregable1.Billetera;
-import entregable1.Coin;
-import entregable1.Saldo;
-import modelos.CompraExcepcion;
 import vistas.PanelCompra;
 import daos.CoinDAO;
+import modelos.Billetera;
+import modelos.Coin;
+import modelos.CompraExcepcion;
+import modelos.Saldo;
 
 public class PanelCompraControlador {
 	

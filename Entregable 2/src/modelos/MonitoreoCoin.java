@@ -10,9 +10,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import entregable1.Coin;
-import entregable1.TipoMoneda;
-
 /**
  * Implementacion funcional de monitorio de precios de cryptomoneda. Actualiza los precios de las monedas indicadas en listaIDMonedas a traves de varias llamadas al servidor CoinGecko.
  */

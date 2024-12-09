@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  *  Esta clase se instancia cuando el usuario realiza una operación de compra, venta o "swap". contiene los datos de la transacción.

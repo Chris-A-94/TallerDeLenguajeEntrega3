@@ -9,9 +9,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import entregable1.Saldo;
-import entregable1.Sistema;
-import entregable1.Usuario;
+import modelos.Saldo;
+import modelos.Sistema;
+import modelos.Usuario;
 import vistas.MisActivosVista;
 
 public class MisActivosControlador {

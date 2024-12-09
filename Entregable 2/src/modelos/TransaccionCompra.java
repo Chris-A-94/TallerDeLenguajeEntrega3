@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 public class TransaccionCompra extends Transaccion {
 	
 	String siglaMoneda, siglaFiat;

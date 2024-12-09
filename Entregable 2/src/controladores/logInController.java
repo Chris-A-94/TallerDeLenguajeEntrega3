@@ -10,8 +10,8 @@ import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import daos.UsuarioDAO;
-import entregable1.Sistema;
-import entregable1.Usuario;
+import modelos.Sistema;
+import modelos.Usuario;
 import vistas.logInPage;
 
 public class logInController {

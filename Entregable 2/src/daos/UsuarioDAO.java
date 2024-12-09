@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import entregable1.Usuario;
+
+import modelos.Usuario;
 
 public class UsuarioDAO implements DaoInterface<Usuario>{
 

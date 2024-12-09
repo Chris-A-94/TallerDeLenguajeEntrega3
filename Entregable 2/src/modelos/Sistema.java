@@ -1,6 +1,5 @@
-package entregable1;
+package modelos;
 import daos.*;
-import modelos.MonitoreoCoin;
 
 import java.io.IOException;
 import java.sql.*;

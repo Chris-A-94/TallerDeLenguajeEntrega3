@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import entregable1.Coin;
-import entregable1.Usuario;
+import modelos.Coin;
+import modelos.Usuario;
 import vistas.TarjetaVista;
 import vistas.VistaSwap;
 

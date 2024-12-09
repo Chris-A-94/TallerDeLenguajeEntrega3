@@ -18,9 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entregable1.Coin;
-import entregable1.Saldo;
-import entregable1.TipoMoneda;
+import modelos.Coin;
+import modelos.Saldo;
+import modelos.TipoMoneda;
 
 public class VistaSwap extends JFrame {
 	JLabel label,

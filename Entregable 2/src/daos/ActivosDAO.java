@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import entregable1.Saldo;
-import entregable1.TipoMoneda;
+import modelos.Saldo;
+import modelos.TipoMoneda;
 
 public class ActivosDAO implements DaoInterface<Saldo>{
 	private Connection con = null;

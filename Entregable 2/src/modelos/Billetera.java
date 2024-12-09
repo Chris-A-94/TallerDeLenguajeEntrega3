@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -10,9 +10,6 @@ import daos.ActivosDAO;
 import daos.CoinDAO;
 
 import daos.TransaccionDAO;
-import modelos.CompraExcepcion;
-import modelos.SaldoExcepcion;
-import modelos.SwapException;
 
 
 /**

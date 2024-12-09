@@ -3,9 +3,9 @@ package controladores;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import entregable1.Coin;
-import entregable1.Saldo;
-import entregable1.Usuario;
+import modelos.Coin;
+import modelos.Saldo;
+import modelos.Usuario;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

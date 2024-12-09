@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  * Informa el balance de una cryptomoneda particular. Traduce el balance a USD.

@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 public class TransaccionSwap extends Transaccion {
 	

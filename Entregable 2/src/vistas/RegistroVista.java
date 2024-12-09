@@ -13,7 +13,7 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.text.JTextComponent;
 import decoradores.ControladorTextField;
 import decoradores.ExitButton;
-import entregable1.Usuario;
+import modelos.Usuario;
 
 public class RegistroVista extends JFrame implements Vista{
 	private static final long serialVersionUID = 1L;

@@ -9,13 +9,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Timer;
+
+import modelos.Coin;
+import modelos.SwapException;
+import modelos.TipoMoneda;
+import modelos.Usuario;
+
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 
-import entregable1.Coin;
-import entregable1.TipoMoneda;
-import entregable1.Usuario;
-import modelos.SwapException;
 import vistas.PanelMonedasVista;
 import vistas.TarjetaVista;
 import vistas.VistaSwap;

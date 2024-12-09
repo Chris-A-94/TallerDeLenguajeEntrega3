@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  * Guarda fecha como DD/MM/AAAA.

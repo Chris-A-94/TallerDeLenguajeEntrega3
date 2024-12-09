@@ -1,13 +1,14 @@
 package daos;
 
 import java.util.List;
+
+import modelos.Transaccion;
+import modelos.TransaccionCompra;
+import modelos.TransaccionSwap;
+
 import java.util.LinkedList;
 
 import java.sql.*;
-
-import entregable1.Transaccion;
-import entregable1.TransaccionCompra;
-import entregable1.TransaccionSwap;
 
 public class TransaccionDAO implements DaoInterface<Transaccion> {
 	private Connection con = null;

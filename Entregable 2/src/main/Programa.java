@@ -1,7 +1,5 @@
 package main;
 
-import entregable1.*;
-import modelos.MonitoreoCoin;
 import vistas.logInPage;
 
 import java.io.IOException;
@@ -9,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import controladores.logInController;
+import modelos.*;
 public class Programa {
 		
 	public static void main(String[] args) {

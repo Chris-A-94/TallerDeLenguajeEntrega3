@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import entregable1.Coin;
+import modelos.Coin;
 
 @SuppressWarnings("serial")
 public class TarjetaVista extends JPanel {
@@ -46,7 +46,6 @@ public class TarjetaVista extends JPanel {
 		// LayoutManager	
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.gray)); 
-		
 		
 		// Título
 		title = new JLabel();

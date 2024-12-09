@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import daos.CoinDAO;
-import entregable1.Coin;
+import modelos.Coin;
 
 public class PanelCompra extends JFrame{
 	
@@ -71,7 +71,7 @@ public class PanelCompra extends JFrame{
 	public PanelCompra()
 	{
 		this.setTitle("Comprar Criptomonedas");
-		this.setSize(400, 300);
+		this.setSize(600, 400);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
@@ -98,13 +98,13 @@ public class PanelCompra extends JFrame{
 		this.valor.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//botones
-		this.comprar.setPreferredSize(new Dimension(75, 25));
+		this.comprar.setPreferredSize(new Dimension(100, 35));
 		this.comprar.setBorder(null);
 		this.comprar.setBackground(new Color(0xAB886D));
 		this.comprar.setFont(new Font("Tahoma",Font.BOLD,14));		
 		this.comprar.setFocusPainted(false);
 		
-		this.cancelar.setPreferredSize(new Dimension(75, 25));
+		this.cancelar.setPreferredSize(new Dimension(100, 35));
 		this.cancelar.setBorder(null);
 		this.cancelar.setBackground(new Color(0xAB886D));
 		this.cancelar.setFont(new Font("Tahoma",Font.BOLD,14));

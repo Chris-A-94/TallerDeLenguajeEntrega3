@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  * Contiene los datos seriales de la tarjeta. Define comportamiento de subclases Debito y Credito.

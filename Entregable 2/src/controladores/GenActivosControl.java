@@ -14,11 +14,11 @@ import javax.swing.JTextField;
 import daos.ActivosDAO;
 import daos.CoinDAO;
 import daos.UsuarioDAO;
-import entregable1.Coin;
-import entregable1.Saldo;
-import entregable1.TipoMoneda;
-import entregable1.Usuario;
+import modelos.Coin;
+import modelos.Saldo;
 import modelos.SaldoExcepcion;
+import modelos.TipoMoneda;
+import modelos.Usuario;
 import vistas.GenerarActivos;
 
 public class GenActivosControl {

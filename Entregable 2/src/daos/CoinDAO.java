@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import entregable1.Coin;
-import entregable1.TipoMoneda;
-import entregable1.Usuario;
+import modelos.Coin;
+import modelos.TipoMoneda;
+import modelos.Usuario;
 
 public class CoinDAO implements DaoInterface<Coin>{
 	private Connection con = null;

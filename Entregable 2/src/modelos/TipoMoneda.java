@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 public enum TipoMoneda {
 	FIAT ("FIAT"),

@@ -3,7 +3,7 @@ package vistas;
 import javax.swing.JButton;
 
 import daos.CoinDAO;
-import entregable1.Coin;
+import modelos.Coin;
 
 import java.util.LinkedList;
 import java.util.List;

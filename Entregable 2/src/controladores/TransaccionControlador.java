@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import entregable1.Billetera;
-import entregable1.Transaccion;
+import modelos.Billetera;
+import modelos.Transaccion;
 import vistas.TransaccionPanel;
 
 public class TransaccionControlador {

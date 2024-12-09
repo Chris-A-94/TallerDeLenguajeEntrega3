@@ -1,4 +1,4 @@
-package entregable1;
+package modelos;
 
 /**
  *	Representa una operación defi. Contiene el protocolo, la moneda en la que fue hecha, las fechas de inicio y fin y la ganancia del mismo. Cuando termina el plazo de tiempo se deshabilita.

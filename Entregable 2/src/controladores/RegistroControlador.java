@@ -11,8 +11,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
 import daos.UsuarioDAO;
-import entregable1.Sistema;
-import entregable1.Usuario;
+import modelos.Sistema;
+import modelos.Usuario;
 import vistas.RegistroVista;
 import vistas.logInPage;
 
