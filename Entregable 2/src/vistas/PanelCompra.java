@@ -19,11 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import daos.CoinDAO;
 import entregable1.Coin;
 
-public class PanelCompra extends JFrame{
+public class PanelCompra extends JFrame implements Vista{
 	
 	private JPanel elPanel;
 	private JComboBox<String> monedasFiat;
@@ -33,7 +34,6 @@ public class PanelCompra extends JFrame{
 	private JButton cancelar;
 	private JTextField valor;	
 	
-	private JPanel panelExteriorCircular;
 	
 	public JLabel getCantidadYPrecio() {
 		return cantidadYPrecio;
@@ -82,8 +82,9 @@ public class PanelCompra extends JFrame{
 		this.add(this.elPanel);	
 		this.getContentPane().setBackground(new Color(0xE4E0E1));
 		this.pack();
-		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 15, 15));
-	//	this.getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 30, 30));	
+		WindowBarPanel wbp = new WindowBarPanel(this,new Color(0xE4E0E1),0,0,false);
+		this.add(wbp);
 		this.setVisible(true);
 
 	}
@@ -98,13 +99,13 @@ public class PanelCompra extends JFrame{
 		this.valor.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		//botones
-		this.comprar.setPreferredSize(new Dimension(75, 25));
+		this.comprar.setPreferredSize(new Dimension(75, 40));
 		this.comprar.setBorder(null);
 		this.comprar.setBackground(new Color(0xAB886D));
 		this.comprar.setFont(new Font("Tahoma",Font.BOLD,14));		
 		this.comprar.setFocusPainted(false);
 		
-		this.cancelar.setPreferredSize(new Dimension(75, 25));
+		this.cancelar.setPreferredSize(new Dimension(75, 40));		
 		this.cancelar.setBorder(null);
 		this.cancelar.setBackground(new Color(0xAB886D));
 		this.cancelar.setFont(new Font("Tahoma",Font.BOLD,14));
@@ -113,6 +114,7 @@ public class PanelCompra extends JFrame{
 		//opciones
 		this.monedasFiat.setMaximumSize(new Dimension(300,20));
 		this.monedasFiat.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.monedasFiat.setBackground(new Color(0xD6C0B3));
 		
 		//centro todo		
 	    cantidadYPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -167,6 +169,36 @@ public class PanelCompra extends JFrame{
 		this.elPanel.add(space);
 		this.elPanel.setPreferredSize(new Dimension(300,200));	
 		this.elPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+
+	@Override
+	public List<JLabel> devolverEtiquetas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JTextComponent> devolverCamposTexto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<JButton> devolverBotones() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void callExit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JButton getExit() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
