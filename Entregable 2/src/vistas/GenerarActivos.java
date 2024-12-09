@@ -39,7 +39,7 @@ public class GenerarActivos extends JFrame implements Vista{
 		this.getContentPane().setBackground(new Color(0xDAD6D7));
 		
 		this.setShape(new RoundRectangle2D.Double(0, 0, this.getWidth(), this.getHeight(), 30, 30));	
-		WindowBarPanel wbp = new WindowBarPanel(this,new Color(0xE4E0E1),0,0,false);
+		WindowBarPanel wbp = new WindowBarPanel(this,new Color(0xDAD6D7),0,0,false);
 		this.add(wbp);
 		
 		this.setVisible(true);
@@ -104,7 +104,8 @@ public class GenerarActivos extends JFrame implements Vista{
 		botones.add(aceptar);
 		botones.add(Box.createRigidArea(new Dimension(5, 0)));
 		botones.add(cancelar);
-		botones.add(Box.createHorizontalGlue());	
+		botones.add(Box.createHorizontalGlue());
+		botones.setBackground(new Color(0xDAD6D7));
 		
 		this.personalizarComps();
 		
@@ -118,7 +119,8 @@ public class GenerarActivos extends JFrame implements Vista{
 		this.elPanel.add(emptySpace);
 		this.elPanel.add(opciones);
 		this.elPanel.add(emptySpace);
-		this.elPanel.add(botones);		
+		this.elPanel.add(botones);	
+		this.elPanel.setBackground(new Color(0xDAD6D7));
 	}
 
 	public JComboBox<String> getOpciones() {

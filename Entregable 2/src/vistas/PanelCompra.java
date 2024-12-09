@@ -142,12 +142,14 @@ public class PanelCompra extends JFrame implements Vista{
 		botones.setLayout(new BoxLayout(botones, BoxLayout.X_AXIS));
 		botones.setMaximumSize(new Dimension(300,60));
 		botones.setAlignmentX(Component.CENTER_ALIGNMENT);
+		botones.setBackground(new Color(0xDAD6D7));
+		botones.setOpaque(true);
 		botones.add(Box.createHorizontalGlue());
 		botones.add(comprar);
 		botones.add(Box.createRigidArea(new Dimension(5, 0)));
 		botones.add(cancelar);
-		botones.add(Box.createHorizontalGlue());
-		botones.setBackground(new Color(0xDAD6D7));
+		botones.add(Box.createHorizontalGlue());		
+		
 		
 		Component space = Box.createVerticalStrut(1);
 		
