@@ -131,7 +131,7 @@ public class PanelCompra extends JFrame{
 		mensaje1.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    mensaje2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.cantidadYPrecio = new JLabel(""); //llenado por el controlador
-		this.precioActualizable = new JLabel("");//llenado por el controlador
+		this.precioActualizable = new JLabel("Valor Equivalente:");//llenado por el controlador
 		
 		this.personalizarComps();
 		
