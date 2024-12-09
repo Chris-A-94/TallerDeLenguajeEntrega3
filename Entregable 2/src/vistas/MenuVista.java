@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,7 +10,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,8 +82,17 @@ public class MenuVista extends JFrame implements Vista {
 		inicio.setOpaque(false);
 		inicio.setBackground(null);
 		
-		JLabel imageLabel0 = new JLabel();
-		imageLabel0.setIcon(new ImageIcon("src/Imagenes/wallpaper0.png"));
+		JLabel imageLabel0 = new JLabel();	
+		try {
+		    URL imageUrl = getClass().getResource("/Imagenes/wallpaper0.png");
+		    if (imageUrl != null) {
+		        imageLabel0.setIcon(new ImageIcon(imageUrl));
+		    } else {
+		        throw new FileNotFoundException("No se encuentra imagen: /Imagenes/wallpaper0.png");
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		
 		inicio.add(imageLabel0);
 		
@@ -297,10 +310,21 @@ public class MenuVista extends JFrame implements Vista {
 			this.add(buttonsPanel);
 			
 			// Logo
-			logo = new ImageIcon("Logo.png");
-			Image tempImagen = logo.getImage();
-			tempImagen = tempImagen.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
-			logo = new ImageIcon(tempImagen);
+			
+			ImageIcon logo = null;
+			try {
+			    URL imageUrl = getClass().getResource("/Imagenes/Logo.png");
+			    if (imageUrl != null) {
+			        logo = new ImageIcon(imageUrl);
+			        Image tempImagen = logo.getImage();
+			        tempImagen = tempImagen.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH);
+			        logo = new ImageIcon(tempImagen);
+			    } else {
+			        throw new FileNotFoundException("Imagen no encontrada: /Logo.png");
+			    }
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
 			
 			int logoWidth = logo.getIconWidth() + 100;
 			int logoHeight = logo.getIconHeight() + 40;
@@ -311,13 +335,26 @@ public class MenuVista extends JFrame implements Vista {
 			logoPanel.setBackground(null);
 			
 			JLabel temp = new JLabel(_LOGO_TEXT);
-			Font font;
+		/*	Font font;
 			try {
 				font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(25.0f);
 			} catch (FontFormatException | IOException e) {
 				font = null;
 				e.printStackTrace();
+			}*/
+			
+			Font font = null;
+			try (InputStream fontStream = getClass().getResourceAsStream("/fonts/C059-Roman.otf")) {
+			    if (fontStream != null) {
+			        font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(25.0f);
+			    } else {
+			        throw new IOException("Fuente inexistente: /C059-Roman.otf");
+			    }
+			} catch (FontFormatException | IOException e) {
+			    font = null;
+			    e.printStackTrace();
 			}
+			
 			temp.setFont(font);
 			temp.setVerticalTextPosition(JLabel.BOTTOM);
 			temp.setHorizontalTextPosition(JLabel.CENTER);
@@ -469,13 +506,27 @@ public class MenuVista extends JFrame implements Vista {
 				
 				// Estética
 				this.boxColor = this.defaultColor;
-				Font font;
+			/*	Font font;
 				try {
 					font = Font.createFont(Font.TRUETYPE_FONT, new File("C059-Roman.otf")).deriveFont(20.0f);
 				} catch (FontFormatException | IOException e) {
 					font = null;
 					e.printStackTrace();
+				}*/
+				
+				Font font = null;
+				try (InputStream fontStream = getClass().getResourceAsStream("/fonts/C059-Roman.otf")) {
+				    if (fontStream != null) {
+				        font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(25.0f);
+				    } else {
+				        throw new IOException("Fuente inexistente: /C059-Roman.otf");
+				    }
+				} catch (FontFormatException | IOException e) {
+				    font = null;
+				    e.printStackTrace();
 				}
+				
+				
 				this.setFont(font);
 				
 				// ActionListener

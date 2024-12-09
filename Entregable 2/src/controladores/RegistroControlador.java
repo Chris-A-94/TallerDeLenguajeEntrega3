@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 
 import javax.swing.border.LineBorder;
@@ -120,12 +121,12 @@ public class RegistroControlador {
 			String text = "";
 			int data;
 			try {
-				reader = new FileReader("src/Imagenes/terminos");
-				data = reader.read();
+				InputStream stream = getClass().getResourceAsStream("/Imagenes/terminos");			
+				data = stream.read();
 			while(data != -1){
 				char dataChar = (char) data;
 				text = text.concat(String.valueOf(dataChar));
-				data = reader.read();
+				data = stream.read();
 			}
 			} catch (IOException e1) {
 			// TODO Auto-generated catch block

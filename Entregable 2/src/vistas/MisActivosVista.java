@@ -10,6 +10,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -70,9 +71,24 @@ public class MisActivosVista extends JPanel {
 		
 		// emptyLabel
 		emptyLabel = new JLabel("Tu billetera está vacía.");
-		ImageIcon imageIcon = new ImageIcon("1.gif");
+	/*	ImageIcon imageIcon = new ImageIcon("1.gif");
 		Image image = imageIcon.getImage();
-		imageIcon = new ImageIcon(image.getScaledInstance(5*50, 4*50, 0));
+		imageIcon = new ImageIcon(image.getScaledInstance(5*50, 4*50, 0));	*/
+		
+		ImageIcon imageIcon = null;
+		try {
+		    URL imageUrl = getClass().getResource("/Imagenes/1.gif");
+		    if (imageUrl != null) {
+		    	imageIcon = new ImageIcon(imageUrl);
+		        Image tempImagen = imageIcon.getImage();
+		        tempImagen = tempImagen.getScaledInstance(5*50, 4*50, 0);
+		        imageIcon = new ImageIcon(tempImagen);
+		    } else {
+		        throw new FileNotFoundException("Imagen no encontrada: /1.gif");
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		
 		emptyLabel.setIcon(imageIcon);
 		emptyLabel.setBounds((width - imageIcon.getIconWidth()) / 2, 10, imageIcon.getIconWidth(), imageIcon.getIconHeight() + 50);

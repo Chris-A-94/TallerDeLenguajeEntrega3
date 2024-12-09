@@ -1,12 +1,15 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -119,25 +122,27 @@ class WindowBarPanel extends JPanel {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					switchBackgroundColor();
-					exitButton.setIcon(new ImageIcon("IconExitButtonPress.png"));
+				//	exitButton.setIcon(new ImageIcon("IconExitButtonPress.png"));
+					exitButton.setIcon(setImage("/Imagenes/IconExitButtonPress.png"));
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					restoreBackgroundColor();
-					exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+					exitButton.setIcon(setImage("/Imagenes/IconExitButton.png"));
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					switchBackgroundColor();
-					exitButton.setIcon(new ImageIcon("IconExitButtonHover.png"));
+					//exitButton.setIcon(new ImageIcon("IconExitButtonHover.png"));
+					exitButton.setIcon(setImage("/Imagenes/IconExitButtonHover.png"));
 				}
 
 				@Override
 				public void mouseExited(MouseEvent e) {
 					restoreBackgroundColor();
-					exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+					exitButton.setIcon(setImage("/Imagenes/IconExitButton.png"));
 				}
 
 				Color defaultColor, newColor;
@@ -153,13 +158,33 @@ class WindowBarPanel extends JPanel {
 			exitButton.setFocusable(false);
 			exitButton.setBorder(null);
 			
-			exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+			//exitButton.setIcon(new ImageIcon("IconExitButton.png"));
+			exitButton.setIcon(setImage("/Imagenes/IconExitButton.png"));
 			exitButton.setBounds(WIDTH - 40, 7, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
 			exitButton.setBackground(backgroundColor);
 			
 			exitButton.addMouseListener(new MouseBehaviour());
 			this.add(exitButton);
 		}
+	}
+	
+	private ImageIcon setImage(String direccion)
+	{
+		ImageIcon logo = null;
+		try {
+		    URL imageUrl = getClass().getResource(direccion);
+		    if (imageUrl != null) {
+		        logo = new ImageIcon(imageUrl);
+		        Image tempImagen = logo.getImage();		        
+		        logo = new ImageIcon(tempImagen);
+		    } else {
+		        throw new FileNotFoundException(direccion);
+		    }
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		return logo;
 	}
 	
 	public JButton getExitButton() {
