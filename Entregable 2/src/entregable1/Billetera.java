@@ -1,11 +1,10 @@
 package entregable1;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import daos.ActivosDAO;
 import daos.CoinDAO;
@@ -205,15 +204,16 @@ public class Billetera {
 		// Se realiza la operación sobre la Moneda
 		from.setStock(from.getStock() + cantidad); // Aumenta el Stock
 		target.setStock(target.getStock() - cantidadConversion); // Decrementa el Stock
-		
-//		//transacciondatabase
-//		String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
-//		String mes = java.time.ZonedDateTime.now().getMonth().toString();
-//		String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
-////		
-//		TransaccionDAO archivarSwap = new TransaccionDAO();
-//		archivarSwap.guardar(new TransaccionSwap(dia, mes, year, this.userID, monedaSaldoSeleccionado.getSigla(), cantSwap, monedaAConvertir.getSigla(), cantidadConversion));
-////		
+		//Conseguir fecha actual
+		String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
+		String mes = String.valueOf(java.time.ZonedDateTime.now().getMonth().getValue());
+		String year = String.valueOf(java.time.ZonedDateTime.now().getYear());
+		//transacciondatabase
+		Transaccion t = new TransaccionSwap(dia, mes, year,this.getUserID(), from.getSigla(), fromSaldo.getCantMonedas(), target.getSigla(), targetSaldo.getCantMonedas());		
+		TransaccionDAO archivarSwap = new TransaccionDAO();
+		archivarSwap.guardar(t);
+		this.agregarTransaccion(t);
+			
 //		System.out.println("Swap exitoso!");
 //		System.out.println("Su nuevo saldo de "+saldoSeleccionado.getSigla()+" es de: "+saldoSeleccionado.getCantMonedas());
 //		System.out.println("Su nuevo saldo de "+saldoSwap.getSigla()+" es de: "+saldoSwap.getCantMonedas());
