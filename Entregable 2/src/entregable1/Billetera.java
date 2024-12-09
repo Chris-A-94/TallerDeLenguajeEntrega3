@@ -206,13 +206,6 @@ public class Billetera {
 		from.setStock(from.getStock() + cantidad); // Aumenta el Stock
 		target.setStock(target.getStock() - cantidadConversion); // Decrementa el Stock
 		
-		
-//		// Se modifica el Stock
-//		CoinDAO monedasDB = new CoinDAO();
-//		monedasDB.modificar(monedaSaldoSeleccionado);
-//		monedasDB.modificar(monedaAConvertir);
-////		
-////		
 //		//transacciondatabase
 //		String dia = String.valueOf(java.time.ZonedDateTime.now().getDayOfMonth());
 //		String mes = java.time.ZonedDateTime.now().getMonth().toString();

@@ -109,9 +109,7 @@ public class MisActivosVista extends JPanel {
 			        if (listaActivos.equals(null)) {
 			        	timer.stop();
 			        }
-			        else if (!listaActivos.isEmpty()){
-			        	emptyLabel.setVisible(false);
-			        	
+			        else { 	
 			        	// Actualizar los activos ya presentes
 			        	for (Activo a : listaActivos) {
 			        		a.actualizarSaldo();
@@ -127,6 +125,11 @@ public class MisActivosVista extends JPanel {
 			        			agregarActivo(sistema.buscarMoneda(s.getSigla()), s);
 			        		}
 			        	}
+			        	
+			        	if (listaActivos.isEmpty())
+			        		return;
+			        	
+			        	MisActivosVista.this.remove(emptyLabel);
 			        }
 			    }
 			};
