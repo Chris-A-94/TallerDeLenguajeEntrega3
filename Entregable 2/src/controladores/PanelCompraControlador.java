@@ -109,7 +109,7 @@ public class PanelCompraControlador {
 					
 					double valorEnCuadro = Double.parseDouble(panelVista.getValor().getText());
 					//if(aux.getCantMonedas() < Double.parseDouble(panelVista.getValor().getText()))
-					if(aux.getCantMonedas() <valorEnCuadro)	
+					if(aux.getCantMonedas() < valorEnCuadro)	
 					{
 						panelVista.getValor().setBorder(new LineBorder(Color.RED, 2));						
 					}
@@ -119,7 +119,11 @@ public class PanelCompraControlador {
 					panelVista.getprecioActualizable().setText("Valor Equivalente: "+valorEquivalente+criptoSeleccionada.getNombre());
 				}
 				else
+				{
 					panelVista.getValor().setBorder(new LineBorder(Color.RED, 2));
+					panelVista.getprecioActualizable().setText("Valor Equivalente:");
+				}
+					
 			}
         });
 		
