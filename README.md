@@ -13,8 +13,8 @@
 ## Checklist:
 - [X] Inicio de sesión
 - [X] Registro de usuario
-- [ ] Implementar Compra
-- [ ] Implementar Swap
+- [X] Implementar Compra
+- [X] Implementar Swap
 - [X] Visualización de las monedas
-- [ ] Visualización del historial de transacciones
-- [ ] Exportar el historial de transacciones como un .CSV
+- [X] Visualización del historial de transacciones
+- [X] Exportar el historial de transacciones como un .CSV
